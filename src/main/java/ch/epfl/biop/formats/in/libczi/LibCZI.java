@@ -1,8 +1,8 @@
-package loci.formats.in.libczi;
+package ch.epfl.biop.formats.in.libczi;
 
 import loci.common.Constants;
 import loci.common.RandomAccessInputStream;
-import loci.formats.in.ZeissQuickStartCZIReader;
+import ch.epfl.biop.formats.in.ZeissQuickStartCZIReader;
 import ome.units.UNITS;
 import ome.units.quantity.Length;
 import ome.xml.model.primitives.Timestamp;

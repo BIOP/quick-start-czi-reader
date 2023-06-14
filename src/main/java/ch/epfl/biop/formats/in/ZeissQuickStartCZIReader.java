@@ -23,7 +23,7 @@
  * #L%
  */
 
-package loci.formats.in;
+package ch.epfl.biop.formats.in;
 
 import loci.common.ByteArrayHandle;
 import loci.common.Constants;
@@ -46,7 +46,10 @@ import loci.formats.codec.JPEGCodec;
 import loci.formats.codec.JPEGXRCodec;
 import loci.formats.codec.LZWCodec;
 import loci.formats.codec.ZstdCodec;
-import loci.formats.in.libczi.LibCZI;
+import loci.formats.in.DynamicMetadataOptions;
+import loci.formats.in.JPEGReader;
+import loci.formats.in.MetadataOptions;
+import ch.epfl.biop.formats.in.libczi.LibCZI;
 import loci.formats.meta.MetadataStore;
 import loci.formats.ome.OMEXMLMetadata;
 import loci.formats.services.OMEXMLService;
@@ -96,12 +99,12 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static loci.formats.in.libczi.LibCZI.JPEG;
-import static loci.formats.in.libczi.LibCZI.JPEGXR;
-import static loci.formats.in.libczi.LibCZI.LZW;
-import static loci.formats.in.libczi.LibCZI.UNCOMPRESSED;
-import static loci.formats.in.libczi.LibCZI.ZSTD_0;
-import static loci.formats.in.libczi.LibCZI.ZSTD_1;
+import static ch.epfl.biop.formats.in.libczi.LibCZI.JPEG;
+import static ch.epfl.biop.formats.in.libczi.LibCZI.JPEGXR;
+import static ch.epfl.biop.formats.in.libczi.LibCZI.LZW;
+import static ch.epfl.biop.formats.in.libczi.LibCZI.UNCOMPRESSED;
+import static ch.epfl.biop.formats.in.libczi.LibCZI.ZSTD_0;
+import static ch.epfl.biop.formats.in.libczi.LibCZI.ZSTD_1;
 
 /**
  * ZeissCZIReader is the file format reader for Zeiss .czi files.
@@ -128,8 +131,8 @@ import static loci.formats.in.libczi.LibCZI.ZSTD_1;
  * For convenience, this reader adds the downscaling factor as an extra dimension named 'PY'
  *
  * A CZI file consists of several segments. The majority of segments are data subblocks, as described before. But other
- * segments are present. Essentially this reader reads the {@link loci.formats.in.libczi.LibCZI.FileHeaderSegment} that
- * contains some metadata as well as the location of the {@link loci.formats.in.libczi.LibCZI.SubBlockDirectorySegment}
+ * segments are present. Essentially this reader reads the {@link LibCZI.FileHeaderSegment} that
+ * contains some metadata as well as the location of the {@link LibCZI.SubBlockDirectorySegment}
  *
  * The SubBlockDirectorySegment is a critical segment because it contains the dimension indices and file location of all
  * data subblocks. Thus, by reading this segment only, there is no need to go through all file segments while

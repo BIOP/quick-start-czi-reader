@@ -1,17 +1,16 @@
-package loci.formats.in;
+package ch.epfl.biop.formats.in;
 
-import ij.ImagePlus;
+import ch.epfl.biop.formats.in.ZeissQuickStartCZIReader;
 import loci.common.services.ServiceFactory;
+import loci.formats.in.ZeissCZIReader;
 import loci.formats.ome.OMEXMLMetadata;
 import loci.formats.services.OMEXMLService;
 import ome.units.UNITS;
 import ome.units.quantity.Length;
 import ome.units.quantity.Time;
 import ome.xml.meta.MetadataRetrieve;
-import org.jruby.RubyProcess;
 
 import java.lang.reflect.Method;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
@@ -363,9 +362,9 @@ public class CompareMeta {
         //imagePath = "C:/Users/nicol/Downloads/v.zanotelli_20190509_p165_031.czi";
         //imagePath = "F:/czis/test-plate.czi";
         //imagePath = "F:/czis/v.zanotelli_20190509_p161_016.czi";
-        imagePath = "C:\\Users\\nicol\\Downloads\\test-plate.czi";
+        //imagePath = "C:\\Users\\nicol\\Downloads\\test-plate.czi";
         //imagePath = "N:\\temp-Romain\\organoid\\GbD3P_RapiClear_stitch_fullStack.czi";
-        //imagePath = "N:\\temp-Romain\\organoid\\GbD3P_RapiClear_40x_default_miniStack_guess.czi";
+        imagePath = "N:\\temp-Romain\\organoid\\GbD3P_RapiClear_40x_default_miniStack_guess.czi";
 
         ServiceFactory factory = new ServiceFactory();
         OMEXMLService service = factory.getInstance(OMEXMLService.class);

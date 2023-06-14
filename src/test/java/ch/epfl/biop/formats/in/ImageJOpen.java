@@ -1,4 +1,4 @@
-package loci.formats.in;
+package ch.epfl.biop.formats.in;
 
 import ij.ImagePlus;
 import loci.common.DebugTools;
