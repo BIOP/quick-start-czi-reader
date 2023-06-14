@@ -1126,7 +1126,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         }
 
         // Initialize the reader store, and basically all metadata
-        new Initializer(this).initializeMetadata(cziPartToSegments, mapCoreTZCToBlocks);
+        new MetadataInitializer(this).initializeMetadata(cziPartToSegments, mapCoreTZCToBlocks);
 
     }
 
@@ -1437,19 +1437,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
     // ------------- Extra classes
 
-    static class Channel {
-        public String name;
-        public String color;
-        public IlluminationType illumination;
-        public AcquisitionMode acquisitionMode;
-        public String emission;
-        public String excitation;
-        public String pinhole;
-        public Double exposure;
-        public Double gain;
-        public String fluor;
-        public String filterSetRef;
-    }
+
 
     /**
      * What is this class ? It is a class that builds a unique signature, a String,
@@ -1785,79 +1773,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
     }
 
-    private static class SceneProperties {
-        List<XYZLength> pos = new ArrayList<>();
-        String name;
-
-        public double getMinPosXInMicrons() {
-            if (pos.size()==0) {
-                return 0;
-            }
-            double minX = Double.MAX_VALUE;
-            for (XYZLength positionLocation : pos) {
-                if (positionLocation.pX.value(UNITS.MICROMETER).doubleValue()<minX) {
-                    minX = positionLocation.pX.value(UNITS.MICROMETER).doubleValue();
-                }
-            }
-            return minX;
-        }
-        public double getMinPosYInMicrons() {
-            if (pos.size()==0) {
-                return 0;
-            }
-            double minY = Double.MAX_VALUE;
-            for (XYZLength positionLocation : pos) {
-                if (positionLocation.pY.value(UNITS.MICROMETER).doubleValue()<minY) {
-                    minY = positionLocation.pY.value(UNITS.MICROMETER).doubleValue();
-                }
-            }
-            return minY;
-        }
-
-        public double getMinPosZInMicrons() {
-            if (pos.size()==0) {
-                return 0;
-            }
-            double minZ = Double.MAX_VALUE;
-            for (XYZLength positionLocation : pos) {
-                if (positionLocation.pZ.value(UNITS.MICROMETER).doubleValue()<minZ) {
-                    minZ = positionLocation.pZ.value(UNITS.MICROMETER).doubleValue();
-                }
-            }
-            return minZ;
-        }
-    }
-
-    private static class GroupProperties {
-        List<TileProperties> tiles = new ArrayList<>();
-
-        int nTilesX, nTilesY;
-    }
-
-    private static class TileProperties {
-        XYZLength pos = new XYZLength();
-        Integer iX;
-        Integer iY;
-    }
-
-    private static class XYZLength {
-        Length pX, pY, pZ;
-    }
-
-    private static class AllPositionsInformation {
-        /**
-         * We may have, group, tiles, or scenes
-         */
-        List<SceneProperties> scenes;
-        List<GroupProperties> groups;
-        //List<TileProperties> tiles;
-
-        List<XYZLength> regions;
-
-        XYZLength slidePreviewPixelSize, slidePreviewLocation, labelPixelSize, labelLocation;
-
-    }
-
     /**
      * A structure that helps to group all CZI segments
      * that are used in the file initialization
@@ -1900,9 +1815,9 @@ public class ZeissQuickStartCZIReader extends FormatReader {
      * This could also be a non-static class that do not need to pass the object, but I somehow prefer it this way
      * Time will tell if it is a bad idea or not
      */
-    private static class Initializer {
+    private static class MetadataInitializer {
 
-        Initializer(ZeissQuickStartCZIReader reader) {
+        MetadataInitializer(ZeissQuickStartCZIReader reader) {
             this.reader = reader;
         }
 
@@ -4061,6 +3976,93 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             }
 
             nameStack.pop();
+        }
+
+        static class Channel {
+            public String name;
+            public String color;
+            public IlluminationType illumination;
+            public AcquisitionMode acquisitionMode;
+            public String emission;
+            public String excitation;
+            public String pinhole;
+            public Double exposure;
+            public Double gain;
+            public String fluor;
+            public String filterSetRef;
+        }
+
+        private static class SceneProperties {
+            List<XYZLength> pos = new ArrayList<>();
+            String name;
+
+            public double getMinPosXInMicrons() {
+                if (pos.size()==0) {
+                    return 0;
+                }
+                double minX = Double.MAX_VALUE;
+                for (XYZLength positionLocation : pos) {
+                    if (positionLocation.pX.value(UNITS.MICROMETER).doubleValue()<minX) {
+                        minX = positionLocation.pX.value(UNITS.MICROMETER).doubleValue();
+                    }
+                }
+                return minX;
+            }
+            public double getMinPosYInMicrons() {
+                if (pos.size()==0) {
+                    return 0;
+                }
+                double minY = Double.MAX_VALUE;
+                for (XYZLength positionLocation : pos) {
+                    if (positionLocation.pY.value(UNITS.MICROMETER).doubleValue()<minY) {
+                        minY = positionLocation.pY.value(UNITS.MICROMETER).doubleValue();
+                    }
+                }
+                return minY;
+            }
+
+            public double getMinPosZInMicrons() {
+                if (pos.size()==0) {
+                    return 0;
+                }
+                double minZ = Double.MAX_VALUE;
+                for (XYZLength positionLocation : pos) {
+                    if (positionLocation.pZ.value(UNITS.MICROMETER).doubleValue()<minZ) {
+                        minZ = positionLocation.pZ.value(UNITS.MICROMETER).doubleValue();
+                    }
+                }
+                return minZ;
+            }
+        }
+
+        private static class GroupProperties {
+            List<TileProperties> tiles = new ArrayList<>();
+
+            int nTilesX, nTilesY;
+        }
+
+        private static class TileProperties {
+            XYZLength pos = new XYZLength();
+            Integer iX;
+            Integer iY;
+        }
+
+        private static class XYZLength {
+            Length pX, pY, pZ;
+        }
+
+        private static class AllPositionsInformation {
+            /**
+             * We may have, group, tiles, or scenes
+             */
+            List<SceneProperties> scenes;
+            List<GroupProperties> groups;
+            //List<TileProperties> tiles;
+
+            List<XYZLength> regions;
+
+            XYZLength slidePreviewPixelSize, slidePreviewLocation, labelPixelSize, labelLocation;
+
         }
 
     }
