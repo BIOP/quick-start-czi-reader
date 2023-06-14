@@ -187,7 +187,7 @@ import static loci.formats.in.libczi.LibCZI.ZSTD_1;
  *
  *  ISSUES TODO FIX:
  *  - the bytes of the thumbnails are stored in the reader
- *  - some absolute path are stored in the reader -> failing memo if the file is moved
+ *  - some absolute path are stored in the reader failing memo if the file is moved
  *
  */
 
