@@ -1,23 +1,61 @@
 package ch.epfl.biop.formats.in;
 
-import ch.epfl.biop.formats.in.ZeissQuickStartCZIReader;
+import ij.ImagePlus;
+import loci.common.services.DependencyException;
+import loci.common.services.ServiceException;
 import loci.common.services.ServiceFactory;
+import loci.formats.FormatException;
+import loci.formats.IFormatReader;
+import loci.formats.in.DynamicMetadataOptions;
+import loci.formats.in.MetadataOptions;
 import loci.formats.in.ZeissCZIReader;
 import loci.formats.ome.OMEXMLMetadata;
 import loci.formats.services.OMEXMLService;
+import loci.plugins.BF;
+import loci.plugins.config.LociConfig;
+import loci.plugins.in.ImporterOptions;
+import loci.plugins.util.LociPrefs;
 import ome.units.UNITS;
 import ome.units.quantity.Length;
 import ome.units.quantity.Time;
 import ome.xml.meta.MetadataRetrieve;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.text.DecimalFormat;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 public class CompareMeta {
 
-    public static void compareMeta(OMEXMLMetadata meta_1, OMEXMLMetadata meta_2) {
+    public static void compareFileMeta(String imagePath, boolean flattenResolutions, boolean autoStitch, Consumer<String> logger) throws DependencyException, ServiceException, IOException, FormatException {
+
+        ServiceFactory factory = new ServiceFactory();
+        OMEXMLService service = factory.getInstance(OMEXMLService.class);
+
+        IFormatReader reader_1 = CompareMeta.builder().quickStart(true).autoStitch(autoStitch).flattenResolutions(flattenResolutions).get();
+
+        OMEXMLMetadata omeXML_1 = service.createOMEXMLMetadata();
+        reader_1.setMetadataStore(omeXML_1);
+        reader_1.setId(imagePath);
+
+        IFormatReader reader_2 = CompareMeta.builder().quickStart(false).autoStitch(autoStitch).flattenResolutions(flattenResolutions).get();
+
+        OMEXMLMetadata omeXML_2 = service.createOMEXMLMetadata();
+        reader_2.setMetadataStore(omeXML_2);
+        reader_2.setId(imagePath);
+
+        logger.accept(" Method            | Parameters       | Quick Start Reader | Original Reader | Delta ");
+        logger.accept("-------------------|------------------|--------------------|-----------------|-------");
+
+        compareMeta(omeXML_1, omeXML_2, logger);
+    }
+
+    public static void compareMeta(OMEXMLMetadata meta_1, OMEXMLMetadata meta_2, Consumer<String> logger) {
         // Methods without arguments
         boolean allEqual = true;
         Map<String, Method> methods = new TreeMap<>();
@@ -31,7 +69,7 @@ public class CompareMeta {
             if (paramTypes.length == 0) {
                 // There's no method returning void apparently
                 allEqual = allEqual && isEqualExceptionAndNullSafe(() -> method.invoke(meta_1),
-                        () -> method.invoke(meta_2), method.getName());
+                        () -> method.invoke(meta_2), method.getName()+"|(No args)|", logger);
             }
         }
 
@@ -40,23 +78,23 @@ public class CompareMeta {
             return;
         }*/
 
-        compareExperimenter(meta_1, meta_2, methods);
+        compareExperimenter(meta_1, meta_2, methods, logger);
 
-        compareInstrument(meta_1, meta_2, methods);
+        compareInstrument(meta_1, meta_2, methods, logger);
 
-        compareImageMethods(meta_1, meta_2, methods);
+        compareImageMethods(meta_1, meta_2, methods, logger);
 
-        comparePlanes(meta_1, meta_2, methods);
+        comparePlanes(meta_1, meta_2, methods, logger);
 
-        compareChannels(meta_1, meta_2, methods);
+        compareChannels(meta_1, meta_2, methods, logger);
 
-        comparePlate(meta_1, meta_2, methods);
+        comparePlate(meta_1, meta_2, methods, logger);
 
-        compareModulo(meta_1, meta_2, methods);
+        compareModulo(meta_1, meta_2, methods, logger);
 
     }
 
-    public static void compareModulo(OMEXMLMetadata meta_1, OMEXMLMetadata meta_2, Map<String, Method> methods) {
+    public static void compareModulo(OMEXMLMetadata meta_1, OMEXMLMetadata meta_2, Map<String, Method> methods, Consumer<String> logger) {
 
         String[] methods_plateIdx = new String[] {
                 "getPlateID",
@@ -81,12 +119,12 @@ public class CompareMeta {
             for (String method:methods_plateIdx) {
                 isEqualExceptionAndNullSafe(
                         () -> methods.get(method).invoke(meta_1,i),
-                        () -> methods.get(method).invoke(meta_2,i), method+"| Plate "+i+" > ");
+                        () -> methods.get(method).invoke(meta_2,i), method+"| Plate "+i+" | ", logger);
             }
         }
     }
 
-    public static void comparePlate(OMEXMLMetadata meta_1, OMEXMLMetadata meta_2, Map<String, Method> methods) {
+    public static void comparePlate(OMEXMLMetadata meta_1, OMEXMLMetadata meta_2, Map<String, Method> methods, Consumer<String> logger) {
 
         String[] methods_plateIdx = new String[] {
                 "getPlateID",
@@ -111,12 +149,12 @@ public class CompareMeta {
             for (String method:methods_plateIdx) {
                 isEqualExceptionAndNullSafe(
                         () -> methods.get(method).invoke(meta_1,i),
-                        () -> methods.get(method).invoke(meta_2,i), method+"| Plate "+i+" > ");
+                        () -> methods.get(method).invoke(meta_2,i), method+"| Plate "+i+" | ", logger);
             }
         }
     }
 
-    public static void compareInstrument(OMEXMLMetadata meta_1, OMEXMLMetadata meta_2, Map<String, Method> methods) {
+    public static void compareInstrument(OMEXMLMetadata meta_1, OMEXMLMetadata meta_2, Map<String, Method> methods, Consumer<String> logger) {
 
         String[] methods_instrIdx = new String[] {
                 "getInstrumentID",
@@ -129,13 +167,13 @@ public class CompareMeta {
             for (String method:methods_instrIdx) {
                 isEqualExceptionAndNullSafe(
                         () -> methods.get(method).invoke(meta_1,i),
-                        () -> methods.get(method).invoke(meta_2,i), method+"| Instrument "+i+" > ");
+                        () -> methods.get(method).invoke(meta_2,i), method+"| Instrument "+i+" | ", logger);
             }
         }
     }
 
 
-    private static void comparePlanes(OMEXMLMetadata meta_1, OMEXMLMetadata meta_2, Map<String, Method> methods) {
+    private static void comparePlanes(OMEXMLMetadata meta_1, OMEXMLMetadata meta_2, Map<String, Method> methods, Consumer<String> logger) {
         // Per image
         String[] methods_ImageIdx_PlaneIdx = new String[] {
                 "getPlaneAnnotationRefCount",
@@ -153,20 +191,20 @@ public class CompareMeta {
             int iImageFinal = iImage;
             if (isEqualExceptionAndNullSafe(
                     () -> meta_1.getPlaneCount(iImageFinal),
-                    () -> meta_2.getPlaneCount(iImageFinal), "Different plane count found for image "+iImageFinal)) {
+                    () -> meta_2.getPlaneCount(iImageFinal), "Different plane count found for image "+iImageFinal, logger)) {
                 for (int iPlane = 0; iPlane < meta_1.getPlaneCount(iImage); iPlane++) {
                     int iPlaneFinal = iPlane;
                     for (String method : methods_ImageIdx_PlaneIdx) {
                         isEqualExceptionAndNullSafe(
                                 () -> methods.get(method).invoke(meta_1, iImageFinal, iPlaneFinal),
-                                () -> methods.get(method).invoke(meta_2, iImageFinal, iPlaneFinal), method + "| Image " + iImageFinal + " Plane " + iPlaneFinal + " > ");
+                                () -> methods.get(method).invoke(meta_2, iImageFinal, iPlaneFinal), method + "| Image " + iImageFinal + " Plane " + iPlaneFinal + " | ", logger);
                     }
                 }
             }
         }
     }
 
-    private static void compareChannels(OMEXMLMetadata meta_1, OMEXMLMetadata meta_2, Map<String, Method> methods) {
+    private static void compareChannels(OMEXMLMetadata meta_1, OMEXMLMetadata meta_2, Map<String, Method> methods, Consumer<String> logger) {
         String[] methods_ImageIdx_ChannelIdx = new String[] {
                 "getChannelAcquisitionMode",
                 "getChannelAnnotationRefCount",
@@ -191,20 +229,20 @@ public class CompareMeta {
             int iImageFinal = iImage;
             if (isEqualExceptionAndNullSafe(
                     () -> meta_1.getChannelCount(iImageFinal),
-                    () -> meta_2.getChannelCount(iImageFinal), "Different channel count found for image "+iImageFinal)) {
+                    () -> meta_2.getChannelCount(iImageFinal), "Different channel count found for image "+iImageFinal, logger)) {
                 for (int iChannel = 0; iChannel < meta_1.getChannelCount(iImage); iChannel++) {
                     int iChannelFinal = iChannel;
                     for (String method : methods_ImageIdx_ChannelIdx) {
                         isEqualExceptionAndNullSafe(
                                 () -> methods.get(method).invoke(meta_1, iImageFinal, iChannelFinal),
-                                () -> methods.get(method).invoke(meta_2, iImageFinal, iChannelFinal), method + "| Image " + iImageFinal + " Channel " + iChannelFinal + " > ");
+                                () -> methods.get(method).invoke(meta_2, iImageFinal, iChannelFinal), method + "| Image " + iImageFinal + " Channel " + iChannelFinal + " | ", logger);
                     }
                 }
             }
         }
     }
 
-    private static void compareImageMethods(OMEXMLMetadata meta_1, OMEXMLMetadata meta_2, Map<String, Method> methods) {
+    private static void compareImageMethods(OMEXMLMetadata meta_1, OMEXMLMetadata meta_2, Map<String, Method> methods, Consumer<String> logger) {
         String[] methods_ImageIdx = new String[] {
                 "getImageName",
                 "getImageAcquisitionDate",
@@ -246,12 +284,12 @@ public class CompareMeta {
             for (String method : methods_ImageIdx) {
                 isEqualExceptionAndNullSafe(
                         () -> methods.get(method).invoke(meta_1, i),
-                        () -> methods.get(method).invoke(meta_2, i), method + "| Image " + i + " > ");
+                        () -> methods.get(method).invoke(meta_2, i), method + "| Image " + i + " | ", logger);
             }
         }
     }
 
-    public static void compareExperimenter(OMEXMLMetadata meta_1, OMEXMLMetadata meta_2, Map<String, Method> methods) {
+    public static void compareExperimenter(OMEXMLMetadata meta_1, OMEXMLMetadata meta_2, Map<String, Method> methods, Consumer<String> logger) {
         String[] methods_expIdx = new String[] {
                 "getExperimenterEmail",
                 "getExperimenterID",
@@ -269,13 +307,14 @@ public class CompareMeta {
             for (String method:methods_expIdx) {
                 isEqualExceptionAndNullSafe(
                         () -> methods.get(method).invoke(meta_1,i),
-                        () -> methods.get(method).invoke(meta_2,i), method+"| Experimenter "+i+" > ");
+                        () -> methods.get(method).invoke(meta_2,i), method+"| Experimenter "+i+" | ", logger);
             }
         }
     }
 
-    private static boolean isEqualExceptionAndNullSafe(Callable<Object> o1Getter, Callable<Object> o2Getter, String message) {
+    private static boolean isEqualExceptionAndNullSafe(Callable<Object> o1Getter, Callable<Object> o2Getter, String message, Consumer<String> logger) {
 
+        DecimalFormat df = new DecimalFormat("0.000");
         Object o1 = null, o2 = null;
         boolean exception_1 = false, exception_2 = false;
         try {
@@ -291,20 +330,27 @@ public class CompareMeta {
         }
 
         if (Boolean.logicalXor(exception_1, exception_2)) {
-            System.out.println( message + "\t 1: \t error: "+exception_1+" \t 2: \t error: "+exception_2);
+            logger.accept( message + " error: "+exception_1+" | error: "+exception_2+ "|");
             return false;
         } else {
             if ((o1!=null)&&(o2!=null)) {
                 if (!o1.equals(o2)) {
-                    if ((o1 instanceof Length) && (o2 instanceof Length)) {
+                    if ((o1 instanceof Length) && (o2 instanceof Length) && (((Length) o1).value(UNITS.MICROMETER)!=null) && (((Length) o2).value(UNITS.MICROMETER)!=null)) {
                         Length l1 = (Length) o1;
                         Length l2 = (Length) o2;
+
+                        l1.value(UNITS.MICROMETER);
+                        l1.value(UNITS.MICROMETER).doubleValue();
+
+                        l2.value(UNITS.MICROMETER);
+                        l2.value(UNITS.MICROMETER).doubleValue();
+
                         double diff = Math.abs(l1.value(UNITS.MICROMETER).doubleValue() - l2.value(UNITS.MICROMETER).doubleValue());
 
                         if (diff<0.001) {
                             return true;
                         } else {
-                            System.out.println( message +"l diff = "+diff+ "\t 1: \t "+o1+"\t 2: \t "+o2);
+                            logger.accept( message + df.format(l1.value(UNITS.MICROMETER))+" um | "+df.format(l2.value(UNITS.MICROMETER))+" um | "+df.format(diff)+ " um");
                         }
                     } else if ((o1 instanceof Time) && (o2 instanceof Time)) {
                         Time t1 = (Time) o1;
@@ -314,31 +360,48 @@ public class CompareMeta {
                         if (diff<0.001) {
                             return true; // below 1 ms = equality, yep that's right.
                         } else {
-                            System.out.println( message +"t diff = "+diff+ "\t 1: \t "+o1+"\t 2: \t "+o2);
+                            logger.accept( message +" "+df.format(t1.value(UNITS.SECOND))+" s |  "+df.format(t2.value(UNITS.SECOND))+" s | "+df.format(diff)+" s");
                         }
                     } else {
-                        System.out.println(message + "\t 1: \t " + o1 + "\t 2: \t " + o2);
+                        logger.accept(message + o1 + "| " + o2 + "|");
                     }
                     return false;
                 } else {
-                    //System.out.println( message + "\t 1: \t "+o1+"\t 2: \t "+o2);
+                    //println( message + "\t 1: \t "+o1+"\t 2: \t "+o2);
                     return true;
                 }
             } else {
                 if ((o1==null)&&(o2==null)) {
                     return true;
                 } else {
-                    System.out.println( message + "\t 1: \t "+(o1==null?"null":o1)+"\t 2: \t "+(o2==null?"null":o2));
+                    logger.accept( message + "| 1: "+(o1==null?"null":o1)+"| 2: "+(o2==null?"null":o2));
                     return false;
                 }
             }
         }
     }
 
+    static int MAX_LINES = 500;
+
     public static void main(String... args) throws Exception {
         String imagePath;
         //--------------------------
-        // imagePath = "C:\\Users\\nicol\\Dropbox\\230316_stitched.czi";
+        imagePath = "C:\\Users\\nicol\\Dropbox\\230316_stitched.czi"; // Works better with the quick start reader
+
+        boolean flattenRes = false;
+        boolean autoStitch = false;
+
+        AtomicInteger counter = new AtomicInteger();
+        counter.set(0);
+        compareFileMeta(imagePath, flattenRes, autoStitch, (str) -> {
+            int count = counter.incrementAndGet();
+            if (count<MAX_LINES) {
+                System.out.println("| " + str + " |");
+            } else if (count==MAX_LINES) {
+                System.out.println();
+                System.out.println(" More than "+MAX_LINES+" differences.");
+            }
+        });
         // Report on 230316_stitched.czi:
         // Difference in positions... To test
         //--------------------------
@@ -364,24 +427,42 @@ public class CompareMeta {
         //imagePath = "F:/czis/v.zanotelli_20190509_p161_016.czi";
         //imagePath = "C:\\Users\\nicol\\Downloads\\test-plate.czi";
         //imagePath = "N:\\temp-Romain\\organoid\\GbD3P_RapiClear_stitch_fullStack.czi";
-        imagePath = "N:\\temp-Romain\\organoid\\GbD3P_RapiClear_40x_default_miniStack_guess.czi";
+        //imagePath = "N:\\temp-Romain\\organoid\\GbD3P_RapiClear_40x_default_miniStack_guess.czi";
+        //new LociConfig().run(null);
+        //ij.Prefs.set("bioformats.enabled.Alicona", false);
+        //ij.Prefs.set("bioformats.enabled.ZeissCZI", true);
 
-        ServiceFactory factory = new ServiceFactory();
-        OMEXMLService service = factory.getInstance(OMEXMLService.class);
+        ImporterOptions options = new ImporterOptions();
+        options.setAutoscale(true);
+        options.setId(imagePath);
+        options.setOpenAllSeries(false);
+        options.setSeriesOn(2, true);
+        options.setSeriesOn(3, true);
+        options.setSeriesOn(4, true);
+        options.setSeriesOn(5, true);
+        options.setShowOMEXML(false);
+        options.setVirtual(true);
+        ImagePlus[] imps;
+        ZeissQuickStartCZIReader.allowAutoStitch = autoStitch;
+        ij.Prefs.set("bioformats.zeissczi.allow.autostitch", autoStitch);
 
-        OMEXMLMetadata omeXML_1 = service.createOMEXMLMetadata();
-        ZeissQuickStartCZIReader reader_1 = new ZeissQuickStartCZIReader();
-        //reader_1.setFlattenedResolutions(false); // To test in bdv condition
-        reader_1.setMetadataStore(omeXML_1);
-        reader_1.setId(imagePath);
+        ij.Prefs.set("bioformats.enabled.ZeissCZI", false);
+        ij.Prefs.set("bioformats.enabled.ZeissQuickStartCZI", true);
 
-        OMEXMLMetadata omeXML_2 = service.createOMEXMLMetadata();
-        ZeissCZIReader reader_2 = new ZeissCZIReader();
-        //reader_2.setFlattenedResolutions(false); // To test in bdv condition
-        reader_2.setMetadataStore(omeXML_2);
-        reader_2.setId(imagePath);
+        imps = BF.openImagePlus(options);
+        imps[0].show();
+        imps[1].show();
+        imps[2].show();
+        imps[3].show();
 
-        compareMeta(omeXML_1, omeXML_2);
+        ij.Prefs.set("bioformats.enabled.ZeissCZI", true);
+        ij.Prefs.set("bioformats.enabled.ZeissQuickStartCZI", false);
+        imps = BF.openImagePlus(options);
+        imps[0].show();
+        imps[1].show();
+        imps[2].show();
+        imps[3].show();
+
         /* TODO compareReader(reader_1, reader_2);
         reader_1.getModuloC();
                 reader_1.getZCTModuloCoords()*/
@@ -403,19 +484,21 @@ public class CompareMeta {
         System.out.println(omeXML_2.dumpXML());*/
         // TODO : compare with different metadata options
         /*ZeissCZIReader reader = new ZeissCZIReader();
-        reader.setFlattenedResolutions(true);
-        List<ImagePlus> images1 = ImageJOpen.openWithReader(reader, imagePath,0);
+        reader.setFlattenedResolutions(true);*/
+
+
+
+        /*CZIReaderBuilder builder = builder().autoStitch(autoStitch).flattenResolutions(flattenRes);
+
+        List<ImagePlus> images1 = ImageJOpen.openWithReader(builder.quickStart(true).get(), imagePath,1);
+        List<ImagePlus> images2 = ImageJOpen.openWithReader(builder.quickStart(false).get(), imagePath,1);
 
         ImagePlus imgReader1 = images1.get(0);
-        imgReader1.setTitle("Reader ZeissCZIReader");
+        imgReader1.setTitle("ZeissQuickStartCZIReader");
         imgReader1.show();
 
-
-        ZeissQuickStartCZIReader quickreader = new ZeissQuickStartCZIReader();
-        quickreader.setFlattenedResolutions(true);
-        List<ImagePlus> images2 = ImageJOpen.openWithReader(quickreader, imagePath,0);
         ImagePlus imgReader2 = images2.get(0);
-        imgReader2.setTitle("Reader ZeissQuickStartCZIReader");
+        imgReader2.setTitle("ZeissCZIReader");
         imgReader2.show();*/
 
 
@@ -432,6 +515,47 @@ public class CompareMeta {
         System.out.println("BF Open... ");
         ImagePlus[] imps = BF.openImagePlus(options);*/
 
+    }
+
+    public static CZIReaderBuilder builder() {
+        return new CZIReaderBuilder();
+    }
+
+    public static class CZIReaderBuilder {
+
+        boolean quick = false;
+        boolean autoStitch = true;
+        boolean flattenRes = true;
+
+        public CZIReaderBuilder quickStart(boolean flag) {
+            this.quick = flag;
+            return this;
+        }
+
+        public CZIReaderBuilder autoStitch(boolean flag) {
+            this.autoStitch = flag;
+            return this;
+        }
+
+        public CZIReaderBuilder flattenResolutions(boolean flag) {
+            this.flattenRes = flag;
+            return this;
+        }
+
+        public IFormatReader get() {
+            IFormatReader reader;
+            if (quick) {
+                reader = new ZeissQuickStartCZIReader();
+            } else {
+                reader = new ZeissCZIReader();
+            }
+            DynamicMetadataOptions options = new DynamicMetadataOptions();
+            options.setBoolean(ZeissCZIReader.ALLOW_AUTOSTITCHING_KEY, autoStitch); // Same key for both readers
+            reader.setFlattenedResolutions(flattenRes); // To test in bdv condition
+            reader.setMetadataOptions(options);
+            return reader;
+
+        }
     }
 
 }

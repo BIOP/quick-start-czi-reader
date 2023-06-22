@@ -18,6 +18,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+// NOT NECESSARY ANYMORE (at least when the PR of readers.txt will be accepted)
 public class ImageJOpen {
 
     public static void main(String... arg) throws Exception {
@@ -93,7 +94,7 @@ public class ImageJOpen {
     public static List<ImagePlus> openWithReader(IFormatReader reader, String id, int series) throws Exception {
         ImporterOptions options = new ImporterOptions();
         options.setId(id);
-        if (series>0) {
+        if (series>=0) {
             options.setOpenAllSeries(false);
             options.setSeriesOn(series, true);
         }
@@ -158,13 +159,21 @@ public class ImageJOpen {
 
         ImagePlusReader ipr = new ImagePlusReader(process);
 
-        int sCount = reader.getSeriesCount();
+
         Method m = ImagePlusReader.class.getDeclaredMethod("readImage", int.class, boolean.class);
         m.setAccessible(true);
         List<ImagePlus> images = new ArrayList<>();
-        for (int s = 0; s<sCount;s++) {
-            ImagePlus imp = (ImagePlus) m.invoke(ipr,s,false);
+
+        if (series>=1000) {
+            ImagePlus imp = (ImagePlus) m.invoke(ipr, series, false);
             images.add(imp);
+        } else {
+            int sCount = reader.getSeriesCount();
+            for (int s = 0; s < 4; s++) {
+                ImagePlus imp = (ImagePlus) m.invoke(ipr, s, false);
+                images.add(imp);
+                imp.show();
+            }
         }
         return images;
 

@@ -116,7 +116,7 @@ import static ch.epfl.biop.formats.in.libczi.LibCZI.ZSTD_1;
  *
  *  X,Y,Z, // 3 spaces dimension
  *         T, Time
- *         M, Mosaic but why is there no trace of it in libczi ???
+ *         M, Mosaic but why is there no trace of it in libczi documentation ???
  *         C, Channel
  *         R, Rotation
  *         I, Illumination
@@ -156,7 +156,7 @@ import static ch.epfl.biop.formats.in.libczi.LibCZI.ZSTD_1;
  * 3. This reader is optimized for fast initialisation and low memory footprint. It has been tested to work on Tb
  * czi size files. To save memory, the data structures used for reading are trimmed to the minimal amount of data
  * necessary for the reading after the reader has been initialized To illustrate this point, for a 6Tb dataset, each 'int'
- * saved per block saves 7Mb (in RAM and in memo file). Trimmimg down libczi dimension entries
+ * saved per block saves 7Mb (in RAM and in memo file). Trimming down libczi dimension entries
  * to {@link MinimalDimensionEntry} leads to a memo file of around 100Mb for a 4Tb czi file. Its initialisation
  * takes below a minute, with memo building. Then a few seconds to generate a new reader from a memo file is sufficient.
  *
@@ -183,14 +183,20 @@ import static ch.epfl.biop.formats.in.libczi.LibCZI.ZSTD_1;
  *  - position from subblock originx and originy works, but it does not seem to work with some other images
  *  - get optimal tile size should vary depending on compression: on raw data it's easy to partially read planes,
  *  but for compressed data that's much harder so it would be better to read the whole block rather that decompressing
- *  it multiple times the same block to extract a partial region
+ *  it multiple times the same block to extract a partial region. A small (configurable ?) (thread safe for the copy method)
+ *  LRU cache could potentially improve a lot the performance of the reader for compressed files.
  *  Features:
  *  - add two methods that map forth and back czi dimension indices to bio-formats series
  *  - add a method that returns a 3D matrix per series (for lattice skewed dataset?)
- *
- *  ISSUES TODO FIX:
  *  - the bytes of the thumbnails are stored in the reader
  *  - some absolute path are stored in the reader failing memo if the file is moved
+ *  - CRITICAL!! Since the implementation of modulo, the string of the core signature may be wrong: 5 channels
+ *  and 4 illuminations lead to 20 channels, and this uses 2 digits for the channel string signature
+ *  instead of one
+ *  - improve: slide preview and label image are stored directly in the reader as a byte array. That does not look optimal
+ *  but loading these bytes on demand is quite tedious: hard to explain, but a reader is created inside the reader and
+ *  maps the file 'temporarily' to a fake file. That's pretty clever and convenient, but prevents (most probably)
+ *  lazy loading AND memoization functionality.
  *
  */
 
@@ -239,7 +245,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
     // bio-formats core index the downscaling factor of the series.
     @CopyByRef
     private List<Integer> coreIndexToDownscaleFactor = new ArrayList<>();
-    // Maps bio-formats series index to the filename, in case of multi-part file
+    // Maps bio-formats series index to the filename, in case of multipart file
     @CopyByRef
     private List<String> coreIndexToFileName = new ArrayList<>(); // TODO: Find a way to not store the absolutepath
 
@@ -288,10 +294,10 @@ public class ZeissQuickStartCZIReader extends FormatReader {
     }
 
     /** Duplicates 'that' reader for parallel reading.
-     * Creating a reader with this constructor allows to keeping a very low memory footprint
+     * Creating a reader with this constructor allows to keep a very low memory footprint
      * because all immutable objects are re-used by reference.
-     * WARNING: calling {@link ZeissQuickStartCZIReader#close()} on one of these readers will prevent the use
-     * of all the other readers created with this constructor */
+     * WARNING: calling {@link ZeissQuickStartCZIReader#close()} on this or that reader will prevent the use
+     * of the other reader created with this constructor */
     public ZeissQuickStartCZIReader(ZeissQuickStartCZIReader that) {
         super(FORMAT, SUFFIX);
         domains = new String[] {FormatTools.LM_DOMAIN, FormatTools.HISTOLOGY_DOMAIN};
@@ -312,6 +318,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             }
         }
 
+        // Fields of the super class
         this.flattenedResolutions = that.flattenedResolutions;
         this.metadataOptions = that.metadataOptions;
         this.currentId = that.currentId;
@@ -326,7 +333,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
         // Set state, just in case
         this.setCoreIndex(that.getCoreIndex());
-
     }
 
     /* @see loci.formats.IFormatReader#close(boolean) */
@@ -362,13 +368,15 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
     // -- ZeissCZI-specific methods --
 
+    public static boolean allowAutoStitch = false; // TODO CHANGE THIS TO METADATA OPTIONS!
+
     public boolean allowAutostitching() {
         MetadataOptions options = getMetadataOptions();
         if (options instanceof DynamicMetadataOptions) {
             return ((DynamicMetadataOptions) options).getBoolean(
                     ALLOW_AUTOSTITCHING_KEY, ALLOW_AUTOSTITCHING_DEFAULT);
         }
-        return ALLOW_AUTOSTITCHING_DEFAULT;
+        return allowAutoStitch;// ALLOW_AUTOSTITCHING_DEFAULT;
     }
 
     public boolean canReadAttachments() { // TODO : handle this method

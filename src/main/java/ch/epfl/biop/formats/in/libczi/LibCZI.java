@@ -27,7 +27,7 @@ import java.io.IOException;
  * - GUID is 16 bytes long (unused)
  * - char arrays are String
  *
- * Timestamps reading inspired by <a href="https://gist.github.com/mutterer/5fbddc293d6c969a9d02778f1551b73f">Jerome macro</a>
+ * Timestamps reading inspired by <a href="https://gist.github.com/mutterer/5fbddc293d6c969a9d02778f1551b73f">Jerome's macro</a>
  *
  * See @see <a href="https://zeiss.github.io/">CZI reference documentation</a>
  *
@@ -111,7 +111,7 @@ public class LibCZI {
                     if (schemaType.equals("DV")) {
                         directorySegment.data.entries[i].entryDV = getEntryDV(in);//return new ZeissCZIFastReader.DirectoryEntryDV(s, prestitchedSetter, coreIndex);
                     } else if (schemaType.equals("DE")) {
-                        throw new IOException("Unsupported schema type DE for directory entry .");
+                        throw new IOException("Unsupported schema type DE for directory entry.");
                         //return new DirectoryEntryDV(s);
                     } else {
                         throw new IOException("Unrecognized directory entry schema type = "+schemaType);
@@ -176,7 +176,6 @@ public class LibCZI {
             String segmentID = in.readString(16).trim();
             if (segmentID.equals(ZISRAWMETADATA)) {
                 MetaDataSegment metaDataSegment = new MetaDataSegment();
-                //in.seek(startingPosition + 16); not needed I think : the string has just been read
                 // read the segment header
                 metaDataSegment.header.id = segmentID;
                 metaDataSegment.header.allocatedSize = in.readLong();
@@ -343,12 +342,6 @@ public class LibCZI {
         try (RandomAccessInputStream in = new RandomAccessInputStream(id, BUFFER_SIZE)) {
             in.order(isLittleEndian);
             in.seek(timeStampEntry.filePosition);
-            //String segmentID = in.readString(16).trim();
-            //if (segmentID.equals("ZISRAWMETADATA")) {}
-            //System.out.println(segmentID);
-            //long allocatedSize = in.readLong();
-            //long usedSize = in.readLong();
-
             in.skipBytes(256); // Hum hum why ? 16 (String) + 8 + 8
 
             int size = in.readInt(); // size
