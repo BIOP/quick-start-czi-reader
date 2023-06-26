@@ -1,28 +1,33 @@
 package ch.epfl.biop.formats.in;
 
 import ij.ImagePlus;
+import ij.io.FileSaver;
+import ij.plugin.ContrastEnhancer;
+import ij.plugin.Scaler;
 import loci.common.services.DependencyException;
 import loci.common.services.ServiceException;
 import loci.common.services.ServiceFactory;
 import loci.formats.FormatException;
 import loci.formats.IFormatReader;
 import loci.formats.in.DynamicMetadataOptions;
-import loci.formats.in.MetadataOptions;
 import loci.formats.in.ZeissCZIReader;
 import loci.formats.ome.OMEXMLMetadata;
 import loci.formats.services.OMEXMLService;
 import loci.plugins.BF;
-import loci.plugins.config.LociConfig;
 import loci.plugins.in.ImporterOptions;
-import loci.plugins.util.LociPrefs;
 import ome.units.UNITS;
 import ome.units.quantity.Length;
 import ome.units.quantity.Time;
 import ome.xml.meta.MetadataRetrieve;
+import org.apache.commons.io.FilenameUtils;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -73,11 +78,6 @@ public class CompareMeta {
             }
         }
 
-        /*if (!allEqual) {
-            System.out.println("Differences found in methods without args, skipping comparisons");
-            return;
-        }*/
-
         compareExperimenter(meta_1, meta_2, methods, logger);
 
         compareInstrument(meta_1, meta_2, methods, logger);
@@ -90,13 +90,13 @@ public class CompareMeta {
 
         comparePlate(meta_1, meta_2, methods, logger);
 
-        compareModulo(meta_1, meta_2, methods, logger);
+        //compareModulo(meta_1, meta_2, methods, logger); Not implemented yet
 
     }
 
     public static void compareModulo(OMEXMLMetadata meta_1, OMEXMLMetadata meta_2, Map<String, Method> methods, Consumer<String> logger) {
-
-        String[] methods_plateIdx = new String[] {
+        // TODO
+        /*String[] methods_plateIdx = new String[] {
                 "getPlateID",
                 "getPlateAnnotationRefCount",
                 "getPlateColumnNamingConvention",
@@ -121,7 +121,7 @@ public class CompareMeta {
                         () -> methods.get(method).invoke(meta_1,i),
                         () -> methods.get(method).invoke(meta_2,i), method+"| Plate "+i+" | ", logger);
             }
-        }
+        }*/
     }
 
     public static void comparePlate(OMEXMLMetadata meta_1, OMEXMLMetadata meta_2, Map<String, Method> methods, Consumer<String> logger) {
@@ -143,8 +143,10 @@ public class CompareMeta {
                 "getPlateStatus"
         };
 
+        int nPlates = Math.max(meta_1.getPlateCount(), meta_2.getPlateCount());
+
         // Plate
-        for (int iPlate = 0; iPlate<meta_1.getPlateCount(); iPlate++) {
+        for (int iPlate = 0; iPlate<nPlates; iPlate++) {
             int i = iPlate;
             for (String method:methods_plateIdx) {
                 isEqualExceptionAndNullSafe(
@@ -161,8 +163,10 @@ public class CompareMeta {
                 "getInstrumentAnnotationRefCount"
         };
 
+        int nInstruments = Math.max(meta_1.getInstrumentCount(), meta_2.getInstrumentCount());
+
         // Experimenter
-        for (int iInstrument = 0; iInstrument<meta_1.getInstrumentCount(); iInstrument++) {
+        for (int iInstrument = 0; iInstrument<nInstruments; iInstrument++) {
             int i = iInstrument;
             for (String method:methods_instrIdx) {
                 isEqualExceptionAndNullSafe(
@@ -171,7 +175,6 @@ public class CompareMeta {
             }
         }
     }
-
 
     private static void comparePlanes(OMEXMLMetadata meta_1, OMEXMLMetadata meta_2, Map<String, Method> methods, Consumer<String> logger) {
         // Per image
@@ -187,7 +190,9 @@ public class CompareMeta {
                 "getPlaneTheZ"
         };
 
-        for (int iImage = 0; iImage<meta_1.getImageCount(); iImage++) {
+        int nImages = Math.max(meta_1.getImageCount(), meta_2.getImageCount());
+
+        for (int iImage = 0; iImage<nImages; iImage++) {
             int iImageFinal = iImage;
             if (isEqualExceptionAndNullSafe(
                     () -> meta_1.getPlaneCount(iImageFinal),
@@ -225,7 +230,9 @@ public class CompareMeta {
                 "getChannelSamplesPerPixel"
         };
 
-        for (int iImage = 0; iImage<meta_1.getImageCount(); iImage++) {
+        int nImages = Math.max(meta_1.getImageCount(), meta_2.getImageCount());
+
+        for (int iImage = 0; iImage<nImages; iImage++) {
             int iImageFinal = iImage;
             if (isEqualExceptionAndNullSafe(
                     () -> meta_1.getChannelCount(iImageFinal),
@@ -279,7 +286,9 @@ public class CompareMeta {
         };
 
 
-        for (int iImage = 0; iImage < meta_1.getImageCount(); iImage++) {
+        int nImages = Math.max(meta_1.getImageCount(), meta_2.getImageCount());
+
+        for (int iImage = 0; iImage < nImages; iImage++) {
             int i = iImage;
             for (String method : methods_ImageIdx) {
                 isEqualExceptionAndNullSafe(
@@ -300,9 +309,9 @@ public class CompareMeta {
                 "getExperimenterUserName",
                 "getExperimenterMiddleName"
         };
-
+        int nExperimenters = Math.max(meta_1.getExperimenterCount(), meta_2.getExperimenterCount());
         // Experimenter
-        for (int iExperimenter = 0; iExperimenter<meta_1.getExperimenterCount(); iExperimenter++) {
+        for (int iExperimenter = 0; iExperimenter<nExperimenters; iExperimenter++) {
             int i = iExperimenter;
             for (String method:methods_expIdx) {
                 isEqualExceptionAndNullSafe(
@@ -382,26 +391,163 @@ public class CompareMeta {
     }
 
     static int MAX_LINES = 500;
+    static double THUMB_SIZE = 150;
 
-    public static void main(String... args) throws Exception {
-        String imagePath;
-        //--------------------------
-        imagePath = "C:\\Users\\nicol\\Dropbox\\230316_stitched.czi"; // Works better with the quick start reader
+    public static void makeReport(String imageFolderPath, String imageName, boolean autoStitch, boolean flattenRes) {
+        String imagePath = imageFolderPath + imageName;
+        String imageNameNoExt = FilenameUtils.removeExtension(imageName);
 
-        boolean flattenRes = false;
-        boolean autoStitch = false;
+        //boolean flattenRes = true;
+        //boolean autoStitch = true;
+        ZeissQuickStartCZIReader.allowAutoStitch = autoStitch;
+        ij.Prefs.set("bioformats.zeissczi.allow.autostitch", autoStitch);
 
-        AtomicInteger counter = new AtomicInteger();
-        counter.set(0);
-        compareFileMeta(imagePath, flattenRes, autoStitch, (str) -> {
-            int count = counter.incrementAndGet();
-            if (count<MAX_LINES) {
-                System.out.println("| " + str + " |");
-            } else if (count==MAX_LINES) {
-                System.out.println();
-                System.out.println(" More than "+MAX_LINES+" differences.");
+        String reportFolderPath = "compare"+File.separator;
+        String reportImagePath = "compare"+File.separator+imageNameNoExt+File.separator;
+        String reportFilePath = reportFolderPath+imageNameNoExt+".flat_"+flattenRes+".stitch_"+autoStitch+".md";
+
+        if (!new File(reportFolderPath).exists()) {
+            if (!new File(reportFolderPath).mkdirs()) {
+                System.err.println("Couldn't create folder "+reportFolderPath+", exiting");
+                return;
             }
-        });
+        }
+
+        if (!new File(reportImagePath).mkdirs()) {
+            System.err.println("Couldn't create folder "+reportImagePath+", exiting");
+            return;
+        }
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(reportFilePath))) {
+
+            Consumer<String> logTo = (str) -> //System.out.println(str);
+            {
+                try {
+                    bw.write(str+"\n");//System.out.println(str);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            };
+
+            // Collect images
+            if (flattenRes==true) { // Skips images if flatten = false
+
+
+
+                List<String> qImages = new ArrayList<>();
+                List<String> images = new ArrayList<>();
+
+                // Importer settings
+                ImporterOptions options = new ImporterOptions();
+                options.setAutoscale(true);
+                options.setId(imagePath);
+                options.setOpenAllSeries(true);
+                options.setShowOMEXML(false);
+                options.setVirtual(true);
+                ImagePlus[] imps;
+
+                // Quick Start
+                ij.Prefs.set("bioformats.enabled.ZeissCZI", false);
+                ij.Prefs.set("bioformats.enabled.ZeissQuickStartCZI", true);
+                imps = BF.openImagePlus(options);
+                int nSeriesQStart = imps.length;
+                for (int i = 0; i < nSeriesQStart; i++) {
+                    ImagePlus temp = new ImagePlus("", imps[i].getProcessor());
+                    double scaleFactor = temp.getWidth() > temp.getWidth() ? THUMB_SIZE / (double) temp.getWidth() : THUMB_SIZE / (double) temp.getHeight();
+                    ImagePlus thumb = Scaler.resize(temp, (int) (temp.getWidth() * scaleFactor), (int) (temp.getHeight() * scaleFactor), 1, "");
+                    thumb.setTitle(imps[i].getTitle());
+                    new ContrastEnhancer().equalize(thumb);
+                    qImages.add(imageNameNoExt + ".quick_true.flat_" + flattenRes + ".stitch_" + autoStitch + ".series_" + i + ".jpg");
+                    new FileSaver(thumb).saveAsJpeg(reportImagePath + qImages.get(qImages.size()-1));
+                }
+
+                // Default reader
+                ij.Prefs.set("bioformats.enabled.ZeissCZI", true);
+                ij.Prefs.set("bioformats.enabled.ZeissQuickStartCZI", false);
+                imps = BF.openImagePlus(options);
+                int nSeries = imps.length;
+                for (int i = 0; i < nSeries; i++) {
+                    ImagePlus temp = new ImagePlus("", imps[i].getProcessor());
+                    double scaleFactor = temp.getWidth() > temp.getWidth() ? THUMB_SIZE / (double) temp.getWidth() : THUMB_SIZE / (double) temp.getHeight();
+                    ImagePlus thumb = Scaler.resize(temp, (int) (temp.getWidth() * scaleFactor), (int) (temp.getHeight() * scaleFactor), 1, "");
+                    thumb.setTitle(imps[i].getTitle());
+                    new ContrastEnhancer().equalize(thumb);
+                    images.add(imageNameNoExt + ".quick_false.flat_" + flattenRes + ".stitch_" + autoStitch + ".series_" + i + ".jpg");
+                    new FileSaver(thumb).saveAsJpeg(reportImagePath + images.get(images.size()-1));
+                }
+
+                logTo.accept("| Series            | Quick Start Reader | Original Reader |");
+                logTo.accept("|-------------------|--------------------|-----------------|");
+
+                int nImages = Math.max(qImages.size(), images.size());
+
+                for (int i = 0; i<nImages; i++) {
+                    String imgQ = "";
+                    if (i<qImages.size()) {
+                        imgQ = "!["+qImages.get(i)+"]("+imageNameNoExt+"/"+qImages.get(i)+")";
+                    }
+                    String img = "";
+                    if (i<images.size()) {
+                        img = "!["+images.get(i)+"]("+imageNameNoExt+"/"+images.get(i)+")";
+                    }
+                    logTo.accept("|"+i+"|"+imgQ+"|"+img+"|");
+                }
+
+
+            }
+
+            logTo.accept("");
+            logTo.accept("");
+
+
+            // Build the rest of the comparison
+            AtomicInteger counter = new AtomicInteger();
+            counter.set(0);
+            compareFileMeta(imagePath, flattenRes, autoStitch, (str) -> {
+                int count = counter.incrementAndGet();
+                if (count<MAX_LINES) {
+                    logTo.accept("| " + str + " |");
+                } else if (count==MAX_LINES) {
+                    logTo.accept("");
+                    logTo.accept(" More than "+MAX_LINES+" differences.");
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public static void main(String... args) {
+
+        makeReport("C:/Users/nicol/Downloads/", "S=2_2x2_T=1_Z=4_CH=1.czi", true ,true);
+        //imagePath = "C:/Users/nicol/Downloads/S=1_CH=2.czi";
+        makeReport("C:/Users/nicol/Downloads/", "S=1_CH=2.czi", true ,true);
+        //imagePath = "C:/Users/nicol/Downloads/S=2_T=3_CH=1.czi";
+        makeReport("C:/Users/nicol/Downloads/", "S=2_T=3_CH=1.czi", true ,true);
+        //imagePath = "C:/Users/nicol/Downloads/Z=5_CH=2.czi";
+        makeReport("C:/Users/nicol/Downloads/", "Z=5_CH=2.czi", true ,true);
+        //imagePath = "C:/Users/nicol/Downloads/T=2_Z=5_CH=2.czi";
+        makeReport("C:/Users/nicol/Downloads/", "T=2_Z=5_CH=2.czi", true ,true);
+        //imagePath = "C:/Users/nicol/Downloads/T=2_Z=5_CH=1.czi";
+        makeReport("C:/Users/nicol/Downloads/", "T=2_Z=5_CH=1.czi", true ,true);
+        //imagePath = "C:/Users/nicol/Downloads/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.czi";
+        makeReport("C:/Users/nicol/Downloads/", "W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.czi", true ,true);
+        //imagePath = "C:/Users/nicol/Downloads/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.czi";
+        makeReport("C:/Users/nicol/Downloads/", "S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.czi", true ,true);
+        //imagePath = "C:/Users/nicol/Downloads/v.zanotelli_20190509_p165_031.czi";
+        makeReport("C:/Users/nicol/Downloads/", "v.zanotelli_20190509_p165_031.czi", true ,true);
+        //imagePath = "F:/czis/test-plate.czi";
+        //imagePath = "F:/czis/v.zanotelli_20190509_p161_016.czi";
+        //imagePath = "C:\\Users\\nicol\\Downloads\\test-plate.czi";
+        makeReport("C:/Users/nicol/Downloads/", "test-plate.czi", true ,true);
+        //imagePath = "N:\\temp-Romain\\organoid\\GbD3P_RapiClear_stitch_fullStack.czi";
+        //imagePath = "N:\\temp-Romain\\organoid\\GbD3P_RapiClear_40x_default_miniStack_guess.czi";
+        //String imageFolderPath = "C:\\Users\\nicol\\Dropbox\\";
+        //String imageName = "230316_stitched.czi";
+        makeReport("C:/Users/nicol/Dropbox/", "230316_stitched.czi", true ,true);
+        makeReport("C:/Users/nicol/Dropbox/", "Experiment-08.czi", true ,true);
+        makeReport("C:/Users/nicol/Dropbox/", "Romain-Experiment-10-Airyscan Processing-05.czi", true ,true);
+
         // Report on 230316_stitched.czi:
         // Difference in positions... To test
         //--------------------------
@@ -413,107 +559,15 @@ public class CompareMeta {
         // Report on Romain-Experiment-10-Airyscan Processing-05.czi
         // Looks ok
 
-        // C:/Users/nicol/Downloads
-        //imagePath = "C:/Users/nicol/Downloads/S=2_2x2_T=1_Z=4_CH=1.czi";
-        //imagePath = "C:/Users/nicol/Downloads/S=1_CH=2.czi";
-        //imagePath = "C:/Users/nicol/Downloads/S=2_T=3_CH=1.czi";
-        //imagePath = "C:/Users/nicol/Downloads/Z=5_CH=2.czi";
-        //imagePath = "C:/Users/nicol/Downloads/T=2_Z=5_CH=2.czi";
-        //imagePath = "C:/Users/nicol/Downloads/T=2_Z=5_CH=1.czi";
-        //imagePath = "C:/Users/nicol/Downloads/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.czi";
-        //imagePath = "C:/Users/nicol/Downloads/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.czi";
-        //imagePath = "C:/Users/nicol/Downloads/v.zanotelli_20190509_p165_031.czi";
-        //imagePath = "F:/czis/test-plate.czi";
-        //imagePath = "F:/czis/v.zanotelli_20190509_p161_016.czi";
-        //imagePath = "C:\\Users\\nicol\\Downloads\\test-plate.czi";
-        //imagePath = "N:\\temp-Romain\\organoid\\GbD3P_RapiClear_stitch_fullStack.czi";
-        //imagePath = "N:\\temp-Romain\\organoid\\GbD3P_RapiClear_40x_default_miniStack_guess.czi";
-        //new LociConfig().run(null);
-        //ij.Prefs.set("bioformats.enabled.Alicona", false);
-        //ij.Prefs.set("bioformats.enabled.ZeissCZI", true);
 
-        ImporterOptions options = new ImporterOptions();
-        options.setAutoscale(true);
-        options.setId(imagePath);
-        options.setOpenAllSeries(false);
-        options.setSeriesOn(2, true);
-        options.setSeriesOn(3, true);
-        options.setSeriesOn(4, true);
-        options.setSeriesOn(5, true);
-        options.setShowOMEXML(false);
-        options.setVirtual(true);
-        ImagePlus[] imps;
-        ZeissQuickStartCZIReader.allowAutoStitch = autoStitch;
-        ij.Prefs.set("bioformats.zeissczi.allow.autostitch", autoStitch);
-
-        ij.Prefs.set("bioformats.enabled.ZeissCZI", false);
-        ij.Prefs.set("bioformats.enabled.ZeissQuickStartCZI", true);
-
-        imps = BF.openImagePlus(options);
-        imps[0].show();
-        imps[1].show();
-        imps[2].show();
-        imps[3].show();
-
-        ij.Prefs.set("bioformats.enabled.ZeissCZI", true);
-        ij.Prefs.set("bioformats.enabled.ZeissQuickStartCZI", false);
-        imps = BF.openImagePlus(options);
-        imps[0].show();
-        imps[1].show();
-        imps[2].show();
-        imps[3].show();
-
-        /* TODO compareReader(reader_1, reader_2);
-        reader_1.getModuloC();
-                reader_1.getZCTModuloCoords()*/
-
-
-        /*int iSerie = 0;
-        reader_1.setSeries(iSerie);
-        for (int rl = 0; rl<reader_1.getResolutionCount(); rl++) {
-            reader_1.setResolution(rl);
-            System.out.println(reader_1.getSizeX()+"\t"+reader_1.getSizeY());
-
-        }*/
-
-        //System.out.println(omeXML_1.dumpXML());
-
-        /*System.out.println(omeXML_1.dumpXML().equals(omeXML_2.dumpXML()));//" ==";
-        System.out.println(omeXML_1.dumpXML());
-        System.out.println("--------------------------------");
-        System.out.println(omeXML_2.dumpXML());*/
-        // TODO : compare with different metadata options
-        /*ZeissCZIReader reader = new ZeissCZIReader();
-        reader.setFlattenedResolutions(true);*/
+        //String imageFolderPath = "C:\\Users\\nicol\\Dropbox\\";
+        //String imageName = "230316_stitched.czi";
 
 
 
-        /*CZIReaderBuilder builder = builder().autoStitch(autoStitch).flattenResolutions(flattenRes);
-
-        List<ImagePlus> images1 = ImageJOpen.openWithReader(builder.quickStart(true).get(), imagePath,1);
-        List<ImagePlus> images2 = ImageJOpen.openWithReader(builder.quickStart(false).get(), imagePath,1);
-
-        ImagePlus imgReader1 = images1.get(0);
-        imgReader1.setTitle("ZeissQuickStartCZIReader");
-        imgReader1.show();
-
-        ImagePlus imgReader2 = images2.get(0);
-        imgReader2.setTitle("ZeissCZIReader");
-        imgReader2.show();*/
 
 
-        /*omeXML = service.getOMEXML(getOMEMetadata());
-        ImporterOptions options = new ImporterOptions();
-        options.setAutoscale(false);
-        options.setId(pathczi);
-        options.setOpenAllSeries(true);
-        options.setShowOMEXML(true);
-        //options.setStitchTiles(false);
-        //ZeissCZIFastReader.ALLOW_AUTOSTITCHING_DEFAULT = true;
-        //options.getShowOMEXMLInfo();
-        options.setVirtual(false);
-        System.out.println("BF Open... ");
-        ImagePlus[] imps = BF.openImagePlus(options);*/
+
 
     }
 
