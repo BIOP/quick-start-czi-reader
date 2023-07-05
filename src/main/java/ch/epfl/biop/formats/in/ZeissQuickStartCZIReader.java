@@ -943,28 +943,32 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         cziPartToSegments.forEach((part, cziSegments) -> { // For each part
             Arrays.asList(cziSegments.subBlockDirectory.data.entries).forEach( // and each entry
                 entry -> {
-                    // Split by resolution level if flattenedResolutions is true
-                    ModuloDimensionEntries moduloEntry = new ModuloDimensionEntries(entry,
-                            nRotations, nIlluminations, nPhases,
-                            nChannels, nSlices, nFrames);
+                    int downscalingFactor = entry.getDimension("X").size/entry.getDimension("X").storedSize;
+                    if ((downscalingFactor==1)||(allowAutostitching())) {
+                        // Split by resolution level if flattenedResolutions is true
+                        ModuloDimensionEntries moduloEntry = new ModuloDimensionEntries(entry,
+                                nRotations, nIlluminations, nPhases,
+                                nChannels, nSlices, nFrames);
 
-                    CoreSignature coreSignature = new CoreSignature(moduloEntry
-                            , RESOLUTION_LEVEL_DIMENSION,
-                            entry.getDimension("X").size/entry.getDimension("X").storedSize,//getDownSampling(entry),
-                            (dim) -> maxDigitPerDimension.get(dim),
-                            allowAutostitching(),
-                            FILE_PART_DIMENSION, part);
-                    //System.out.println(coreSignature);
-                    if (!coreSignatureToBlocks.containsKey(coreSignature)) {
-                        coreSignatureToBlocks.put(coreSignature, new ArrayList<>());
+                        CoreSignature coreSignature = new CoreSignature(moduloEntry
+                                , RESOLUTION_LEVEL_DIMENSION,
+                                downscalingFactor,//getDownSampling(entry),
+                                (dim) -> maxDigitPerDimension.get(dim),
+                                allowAutostitching(),
+                                FILE_PART_DIMENSION, part);
+                        if (!coreSignatureToBlocks.containsKey(coreSignature)) {
+                            coreSignatureToBlocks.put(coreSignature, new ArrayList<>());
+                        }
+                        coreSignatureToBlocks.get(coreSignature).add(moduloEntry);
                     }
-                    coreSignatureToBlocks.get(coreSignature).add(moduloEntry);
                 });
         });
 
         // Sort them
         List<CoreSignature> orderedCoreSignatureList = coreSignatureToBlocks.keySet().stream().sorted().collect(Collectors.toList());
 
+        //System.out.println("Series signatures:");
+        //orderedCoreSignatureList.forEach(System.out::println);
         // We now know how many core index are present in the image... except for missing extra images!
 
         core = new ArrayList<>();
@@ -1086,6 +1090,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         // Logs all series info
         for (int i = 0; i<core.size(); i++) {
             setCoreIndex(i);
+            //System.out.println("Series = "+ getSeries()+" Core index = "+getCoreIndex());
             LOGGER.trace("Series = {}", getSeries());
             LOGGER.trace("\tSize X = {}", getSizeX());
             LOGGER.trace("\tSize Y = {}", getSizeY());
@@ -1098,6 +1103,10 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 CoreSignature usl = orderedCoreSignatureList.get(i);
                 LOGGER.trace("Core Series signature = "+usl);
                 LOGGER.trace("\tnBlocks in CZI File = {}", coreSignatureToBlocks.get(usl).size());
+                //System.out.println("Core Series signature = "+usl);
+            } else {
+                LOGGER.trace("Thumbnail");
+                //System.out.println("Thumbnail ");
             }
         }
 
@@ -1320,7 +1329,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         ms0.sizeC = maxC - minC;
         ms0.sizeT = maxT - minT;
 
-        if (downScale!=1) {
+        if ((downScale!=1)&&(allowAutostitching())) {
             ms0.sizeX = nPixX_maxRes/downScale;
             ms0.sizeY = nPixY_maxRes/downScale;
             int[] originCoordinates = new int[2];
@@ -1417,23 +1426,23 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 return 3;
             case RESOLUTION_LEVEL_DIMENSION:
                 return 4;
-            case "M": // Mosaic
-                return 5;
             case "C": // Channel
-                return 6;
+                return 5;
             case "R": // Rotation
-                return 7;
+                return 6;
             case "I": // Illumination
-                return 8;
+                return 7;
             case "H": // Phase
-                return 9;
+                return 8;
             case "V": // View : = Angle
-                return 10;
+                return 9;
             case "B": // Block - deprecated
+                return 10;
+            case "S": // Scene // That's weird the priority between scene on mosaic, I need to understand a bit better
                 return 11;
-            case "S": // Scene
+            case "M": // Mosaic
                 return 12;
-            case FILE_PART_DIMENSION: // Scene
+            case FILE_PART_DIMENSION: // File part : number one
                 return 13;
             default:
                 throw new UnsupportedOperationException("Unknown dimension "+dimension);
@@ -2010,6 +2019,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         private void readXMLMetadata(LibCZI.MetaDataSegment metaDataSegment, DocumentBuilder parser) throws FormatException, IOException {
             String xml = metaDataSegment.data.xml;
             xml = XMLTools.sanitizeXML(xml);
+            //System.out.println(xml);
             translateMetadata(xml, parser);
         }
 
@@ -2848,8 +2858,12 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
                 // TIME: Let's set the acquisition date of the series : it's the same
                 // for all series, but there will be an offset on the first plane
-                Timestamp seriesT0 = new Timestamp(acquiredDate);
-                reader.store.setImageAcquisitionDate(seriesT0, reader.series);
+
+                Timestamp seriesT0 = null;
+                if (acquiredDate!=null) {
+                    seriesT0 = new Timestamp(acquiredDate);
+                    reader.store.setImageAcquisitionDate(seriesT0, reader.series);
+                }
 
                 int nChannels = reader.getSizeC();
                 List<MinimalDimensionEntry> blocks;
@@ -2953,11 +2967,11 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
                     double incrementTimeOverZ = 0;
                     if (reader.getSizeZ()>1) {
-                        incrementTimeOverZ = (sbmzfti.timestamp - sbmziti.timestamp) / (double) ((reader.getSizeZ() / reader.nRotations) - 1);
+                        incrementTimeOverZ = (sbmzfti.timestamp - sbmziti.timestamp) / (double) (reader.getSizeZ() / reader.nRotations);
                     }
                     double incrementTimeOverT = 0;
                     if (reader.getSizeT()>1) {
-                        incrementTimeOverT = (sbmzitf.timestamp - sbmziti.timestamp) / (double) ((reader.getSizeT() / reader.nPhases) - 1);
+                        incrementTimeOverT = (sbmzitf.timestamp - sbmziti.timestamp) / (double) (reader.getSizeT() / reader.nPhases);
                     }
                     Time exposure = null;
                     if (sbmziti.exposureTime!=0) {
@@ -2969,7 +2983,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                         }
                     }
 
-                    double offsetT0 = sbmziti.timestamp-seriesT0.asInstant().getMillis()/1000.0;
+                    double offsetT0 = (seriesT0==null)?sbmziti.timestamp:sbmziti.timestamp-seriesT0.asInstant().getMillis()/1000.0;
                     double offsetZ0 = (stagePosZ==null)?0:stagePosZ.value(UNITS.MICROMETER).doubleValue();
                     double stepZ = (zStep==null)?0:zStep.value(UNITS.MICROMETER).doubleValue();
 

@@ -4,6 +4,7 @@ import ij.ImagePlus;
 import ij.io.FileSaver;
 import ij.plugin.ContrastEnhancer;
 import ij.plugin.Scaler;
+import loci.common.DebugTools;
 import loci.common.services.DependencyException;
 import loci.common.services.ServiceException;
 import loci.common.services.ServiceFactory;
@@ -20,13 +21,18 @@ import ome.units.quantity.Length;
 import ome.units.quantity.Time;
 import ome.xml.meta.MetadataRetrieve;
 import org.apache.commons.io.FilenameUtils;
+import org.jruby.RubyProcess;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.text.DecimalFormat;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +41,28 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
+/*
+TODO:
+Add time and memory monitoring
+ */
+
 public class CompareMeta {
+
+    static long nanoStart;
+    public static void tic() {
+        nanoStart = System.nanoTime();
+    }
+
+    public static String toc() {
+        long nanoEnd = System.nanoTime();
+        long delta = nanoEnd-nanoStart;
+        Duration period = Duration.ofNanos(delta);
+        if (period.minusMillis(1).isNegative()) {
+            return "<1 ms";
+        } else {
+            return period.toMillis()+" ms";
+        }
+    }
 
     public static void compareFileMeta(String imagePath, boolean flattenResolutions, boolean autoStitch, Consumer<String> logger) throws DependencyException, ServiceException, IOException, FormatException {
 
@@ -46,18 +73,26 @@ public class CompareMeta {
 
         OMEXMLMetadata omeXML_1 = service.createOMEXMLMetadata();
         reader_1.setMetadataStore(omeXML_1);
+        tic();
         reader_1.setId(imagePath);
+        String quickStartInit = toc();
 
         IFormatReader reader_2 = CompareMeta.builder().quickStart(false).autoStitch(autoStitch).flattenResolutions(flattenResolutions).get();
 
         OMEXMLMetadata omeXML_2 = service.createOMEXMLMetadata();
         reader_2.setMetadataStore(omeXML_2);
+        tic();
         reader_2.setId(imagePath);
+        String init = toc();
 
         logger.accept(" Method            | Parameters       | Quick Start Reader | Original Reader | Delta ");
         logger.accept("-------------------|------------------|--------------------|-----------------|-------");
+        logger.accept("Initialization     |                  |"+quickStartInit+  "|"+init+         "|       ");
+
 
         compareMeta(omeXML_1, omeXML_2, logger);
+        reader_1.close();
+        reader_2.close();
     }
 
     public static void compareMeta(OMEXMLMetadata meta_1, OMEXMLMetadata meta_2, Consumer<String> logger) {
@@ -413,10 +448,14 @@ public class CompareMeta {
             }
         }
 
-        if (!new File(reportImagePath).mkdirs()) {
-            System.err.println("Couldn't create folder "+reportImagePath+", exiting");
-            return;
+        if (!new File(reportImagePath).exists()) {
+            if (!new File(reportImagePath).mkdirs()) {
+                System.err.println("Couldn't create folder "+reportImagePath+", exiting");
+                return;
+            }
         }
+
+
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(reportFilePath))) {
 
@@ -435,7 +474,9 @@ public class CompareMeta {
 
 
                 List<String> qImages = new ArrayList<>();
+                List<String> qImagesSize = new ArrayList<>();
                 List<String> images = new ArrayList<>();
+                List<String> imagesSize = new ArrayList<>();
 
                 // Importer settings
                 ImporterOptions options = new ImporterOptions();
@@ -449,7 +490,9 @@ public class CompareMeta {
                 // Quick Start
                 ij.Prefs.set("bioformats.enabled.ZeissCZI", false);
                 ij.Prefs.set("bioformats.enabled.ZeissQuickStartCZI", true);
+                tic();
                 imps = BF.openImagePlus(options);
+                String readTimeQuick = toc();//System.out.println("init quick = "+toc());
                 int nSeriesQStart = imps.length;
                 for (int i = 0; i < nSeriesQStart; i++) {
                     ImagePlus temp = new ImagePlus("", imps[i].getProcessor());
@@ -459,12 +502,23 @@ public class CompareMeta {
                     new ContrastEnhancer().equalize(thumb);
                     qImages.add(imageNameNoExt + ".quick_true.flat_" + flattenRes + ".stitch_" + autoStitch + ".series_" + i + ".jpg");
                     new FileSaver(thumb).saveAsJpeg(reportImagePath + qImages.get(qImages.size()-1));
+                    qImagesSize.add("X:"+imps[i].getWidth()+"<br>"+
+                                    "Y:"+imps[i].getHeight()+"<br>"+
+                                    "C:"+imps[i].getNChannels()+"<br>"+
+                                    "Z:"+imps[i].getNSlices()+"<br>"+
+                                    "T:"+imps[i].getNFrames()
+                            );
+                    temp.close();
+                    thumb.close();
+                    imps[i].close();
                 }
 
                 // Default reader
                 ij.Prefs.set("bioformats.enabled.ZeissCZI", true);
                 ij.Prefs.set("bioformats.enabled.ZeissQuickStartCZI", false);
+                tic();
                 imps = BF.openImagePlus(options);
+                String readTime = toc();//System.out.println("init default = "+toc());
                 int nSeries = imps.length;
                 for (int i = 0; i < nSeries; i++) {
                     ImagePlus temp = new ImagePlus("", imps[i].getProcessor());
@@ -474,25 +528,34 @@ public class CompareMeta {
                     new ContrastEnhancer().equalize(thumb);
                     images.add(imageNameNoExt + ".quick_false.flat_" + flattenRes + ".stitch_" + autoStitch + ".series_" + i + ".jpg");
                     new FileSaver(thumb).saveAsJpeg(reportImagePath + images.get(images.size()-1));
+                    imagesSize.add("X:"+imps[i].getWidth()+"<br>"+
+                            "Y:"+imps[i].getHeight()+"<br>"+
+                            "C:"+imps[i].getNChannels()+"<br>"+
+                            "Z:"+imps[i].getNSlices()+"<br>"+
+                            "T:"+imps[i].getNFrames()
+                    );
+                    temp.close();
+                    thumb.close();
+                    imps[i].close();
                 }
 
-                logTo.accept("| Series            | Quick Start Reader | Original Reader |");
-                logTo.accept("|-------------------|--------------------|-----------------|");
+                logTo.accept("| Series            | Quick Start Reader | Size | Original Reader | Size |");
+                logTo.accept("|-------------------|--------------------|------|-----------------|------|");
+                logTo.accept("| Read time (all)   |"+readTimeQuick+   "|------|"+readTime     +"|------|");
 
                 int nImages = Math.max(qImages.size(), images.size());
 
                 for (int i = 0; i<nImages; i++) {
-                    String imgQ = "";
+                    String imgQ;
                     if (i<qImages.size()) {
-                        imgQ = "!["+qImages.get(i)+"]("+imageNameNoExt+"/"+qImages.get(i)+")";
-                    }
-                    String img = "";
+                        imgQ = "!["+qImages.get(i)+"]("+imageNameNoExt+"/"+qImages.get(i)+")"+"|"+qImagesSize.get(i);
+                    } else imgQ = " | ";
+                    String img;
                     if (i<images.size()) {
-                        img = "!["+images.get(i)+"]("+imageNameNoExt+"/"+images.get(i)+")";
-                    }
+                        img = "!["+images.get(i)+"]("+imageNameNoExt+"/"+images.get(i)+")"+"|"+imagesSize.get(i);
+                    } else img = " | ";
                     logTo.accept("|"+i+"|"+imgQ+"|"+img+"|");
                 }
-
 
             }
 
@@ -517,36 +580,109 @@ public class CompareMeta {
             e.printStackTrace();
         }
     }
-    public static void main(String... args) {
 
-        makeReport("C:/Users/nicol/Downloads/", "S=2_2x2_T=1_Z=4_CH=1.czi", true ,true);
-        //imagePath = "C:/Users/nicol/Downloads/S=1_CH=2.czi";
-        makeReport("C:/Users/nicol/Downloads/", "S=1_CH=2.czi", true ,true);
-        //imagePath = "C:/Users/nicol/Downloads/S=2_T=3_CH=1.czi";
-        makeReport("C:/Users/nicol/Downloads/", "S=2_T=3_CH=1.czi", true ,true);
-        //imagePath = "C:/Users/nicol/Downloads/Z=5_CH=2.czi";
-        makeReport("C:/Users/nicol/Downloads/", "Z=5_CH=2.czi", true ,true);
-        //imagePath = "C:/Users/nicol/Downloads/T=2_Z=5_CH=2.czi";
-        makeReport("C:/Users/nicol/Downloads/", "T=2_Z=5_CH=2.czi", true ,true);
-        //imagePath = "C:/Users/nicol/Downloads/T=2_Z=5_CH=1.czi";
-        makeReport("C:/Users/nicol/Downloads/", "T=2_Z=5_CH=1.czi", true ,true);
-        //imagePath = "C:/Users/nicol/Downloads/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.czi";
-        makeReport("C:/Users/nicol/Downloads/", "W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.czi", true ,true);
-        //imagePath = "C:/Users/nicol/Downloads/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.czi";
-        makeReport("C:/Users/nicol/Downloads/", "S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.czi", true ,true);
-        //imagePath = "C:/Users/nicol/Downloads/v.zanotelli_20190509_p165_031.czi";
-        makeReport("C:/Users/nicol/Downloads/", "v.zanotelli_20190509_p165_031.czi", true ,true);
-        //imagePath = "F:/czis/test-plate.czi";
-        //imagePath = "F:/czis/v.zanotelli_20190509_p161_016.czi";
-        //imagePath = "C:\\Users\\nicol\\Downloads\\test-plate.czi";
-        makeReport("C:/Users/nicol/Downloads/", "test-plate.czi", true ,true);
+    /**
+     *
+
+
+     https://rodare.hzdr.de/record/1849 (zipped parts)
+
+     * @param args
+     */
+    public static void main(String... args) throws UnsupportedEncodingException {
+        //DebugTools.setRootLevel("TRACE");
+        String[] cziURLs ={
+           // "https://zenodo.org/record/7147844/files/test-fullplate.czi", // 13.7 GB test full plate -> out of memory
+            "https://zenodo.org/record/7129425/files/test-plate.czi", // test plate, 3.3 GB
+            "https://zenodo.org/record/7254229/files/P1.czi", // Cytoskeleton stack image, 125 MB
+            "https://zenodo.org/record/4662053/files/2021-02-25-tulip_Airyscan.czi", // Airyscan processed, 42.1 MB
+            "https://zenodo.org/record/4662053/files/2021-02-25-tulip_unprocessed-Airyscan.czi", // Unprocessed Airyscan 2.9Gb
+            "https://zenodo.org/record/6848342/files/Airyscan%20Lines%20Pattern.czi", //2 MB
+            "https://zenodo.org/record/6848342/files/Confocal%20Lines%20Pattern.czi", //2.2 MB
+            "https://zenodo.org/record/7015307/files/S%3D1_3x3_T%3D3_Z%3D4_CH%3D2.czi", // 107MB (demo camera images by Sebastien Rhode)
+            "https://zenodo.org/record/7015307/files/S%3D1_CH%3D2.czi", // 1.6MB
+            "https://zenodo.org/record/7015307/files/S%3D2_2x2_CH%3D1.czi", // 2.6MB
+            "https://zenodo.org/record/7015307/files/S%3D2_2x2_T%3D1_Z%3D4_CH%3D1.czi", //6.5MB
+            "https://zenodo.org/record/7015307/files/S%3D2_2x2_T%3D3_CH%3D1.czi", // 5.2MB
+            "https://zenodo.org/record/7015307/files/S%3D2_2x2_T%3D3_Z%3D4_CH%3D1.czi", // 16.8 MB
+            "https://zenodo.org/record/7015307/files/S%3D2_2x2_Z%3D4_CH%3D1.czi", // 6.5 MB
+            "https://zenodo.org/record/7015307/files/S%3D2_3x3_T%3D1_Z%3D4_CH%3D2.czi", // 72.6MB
+            "https://zenodo.org/record/7015307/files/S%3D2_3x3_T%3D3_CH%3D2.czi", // 55.3 MB
+            "https://zenodo.org/record/7015307/files/S%3D2_3x3_T%3D3_Z%3D1_CH%3D2.czi", // 54.6 MB
+            "https://zenodo.org/record/7015307/files/S%3D2_T%3D3_CH%3D1.czi", // 2.1 MB
+            "https://zenodo.org/record/7015307/files/S%3D2_T%3D3_Z%3D5_CH%3D1.czi", // 5.3 MB */
+            "https://zenodo.org/record/7015307/files/S%3D3_1Pos_2Mosaic_T%3D2%3DZ%3D3_CH%3D2.czi", // 57.1 MB
+            "https://zenodo.org/record/7015307/files/S%3D3_CH%3D2.czi", // 2.1 MB
+            "https://zenodo.org/record/7015307/files/T%3D1_CH%3D2.czi", // 1.6 MB
+            "https://zenodo.org/record/7015307/files/T%3D1_Z%3D5_CH%3D1.czi", // 2.0 MB
+            "https://zenodo.org/record/7015307/files/T%3D2_CH%3D1.czi", // 1.6 MB
+            "https://zenodo.org/record/7015307/files/T%3D2_Z%3D5_CH%3D1.czi", // 2.6 MB
+            "https://zenodo.org/record/7015307/files/T%3D2_Z%3D5_CH%3D2.czi", // 4.0MB
+            "https://zenodo.org/record/7015307/files/T%3D3_CH%3D2.czi", // 2.1 MB
+            "https://zenodo.org/record/7015307/files/T%3D3_Z%3D5_CH%3D2.czi", // 5.3 MB
+            "https://zenodo.org/record/7015307/files/W96_B2%2BB4_S%3D2_T%3D1%3DZ%3D1_C%3D1_Tile%3D5x9.czi", // 31.3 MB
+            "https://zenodo.org/record/7015307/files/W96_B2%2BB4_S%3D2_T%3D2%3DZ%3D4_C%3D3_Tile%3D5x9.czi", // 737.7 MB
+            "https://zenodo.org/record/7015307/files/Z%3D5_CH%3D1.czi", // 2.0 MB
+            "https://zenodo.org/record/7015307/files/Z%3D5_CH%3D2.czi", // 2.6 MB
+            "https://zenodo.org/record/7117784/files/RBC_full_one_timepoint.czi", // 1.0 GB RBC full one timepoint
+            "https://zenodo.org/record/7117784/files/RBC_full_time_series.czi", // 3.1 GB RBC full time series
+            "https://zenodo.org/record/7117784/files/RBC_medium_LLSZ.czi", // 700 MB RBC series LLSZ
+            "https://zenodo.org/record/7117784/files/RBC_tiny.czi", // 48.9 MB RBC tiny
+            "https://zenodo.org/record/7260610/files/20221019_MixedGrain.czi", // 113 MB Mixed Grain confocal
+            "https://zenodo.org/record/7260610/files/20221019_MixedGrain2.czi", // 78.6 MB Mixed Grain2
+            "https://zenodo.org/record/5101351/files/Ph488.czi", // 43.1 MB
+            "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031.czi", // 964 MB
+            "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031_pt1.czi", // 3 MB
+            "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031_pt2.czi", // 7.3 MB
+            // There are many more of the same kind that I do not use
+            "https://zenodo.org/record/7430767/files/10.5%20dpc%20vegfc%20gapdh%20Pecam%20wt%201.czi",
+            // There are many more of the same kind
+            "https://downloads.openmicroscopy.org/images/Zeiss-CZI/idr0011/Plate1-Blue-A_TS-Stinger/Plate1-Blue-A-12-Scene-3-P3-F2-03.czi",
+            // There are many more of the same kind
+
+
+        };
+
+        //List<File> filesToTest = new ArrayList<>();
+        //File f = DatasetHelper.getDataset("");
+        /*filesToTest.add(new File("C:/Users/nicol/Downloads/", "S=2_2x2_T=1_Z=4_CH=1.czi"));
+        filesToTest.add(new File("C:/Users/nicol/Downloads/", "S=1_CH=2.czi"));
+        filesToTest.add(new File("C:/Users/nicol/Downloads/", "S=2_T=3_CH=1.czi"));
+        filesToTest.add(new File("C:/Users/nicol/Downloads/", "Z=5_CH=2.czi"));
+        filesToTest.add(new File("C:/Users/nicol/Downloads/", "T=2_Z=5_CH=2.czi"));
+        filesToTest.add(new File("C:/Users/nicol/Downloads/", "T=2_Z=5_CH=1.czi"));
+        filesToTest.add(new File("C:/Users/nicol/Downloads/", "W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.czi"));*/
+        //filesToTest.add(new File("C:/Users/nicol/Downloads/", "S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.czi"));
+        /*filesToTest.add(new File("C:/Users/nicol/Downloads/", "v.zanotelli_20190509_p165_031.czi"));
+        filesToTest.add(new File("C:/Users/nicol/Downloads/", "test-plate.czi"));
+        filesToTest.add(new File("C:/Users/nicol/Dropbox/", "230316_stitched.czi"));
+        filesToTest.add(new File("C:/Users/nicol/Dropbox/", "Experiment-08.czi"));
+        filesToTest.add(new File("C:/Users/nicol/Dropbox/", "Romain-Experiment-10-Airyscan Processing-05.czi"));*/
+        System.out.println(URLDecoder.decode(cziURLs[0], "UTF-8"));
+        for (String url: cziURLs) {//(File f:filesToTest
+            File f = DatasetHelper.getDataset(url, (str) -> {
+                try {
+                    return URLDecoder.decode(str, "UTF-8");
+                } catch(Exception e){
+                    e.printStackTrace();
+                    return str;
+                }
+            });
+            System.out.println("Analysis of file: "+f.getName());
+            //System.out.println("autostitch false");
+            try {
+                makeReport(f.getParent() + File.separator, f.getName(), false, true);
+                //System.out.println("autostitch true");
+                makeReport(f.getParent() + File.separator, f.getName(), true, true);
+            } catch (Exception e) {
+                System.out.println("Couldn't analyse file: "+e.getMessage());
+            }
+        }
+
         //imagePath = "N:\\temp-Romain\\organoid\\GbD3P_RapiClear_stitch_fullStack.czi";
         //imagePath = "N:\\temp-Romain\\organoid\\GbD3P_RapiClear_40x_default_miniStack_guess.czi";
         //String imageFolderPath = "C:\\Users\\nicol\\Dropbox\\";
         //String imageName = "230316_stitched.czi";
-        makeReport("C:/Users/nicol/Dropbox/", "230316_stitched.czi", true ,true);
-        makeReport("C:/Users/nicol/Dropbox/", "Experiment-08.czi", true ,true);
-        makeReport("C:/Users/nicol/Dropbox/", "Romain-Experiment-10-Airyscan Processing-05.czi", true ,true);
 
         // Report on 230316_stitched.czi:
         // Difference in positions... To test
