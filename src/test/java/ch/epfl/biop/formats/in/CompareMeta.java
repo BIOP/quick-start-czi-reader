@@ -604,9 +604,9 @@ public class CompareMeta {
         //DebugTools.setRootLevel("TRACE");
         String[] cziURLs ={
            // "https://zenodo.org/record/7147844/files/test-fullplate.czi", // 13.7 GB test full plate -> out of memory
-           // "https://zenodo.org/record/7129425/files/test-plate.czi", // test plate, 3.3 GB
+            "https://zenodo.org/record/7129425/files/test-plate.czi", // test plate, 3.3 GB
             "https://zenodo.org/record/7254229/files/P1.czi", // Cytoskeleton stack image, 125 MB
-          /*  "https://zenodo.org/record/4662053/files/2021-02-25-tulip_Airyscan.czi", // Airyscan processed, 42.1 MB
+            "https://zenodo.org/record/4662053/files/2021-02-25-tulip_Airyscan.czi", // Airyscan processed, 42.1 MB
             "https://zenodo.org/record/4662053/files/2021-02-25-tulip_unprocessed-Airyscan.czi", // Unprocessed Airyscan 2.9Gb
             "https://zenodo.org/record/6848342/files/Airyscan%20Lines%20Pattern.czi", //2 MB
             "https://zenodo.org/record/6848342/files/Confocal%20Lines%20Pattern.czi", //2.2 MB
@@ -646,9 +646,10 @@ public class CompareMeta {
             "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031_pt1.czi", // 3 MB
             "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031_pt2.czi", // 7.3 MB
             // There are many more of the same kind that I do not use
+
             "https://zenodo.org/record/7430767/files/10.5%20dpc%20vegfc%20gapdh%20Pecam%20wt%201.czi",
             // There are many more of the same kind
-            "https://downloads.openmicroscopy.org/images/Zeiss-CZI/idr0011/Plate1-Blue-A_TS-Stinger/Plate1-Blue-A-12-Scene-3-P3-F2-03.czi",*/
+            "https://downloads.openmicroscopy.org/images/Zeiss-CZI/idr0011/Plate1-Blue-A_TS-Stinger/Plate1-Blue-A-12-Scene-3-P3-F2-03.czi",
             // There are many more of the same kind
 
 
