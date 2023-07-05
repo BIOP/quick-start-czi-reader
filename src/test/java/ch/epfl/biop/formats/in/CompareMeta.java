@@ -22,6 +22,7 @@ import ome.units.quantity.Time;
 import ome.xml.meta.MetadataRetrieve;
 import org.apache.commons.io.FilenameUtils;
 import org.jruby.RubyProcess;
+import org.scijava.util.VersionUtils;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -428,7 +429,8 @@ public class CompareMeta {
     static int MAX_LINES = 500;
     static double THUMB_SIZE = 150;
 
-    public static void makeReport(String imageFolderPath, String imageName, boolean autoStitch, boolean flattenRes) {
+    public static void makeReport(String imageFolderPath, String imageName, boolean autoStitch, boolean flattenRes,
+                                  String originalURL) {
         String imagePath = imageFolderPath + imageName;
         String imageNameNoExt = FilenameUtils.removeExtension(imageName);
 
@@ -467,6 +469,14 @@ public class CompareMeta {
                     throw new RuntimeException(e);
                 }
             };
+
+            logTo.accept("# ["+imageName+"]("+originalURL+") report" );
+            logTo.accept(" - **Autostitch** = "+autoStitch);
+            logTo.accept(" - ZeissCZIReader v"+ VersionUtils.getVersion(ZeissCZIReader.class));
+            logTo.accept(" - ZeissQuickStartCZIReader v"+ VersionUtils.getVersion(ZeissQuickStartCZIReader.class));
+            logTo.accept("");
+            logTo.accept("# Images ");
+            logTo.accept("");
 
             // Collect images
             if (flattenRes==true) { // Skips images if flatten = false
@@ -560,6 +570,7 @@ public class CompareMeta {
             }
 
             logTo.accept("");
+            logTo.accept("# Metadata");
             logTo.accept("");
 
 
@@ -593,9 +604,9 @@ public class CompareMeta {
         //DebugTools.setRootLevel("TRACE");
         String[] cziURLs ={
            // "https://zenodo.org/record/7147844/files/test-fullplate.czi", // 13.7 GB test full plate -> out of memory
-            "https://zenodo.org/record/7129425/files/test-plate.czi", // test plate, 3.3 GB
+           // "https://zenodo.org/record/7129425/files/test-plate.czi", // test plate, 3.3 GB
             "https://zenodo.org/record/7254229/files/P1.czi", // Cytoskeleton stack image, 125 MB
-            "https://zenodo.org/record/4662053/files/2021-02-25-tulip_Airyscan.czi", // Airyscan processed, 42.1 MB
+          /*  "https://zenodo.org/record/4662053/files/2021-02-25-tulip_Airyscan.czi", // Airyscan processed, 42.1 MB
             "https://zenodo.org/record/4662053/files/2021-02-25-tulip_unprocessed-Airyscan.czi", // Unprocessed Airyscan 2.9Gb
             "https://zenodo.org/record/6848342/files/Airyscan%20Lines%20Pattern.czi", //2 MB
             "https://zenodo.org/record/6848342/files/Confocal%20Lines%20Pattern.czi", //2.2 MB
@@ -610,7 +621,7 @@ public class CompareMeta {
             "https://zenodo.org/record/7015307/files/S%3D2_3x3_T%3D3_CH%3D2.czi", // 55.3 MB
             "https://zenodo.org/record/7015307/files/S%3D2_3x3_T%3D3_Z%3D1_CH%3D2.czi", // 54.6 MB
             "https://zenodo.org/record/7015307/files/S%3D2_T%3D3_CH%3D1.czi", // 2.1 MB
-            "https://zenodo.org/record/7015307/files/S%3D2_T%3D3_Z%3D5_CH%3D1.czi", // 5.3 MB */
+            "https://zenodo.org/record/7015307/files/S%3D2_T%3D3_Z%3D5_CH%3D1.czi", // 5.3 MB
             "https://zenodo.org/record/7015307/files/S%3D3_1Pos_2Mosaic_T%3D2%3DZ%3D3_CH%3D2.czi", // 57.1 MB
             "https://zenodo.org/record/7015307/files/S%3D3_CH%3D2.czi", // 2.1 MB
             "https://zenodo.org/record/7015307/files/T%3D1_CH%3D2.czi", // 1.6 MB
@@ -637,7 +648,7 @@ public class CompareMeta {
             // There are many more of the same kind that I do not use
             "https://zenodo.org/record/7430767/files/10.5%20dpc%20vegfc%20gapdh%20Pecam%20wt%201.czi",
             // There are many more of the same kind
-            "https://downloads.openmicroscopy.org/images/Zeiss-CZI/idr0011/Plate1-Blue-A_TS-Stinger/Plate1-Blue-A-12-Scene-3-P3-F2-03.czi",
+            "https://downloads.openmicroscopy.org/images/Zeiss-CZI/idr0011/Plate1-Blue-A_TS-Stinger/Plate1-Blue-A-12-Scene-3-P3-F2-03.czi",*/
             // There are many more of the same kind
 
 
@@ -671,9 +682,9 @@ public class CompareMeta {
             System.out.println("Analysis of file: "+f.getName());
             //System.out.println("autostitch false");
             try {
-                makeReport(f.getParent() + File.separator, f.getName(), false, true);
+                makeReport(f.getParent() + File.separator, f.getName(), false, true, url);
                 //System.out.println("autostitch true");
-                makeReport(f.getParent() + File.separator, f.getName(), true, true);
+                makeReport(f.getParent() + File.separator, f.getName(), true, true, url);
             } catch (Exception e) {
                 System.out.println("Couldn't analyse file: "+e.getMessage());
             }

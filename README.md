@@ -7,6 +7,7 @@ A revamped version of the original ZeissCZIReader which parses faster the metada
 For more information see:
 - the [original issue](https://github.com/ome/bioformats/issues/3839)
 - a [draft PR on Bio-Formats](https://github.com/ome/bioformats/pull/4009)
+- go to the compare folder of this repository to see how this readers differs from the bio-formats reader for a set of publicly available czi files
 
 To use this reader instead of the original one, you will need to activate a Fiji update site, (not implemented yet)
 
