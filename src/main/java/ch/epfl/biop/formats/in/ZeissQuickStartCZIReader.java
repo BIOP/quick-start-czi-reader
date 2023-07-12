@@ -2845,12 +2845,16 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 // Look for the scene name, if it exists
                 if (signature.getDimensions().containsKey("S")) {
                     int sceneIndex = signature.getDimensions().get("S");
-                    sceneName = allPositionsInformation.scenes.get(sceneIndex).name;
-                    if ((sceneName == null)||(sceneName.trim().equals(""))) sceneName = "Scene position #"+sceneIndex;
-                    Length pZ = allPositionsInformation.scenes.get(sceneIndex).pos.get(0).pZ;
-                    if (pZ!=null) {
-                        stageLabelZSet = true;
-                        reader.store.setStageLabelZ(pZ, reader.series);
+                    if (allPositionsInformation.scenes.size()>sceneIndex) {
+                        sceneName = allPositionsInformation.scenes.get(sceneIndex).name;
+                        if ((sceneName == null)||(sceneName.trim().equals(""))) sceneName = "Scene position #"+sceneIndex;
+                        Length pZ = allPositionsInformation.scenes.get(sceneIndex).pos.get(0).pZ;
+                        if (pZ!=null) {
+                            stageLabelZSet = true;
+                            reader.store.setStageLabelZ(pZ, reader.series);
+                        }
+                    } else {
+                        sceneName = "Scene position #"+sceneIndex;
                     }
                 }
                 reader.store.setStageLabelName(sceneName, reader.series);
