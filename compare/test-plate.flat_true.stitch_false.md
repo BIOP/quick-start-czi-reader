@@ -1,13 +1,13 @@
 # [test-plate.czi](https://zenodo.org/record/7129425/files/test-plate.czi) report
  - **Autostitch** = false
- - ZeissCZIReader v6.13.0
- - ZeissQuickStartCZIReader v0.1.4-SNAPSHOT
+ - ZeissCZIReader v6.14.0
+ - ZeissQuickStartCZIReader v0.1.7-SNAPSHOT
 
 # Images 
 
 | Series            | Quick Start Reader | Size | Original Reader | Size |
 |-------------------|--------------------|------|-----------------|------|
-| Read time (all)   |42024 ms|------|40624 ms|------|
+| Read time (all)   |38132 ms|------|36343 ms|------|
 |0|![test-plate.quick_true.flat_true.stitch_false.series_0.jpg](test-plate/test-plate.quick_true.flat_true.stitch_false.series_0.jpg)|X:2048<br>Y:2048<br>C:4<br>Z:1<br>T:1|![test-plate.quick_false.flat_true.stitch_false.series_0.jpg](test-plate/test-plate.quick_false.flat_true.stitch_false.series_0.jpg)|X:2048<br>Y:2048<br>C:4<br>Z:1<br>T:1|
 |1|![test-plate.quick_true.flat_true.stitch_false.series_1.jpg](test-plate/test-plate.quick_true.flat_true.stitch_false.series_1.jpg)|X:2048<br>Y:2048<br>C:4<br>Z:1<br>T:1|![test-plate.quick_false.flat_true.stitch_false.series_1.jpg](test-plate/test-plate.quick_false.flat_true.stitch_false.series_1.jpg)|X:2048<br>Y:2048<br>C:4<br>Z:1<br>T:1|
 |2|![test-plate.quick_true.flat_true.stitch_false.series_2.jpg](test-plate/test-plate.quick_true.flat_true.stitch_false.series_2.jpg)|X:2048<br>Y:2048<br>C:4<br>Z:1<br>T:1|![test-plate.quick_false.flat_true.stitch_false.series_2.jpg](test-plate/test-plate.quick_false.flat_true.stitch_false.series_2.jpg)|X:2048<br>Y:2048<br>C:4<br>Z:1<br>T:1|
@@ -112,7 +112,8 @@
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |450 ms|142 ms|        |
+| Initialization     |                  |389 ms|110 ms|        |
+| Reader Size (Mb)     |                  |3.55|4.66|        |
 | getStageLabelName| Image 0 | P1| Scene position #0| |
 | getStageLabelName| Image 1 | P2| Scene position #1| |
 | getStageLabelName| Image 2 | P3| Scene position #2| |

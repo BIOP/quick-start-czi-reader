@@ -1,13 +1,13 @@
 # [v.zanotelli_20190509_p165_031.czi](https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031.czi) report
  - **Autostitch** = false
- - ZeissCZIReader v6.13.0
- - ZeissQuickStartCZIReader v0.1.4-SNAPSHOT
+ - ZeissCZIReader v6.14.0
+ - ZeissQuickStartCZIReader v0.1.7-SNAPSHOT
 
 # Images 
 
 | Series            | Quick Start Reader | Size | Original Reader | Size |
 |-------------------|--------------------|------|-----------------|------|
-| Read time (all)   |38772 ms|------|41747 ms|------|
+| Read time (all)   |52468 ms|------|43988 ms|------|
 |0|![v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_0.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_0.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|![v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_0.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_0.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|
 |1|![v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_1.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_1.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|![v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_1.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_1.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|
 |2|![v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_2.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_2.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|![v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_2.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_2.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|
@@ -207,7 +207,8 @@
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |179 ms|107 ms|        |
+| Initialization     |                  |268 ms|182 ms|        |
+| Reader Size (Mb)     |                  |10.88|11.49|        |
 | getImageCount|(No args)|172| 194| |
 | getStageLabelName| Image 0 | ScanRegion0| Scene position #0| |
 | getStageLabelName| Image 1 | ScanRegion0| Scene position #1| |
@@ -703,6 +704,5 @@
 | getPixelsBinDataCount| Image 176 |  error: true | error: false| |
 | getMicrobeamManipulationRefCount| Image 176 |  error: true | error: false| |
 | getTiffDataCount| Image 176 |  error: true | error: false| |
-| getStageLabelName| Image 176 |  error: true | error: false| |
 
  More than 500 differences.

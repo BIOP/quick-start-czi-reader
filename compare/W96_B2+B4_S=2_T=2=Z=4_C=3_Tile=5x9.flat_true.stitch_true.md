@@ -1,13 +1,13 @@
 # [W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.czi](https://zenodo.org/record/7015307/files/W96_B2%2BB4_S%3D2_T%3D2%3DZ%3D4_C%3D3_Tile%3D5x9.czi) report
  - **Autostitch** = true
- - ZeissCZIReader v6.13.0
- - ZeissQuickStartCZIReader v0.1.4-SNAPSHOT
+ - ZeissCZIReader v6.14.0
+ - ZeissQuickStartCZIReader v0.1.7-SNAPSHOT
 
 # Images 
 
 | Series            | Quick Start Reader | Size | Original Reader | Size |
 |-------------------|--------------------|------|-----------------|------|
-| Read time (all)   |1068 ms|------|1218 ms|------|
+| Read time (all)   |1414 ms|------|1567 ms|------|
 |0|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_0.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_0.jpg)|X:2944<br>Y:3444<br>C:3<br>Z:4<br>T:2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_0.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_0.jpg)|X:2944<br>Y:3444<br>C:3<br>Z:4<br>T:2|
 |1|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_1.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_1.jpg)|X:1472<br>Y:1722<br>C:3<br>Z:4<br>T:2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_1.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_1.jpg)|X:1472<br>Y:1722<br>C:3<br>Z:4<br>T:2|
 |2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_2.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_2.jpg)|X:736<br>Y:861<br>C:3<br>Z:4<br>T:2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_2.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_2.jpg)|X:736<br>Y:861<br>C:3<br>Z:4<br>T:2|
@@ -19,7 +19,8 @@
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |48 ms|115 ms|        |
+| Initialization     |                  |64 ms|148 ms|        |
+| Reader Size (Mb)     |                  |2.11|5.29|        |
 | getStageLabelName| Image 0 | B2| Scene position #0| |
 | getStageLabelX| Image 0 | 13039.200 um | 13500.000 um | 460.800 um |
 | getStageLabelY| Image 0 | 16895.600 um | 17500.400 um | 604.800 um |
@@ -515,6 +516,5 @@
 | getPlaneDeltaT| Image 5 Plane 9 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
 | getPlaneExposureTime| Image 5 Plane 9 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
 | getPlanePositionX| Image 5 Plane 9 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 5 Plane 9 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
 
  More than 500 differences.

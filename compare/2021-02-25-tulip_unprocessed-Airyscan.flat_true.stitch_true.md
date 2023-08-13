@@ -1,20 +1,21 @@
 # [2021-02-25-tulip_unprocessed-Airyscan.czi](https://zenodo.org/record/4662053/files/2021-02-25-tulip_unprocessed-Airyscan.czi) report
  - **Autostitch** = true
- - ZeissCZIReader v6.13.0
- - ZeissQuickStartCZIReader v0.1.4-SNAPSHOT
+ - ZeissCZIReader v6.14.0
+ - ZeissQuickStartCZIReader v0.1.7-SNAPSHOT
 
 # Images 
 
 | Series            | Quick Start Reader | Size | Original Reader | Size |
 |-------------------|--------------------|------|-----------------|------|
-| Read time (all)   |135 ms|------|147 ms|------|
+| Read time (all)   |182 ms|------|172 ms|------|
 |0|![2021-02-25-tulip_unprocessed-Airyscan.quick_true.flat_true.stitch_true.series_0.jpg](2021-02-25-tulip_unprocessed-Airyscan/2021-02-25-tulip_unprocessed-Airyscan.quick_true.flat_true.stitch_true.series_0.jpg)|X:1024<br>Y:1024<br>C:2<br>Z:21<br>T:32|![2021-02-25-tulip_unprocessed-Airyscan.quick_false.flat_true.stitch_true.series_0.jpg](2021-02-25-tulip_unprocessed-Airyscan/2021-02-25-tulip_unprocessed-Airyscan.quick_false.flat_true.stitch_true.series_0.jpg)|X:1024<br>Y:1024<br>C:2<br>Z:21<br>T:32|
 
 # Metadata
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |16 ms|26 ms|        |
+| Initialization     |                  |18 ms|32 ms|        |
+| Reader Size (Mb)     |                  |0.64|1.35|        |
 | getStageLabelX| Image 0 | 0.000 um | -33280.500 um | 33280.500 um |
 | getStageLabelY| Image 0 | 0.000 um | 1262.370 um | 1262.370 um |
 | getStageLabelZ| Image 0 | 0.000 um | 705.839 um | 705.839 um |
@@ -510,6 +511,5 @@
 | getPlanePositionX| Image 0 Plane 122 | 0.000 um | -33280.500 um | 33280.500 um |
 | getPlanePositionY| Image 0 Plane 122 | 0.000 um | 1262.370 um | 1262.370 um |
 | getPlanePositionZ| Image 0 Plane 122 | 3.548 um | 709.387 um | 705.839 um |
-| getPlaneDeltaT| Image 0 Plane 123 | | 1: ome.units.quantity.Time: value[0.0], unit[s] stored as java.lang.Double| 2: null |
 
  More than 500 differences.

@@ -1,13 +1,13 @@
 # [W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.czi](https://zenodo.org/record/7015307/files/W96_B2%2BB4_S%3D2_T%3D2%3DZ%3D4_C%3D3_Tile%3D5x9.czi) report
  - **Autostitch** = false
- - ZeissCZIReader v6.13.0
- - ZeissQuickStartCZIReader v0.1.4-SNAPSHOT
+ - ZeissCZIReader v6.14.0
+ - ZeissQuickStartCZIReader v0.1.7-SNAPSHOT
 
 # Images 
 
 | Series            | Quick Start Reader | Size | Original Reader | Size |
 |-------------------|--------------------|------|-----------------|------|
-| Read time (all)   |1843 ms|------|1971 ms|------|
+| Read time (all)   |1825 ms|------|2114 ms|------|
 |0|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_false.series_0.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_false.series_0.jpg)|X:640<br>Y:420<br>C:3<br>Z:4<br>T:2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_false.series_0.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_false.series_0.jpg)|X:640<br>Y:420<br>C:3<br>Z:4<br>T:2|
 |1|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_false.series_1.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_false.series_1.jpg)|X:640<br>Y:420<br>C:3<br>Z:4<br>T:2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_false.series_1.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_false.series_1.jpg)|X:640<br>Y:420<br>C:3<br>Z:4<br>T:2|
 |2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_false.series_2.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_false.series_2.jpg)|X:640<br>Y:420<br>C:3<br>Z:4<br>T:2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_false.series_2.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_false.series_2.jpg)|X:640<br>Y:420<br>C:3<br>Z:4<br>T:2|
@@ -103,7 +103,8 @@
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |111 ms|122 ms|        |
+| Initialization     |                  |160 ms|178 ms|        |
+| Reader Size (Mb)     |                  |3.45|6.53|        |
 | getStageLabelName| Image 0 | B2| Scene position #0| |
 | getStageLabelName| Image 1 | B2| Scene position #1| |
 | getStageLabelName| Image 2 | B2| Scene position #2| |
@@ -599,6 +600,5 @@
 | getPlaneDeltaT| Image 19 Plane 6 |  43.691 s |  43.919 s | 0.227 s |
 | getPlaneDeltaT| Image 19 Plane 7 |  43.779 s |  44.016 s | 0.237 s |
 | getPlaneDeltaT| Image 19 Plane 8 |  43.868 s |  44.112 s | 0.243 s |
-| getPlaneDeltaT| Image 19 Plane 9 |  44.039 s |  44.386 s | 0.347 s |
 
  More than 500 differences.

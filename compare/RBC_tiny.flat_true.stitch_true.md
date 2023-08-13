@@ -1,20 +1,21 @@
 # [RBC_tiny.czi](https://zenodo.org/record/7117784/files/RBC_tiny.czi) report
  - **Autostitch** = true
- - ZeissCZIReader v6.13.0
- - ZeissQuickStartCZIReader v0.1.4-SNAPSHOT
+ - ZeissCZIReader v6.14.0
+ - ZeissQuickStartCZIReader v0.1.7-SNAPSHOT
 
 # Images 
 
 | Series            | Quick Start Reader | Size | Original Reader | Size |
 |-------------------|--------------------|------|-----------------|------|
-| Read time (all)   |50 ms|------|84 ms|------|
+| Read time (all)   |72 ms|------|187 ms|------|
 |0|![RBC_tiny.quick_true.flat_true.stitch_true.series_0.jpg](RBC_tiny/RBC_tiny.quick_true.flat_true.stitch_true.series_0.jpg)|X:209<br>Y:118<br>C:1<br>Z:834<br>T:1|![RBC_tiny.quick_false.flat_true.stitch_true.series_0.jpg](RBC_tiny/RBC_tiny.quick_false.flat_true.stitch_true.series_0.jpg)|X:209<br>Y:118<br>C:1<br>Z:834<br>T:1|
 
 # Metadata
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |17 ms|44 ms|        |
+| Initialization     |                  |25 ms|64 ms|        |
+| Reader Size (Mb)     |                  |1.79|2.99|        |
 | getPlanePositionZ| Image 0 Plane 1 | -384.727 um | -385.027 um | 0.300 um |
 | getPlanePositionZ| Image 0 Plane 2 | -384.427 um | -385.027 um | 0.600 um |
 | getPlanePositionZ| Image 0 Plane 3 | -384.127 um | -385.027 um | 0.900 um |
@@ -510,6 +511,5 @@
 | getPlaneDeltaT| Image 0 Plane 259 |  13.438 s |  13.451 s | 0.013 s |
 | getPlanePositionZ| Image 0 Plane 259 | -307.327 um | -385.027 um | 77.700 um |
 | getPlaneDeltaT| Image 0 Plane 260 |  13.481 s |  13.494 s | 0.013 s |
-| getPlanePositionZ| Image 0 Plane 260 | -307.027 um | -385.027 um | 78.000 um |
 
  More than 500 differences.
