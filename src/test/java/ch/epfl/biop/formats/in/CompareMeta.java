@@ -473,7 +473,7 @@ public class CompareMeta {
         String reportImagePath = "compare"+File.separator+imageNameNoExt+File.separator;
         String reportFilePath = reportFolderPath+imageNameNoExt+".flat_"+flattenRes+".stitch_"+autoStitch+".md";
 
-        summary.urlFullReport = reportFilePath;
+        summary.urlFullReport = "compare/"+imageNameNoExt+".flat_"+flattenRes+".stitch_"+autoStitch+".md";;
 
         if (!new File(reportFolderPath).exists()) {
             if (!new File(reportFolderPath).mkdirs()) {
