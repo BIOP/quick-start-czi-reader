@@ -19,18 +19,18 @@ import java.io.IOException;
 /**
  * CziStructs.h c++ structures translated to Java
  * And helper static methods
- *
+ * <p>
  * Translation:
  * - using Java variable convention (lowercase)
  * - std::int32_t is int
  * - std::int64_t is long
  * - GUID is 16 bytes long (unused)
  * - char arrays are String
- *
+ * <p>
  * Timestamps reading inspired by <a href="https://gist.github.com/mutterer/5fbddc293d6c969a9d02778f1551b73f">Jerome's macro</a>
- *
+ * <p>
  * See @see <a href="https://zeiss.github.io/">CZI reference documentation</a>
- *
+ * <p>
  * Used in {@link ZeissQuickStartCZIReader}
  *
  * @author Nicolas Chiaruttini, EPFL, 2023
@@ -382,7 +382,7 @@ public class LibCZI {
      * @param in stream over a czi file
      * @param filePosition starting position of the block to fetch
      * @return the referenced sub block segment
-     * @throws IOException
+     * @throws IOException io exception
      */
     public static SubBlockSegment getBlock(RandomAccessInputStream in, long filePosition) throws IOException {
         SubBlockSegment subBlock = new SubBlockSegment();
@@ -412,7 +412,7 @@ public class LibCZI {
      * @param subBlock a properly initialized subblock object
      * @param parser an object that can read xml
      * @return the referenced sub block metadata of the input sub block segment
-     * @throws IOException
+     * @throws IOException io exception
      */
     public static SubBlockMeta readSubBlockMeta(RandomAccessInputStream in, SubBlockSegment subBlock, DocumentBuilder parser) throws IOException {
         SubBlockMeta subBlockMeta = new SubBlockMeta();
@@ -441,10 +441,6 @@ public class LibCZI {
 
             NodeList children = root.getChildNodes();
 
-            if (children == null) {
-                return subBlockMeta;
-            }
-
             for (int i=0; i<children.getLength(); i++) {
                 if (!(children.item(i) instanceof Element)) {
                     continue;
@@ -454,34 +450,37 @@ public class LibCZI {
                 if (child.getNodeName().equals("Tags")) {
                     NodeList tags = child.getChildNodes();
 
-                    if (tags != null) {
-                        for (int tag=0; tag<tags.getLength(); tag++) {
-                            if (!(tags.item(tag) instanceof Element)) {
-                                continue;
-                            }
-                            Element tagNode = (Element) tags.item(tag);
-                            String text = tagNode.getTextContent();
-                            if (text != null) {
-                                if (tagNode.getNodeName().equals("StageXPosition")) {
+                    for (int tag=0; tag<tags.getLength(); tag++) {
+                        if (!(tags.item(tag) instanceof Element)) {
+                            continue;
+                        }
+                        Element tagNode = (Element) tags.item(tag);
+                        String text = tagNode.getTextContent();
+                        if (text != null) {
+                            switch (tagNode.getNodeName()) {
+                                case "StageXPosition": {
                                     final Double number = Double.valueOf(text);
                                     subBlockMeta.stageX = new Length(number, UNITS.MICROMETER);
+                                    break;
                                 }
-                                else if (tagNode.getNodeName().equals("StageYPosition")) {
+                                case "StageYPosition": {
                                     final Double number = Double.valueOf(text);
                                     subBlockMeta.stageY = new Length(number, UNITS.MICROMETER);
+                                    break;
                                 }
-                                else if (tagNode.getNodeName().equals("FocusPosition")) {
+                                case "FocusPosition": {
                                     final Double number = Double.valueOf(text);
                                     subBlockMeta.stageZ = new Length(number, UNITS.MICROMETER);
+                                    break;
                                 }
-                                else if (tagNode.getNodeName().equals("AcquisitionTime")) {
+                                case "AcquisitionTime":
                                     Timestamp t = Timestamp.valueOf(text);
                                     if (t != null)
                                         subBlockMeta.timestamp = t.asInstant().getMillis() / 1000d;
-                                }
-                                else if (tagNode.getNodeName().equals("ExposureTime")) {
-                                    subBlockMeta.exposureTime = Double.valueOf(text);
-                                }
+                                    break;
+                                case "ExposureTime":
+                                    subBlockMeta.exposureTime = Double.parseDouble(text);
+                                    break;
                             }
                         }
                     }

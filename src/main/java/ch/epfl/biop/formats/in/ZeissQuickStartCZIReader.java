@@ -95,7 +95,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -109,11 +108,11 @@ import static ch.epfl.biop.formats.in.libczi.LibCZI.ZSTD_1;
 /**
  * ZeissCZIReader is the file format reader for Zeiss .czi files.
  * See  @see <a href="https://zeiss.github.io/">CZI reference documentation</a>
- *
+ * <p>
  * Essentially, all data is stored into subblocks where each subblock location is specified by its dimension indices.
  * There are standard spatial and time dimensions, as well as extra ones necessary to describe channel, scenes,
  * acquisition modalities, etc:
- *
+ * <p>
  *  X,Y,Z, // 3 spaces dimension
  *         T, Time
  *         M, Mosaic but why is there no trace of it in libczi documentation ???
@@ -124,12 +123,12 @@ import static ch.epfl.biop.formats.in.libczi.LibCZI.ZSTD_1;
  *         V, View
  *         B, Block = deprecated
  *         S  Scene
- *
+ * <p>
  *
  * A subblock may represent a lower resolution level. How to know this ? Because its stored size (x or y) is lower
  * than its size (x or y). Its downscaling factor can thus be computed the ratio between stored size and size.
  * For convenience, this reader adds the downscaling factor as an extra dimension named 'PY'
- *
+ * <p>
  * A CZI file consists of several segments. The majority of segments are data subblocks, as described before. But other
  * segments are present. Essentially this reader reads the {@link LibCZI.FileHeaderSegment} that
  * contains some metadata as well as the location of the {@link LibCZI.SubBlockDirectorySegment}
@@ -137,29 +136,29 @@ import static ch.epfl.biop.formats.in.libczi.LibCZI.ZSTD_1;
  * The SubBlockDirectorySegment is a critical segment because it contains the dimension indices and file location of all
  * data subblocks. Thus, by reading this segment only, there is no need to go through all file segments while
  * initializing the reader.
- *
+ * <p>
  * Using this initial reading of the directory segment, all dimensions and all dimension ranges are known in advance.
  * This is used to compute the number of core series of the reader, as well as the resolution levels. This is done
  * by creating a core series signature {@link CoreSignature} where the dimension are sorted according to a priority
  * {@link ZeissQuickStartCZIReader#dimensionPriority(String)}. If autostitching is true, all mosaics belong to the same core
  * series. If autostitching is false, each mosaic is split into different core series.
- *
+ * <p>
  * (core series (or core index) = series + resolution level)
- *
+ * <p>
  * Notes:
  * 1. It is assumed that all subblocks from a single core index
  * have the same compression type {@link ZeissQuickStartCZIReader#coreIndexToCompression}
  *
  * 2. This reader is not thread safe, you can use memoization or {@link ZeissQuickStartCZIReader#copy()}
  * to get a new reader and perform parallel reading.
- *
+ * <p>
  * 3. This reader is optimized for fast initialisation and low memory footprint. It has been tested to work on Tb
  * czi size files. To save memory, the data structures used for reading are trimmed to the minimal amount of data
  * necessary for the reading after the reader has been initialized To illustrate this point, for a 6Tb dataset, each 'int'
  * saved per block saves 7Mb (in RAM and in memo file). Trimming down libczi dimension entries
  * to {@link MinimalDimensionEntry} leads to a memo file of around 100Mb for a 4Tb czi file. Its initialisation
  * takes below a minute, with memo building. Then a few seconds to generate a new reader from a memo file is sufficient.
- *
+ * <p>
  * 4. Even with memoization, at runtime, a reader for a multi Tb file will take around 300Mb on the heap. While this
  * is reasonable for a single reader, it becomes an issue to create multiple readers for parallel reading: 10 readers
  * will take 3 Gb. Thus the method {@link ZeissQuickStartCZIReader#copy()} exist in order to create a new reader from an
@@ -167,13 +166,13 @@ import static ch.epfl.biop.formats.in.libczi.LibCZI.ZSTD_1;
  * readers can be created to read in parallel en single czi file, but it will use only the memory of one reader.
  * WARNING: calling {@link ZeissQuickStartCZIReader#close()} on one of these readers will prevent the use
  * of all the other readers created with the copy method!
- *
+ * <p>
  * The annotation {@link CopyByRef} is used to annotate the fields that should be initialized in the duplicated reader
  * using the reference of the model one, see the constructor with the reader in argument.
- *
+ * <p>
  * 5. This reader uses the class {@link LibCZI} which contains the czi data structure translated to Java and which
  * contains very little logic related to the reader itself, which should be in this class.
- *
+ * <p>
  * TODO:
  *  - exposure time read from subblock do not seem to work
  *  - check camera orientation with regards to origin ?
@@ -202,7 +201,7 @@ import static ch.epfl.biop.formats.in.libczi.LibCZI.ZSTD_1;
 
 public class ZeissQuickStartCZIReader extends FormatReader {
 
-    Logger logger = LoggerFactory.getLogger(ZeissQuickStartCZIReader.class);
+    final static Logger logger = LoggerFactory.getLogger(ZeissQuickStartCZIReader.class);
 
     // -- Constants --
     public static final String ALLOW_AUTOSTITCHING_KEY = "zeissczi.autostitch";
@@ -228,29 +227,29 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
     // bio-formats core index to x origin, in the Zeiss 2D coordinates system, common to all planes. Unit: pixel (highest resolution level)
     @CopyByRef
-    private List<Integer> coreIndexToOx = new ArrayList<>();
+    final private List<Integer> coreIndexToOx = new ArrayList<>();
 
     // bio-formats core index to y origin, in the Zeiss 2D coordinates system, common to all planes. Unit: pixel (highest resolution level)
     @CopyByRef
-    private List<Integer> coreIndexToOy = new ArrayList<>();
+    final private List<Integer> coreIndexToOy = new ArrayList<>();
 
     // bio-formats core index the compression factor of the series.
     @CopyByRef
-    private List<Integer> coreIndexToCompression = new ArrayList<>();
+    final private List<Integer> coreIndexToCompression = new ArrayList<>();
 
     // bio-formats core index the compression factor of the series.
     @CopyByRef
-    private List<CoreSignature> coreIndexToSignature = new ArrayList<>();
+    final private List<CoreSignature> coreIndexToSignature = new ArrayList<>();
 
     // bio-formats core index the downscaling factor of the series.
     @CopyByRef
-    private List<Integer> coreIndexToDownscaleFactor = new ArrayList<>();
+    final private List<Integer> coreIndexToDownscaleFactor = new ArrayList<>();
     // Maps bio-formats series index to the filename, in case of multipart file
     @CopyByRef
-    private List<String> coreIndexToFileName = new ArrayList<>(); // TODO: Find a way to not store the absolutepath
+    final private List<String> coreIndexToFileName = new ArrayList<>(); // TODO: Find a way to not store the absolutepath
 
     @CopyByRef
-    private Map<Integer, Integer> coreIndexToSeries = new HashMap<>();
+    final private Map<Integer, Integer> coreIndexToSeries = new HashMap<>();
 
     // streamCurrentSeries is a temp field that should maybe be changed when setSeries is called
     transient int streamCurrentSeries = -1;
@@ -259,7 +258,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
     // - first key: bio-formats core index
     // - second key: czt index
     @CopyByRef
-    private List< // CoreIndex
+    final private List< // CoreIndex
             HashMap<CZTKey, // CZT
                     List<MinimalDimensionEntry>>>
             coreIndexToTZCToMinimalBlocks = new ArrayList<>();
@@ -272,7 +271,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
     private MetadataStore store;
 
     @CopyByRef
-    private ArrayList<byte[]> extraImages = new ArrayList<>();
+    final private ArrayList<byte[]> extraImages = new ArrayList<>();
 
     @CopyByRef
     int maxBlockSizeX = -1;
@@ -487,13 +486,11 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     while (stream.getFilePointer() < sizeOfHeader) {
                         int chunkID = readVarint(stream);
                         // only one chunk ID defined so far
-                        switch (chunkID) {
-                            case 1:
-                                int payload = stream.read();
-                                highLowUnpacking = (payload & 1) == 1;
-                                break;
-                            default:
-                                throw new FormatException("Invalid chunk ID: " + chunkID);
+                        if (chunkID == 1) {
+                            int payload = stream.read();
+                            highLowUnpacking = (payload & 1) == 1;
+                        } else {
+                            throw new FormatException("Invalid chunk ID: " + chunkID);
                         }
                     }
                     // safe cast because stream wraps a byte array
@@ -598,7 +595,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
     }
 
     @Override
-    public void reopenFile() throws IOException {
+    public void reopenFile() {
         streamCurrentSeries = -1;
     }
 
@@ -643,12 +640,8 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             // thumbnail, label, or preview image stored as an attachment
             int index = getCoreIndex() - (core.size() - extraImages.size());
             byte[] fullPlane = extraImages.get(index);
-            RandomAccessInputStream s = new RandomAccessInputStream(fullPlane);
-            try {
+            try (RandomAccessInputStream s = new RandomAccessInputStream(fullPlane)) {
                 readPlane(s, x, y, w, h, buf);
-            }
-            finally {
-                s.close();
             }
             return buf;
         }
@@ -751,10 +744,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                         skipLinesBufStart = blockOriY;
                     }
                     int blockEndY = (regionRead.y+regionRead.height)-(image.y+image.height);
-                    int skipLinesEnd = 0;
-                    if (blockEndY>0) {
-                        skipLinesEnd = blockEndY;
-                    }
+                    int skipLinesEnd = Math.max(blockEndY, 0);
                     int totalLines = regionRead.height-skipLinesRawDataStart-skipLinesEnd;
                     int nBytesPerLineRawData = regionRead.width*bytesPerPixel;
                     int nBytesPerLineBuf = image.width*bytesPerPixel;
@@ -879,20 +869,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         // PA0H0S00PY00001
         // PA is always first, PY always last
 
-        Set<String> allDimensions = new HashSet<>();
-        //Map<String, Integer> maxDigitPerDimension = new HashMap<>();
         Map<String, Integer> maxValuePerDimension = new HashMap<>();
-
-        // First we look at all the existing dimensions
-        cziPartToSegments.forEach((part, cziSegments) -> { // For each part
-            Arrays.asList(cziSegments.subBlockDirectory.data.entries).forEach( // and each entry
-                    entry -> {
-                        for (String dimension: entry.getDimensions()) {
-                            allDimensions.add(dimension);
-                        }
-                    }
-            );
-        });
 
         // Then we look at the max value in each dimension, to know how many digits are needed to write the signature
         // and proper alphabetical ordering
@@ -929,9 +906,9 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
         // TODO!!! CHANGE DIGIT AFTER MODULO!!! Or it may break!!
         Map<String, Integer> maxDigitPerDimension = new HashMap<>();
-        maxValuePerDimension.keySet().forEach(dim -> {
-            maxDigitPerDimension.put(dim, String.valueOf(maxValuePerDimension.get(dim)).length());
-        });
+        maxValuePerDimension.keySet().forEach(dim ->
+            maxDigitPerDimension.put(dim, String.valueOf(maxValuePerDimension.get(dim)).length())
+        );
 
         // Ready to build the signature
         // LibCZI.SubBlockDirectorySegment.SubBlockDirectorySegmentData.SubBlockDirectoryEntry
@@ -953,7 +930,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                         CoreSignature coreSignature = new CoreSignature(moduloEntry
                                 , RESOLUTION_LEVEL_DIMENSION,
                                 downscalingFactor,//getDownSampling(entry),
-                                (dim) -> maxDigitPerDimension.get(dim),
+                                maxDigitPerDimension::get,
                                 allowAutostitching(),
                                 FILE_PART_DIMENSION, part);
                         if (!coreSignatureToBlocks.containsKey(coreSignature)) {
@@ -1001,7 +978,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             core_i.moduloT.type = FormatTools.PHASE;
 
             //--------------- END OF MODULO
-
 
             core.add(core_i);
             core_i.orderCertain = true;
@@ -1079,9 +1055,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             addLabelIfExists(sortedFileParts, cziPartToSegments, id);//, allPositionsInformation);
             addSlidePreviewIfExists(sortedFileParts, cziPartToSegments, id);//, allPositionsInformation);
             //getJPGThumbnailIfExists(sortedFileParts, cziPartToSegments, id); //disabled for bwd compatibility
-        } catch (DependencyException e) {
-            throw new RuntimeException(e);
-        } catch (ServiceException e) {
+        } catch (DependencyException | ServiceException e) {
             throw new RuntimeException(e);
         }
 
@@ -1455,13 +1429,13 @@ public class ZeissQuickStartCZIReader extends FormatReader {
      * the subblock dimension entries. Essentially, because the XYZCT dimension belong to the same core,
      * these dimensions will be ignored in the signature -> this will make all sub-blocks belong to the
      * same series.
-     *
+     * <p>
      * If auto-stitching is true, the mosaic dimension is also ignored, and this will fuse all mosaic blocks
      * into a single core series, effectively merging mosaic into a single image.
-     *
+     * <p>
      * Also, the signature is made with ordering of the dimension, this will allow to sort series according
      * to the String signature possible.
-     *
+     * <p>
      * To avoid issues with ordering, the maximal number of digits per dimension should be known in advance.
      */
     static class CoreSignature implements Comparable<CoreSignature> {
@@ -1480,7 +1454,8 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     .forEachOrdered(e -> {
                         if (!ignoreDimForSeries(e.getDimension(), autostitch)) {
                             String digitFormat_inner = "%0"+maxDigitPerDimension.apply(e.getDimension())+"d";
-                            signatureBuilder.append(e.getDimension()+String.format(digitFormat_inner, e.getStart()));
+                            signatureBuilder.append(e.getDimension())
+                                    .append(String.format(digitFormat_inner, e.getStart()));
                         }
                     });
             // TODO : put this as a dimension entry directly
@@ -1624,13 +1599,13 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     case "R": case "I": case "H": break; // no entry
                     case "C":
                         entryList.add(new ModuloDimensionEntry("C",
-                                iIllumination*nChannels + entries[i].start, entries[i].storedSize));break;
+                                iIllumination * nChannels + entries[i].start, entries[i].storedSize));break;
                     case "Z":
                         entryList.add(new ModuloDimensionEntry("Z",
-                                iRotation*nSlices + entries[i].start, entries[i].storedSize));break;
+                                iRotation * nSlices + entries[i].start, entries[i].storedSize));break;
                     case "T":
                         entryList.add(new ModuloDimensionEntry("T",
-                                iPhase*nFrames + entries[i].start, entries[i].storedSize));
+                                iPhase * nFrames + entries[i].start, entries[i].storedSize));
                     default:
                         entryList.add(new ModuloDimensionEntry(entries[i].dimension, entries[i].start, entries[i].storedSize));
                 }
@@ -1682,7 +1657,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             return false;
         }
 
-        class ModuloDimensionEntry {
+        static class ModuloDimensionEntry {
             //LibCZI.SubBlockSegment.SubBlockSegmentData.SubBlockDirectoryEntryDV.DimensionEntry entry;
             final String dimension;
             final int start;
@@ -1707,7 +1682,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
     /**
      * This is a class that wraps three numbers c,z,t and an object
      * can be used as a key in a hashmap.
-     *
+     * <p>
      * It's used to create a Map from CZTKey to Blocks instead of
      * Map from C to Map from Z to Map from T to Blocks
      */
@@ -1807,21 +1782,21 @@ public class ZeissQuickStartCZIReader extends FormatReader {
      * This Zeiss Reader class was initially huge and contained many many fields. One issue
      * is that these fields were only necessary during the reader initialisation (method initFile)
      * and were not needed after.
-     *
+     * <p>
      * As a consequence, many of these fields were transient: they are not serialized. That was the original
      * design. However this was creating a bit of confusion regarding the accessible and initialized fields that
      * you could access after the reader was initialized.
-     *
+     * <p>
      * This creates a bit of confusion regarding the fields which are necessary during the initialisation only
      * and the fields which are necessary just when retrieving data.
-     *
+     * <p>
      * So, in order to solve this issue and clarify a bit the structure of the reader, all these transient fields
      * required for initialisation and the methods containing the logic of the metadata reading / translating
      * have been moved into this Initializer class.
-     *
+     * <p>
      * There should be a unique initializer object created in the initFile method, and its scope SHOULD NOT extend beyond
      * the initFile method.
-     *
+     * <p>
      * This could also be a non-static class that do not need to pass the object, but I somehow prefer it this way
      * Time will tell if it is a bad idea or not
      */
@@ -1891,7 +1866,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
         private Time timeIncrement;
 
-        private ArrayList<String> gains = new ArrayList<>();
+        final private ArrayList<String> gains = new ArrayList<>();
 
         private Length zStep;
 
@@ -1901,31 +1876,31 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
         private int plateColumns;
 
-        private ArrayList<String> platePositions = new ArrayList<>();
+        final private ArrayList<String> platePositions = new ArrayList<>();
 
-        private ArrayList<String> fieldNames = new ArrayList<>();
+        final private ArrayList<String> fieldNames = new ArrayList<>();
 
-        private ArrayList<String> imageNames = new ArrayList<>();
+        final private ArrayList<String> imageNames = new ArrayList<>();
 
         private Timestamp[] coreIndexTimeStamp;
 
-        private Map<Integer, Length> coreToPixSizeX = new HashMap<>(),
-                coreToPixSizeY = new HashMap<>(),
-                coreToPixSizeZ = new HashMap<>(); // Because I can't read from the store.... RAAHAAH
+        final private Map<Integer, Length> coreToPixSizeX = new HashMap<>();
+        final private Map<Integer, Length> coreToPixSizeY = new HashMap<>();
+        final private Map<Integer, Length> coreToPixSizeZ = new HashMap<>(); // Because I can't read from the store.... RAAHAAH
 
-        private ArrayList<Channel> channels = new ArrayList<>();
+        final private ArrayList<Channel> channels = new ArrayList<>();
 
-        private ArrayList<String> binnings = new ArrayList<>();
+        final private ArrayList<String> binnings = new ArrayList<>();
 
         private String zoom;
 
-        private ArrayList<String> detectorRefs = new ArrayList<>();
+        final private ArrayList<String> detectorRefs = new ArrayList<>();
 
         private boolean hasDetectorSettings = false;
 
         private String[] rotationLabels, phaseLabels, illuminationLabels;
 
-        AllPositionsInformation allPositionsInformation = new AllPositionsInformation();
+        final AllPositionsInformation allPositionsInformation = new AllPositionsInformation();
 
         private void setExperimenterInformation() {
             // User information fields
@@ -2036,6 +2011,10 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     realRoot = (Element) children.item(i);
                     break;
                 }
+            }
+
+            if (realRoot == null) {
+                throw new RuntimeException("The CZI XML root element is null");
             }
 
             translateExperiment(realRoot);
@@ -2405,7 +2384,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
                 NodeList detectors = getGrandchildren(instrument, "Detector");
                 if (detectors != null) {
-                    HashSet<String> uniqueDetectors = new HashSet<String>();
+                    HashSet<String> uniqueDetectors = new HashSet<>();
                     for (int i=0; i<detectors.getLength(); i++) {
                         Element detector = (Element) detectors.item(i);
 
@@ -2807,12 +2786,12 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             // Space : according to czi specs, all blocks are located within a 2D virtual plane
             // but this plane has a global physical offset, set by the stage location. This is
             // this offset that we are looking for in the loop below
-        /*double offsetXInMicrons = 0;
-        double offsetYInMicrons = 0;
-        if (allPositionsInformation.scenes.size()>0) {
-            offsetXInMicrons = 0;//allPositionsInformation.scenes.get(0).getMinPosXInMicrons();
-            offsetYInMicrons = 0;//allPositionsInformation.scenes.get(0).getMinPosYInMicrons();
-        }*/
+            /*double offsetXInMicrons = 0;
+            double offsetYInMicrons = 0;
+            if (allPositionsInformation.scenes.size()>0) {
+                offsetXInMicrons = 0;//allPositionsInformation.scenes.get(0).getMinPosXInMicrons();
+                offsetYInMicrons = 0;//allPositionsInformation.scenes.get(0).getMinPosYInMicrons();
+            }*/
 
             // Let's start to set the space and time information for all core index
             for (int iCoreIndex = 0; iCoreIndex<reader.core.size(); iCoreIndex++) {
@@ -3039,7 +3018,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     if (originalValue == null) {
                         continue;
                     }
-                    Double value = Double.valueOf(originalValue) * 1_000_000;
+                    Double value = Double.parseDouble(originalValue) * 1_000_000;
                     if (value > 0) {
                         for (int iCoreIndex=0; iCoreIndex<reader.core.size(); iCoreIndex++) {
                             reader.series = reader.coreIndexToSeries(iCoreIndex);
@@ -3053,26 +3032,27 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                             // setCoreIndex(iCoreIndex); -> THIS JUST DOES NOT SET THE RIGHT RESOLUTION!! TODO: Post an issue
                             // Hence this hack:
                             int downscale = reader.coreIndexToDownscaleFactor.get(iCoreIndex);
-                            boolean resolutionZero = (downscale==1)||(reader.flattenedResolutions==true);// The OR test is there because you need to fill all series with a pixel size sequentially.
+                            boolean resolutionZero = (downscale==1)||(reader.flattenedResolutions);// The OR test is there because you need to fill all series with a pixel size sequentially.
 
                             PositiveFloat size = new PositiveFloat(value);
 
-                            if (id.equals("X")) {
-                                coreToPixSizeX.put(iCoreIndex, FormatTools.createLength(size.getValue() * downscale, UNITS.MICROMETER));
-                                if (resolutionZero) {
-                                    reader.store.setPixelsPhysicalSizeX(coreToPixSizeX.get(iCoreIndex), reader.series);
-                                }
-                            } else if (id.equals("Y")) {
-                                coreToPixSizeY.put(iCoreIndex, FormatTools.createLength(size.getValue() * downscale, UNITS.MICROMETER));
-                                if (resolutionZero) {
-                                    reader.store.setPixelsPhysicalSizeY(coreToPixSizeY.get(iCoreIndex), reader.series);
-                                }
-                            } else if (id.equals("Z")) {
-                                zStep = FormatTools.createLength(size, UNITS.MICROMETER);
-                                coreToPixSizeZ.put(iCoreIndex, zStep);
-                                if (resolutionZero) {
-                                    reader.store.setPixelsPhysicalSizeZ(zStep, reader.series);
-                                }
+                            switch (id) {
+                                case "X":
+                                    coreToPixSizeX.put(iCoreIndex, FormatTools.createLength(size.getValue() * downscale, UNITS.MICROMETER));
+                                    if (resolutionZero) {
+                                        reader.store.setPixelsPhysicalSizeX(coreToPixSizeX.get(iCoreIndex), reader.series);
+                                    } break;
+                                case "Y":
+                                    coreToPixSizeY.put(iCoreIndex, FormatTools.createLength(size.getValue() * downscale, UNITS.MICROMETER));
+                                    if (resolutionZero) {
+                                        reader.store.setPixelsPhysicalSizeY(coreToPixSizeY.get(iCoreIndex), reader.series);
+                                    } break;
+                                case "Z":
+                                    zStep = FormatTools.createLength(size, UNITS.MICROMETER);
+                                    coreToPixSizeZ.put(iCoreIndex, zStep);
+                                    if (resolutionZero) {
+                                        reader.store.setPixelsPhysicalSizeZ(zStep, reader.series);
+                                    } break;
                             }
                         }
                     }
@@ -3131,10 +3111,10 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                         String centerY = getFirstNodeValue(geometry, "CenterY");
 
                         if (length != null) {
-                            Double halfLen = Double.parseDouble(length) / 2;
+                            double halfLen = Double.parseDouble(length) / 2.0;
                             if (centerX != null) {
-                                reader.store.setLineX1(Double.valueOf(centerX) - halfLen, roiCount, shape);
-                                reader.store.setLineX2(Double.valueOf(centerX) + halfLen, roiCount, shape);
+                                reader.store.setLineX1(Double.parseDouble(centerX) - halfLen, roiCount, shape);
+                                reader.store.setLineX2(Double.parseDouble(centerX) + halfLen, roiCount, shape);
 
                                 reader.store.setLineX1(Double.valueOf(centerX), roiCount, shape + 1);
                                 reader.store.setLineX2(Double.valueOf(centerX), roiCount, shape + 1);
@@ -3143,8 +3123,8 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                                 reader.store.setLineY1(Double.valueOf(centerY), roiCount, shape);
                                 reader.store.setLineY2(Double.valueOf(centerY), roiCount, shape);
 
-                                reader.store.setLineY1(Double.valueOf(centerY) - halfLen, roiCount, shape + 1);
-                                reader.store.setLineY2(Double.valueOf(centerY) + halfLen, roiCount, shape + 1);
+                                reader.store.setLineY1(Double.parseDouble(centerY) - halfLen, roiCount, shape + 1);
+                                reader.store.setLineY2(Double.parseDouble(centerY) + halfLen, roiCount, shape + 1);
                             }
                         }
                         reader.store.setLineText(getFirstNodeValue(textElements, "Text"), roiCount, shape);
@@ -3555,17 +3535,17 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                         try {
                             xPos = new Length(Double.valueOf(x), UNITS.METRE);
                         }
-                        catch (NumberFormatException e) { }
+                        catch (NumberFormatException e) { logger.warn(e.getMessage()); }
                         Length yPos = null;
                         try {
                             yPos = new Length(Double.valueOf(y), UNITS.METRE);
                         }
-                        catch (NumberFormatException e) { }
+                        catch (NumberFormatException e) { logger.warn(e.getMessage()); }
                         Length zPos = null;
                         try {
                             zPos = new Length(Double.valueOf(z), UNITS.METRE);
                         }
-                        catch (NumberFormatException e) { }
+                        catch (NumberFormatException e) { logger.warn(e.getMessage()); }
 
                         int numTiles = (tilesX == null || tilesY == null) ? 0 : tilesX * tilesY;
                         for (int tile=0; tile<numTiles; tile++) {
@@ -3693,7 +3673,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     if (color != null && !reader.isRGB()) {
                         color = color.replaceAll("#", "");
                         if (color.length() > 6) {
-                            color = color.substring(2, color.length());
+                            color = color.substring(2);
                         }
                         try {
                             // shift by 8 to allow alpha in the final byte
@@ -3746,7 +3726,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                         try {
                             reader.store.setDetectorSettingsBinning(MetadataTools.getBinning(binnings.get(c)), iSeries, c);
                         } catch (FormatException e) {
-                            reader.logger.error(e.getMessage());
+                            logger.error(e.getMessage());
                             e.printStackTrace();
                         }
                     }
@@ -4012,7 +3992,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         }
 
         private static class SceneProperties {
-            List<XYZLength> pos = new ArrayList<>();
+            final List<XYZLength> pos = new ArrayList<>();
             String name;
 
             public double getMinPosXInMicrons() {
@@ -4055,13 +4035,13 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         }
 
         private static class GroupProperties {
-            List<TileProperties> tiles = new ArrayList<>();
+            final List<TileProperties> tiles = new ArrayList<>();
 
             int nTilesX, nTilesY;
         }
 
         private static class TileProperties {
-            XYZLength pos = new XYZLength();
+            final XYZLength pos = new XYZLength();
             Integer iX;
             Integer iY;
         }

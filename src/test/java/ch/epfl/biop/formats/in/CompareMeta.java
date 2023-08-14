@@ -43,7 +43,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 public class CompareMeta {
-    public static Set<String> criticalMethods = new HashSet<>(Arrays.asList(
+    public static final Set<String> criticalMethods = new HashSet<>(Arrays.asList(
             "getPixelsSizeX",
             "getPixelsSizeY",
             "getPixelsSizeZ",
@@ -147,32 +147,6 @@ public class CompareMeta {
 
     public static void compareModulo(OMEXMLMetadata meta_1, OMEXMLMetadata meta_2, Map<String, Method> methods, Consumer<String> logger) {
         // TODO
-        /*String[] methods_plateIdx = new String[] {
-                "getPlateID",
-                "getPlateAnnotationRefCount",
-                "getPlateColumnNamingConvention",
-                "getPlateColumns",
-                "getPlateDescription",
-                "getPlateAcquisitionCount",
-                "getPlateExternalIdentifier",
-                "getPlateName",
-                "getPlateRows",
-                "getPlateFieldIndex",
-                "getPlateRowNamingConvention",
-                "getPlateWellOriginX",
-                "getPlateWellOriginY",
-                "getPlateStatus"
-        };
-
-        // Plate
-        for (int iPlate = 0; iPlate<meta_1.getPlateCount(); iPlate++) {
-            int i = iPlate;
-            for (String method:methods_plateIdx) {
-                isEqualExceptionAndNullSafe(
-                        () -> methods.get(method).invoke(meta_1,i),
-                        () -> methods.get(method).invoke(meta_2,i), method+"| Plate "+i+" | ", logger);
-            }
-        }*/
     }
 
     public static void comparePlate(OMEXMLMetadata meta_1, OMEXMLMetadata meta_2, Map<String, Method> methods, Consumer<String> logger, SummaryPerFile summary) {
@@ -452,8 +426,8 @@ public class CompareMeta {
         }
     }
 
-    static int MAX_LINES = 500;
-    static double THUMB_SIZE = 150;
+    static final int MAX_LINES = 500;
+    static final double THUMB_SIZE = 150;
 
     public static void makeReport(String imageFolderPath, String imageName, boolean autoStitch, boolean flattenRes,
                                   String originalURL, SummaryPerFile summary) {
@@ -473,7 +447,7 @@ public class CompareMeta {
         String reportImagePath = "compare"+File.separator+imageNameNoExt+File.separator;
         String reportFilePath = reportFolderPath+imageNameNoExt+".flat_"+flattenRes+".stitch_"+autoStitch+".md";
 
-        summary.urlFullReport = "compare/"+imageNameNoExt+".flat_"+flattenRes+".stitch_"+autoStitch+".md";;
+        summary.urlFullReport = "compare/"+imageNameNoExt+".flat_"+flattenRes+".stitch_"+autoStitch+".md";
 
         if (!new File(reportFolderPath).exists()) {
             if (!new File(reportFolderPath).mkdirs()) {
@@ -509,7 +483,7 @@ public class CompareMeta {
             logTo.accept("");
 
             // Collect images
-            if (flattenRes==true) { // Skips images if flatten = false
+            if (flattenRes) { // Skips images if flatten = false
 
                 List<String> qImages = new ArrayList<>();
                 List<String> qImagesSize = new ArrayList<>();
