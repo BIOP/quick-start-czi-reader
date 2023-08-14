@@ -419,7 +419,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         return check.equals(CZI_MAGIC_STRING);
     }
 
-    public byte[] readRawPixelData(long blockDataOffset,
+    private byte[] readRawPixelData(long blockDataOffset,
                                    long blockDataSize, // TODO What is data size ? I think it's the number of bytes...
                                    int compression,
                                    int storedSizeX,
@@ -1291,27 +1291,27 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             if (blockSizeX>maxBlockSizeX) maxBlockSizeX = blockSizeX;
             if (blockSizeX>maxBlockSizeY) maxBlockSizeY = blockSizeY;
 
-            int x_min = (int) block.getDimension("X").start/downScale;
+            int x_min = block.getDimension("X").start/downScale;
             int x_max = x_min+blockSizeX; // size or stored size ?
-            int y_min = (int) block.getDimension("Y").start/downScale;
+            int y_min = block.getDimension("Y").start/downScale;
             int y_max = y_min+blockSizeY;
             int z_min = 0;
             int z_max = 1;
             if (block.hasDimension("Z")) {
                 z_min = block.getDimension("Z").start;
-                z_max = z_min + block.getDimension("Z").storedSize;//.size;
+                z_max = z_min + block.getDimension("Z").storedSize;
             }
             int c_min = 0;
             int c_max = 1;
             if (block.hasDimension("C")) {
                 c_min = block.getDimension("C").start;
-                c_max = c_min + block.getDimension("C").storedSize;//.size;
+                c_max = c_min + block.getDimension("C").storedSize;
             }
             int t_min = 0;
             int t_max = 1;
             if (block.hasDimension("T")) {
                 t_min = block.getDimension("T").start;
-                t_max = t_min + block.getDimension("T").storedSize;//.size;
+                t_max = t_min + block.getDimension("T").storedSize;
             }
             if (maxX<x_max) maxX = x_max;
             if (maxY<y_max) maxY = y_max;
@@ -1342,8 +1342,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             int[] originCoordinates = new int[2];
             originCoordinates[0] = minX;
             originCoordinates[1] = minY;
-            //System.out.println("minX = "+minX+" maxX = "+maxX);
-            //System.out.println("minY = "+minY+" maxY = "+maxY);
             return originCoordinates;
         }
     }
@@ -1449,18 +1447,10 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         }
     }
 
-    // --------------- METADATA
-
-    //protected MetadataStore makeFilterMetadata() {
-    //  return new FilterMetadata(getMetadataStore(), isMetadataFiltered());
-    //}
-
     // ------------- Extra classes
 
-
-
     /**
-     * What is this class ? It is a class that builds a unique signature, a String,
+     * What is this class ? It is a class that builds a String signature,
      * that will be unique for each core index of the reader. This signature is built from
      * the subblock dimension entries. Essentially, because the XYZCT dimension belong to the same core,
      * these dimensions will be ignored in the signature -> this will make all sub-blocks belong to the
