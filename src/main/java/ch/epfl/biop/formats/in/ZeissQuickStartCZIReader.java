@@ -1774,7 +1774,11 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             this.subBlockDirectory = LibCZI.getSubBlockDirectorySegment(this.fileHeader, id, BUFFER_SIZE, littleEndian);
             this.metadata = LibCZI.getMetaDataSegment(this.fileHeader, id, BUFFER_SIZE, littleEndian);
             this.attachmentDirectory = LibCZI.getAttachmentDirectorySegment(this.fileHeader, id, BUFFER_SIZE, littleEndian);
-            this.timeStamps = LibCZI.getTimeStamps(this.attachmentDirectory, id, BUFFER_SIZE, littleEndian);
+            if (attachmentDirectory!=null) {
+                this.timeStamps = LibCZI.getTimeStamps(this.attachmentDirectory, id, BUFFER_SIZE, littleEndian);
+            } else {
+                this.timeStamps = new double[0];
+            }
         }
     }
 
@@ -2874,24 +2878,26 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
                     // Read position from block
                     if (stagePosX == null) {
-                        for (MinimalDimensionEntry iBlock : blocks) {
-                            Length posX = new Length(/*offsetXInMicrons+*/iBlock.dimensionStartX/reader.coreIndexToDownscaleFactor.get(iCoreIndex)
-                                    *coreToPixSizeX.get(iCoreIndex).value(UNITS.MICROMETER).doubleValue(), UNITS.MICROMETER);
-                            Length posY = new Length(/*offsetYInMicrons+*/iBlock.dimensionStartY/reader.coreIndexToDownscaleFactor.get(iCoreIndex)
-                                    *coreToPixSizeY.get(iCoreIndex).value(UNITS.MICROMETER).doubleValue(), UNITS.MICROMETER);
-                            if ((stagePosX == null)||(stagePosX.value().doubleValue()>posX.value(UNITS.MICROMETER).doubleValue())) {
-                                stagePosX = posX;
-                            }
-                            if ((stagePosY == null)||(stagePosY.value().doubleValue()>posY.value(UNITS.MICROMETER).doubleValue())) {
-                                stagePosY = posY;
-                            }
+                        if (!coreToPixSizeX.get(iCoreIndex).unit().equals(UNITS.REFERENCEFRAME)) {
+                            for (MinimalDimensionEntry iBlock : blocks) {
+                                Length posX = new Length(/*offsetXInMicrons+*/iBlock.dimensionStartX/reader.coreIndexToDownscaleFactor.get(iCoreIndex)
+                                        *coreToPixSizeX.get(iCoreIndex).value(UNITS.MICROMETER).doubleValue(), UNITS.MICROMETER);
+                                Length posY = new Length(/*offsetYInMicrons+*/iBlock.dimensionStartY/reader.coreIndexToDownscaleFactor.get(iCoreIndex)
+                                        *coreToPixSizeY.get(iCoreIndex).value(UNITS.MICROMETER).doubleValue(), UNITS.MICROMETER);
+                                if ((stagePosX == null)||(stagePosX.value().doubleValue()>posX.value(UNITS.MICROMETER).doubleValue())) {
+                                    stagePosX = posX;
+                                }
+                                if ((stagePosY == null)||(stagePosY.value().doubleValue()>posY.value(UNITS.MICROMETER).doubleValue())) {
+                                    stagePosY = posY;
+                                }
 
-                            if (coreToPixSizeZ.size()!=0) {
-                                Length posZ = new Length(iBlock.dimensionStartZ//.getDimension("Z").start
-                                        * coreToPixSizeZ.get(iCoreIndex).value(UNITS.MICROMETER).doubleValue(), UNITS.MICROMETER);
+                                if (coreToPixSizeZ.size()!=0) {
+                                    Length posZ = new Length(iBlock.dimensionStartZ//.getDimension("Z").start
+                                            * coreToPixSizeZ.get(iCoreIndex).value(UNITS.MICROMETER).doubleValue(), UNITS.MICROMETER);
 
-                                if ((stagePosZ == null) || (stagePosZ.value().doubleValue() > posZ.value(UNITS.MICROMETER).doubleValue())) {
-                                    stagePosZ = posZ;
+                                    if ((stagePosZ == null) || (stagePosZ.value().doubleValue() > posZ.value(UNITS.MICROMETER).doubleValue())) {
+                                        stagePosZ = posZ;
+                                    }
                                 }
                             }
                         }
@@ -3059,6 +3065,11 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     else {
                         LOGGER.debug(
                                 "Expected positive value for PhysicalSize; got {}", value);
+                        for (int iCoreIndex=0; iCoreIndex<reader.core.size(); iCoreIndex++) {
+                            coreToPixSizeX.put(iCoreIndex, new Length(1, UNITS.REFERENCEFRAME));
+                            coreToPixSizeY.put(iCoreIndex, new Length(1, UNITS.REFERENCEFRAME));
+                            coreToPixSizeZ.put(iCoreIndex, new Length(1, UNITS.REFERENCEFRAME));
+                        }
                     }
                 }
             }

@@ -156,7 +156,9 @@ public class LibCZI {
                 }
                 return directorySegment;
             } else {
-                throw new IOException(ZISRAWATTDIR+" segment expected, found "+segmentID+" instead.");
+                logger.warn("No "+ZISRAWATTDIR+" segment found.");
+                return null;
+                //throw new IOException(ZISRAWATTDIR+" segment expected, found "+segmentID+" instead.");
             }
         }
     }
@@ -214,6 +216,7 @@ public class LibCZI {
      * @throws IOException invalid file, invalid file location
      */
     public static byte[] getJPGThumbNailBytes(AttachmentDirectorySegment attachmentDirectorySegment, String id, int BUFFER_SIZE, boolean isLittleEndian) throws IOException {
+        if (attachmentDirectorySegment==null) return null;
         AttachmentDirectorySegment.AttachmentDirectorySegmentData.AttachmentEntry thumbnailEntry = null;
         for (AttachmentDirectorySegment.AttachmentDirectorySegmentData.AttachmentEntry entry: attachmentDirectorySegment.data.entries) {
             if (entry.contentFileType.equals("JPG") && (entry.name.equals("Thumbnail"))) {
@@ -252,6 +255,8 @@ public class LibCZI {
      * @throws IOException invalid file, invalid file location
      */
     public static byte[] getLabelBytes(AttachmentDirectorySegment attachmentDirectorySegment, String id, int BUFFER_SIZE, boolean isLittleEndian) throws IOException {
+        if (attachmentDirectorySegment==null) return null;
+
         AttachmentDirectorySegment.AttachmentDirectorySegmentData.AttachmentEntry labelEntry = null;
         for (AttachmentDirectorySegment.AttachmentDirectorySegmentData.AttachmentEntry entry: attachmentDirectorySegment.data.entries) {
             if (entry.contentFileType.equals("CZI") && (entry.name.equals("Label"))) {
@@ -289,6 +294,7 @@ public class LibCZI {
      * @throws IOException invalid file, invalid file location
      */
     public static byte[] getPreviewBytes(AttachmentDirectorySegment attachmentDirectorySegment, String id, int BUFFER_SIZE, boolean isLittleEndian) throws IOException {
+        if (attachmentDirectorySegment==null) return null;
         AttachmentDirectorySegment.AttachmentDirectorySegmentData.AttachmentEntry previewEntry = null;
         for (AttachmentDirectorySegment.AttachmentDirectorySegmentData.AttachmentEntry entry: attachmentDirectorySegment.data.entries) {
             if (entry.contentFileType.equals("CZI") && (entry.name.equals("SlidePreview"))) {
