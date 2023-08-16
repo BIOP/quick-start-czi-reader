@@ -82,6 +82,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.ref.SoftReference;
 import java.lang.reflect.Field;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -92,9 +93,12 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.locks.Lock;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -539,6 +543,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             System.arraycopy(data, 0, buf, 0, data.length);
             return buf;
         }
+
         return data;
     }
 
@@ -1916,9 +1921,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             reader.store.setExperimenterMiddleName(userMiddleName, 0);
             reader.store.setExperimenterUserName(userName, 0);
             for (int iSeries=0; iSeries<reader.getSeriesCount();iSeries++) {
-                if (experimenterID != null) {
-                    reader.store.setImageExperimenterRef(experimenterID, iSeries);
-                }
+                reader.store.setImageExperimenterRef(experimenterID, iSeries);
             }
         }
 
@@ -2033,7 +2036,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
         private void translateExperiment(Element root) throws FormatException {
             NodeList experiments = root.getElementsByTagName("Experiment");
-            if (experiments == null || experiments.getLength() == 0) {
+            if (experiments.getLength() == 0) {
                 return;
             }
 
@@ -2064,7 +2067,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                             bin = bin.replaceAll(",", "x");
                             Binning binning = MetadataTools.getBinning(bin);
 
-                            if (model != null && model.equals(cameraModel)) {
+                            if (model.equals(cameraModel)) {
                                 for (int image = 0; image < reader.getSeriesCount(); image++) {
                                     for (int c = 0; c < reader.getEffectiveSizeC(); c++) {
                                         reader.store.setDetectorSettingsID(id, image, c);
@@ -2088,7 +2091,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     Element detectorGroup = (Element) detectorGroups.item(d);
                     detectors = detectorGroup.getElementsByTagName("Detector");
 
-                    if (detectors != null && detectors.getLength() > 0) {
+                    if (detectors.getLength() > 0) {
                         for (int i = 0; i < detectors.getLength(); i++) {
                             Element detector = (Element) detectors.item(i);
                             String voltage = getFirstNodeValue(detector, "Voltage");
@@ -2102,7 +2105,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
                 NodeList tracks = multiTrack.getElementsByTagName("Track");
 
-                if (tracks != null && tracks.getLength() > 0) {
+                if (tracks.getLength() > 0) {
                     for (int i = 0; i < tracks.getLength(); i++) {
                         Element track = (Element) tracks.item(i);
                         Element channel = getFirstNode(track, "Channel");
@@ -2136,7 +2139,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             MetadataStore store = reader.store;
 
             NodeList informations = root.getElementsByTagName("Information");
-            if (informations == null || informations.getLength() == 0) {
+            if (informations.getLength() == 0) {
                 return;
             }
 
@@ -2231,60 +2234,58 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     channelNodes = image.getElementsByTagName("Channel");
                 }
 
-                if (channelNodes != null) {
-                    for (int i=0; i<channelNodes.getLength(); i++) {
-                        Element channel = (Element) channelNodes.item(i);
+                for (int i = 0; i < channelNodes.getLength(); i++) {
+                    Element channel = (Element) channelNodes.item(i);
 
-                        while (channels.size() <= i) {
-                            channels.add(new Channel());
+                    while (channels.size() <= i) {
+                        channels.add(new Channel());
+                    }
+
+                    channels.get(i).emission =
+                            getFirstNodeValue(channel, "EmissionWavelength");
+                    channels.get(i).excitation =
+                            getFirstNodeValue(channel, "ExcitationWavelength");
+                    channels.get(i).pinhole = getFirstNodeValue(channel, "PinholeSize");
+
+                    channels.get(i).name = channel.getAttribute("Name");
+
+                    String illumination = getFirstNodeValue(channel, "IlluminationType");
+                    if (illumination != null) {
+                        channels.get(i).illumination = MetadataTools.getIlluminationType(illumination);
+                    }
+                    String acquisition = getFirstNodeValue(channel, "AcquisitionMode");
+                    if (acquisition != null) {
+                        channels.get(i).acquisitionMode = MetadataTools.getAcquisitionMode(acquisition);
+                    }
+
+                    Element detectorSettings = getFirstNode(channel, "DetectorSettings");
+
+                    String binning = getFirstNodeValue(detectorSettings, "Binning");
+                    if (binning != null) {
+                        binning = binning.replaceAll(",", "x");
+                        binnings.add(binning);
+                    }
+
+                    Element scanInfo = getFirstNode(channel, "LaserScanInfo");
+                    if (scanInfo != null) {
+                        zoom = getFirstNodeValue(scanInfo, "ZoomX");
+                    }
+
+                    Element detector = getFirstNode(detectorSettings, "Detector");
+                    if (detector != null) {
+                        String detectorID = detector.getAttribute("Id");
+                        if (detectorID.indexOf(' ') != -1) {
+                            detectorID = detectorID.replaceAll("\\s", "");
                         }
-
-                        channels.get(i).emission =
-                                getFirstNodeValue(channel, "EmissionWavelength");
-                        channels.get(i).excitation =
-                                getFirstNodeValue(channel, "ExcitationWavelength");
-                        channels.get(i).pinhole = getFirstNodeValue(channel, "PinholeSize");
-
-                        channels.get(i).name = channel.getAttribute("Name");
-
-                        String illumination = getFirstNodeValue(channel, "IlluminationType");
-                        if (illumination != null) {
-                            channels.get(i).illumination = MetadataTools.getIlluminationType(illumination);
+                        if (!detectorID.startsWith("Detector:")) {
+                            detectorID = "Detector:" + detectorID;
                         }
-                        String acquisition = getFirstNodeValue(channel, "AcquisitionMode");
-                        if (acquisition != null) {
-                            channels.get(i).acquisitionMode = MetadataTools.getAcquisitionMode(acquisition);
-                        }
+                        detectorRefs.add(detectorID);
+                    }
 
-                        Element detectorSettings = getFirstNode(channel, "DetectorSettings");
-
-                        String binning = getFirstNodeValue(detectorSettings, "Binning");
-                        if (binning != null) {
-                            binning = binning.replaceAll(",", "x");
-                            binnings.add(binning);
-                        }
-
-                        Element scanInfo = getFirstNode(channel, "LaserScanInfo");
-                        if (scanInfo != null) {
-                            zoom = getFirstNodeValue(scanInfo, "ZoomX");
-                        }
-
-                        Element detector = getFirstNode(detectorSettings, "Detector");
-                        if (detector != null) {
-                            String detectorID = detector.getAttribute("Id");
-                            if (detectorID.indexOf(' ') != -1) {
-                                detectorID = detectorID.replaceAll("\\s","");
-                            }
-                            if (!detectorID.startsWith("Detector:")) {
-                                detectorID = "Detector:" + detectorID;
-                            }
-                            detectorRefs.add(detectorID);
-                        }
-
-                        Element filterSet = getFirstNode(channel, "FilterSetRef");
-                        if (filterSet != null) {
-                            channels.get(i).filterSetRef = filterSet.getAttribute("Id");
-                        }
+                    Element filterSet = getFirstNode(channel, "FilterSetRef");
+                    if (filterSet != null) {
+                        channels.get(i).filterSetRef = filterSet.getAttribute("Id");
                     }
                 }
             }
@@ -2308,7 +2309,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
             if (instrument != null) {
                 NodeList microscopes = getGrandchildren(instrument, "Microscope");
-                Element manufacturerNode = null;
+                Element manufacturerNode;
 
                 store.setInstrumentID(MetadataTools.createLSID("Instrument", 0), 0);
 
@@ -2438,7 +2439,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
                         zoom = getFirstNodeValue(detector, "Zoom");
                         if (zoom != null && !zoom.isEmpty()) {
-                            if (zoom != null && !zoom.equals("")) {
+                            if (!zoom.equals("")) {
                                 if (zoom.indexOf(',') != -1) {
                                     zoom = zoom.substring(0, zoom.indexOf(','));
                                 }
@@ -2495,40 +2496,34 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                             emissions = filterSet.getElementsByTagName("EmissionFilterRef");
                         }
 
-                        if (dichroicRef != null || excitations != null || emissions != null) {
-                            store.setFilterSetID(filterSet.getAttribute("Id"), 0, i);
-                            store.setFilterSetManufacturer(manufacturer, 0, i);
-                            store.setFilterSetModel(model, 0, i);
-                            store.setFilterSetSerialNumber(serialNumber, 0, i);
-                            store.setFilterSetLotNumber(lotNumber, 0, i);
-                        }
+                        store.setFilterSetID(filterSet.getAttribute("Id"), 0, i);
+                        store.setFilterSetManufacturer(manufacturer, 0, i);
+                        store.setFilterSetModel(model, 0, i);
+                        store.setFilterSetSerialNumber(serialNumber, 0, i);
+                        store.setFilterSetLotNumber(lotNumber, 0, i);
 
                         if (dichroicRef != null && dichroicRef.length() > 0) {
                             store.setFilterSetDichroicRef(dichroicRef, 0, i);
                         }
 
-                        if (excitations != null) {
-                            for (int ex=0; ex<excitations.getLength(); ex++) {
-                                Element excitation = (Element) excitations.item(ex);
-                                String ref = excitation.getTextContent();
-                                if (ref == null || ref.length() <= 0) {
-                                    ref = excitation.getAttribute("Id");
-                                }
-                                if (ref != null && ref.length() > 0) {
-                                    store.setFilterSetExcitationFilterRef(ref, 0, i, ex);
-                                }
+                        for (int ex = 0; ex < excitations.getLength(); ex++) {
+                            Element excitation = (Element) excitations.item(ex);
+                            String ref = excitation.getTextContent();
+                            if (ref == null || ref.length() <= 0) {
+                                ref = excitation.getAttribute("Id");
+                            }
+                            if (ref.length() > 0) {
+                                store.setFilterSetExcitationFilterRef(ref, 0, i, ex);
                             }
                         }
-                        if (emissions != null) {
-                            for (int em=0; em<emissions.getLength(); em++) {
-                                Element emission = (Element) emissions.item(em);
-                                String ref = emission.getTextContent();
-                                if (ref == null || ref.length() <= 0) {
-                                    ref = emission.getAttribute("Id");
-                                }
-                                if (ref != null && ref.length() > 0) {
-                                    store.setFilterSetEmissionFilterRef(ref, 0, i, em);
-                                }
+                        for (int em = 0; em < emissions.getLength(); em++) {
+                            Element emission = (Element) emissions.item(em);
+                            String ref = emission.getTextContent();
+                            if (ref == null || ref.length() <= 0) {
+                                ref = emission.getAttribute("Id");
+                            }
+                            if (ref.length() > 0) {
+                                store.setFilterSetEmissionFilterRef(ref, 0, i, em);
                             }
                         }
                     }
@@ -2640,7 +2635,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 return null;
             }
             NodeList nodes = root.getElementsByTagName(name);
-            if (nodes != null && nodes.getLength() > 0) {
+            if (nodes.getLength() > 0) {
                 return nodes.item(0).getTextContent();
             }
             return null;
@@ -2655,7 +2650,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 return null;
             }
             NodeList children = root.getElementsByTagName(child);
-            if (children != null && children.getLength() > 0) {
+            if (children.getLength() > 0) {
                 Element childNode = (Element) children.item(0);
                 return childNode.getElementsByTagName(name);
             }
@@ -2667,7 +2662,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 return null;
             }
             NodeList list = root.getElementsByTagName(name);
-            if (list == null) {
+            if (list.getLength() == 0) {
                 return null;
             }
             return (Element) list.item(0);
@@ -3547,7 +3542,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                         }
                         catch (NumberFormatException e) { logger.warn(e.getMessage()); }
 
-                        int numTiles = (tilesX == null || tilesY == null) ? 0 : tilesX * tilesY;
+                        int numTiles = tilesX * tilesY;
                         for (int tile=0; tile<numTiles; tile++) {
                             int index = i * tilesX * tilesY + tile;
                             if (groups.getLength() == reader.core.size()) {
@@ -3609,40 +3604,38 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
                         for (int r=0; r<regionArrays.getLength(); r++) {
                             NodeList regions = ((Element) regionArrays.item(r)).getElementsByTagName("SingleTileRegion");
-                            if (regions != null) {
-                                for (int i=0; i<regions.getLength(); i++, positionIndex++) {
-                                    Element region = (Element) regions.item(i);
+                            for (int i = 0; i < regions.getLength(); i++, positionIndex++) {
+                                Element region = (Element) regions.item(i);
 
-                                    String x = getFirstNode(region, "X").getTextContent();
-                                    String y = getFirstNode(region, "Y").getTextContent();
-                                    String z = getFirstNode(region, "Z").getTextContent();
-                                    String name = region.getAttribute("Name");
+                                String x = getFirstNode(region, "X").getTextContent();
+                                String y = getFirstNode(region, "Y").getTextContent();
+                                String z = getFirstNode(region, "Z").getTextContent();
+                                String name = region.getAttribute("Name");
 
-                                    // safe to assume all 3 arrays have the same length
-                                    //if (positionIndex < positionsX.length) {
-                                    XYZLength loc = new XYZLength();
-                                    if (x == null) {
-                                        loc.pX = null; //positionsX[positionIndex] = null;
-                                    } else {
-                                        final Double number = Double.valueOf(x);
-                                        loc.pX = new Length(number, UNITS.MICROMETER);// positionsX[positionIndex] = new Length(number, UNITS.MICROMETER);
-                                    }
-                                    if (y == null) {
-                                        loc.pY = null;//positionsY[positionIndex] = null;
-                                    } else {
-                                        final Double number = Double.valueOf(y);
-                                        loc.pY = new Length(number, UNITS.MICROMETER);//positionsY[positionIndex] = new Length(number, UNITS.MICROMETER);
-                                    }
-                                    if (z == null) {
-                                        loc.pZ = null;//positionsZ[positionIndex] = null;
-                                    } else {
-                                        final Double number = Double.valueOf(z);
-                                        loc.pZ = new Length(number, UNITS.MICROMETER);//positionsZ[positionIndex] = new Length(number, UNITS.MICROMETER);
-                                    }
-                                    allPositionsInformation.regions.add(loc);
-
-                                    fieldNames.add(name);
+                                // safe to assume all 3 arrays have the same length
+                                //if (positionIndex < positionsX.length) {
+                                XYZLength loc = new XYZLength();
+                                if (x == null) {
+                                    loc.pX = null; //positionsX[positionIndex] = null;
+                                } else {
+                                    final Double number = Double.valueOf(x);
+                                    loc.pX = new Length(number, UNITS.MICROMETER);// positionsX[positionIndex] = new Length(number, UNITS.MICROMETER);
                                 }
+                                if (y == null) {
+                                    loc.pY = null;//positionsY[positionIndex] = null;
+                                } else {
+                                    final Double number = Double.valueOf(y);
+                                    loc.pY = new Length(number, UNITS.MICROMETER);//positionsY[positionIndex] = new Length(number, UNITS.MICROMETER);
+                                }
+                                if (z == null) {
+                                    loc.pZ = null;//positionsZ[positionIndex] = null;
+                                } else {
+                                    final Double number = Double.valueOf(z);
+                                    loc.pZ = new Length(number, UNITS.MICROMETER);//positionsZ[positionIndex] = new Length(number, UNITS.MICROMETER);
+                                }
+                                allPositionsInformation.regions.add(loc);
+
+                                fieldNames.add(name);
                             }
                         }
                     }
