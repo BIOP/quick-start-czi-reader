@@ -42,7 +42,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
-public class CompareMeta {
+public class CompareReader {
     public static final Set<String> criticalMethods = new HashSet<>(Arrays.asList(
             "getPixelsSizeX",
             "getPixelsSizeY",
@@ -76,7 +76,7 @@ public class CompareMeta {
         ServiceFactory factory = new ServiceFactory();
         OMEXMLService service = factory.getInstance(OMEXMLService.class);
 
-        IFormatReader reader_1 = CompareMeta.builder().quickStart(true).autoStitch(autoStitch).flattenResolutions(flattenResolutions).get();
+        IFormatReader reader_1 = CompareReader.builder().quickStart(true).autoStitch(autoStitch).flattenResolutions(flattenResolutions).get();
 
         OMEXMLMetadata omeXML_1 = service.createOMEXMLMetadata();
         reader_1.setMetadataStore(omeXML_1);
@@ -85,7 +85,7 @@ public class CompareMeta {
         Duration readerIniTime1 = toc();
         String quickStartInit = formatDuration(readerIniTime1);
 
-        IFormatReader reader_2 = CompareMeta.builder().quickStart(false).autoStitch(autoStitch).flattenResolutions(flattenResolutions).get();
+        IFormatReader reader_2 = CompareReader.builder().quickStart(false).autoStitch(autoStitch).flattenResolutions(flattenResolutions).get();
 
         OMEXMLMetadata omeXML_2 = service.createOMEXMLMetadata();
         reader_2.setMetadataStore(omeXML_2);
@@ -516,11 +516,11 @@ public class CompareMeta {
                     qImages.add(imageNameNoExt + ".quick_true.flat_" + flattenRes + ".stitch_" + autoStitch + ".series_" + i + ".jpg");
                     new FileSaver(thumb).saveAsJpeg(reportImagePath + qImages.get(qImages.size()-1));
                     qImagesSize.add("X:"+imps[i].getWidth()+"<br>"+
-                                    "Y:"+imps[i].getHeight()+"<br>"+
-                                    "C:"+imps[i].getNChannels()+"<br>"+
-                                    "Z:"+imps[i].getNSlices()+"<br>"+
-                                    "T:"+imps[i].getNFrames()
-                            );
+                            "Y:"+imps[i].getHeight()+"<br>"+
+                            "C:"+imps[i].getNChannels()+"<br>"+
+                            "Z:"+imps[i].getNSlices()+"<br>"+
+                            "T:"+imps[i].getNFrames()
+                    );
                     temp.close();
                     thumb.close();
                     imps[i].close();
@@ -600,54 +600,55 @@ public class CompareMeta {
     public static void main(String... args) {
         //DebugTools.setRootLevel("TRACE");
         String[] cziURLs ={
-            // "https://zenodo.org/record/7147844/files/test-fullplate.czi", // 13.7 GB test full plate -> out of memory
-            "https://zenodo.org/record/7129425/files/test-plate.czi", // test plate, 3.3 GB
-            "https://zenodo.org/record/7254229/files/P1.czi", // Cytoskeleton stack image, 125 MB
-            "https://zenodo.org/record/4662053/files/2021-02-25-tulip_Airyscan.czi", // Airyscan processed, 42.1 MB
-            "https://zenodo.org/record/4662053/files/2021-02-25-tulip_unprocessed-Airyscan.czi", // Unprocessed Airyscan 2.9Gb
-            "https://zenodo.org/record/6848342/files/Airyscan%20Lines%20Pattern.czi", //2 MB
-            "https://zenodo.org/record/6848342/files/Confocal%20Lines%20Pattern.czi", //2.2 MB
-            "https://zenodo.org/record/7015307/files/S%3D1_3x3_T%3D3_Z%3D4_CH%3D2.czi", // 107MB (demo camera images by Sebastien Rhode)
-            "https://zenodo.org/record/7015307/files/S%3D1_CH%3D2.czi", // 1.6MB
-            "https://zenodo.org/record/7015307/files/S%3D2_2x2_CH%3D1.czi", // 2.6MB
-            "https://zenodo.org/record/7015307/files/S%3D2_2x2_T%3D1_Z%3D4_CH%3D1.czi", //6.5MB
-            "https://zenodo.org/record/7015307/files/S%3D2_2x2_T%3D3_CH%3D1.czi", // 5.2MB
-            "https://zenodo.org/record/7015307/files/S%3D2_2x2_T%3D3_Z%3D4_CH%3D1.czi", // 16.8 MB
-            "https://zenodo.org/record/7015307/files/S%3D2_2x2_Z%3D4_CH%3D1.czi", // 6.5 MB
-            "https://zenodo.org/record/7015307/files/S%3D2_3x3_T%3D1_Z%3D4_CH%3D2.czi", // 72.6MB
-            "https://zenodo.org/record/7015307/files/S%3D2_3x3_T%3D3_CH%3D2.czi", // 55.3 MB
-            "https://zenodo.org/record/7015307/files/S%3D2_3x3_T%3D3_Z%3D1_CH%3D2.czi", // 54.6 MB
-            "https://zenodo.org/record/7015307/files/S%3D2_T%3D3_CH%3D1.czi", // 2.1 MB
-            "https://zenodo.org/record/7015307/files/S%3D2_T%3D3_Z%3D5_CH%3D1.czi", // 5.3 MB
-            "https://zenodo.org/record/7015307/files/S%3D3_1Pos_2Mosaic_T%3D2%3DZ%3D3_CH%3D2.czi", // 57.1 MB
-            "https://zenodo.org/record/7015307/files/S%3D3_CH%3D2.czi", // 2.1 MB
-            "https://zenodo.org/record/7015307/files/T%3D1_CH%3D2.czi", // 1.6 MB
-            "https://zenodo.org/record/7015307/files/T%3D1_Z%3D5_CH%3D1.czi", // 2.0 MB
-            "https://zenodo.org/record/7015307/files/T%3D2_CH%3D1.czi", // 1.6 MB
-            "https://zenodo.org/record/7015307/files/T%3D2_Z%3D5_CH%3D1.czi", // 2.6 MB
-            "https://zenodo.org/record/7015307/files/T%3D2_Z%3D5_CH%3D2.czi", // 4.0MB
-            "https://zenodo.org/record/7015307/files/T%3D3_CH%3D2.czi", // 2.1 MB
-            "https://zenodo.org/record/7015307/files/T%3D3_Z%3D5_CH%3D2.czi", // 5.3 MB
-            "https://zenodo.org/record/7015307/files/W96_B2%2BB4_S%3D2_T%3D1%3DZ%3D1_C%3D1_Tile%3D5x9.czi", // 31.3 MB
-            "https://zenodo.org/record/7015307/files/W96_B2%2BB4_S%3D2_T%3D2%3DZ%3D4_C%3D3_Tile%3D5x9.czi", // 737.7 MB
-            "https://zenodo.org/record/7015307/files/Z%3D5_CH%3D1.czi", // 2.0 MB
-            "https://zenodo.org/record/7015307/files/Z%3D5_CH%3D2.czi", // 2.6 MB
-            "https://zenodo.org/record/7117784/files/RBC_full_one_timepoint.czi", // 1.0 GB RBC full one timepoint
-            "https://zenodo.org/record/7117784/files/RBC_full_time_series.czi", // 3.1 GB RBC full time series
-            "https://zenodo.org/record/7117784/files/RBC_medium_LLSZ.czi", // 700 MB RBC series LLSZ
-            "https://zenodo.org/record/7117784/files/RBC_tiny.czi", // 48.9 MB RBC tiny
-            "https://zenodo.org/record/7260610/files/20221019_MixedGrain.czi", // 113 MB Mixed Grain confocal
-            "https://zenodo.org/record/7260610/files/20221019_MixedGrain2.czi", // 78.6 MB Mixed Grain2
-            "https://zenodo.org/record/5101351/files/Ph488.czi", // 43.1 MB
-            "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031.czi", // 964 MB
-            "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031_pt1.czi", // 3 MB
-            "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031_pt2.czi", // 7.3 MB
-            // There are many more of the same kind that I do not use
+                // "https://zenodo.org/record/7147844/files/test-fullplate.czi", // 13.7 GB test full plate -> out of memory
+                "https://zenodo.org/record/7129425/files/test-plate.czi", // test plate, 3.3 GB
+                "https://zenodo.org/record/7254229/files/P1.czi", // Cytoskeleton stack image, 125 MB
+                "https://zenodo.org/record/4662053/files/2021-02-25-tulip_Airyscan.czi", // Airyscan processed, 42.1 MB
+                "https://zenodo.org/record/4662053/files/2021-02-25-tulip_unprocessed-Airyscan.czi", // Unprocessed Airyscan 2.9Gb
+                "https://zenodo.org/record/6848342/files/Airyscan%20Lines%20Pattern.czi", //2 MB
+                "https://zenodo.org/record/6848342/files/Confocal%20Lines%20Pattern.czi", //2.2 MB
+                "https://zenodo.org/record/7015307/files/S%3D1_3x3_T%3D3_Z%3D4_CH%3D2.czi", // 107MB (demo camera images by Sebastien Rhode)
+                "https://zenodo.org/record/7015307/files/S%3D1_CH%3D2.czi", // 1.6MB
+                "https://zenodo.org/record/7015307/files/S%3D2_2x2_CH%3D1.czi", // 2.6MB
+                "https://zenodo.org/record/7015307/files/S%3D2_2x2_T%3D1_Z%3D4_CH%3D1.czi", //6.5MB
+                "https://zenodo.org/record/7015307/files/S%3D2_2x2_T%3D3_CH%3D1.czi", // 5.2MB
+                "https://zenodo.org/record/7015307/files/S%3D2_2x2_T%3D3_Z%3D4_CH%3D1.czi", // 16.8 MB
+                "https://zenodo.org/record/7015307/files/S%3D2_2x2_Z%3D4_CH%3D1.czi", // 6.5 MB
+                "https://zenodo.org/record/7015307/files/S%3D2_3x3_T%3D1_Z%3D4_CH%3D2.czi", // 72.6MB
+                "https://zenodo.org/record/7015307/files/S%3D2_3x3_T%3D3_CH%3D2.czi", // 55.3 MB
+                "https://zenodo.org/record/7015307/files/S%3D2_3x3_T%3D3_Z%3D1_CH%3D2.czi", // 54.6 MB
+                "https://zenodo.org/record/7015307/files/S%3D2_T%3D3_CH%3D1.czi", // 2.1 MB
+                "https://zenodo.org/record/7015307/files/S%3D2_T%3D3_Z%3D5_CH%3D1.czi", // 5.3 MB
+                "https://zenodo.org/record/7015307/files/S%3D3_1Pos_2Mosaic_T%3D2%3DZ%3D3_CH%3D2.czi", // 57.1 MB
+                "https://zenodo.org/record/7015307/files/S%3D3_CH%3D2.czi", // 2.1 MB
+                "https://zenodo.org/record/7015307/files/T%3D1_CH%3D2.czi", // 1.6 MB
+                "https://zenodo.org/record/7015307/files/T%3D1_Z%3D5_CH%3D1.czi", // 2.0 MB
+                "https://zenodo.org/record/7015307/files/T%3D2_CH%3D1.czi", // 1.6 MB
+                "https://zenodo.org/record/7015307/files/T%3D2_Z%3D5_CH%3D1.czi", // 2.6 MB
+                "https://zenodo.org/record/7015307/files/T%3D2_Z%3D5_CH%3D2.czi", // 4.0MB
+                "https://zenodo.org/record/7015307/files/T%3D3_CH%3D2.czi", // 2.1 MB
+                "https://zenodo.org/record/7015307/files/T%3D3_Z%3D5_CH%3D2.czi", // 5.3 MB
+                "https://zenodo.org/record/7015307/files/W96_B2%2BB4_S%3D2_T%3D1%3DZ%3D1_C%3D1_Tile%3D5x9.czi", // 31.3 MB
+                "https://zenodo.org/record/7015307/files/W96_B2%2BB4_S%3D2_T%3D2%3DZ%3D4_C%3D3_Tile%3D5x9.czi", // 737.7 MB
+                "https://zenodo.org/record/7015307/files/Z%3D5_CH%3D1.czi", // 2.0 MB
+                "https://zenodo.org/record/7015307/files/Z%3D5_CH%3D2.czi", // 2.6 MB
+                "https://zenodo.org/record/7117784/files/RBC_full_one_timepoint.czi", // 1.0 GB RBC full one timepoint
+                "https://zenodo.org/record/7117784/files/RBC_full_time_series.czi", // 3.1 GB RBC full time series
+                "https://zenodo.org/record/7117784/files/RBC_medium_LLSZ.czi", // 700 MB RBC series LLSZ
+                "https://zenodo.org/record/7117784/files/RBC_tiny.czi", // 48.9 MB RBC tiny
+                "https://zenodo.org/record/7260610/files/20221019_MixedGrain.czi", // 113 MB Mixed Grain confocal
+                "https://zenodo.org/record/7260610/files/20221019_MixedGrain2.czi", // 78.6 MB Mixed Grain2
+                "https://zenodo.org/record/5101351/files/Ph488.czi", // 43.1 MB
+                "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031.czi", // 964 MB
+                "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031_pt1.czi", // 3 MB
+                "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031_pt2.czi", // 7.3 MB
+                // There are many more of the same kind that I do not use
 
-            "https://zenodo.org/record/7430767/files/10.5%20dpc%20vegfc%20gapdh%20Pecam%20wt%201.czi",
-            // There are many more of the same kind
-            "https://downloads.openmicroscopy.org/images/Zeiss-CZI/idr0011/Plate1-Blue-A_TS-Stinger/Plate1-Blue-A-12-Scene-3-P3-F2-03.czi",
-            // There are many more of the same kind*/
+                "https://zenodo.org/record/7430767/files/10.5%20dpc%20vegfc%20gapdh%20Pecam%20wt%201.czi",
+                // There are many more of the same kind
+                "https://downloads.openmicroscopy.org/images/Zeiss-CZI/idr0011/Plate1-Blue-A_TS-Stinger/Plate1-Blue-A-12-Scene-3-P3-F2-03.czi",
+
+                // There are many more of the same kind*/
         };
 
         List<SummaryPerFile> summaryList = new ArrayList<>();

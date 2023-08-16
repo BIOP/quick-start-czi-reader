@@ -7,14 +7,14 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size |
 |-------------------|--------------------|------|-----------------|------|
-| Read time (all)   |56 ms|------|64 ms|------|
+| Read time (all)   |53 ms|------|51 ms|------|
 |0|![T=1_Z=5_CH=1.quick_true.flat_true.stitch_false.series_0.jpg](T=1_Z=5_CH=1/T=1_Z=5_CH=1.quick_true.flat_true.stitch_false.series_0.jpg)|X:256<br>Y:256<br>C:1<br>Z:5<br>T:1|![T=1_Z=5_CH=1.quick_false.flat_true.stitch_false.series_0.jpg](T=1_Z=5_CH=1/T=1_Z=5_CH=1.quick_false.flat_true.stitch_false.series_0.jpg)|X:256<br>Y:256<br>C:1<br>Z:5<br>T:1|
 
 # Metadata
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |26 ms|25 ms|        |
+| Initialization     |                  |18 ms|18 ms|        |
 | Reader Size (Mb)     |                  |1.97|2.58|        |
 | getPlaneDeltaT| Image 0 Plane 1 |  0.662 s |  0.737 s | 0.075 s |
 | getPlaneDeltaT| Image 0 Plane 2 |  0.924 s |  1.061 s | 0.137 s |
