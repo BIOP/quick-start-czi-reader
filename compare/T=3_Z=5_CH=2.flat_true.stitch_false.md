@@ -7,15 +7,15 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size |
 |-------------------|--------------------|------|-----------------|------|
-| Read time (all)   |57 ms|------|53 ms|------|
+| Read time (all)   |41 ms|------|58 ms|------|
 |0|![T=3_Z=5_CH=2.quick_true.flat_true.stitch_false.series_0.jpg](T=3_Z=5_CH=2/T=3_Z=5_CH=2.quick_true.flat_true.stitch_false.series_0.jpg)|X:256<br>Y:256<br>C:2<br>Z:5<br>T:3|![T=3_Z=5_CH=2.quick_false.flat_true.stitch_false.series_0.jpg](T=3_Z=5_CH=2/T=3_Z=5_CH=2.quick_false.flat_true.stitch_false.series_0.jpg)|X:256<br>Y:256<br>C:2<br>Z:5<br>T:3|
 
 # Metadata
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |17 ms|18 ms|        |
-| Reader Size (Mb)     |                  |1.99|2.63|        |
+| Initialization     |                  |18 ms|18 ms|        |
+| Reader Size (Mb)     |                  |2.00|2.64|        |
 | getStageLabelName| Image 0 | Current-Position| Scene position #0| |
 | getPlaneDeltaT| Image 0 Plane 2 |  0.817 s |  0.941 s | 0.124 s |
 | getPlaneDeltaT| Image 0 Plane 3 |  1.002 s |  1.111 s | 0.109 s |

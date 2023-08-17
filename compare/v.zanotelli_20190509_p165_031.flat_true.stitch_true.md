@@ -7,7 +7,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size |
 |-------------------|--------------------|------|-----------------|------|
-| Read time (all)   |38628 ms|------|52647 ms|------|
+| Read time (all)   |33867 ms|------|44388 ms|------|
 |0|![v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_true.series_0.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_true.series_0.jpg)|X:13143<br>Y:13184<br>C:2<br>Z:1<br>T:1|![v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_true.series_0.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_true.series_0.jpg)|X:13143<br>Y:13184<br>C:2<br>Z:1<br>T:1|
 |1|![v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_true.series_1.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_true.series_1.jpg)|X:6571<br>Y:6592<br>C:2<br>Z:1<br>T:1|![v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_true.series_1.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_true.series_1.jpg)|X:6571<br>Y:6592<br>C:2<br>Z:1<br>T:1|
 |2|![v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_true.series_2.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_true.series_2.jpg)|X:3285<br>Y:3296<br>C:2<br>Z:1<br>T:1|![v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_true.series_2.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_true.series_2.jpg)|X:3285<br>Y:3296<br>C:2<br>Z:1<br>T:1|
@@ -30,8 +30,8 @@
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |89 ms|99 ms|        |
-| Reader Size (Mb)     |                  |10.05|10.87|        |
+| Initialization     |                  |89 ms|98 ms|        |
+| Reader Size (Mb)     |                  |10.07|10.88|        |
 | getStageLabelName| Image 0 | ScanRegion0| Scene position #0| |
 | getStageLabelX| Image 0 | -34335.125 um | -32465.133 um | 1869.992 um |
 | getStageLabelY| Image 0 | 5869.696 um | 7739.688 um | 1869.992 um |
