@@ -293,13 +293,13 @@ public class ZeissQuickStartCZIReader extends FormatReader {
      * if using the {@link ZeissQuickStartCZIReader#copy()} method to duplicate the reader
      */
     @CopyByRef
-    transient SubBlockCache compressedBlockCache = new SubBlockCache(10 * 1024 * 1024, 400 * 1024 * 1024 );
+    transient SubBlockLRUCache subBlockLRUCache = new SubBlockLRUCache(10 * 1024 * 1024, 400 * 1024 * 1024 );
 
     @CopyByRef
     transient Lock cacheLock = new ReentrantLock();
 
     @CopyByRef
-    transient Set<MinimalDimensionEntry> currentlyComputedBlock = new HashSet<>();
+    transient Set<MinimalDimensionEntry> subBlocksCurrentlyLoading = new HashSet<>();
 
     // -- Constructor --
 
@@ -373,6 +373,10 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             coreIndexToSeries.clear();
             coreIndexToTZCToMinimalBlocks.clear(); // The big one!
             extraImages.clear(); // Can be big as well
+            cacheLock.lock();
+            subBlockLRUCache.clear();
+            subBlocksCurrentlyLoading.clear();
+            cacheLock.unlock();
         }
     }
 
@@ -440,76 +444,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         return check.equals(CZI_MAGIC_STRING);
     }
 
-    static class SubBlockCache extends
-            LinkedHashMap<MinimalDimensionEntry, SoftReference<byte[]>>
-    {
-
-        private static final long serialVersionUID = 1L;
-
-        private long maxCost;
-
-        AtomicLong totalWeight = new AtomicLong();
-
-        HashMap<MinimalDimensionEntry, Long> cost = new HashMap<>();
-
-        public SubBlockCache(final int iniSize, final long maxCost) {
-            super(iniSize, 0.75f, true);
-            this.maxCost = maxCost;
-        }
-
-        public void setMaxCost(long maxCost) {
-            this.maxCost = maxCost;
-        }
-
-        public long getCost() {
-            return totalWeight.get();
-        }
-
-        public long getMaxCost() {
-            return maxCost;
-        }
-
-        @Override
-        protected boolean removeEldestEntry(
-                final Map.Entry<MinimalDimensionEntry, SoftReference<byte[]>> eldest)
-        {
-            if (totalWeight.get() > maxCost) {
-                totalWeight.addAndGet(-cost.get(eldest.getKey()));
-                cost.remove(eldest.getKey());
-                eldest.getValue().clear();
-                //System.out.println("Remove");
-                return true;
-            }
-            else return false;
-        }
-
-        synchronized public void touch(final MinimalDimensionEntry key,
-                                       final byte[] value)
-        {
-            final SoftReference<byte[]> ref = get(key);
-            if (ref == null) {
-                long costValue = value.length;//getWeight(value);
-                totalWeight.addAndGet(costValue);
-                cost.put(key, costValue);
-                //System.out.println(totalWeight.get()/(1024*1024)+" Mb");
-                put(key, new SoftReference<>(value));
-            }
-            else if (ref.get() == null) {
-                put(key, new SoftReference<>(value));
-            }
-        }
-
-        @Override
-        public synchronized void clear() {
-            for (final SoftReference<byte[]> ref : values()) {
-                ref.clear();
-            }
-            totalWeight.set(0);
-            cost.clear();
-            super.clear();
-        }
-    }
-
     private byte[] readRawPixelData(MinimalDimensionEntry block, // TODO What is data size ? I think it's the number of bytes...
                                    int compression,
                                    int storedSizeX,
@@ -519,11 +453,11 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
         if (compression!=UNCOMPRESSED) {
             cacheLock.lock();
-            if (compressedBlockCache.containsKey(block)) {
-                byte[] bytes = compressedBlockCache.get(block).get();
+            if (subBlockLRUCache.containsKey(block)) {
+                byte[] bytes = subBlockLRUCache.get(block).get();
                 if (bytes!=null) {
                     // - cache hit for block
-                    compressedBlockCache.touch(block, bytes);
+                    subBlockLRUCache.touch(block, bytes); // Updates order
                     cacheLock.unlock();
                     return bytes;
                 }
@@ -531,43 +465,43 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
             // - block not in cache
 
-            if (currentlyComputedBlock.contains(block)) {
+            if (subBlocksCurrentlyLoading.contains(block)) {
                 // There's already, in a different thread, a reader instance
                 // computing the same block. We need to wait for it to finish
                 try {
                     do {
                         // - waiting for block to be computed
                         cacheLock.unlock();
-                        synchronized (currentlyComputedBlock) {
-                            currentlyComputedBlock.wait();
+                        synchronized (subBlocksCurrentlyLoading) {
+                            subBlocksCurrentlyLoading.wait();
                         }
                         cacheLock.lock();
                         // - is the right block being computed ?
-                    } while (currentlyComputedBlock.contains(block));
+                    } while (subBlocksCurrentlyLoading.contains(block));
+                    // Yes -> the right block has been computed
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                byte[] bytes = compressedBlockCache.get(block).get();
+                byte[] bytes = subBlockLRUCache.get(block).get();
                 if (bytes!=null) {
                     // - the block has been computed
-                    compressedBlockCache.touch(block, bytes); // put on top, for LRU cache
+                    subBlockLRUCache.touch(block, bytes); // put on top, for LRU cache
                     cacheLock.unlock();
                     return bytes;
                 } else {
                     // weird: the block is not there in the end... maybe it's been removed from the cache
-                    synchronized (currentlyComputedBlock) {
-                        currentlyComputedBlock.add(block);
+                    synchronized (subBlocksCurrentlyLoading) {
+                        subBlocksCurrentlyLoading.add(block);
                     }
                 }
             } else {
                 // This thread will compute this block
-                synchronized (currentlyComputedBlock) {
-                    currentlyComputedBlock.add(block);
+                synchronized (subBlocksCurrentlyLoading) {
+                    subBlocksCurrentlyLoading.add(block);
                 }
             }
             cacheLock.unlock();
         }
-
 
         LibCZI.SubBlockSegment subBlock = LibCZI.getBlock(s, block.filePosition);
         long blockDataOffset = subBlock.dataOffset;
@@ -688,21 +622,21 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             System.arraycopy(data, 0, buf, 0, data.length);
             cacheLock.lock();
             // Block just computed
-            compressedBlockCache.touch(block, buf);
+            subBlockLRUCache.touch(block, buf);
             // Put in cache
-            currentlyComputedBlock.remove(block);
+            subBlocksCurrentlyLoading.remove(block);
             cacheLock.unlock();
-            synchronized (currentlyComputedBlock) {
-                currentlyComputedBlock.notifyAll(); // Wake the threads waiting for this block
+            synchronized (subBlocksCurrentlyLoading) {
+                subBlocksCurrentlyLoading.notifyAll(); // Wake the threads waiting for this block
             }
             return buf;
         }
         cacheLock.lock();
-        compressedBlockCache.touch(block, data);
-        currentlyComputedBlock.remove(block);
+        subBlockLRUCache.touch(block, data);
+        subBlocksCurrentlyLoading.remove(block);
         cacheLock.unlock();
-        synchronized (currentlyComputedBlock) {
-            currentlyComputedBlock.notifyAll();
+        synchronized (subBlocksCurrentlyLoading) {
+            subBlocksCurrentlyLoading.notifyAll();
         }
         return data;
     }
@@ -1260,8 +1194,9 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
         for (int iCoreIndex = 0; iCoreIndex<core.size(); iCoreIndex++) {
             if (core.get(iCoreIndex).thumbnail) continue; // skips extra images
-            coreIndexToFileName.add(id); // TODO : improve and understand multi-series files
             CoreSignature coreSignature = orderedCoreSignatureList.get(iCoreIndex);
+            coreIndexToFileName.add(cziPartToSegments.get(filePartFromCoreSignature(coreSignature)).fileName);
+            //coreIndexToFileName.add(id);
             mapCoreTZCToBlocks.add(iCoreIndex, new HashMap<>());
             coreIndexToTZCToMinimalBlocks.add(iCoreIndex, new HashMap<>());
             HashMap<CZTKey, List<MinimalDimensionEntry>> seriesMap = mapCoreTZCToBlocks.get(iCoreIndex);
@@ -1728,8 +1663,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
          ms0.sizeT *= phases;
          */
 
-        final List<ModuloDimensionEntry> entryList = new ArrayList<>(); //LibCZI.SubBlockSegment.SubBlockSegmentData.SubBlockDirectoryEntryDV.DimensionEntry[] entries;
-
+        final List<ModuloDimensionEntry> entryList = new ArrayList<>();
         final int nRotations, nIlluminations, nPhases;
 
         public ModuloDimensionEntries(LibCZI.SubBlockDirectorySegment.SubBlockDirectorySegmentData.SubBlockDirectoryEntry entry,
@@ -1748,7 +1682,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             // Collect
             LibCZI.SubBlockSegment.SubBlockSegmentData.SubBlockDirectoryEntryDV.DimensionEntry[] entries = entry.getDimensionEntries();
             for (int i = 0; i<entries.length; i++) {
-                //entryList.add(new ModuloDimensionEntry(entry));
                 switch (entries[i].dimension) {
                     case "R": iRotation = entries[i].start; break;
                     case "I": iIllumination = entries[i].start; break;
@@ -1841,7 +1774,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         }
     }
 
-
     /**
      * This is a class that wraps three numbers c,z,t and an object
      * can be used as a key in a hashmap.
@@ -1931,8 +1863,9 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         final LibCZI.AttachmentDirectorySegment attachmentDirectory;
         final LibCZI.MetaDataSegment metadata;
         final double[] timeStamps;
-
+        final String fileName;
         public CZISegments(String id, boolean littleEndian) throws IOException {
+            this.fileName = id;
             this.fileHeader = LibCZI.getFileHeaderSegment(id, BUFFER_SIZE, littleEndian);
             this.subBlockDirectory = LibCZI.getSubBlockDirectorySegment(this.fileHeader, id, BUFFER_SIZE, littleEndian);
             this.metadata = LibCZI.getMetaDataSegment(this.fileHeader, id, BUFFER_SIZE, littleEndian);
@@ -1943,6 +1876,80 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 this.timeStamps = new double[0];
             }
         }
+    }
+
+    static class SubBlockLRUCache extends
+            LinkedHashMap<MinimalDimensionEntry, SoftReference<byte[]>>
+    {
+
+        private static final long serialVersionUID = 1L;
+
+        private long maxCost;
+
+        AtomicLong totalWeight = new AtomicLong();
+
+        HashMap<MinimalDimensionEntry, Long> cost = new HashMap<>();
+
+        public SubBlockLRUCache(final int iniSize, final long maxCost) {
+            super(iniSize, 0.75f, true);
+            this.maxCost = maxCost;
+        }
+
+        public void setMaxCost(long maxCost) {
+            this.maxCost = maxCost;
+        }
+
+        public long getCost() {
+            return totalWeight.get();
+        }
+
+        public long getMaxCost() {
+            return maxCost;
+        }
+
+        @Override
+        protected boolean removeEldestEntry(
+                final Map.Entry<MinimalDimensionEntry, SoftReference<byte[]>> eldest)
+        {
+            if (totalWeight.get() > maxCost) {
+                totalWeight.addAndGet(-cost.get(eldest.getKey()));
+                cost.remove(eldest.getKey());
+                eldest.getValue().clear();
+                //System.out.println("Remove");
+                return true;
+            }
+            else return false;
+        }
+
+        synchronized public void touch(final MinimalDimensionEntry key,
+                                       final byte[] value)
+        {
+            final SoftReference<byte[]> ref = get(key);
+            if (ref == null) {
+                long costValue = value.length;//getWeight(value);
+                totalWeight.addAndGet(costValue);
+                cost.put(key, costValue);
+                //System.out.println(totalWeight.get()/(1024*1024)+" Mb");
+                put(key, new SoftReference<>(value));
+            }
+            else if (ref.get() == null) {
+                put(key, new SoftReference<>(value));
+            }
+        }
+
+        @Override
+        public synchronized void clear() {
+            for (final SoftReference<byte[]> ref : values()) {
+                ref.clear();
+            }
+            totalWeight.set(0);
+            cost.clear();
+            super.clear();
+        }
+    }
+
+    private static int filePartFromCoreSignature(CoreSignature signature) {
+        return signature.getDimensions().get(FILE_PART_DIMENSION);
     }
 
     /**
@@ -4212,5 +4219,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         }
 
     }
+
+
 
 }
