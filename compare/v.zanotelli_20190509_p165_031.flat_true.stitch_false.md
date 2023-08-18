@@ -7,7 +7,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size |
 |-------------------|--------------------|------|-----------------|------|
-| Read time (all)   |27285 ms|------|35359 ms|------|
+| Read time (all)   |27147 ms|------|34984 ms|------|
 |0|![v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_0.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_0.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|![v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_0.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_0.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|
 |1|![v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_1.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_1.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|![v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_1.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_1.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|
 |2|![v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_2.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_2.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|![v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_2.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_2.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|
@@ -207,7 +207,7 @@
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |177 ms|128 ms|        |
+| Initialization     |                  |157 ms|109 ms|        |
 | Reader Size (Mb)     |                  |10.88|11.50|        |
 | getImageCount|(No args)|172| 194| |
 | getStageLabelName| Image 0 | ScanRegion0| Scene position #0| |

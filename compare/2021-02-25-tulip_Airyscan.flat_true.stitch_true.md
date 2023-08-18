@@ -7,14 +7,14 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size |
 |-------------------|--------------------|------|-----------------|------|
-| Read time (all)   |32 ms|------|41 ms|------|
+| Read time (all)   |30 ms|------|39 ms|------|
 |0|![2021-02-25-tulip_Airyscan.quick_true.flat_true.stitch_true.series_0.jpg](2021-02-25-tulip_Airyscan/2021-02-25-tulip_Airyscan.quick_true.flat_true.stitch_true.series_0.jpg)|X:1000<br>Y:1000<br>C:1<br>Z:21<br>T:1|![2021-02-25-tulip_Airyscan.quick_false.flat_true.stitch_true.series_0.jpg](2021-02-25-tulip_Airyscan/2021-02-25-tulip_Airyscan.quick_false.flat_true.stitch_true.series_0.jpg)|X:1000<br>Y:1000<br>C:1<br>Z:21<br>T:1|
 
 # Metadata
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |3 ms|4 ms|        |
+| Initialization     |                  |3 ms|3 ms|        |
 | Reader Size (Mb)     |                  |0.14|0.23|        |
 | getStageLabelX| Image 0 | 0.000 um | -33280.500 um | 33280.500 um |
 | getStageLabelY| Image 0 | 0.000 um | 1262.370 um | 1262.370 um |

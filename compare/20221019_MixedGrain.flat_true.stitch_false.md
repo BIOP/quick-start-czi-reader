@@ -7,7 +7,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size |
 |-------------------|--------------------|------|-----------------|------|
-| Read time (all)   |51 ms|------|63 ms|------|
+| Read time (all)   |52 ms|------|69 ms|------|
 |0|![20221019_MixedGrain.quick_true.flat_true.stitch_false.series_0.jpg](20221019_MixedGrain/20221019_MixedGrain.quick_true.flat_true.stitch_false.series_0.jpg)|X:1024<br>Y:1024<br>C:2<br>Z:27<br>T:1|![20221019_MixedGrain.quick_false.flat_true.stitch_false.series_0.jpg](20221019_MixedGrain/20221019_MixedGrain.quick_false.flat_true.stitch_false.series_0.jpg)|X:1024<br>Y:1024<br>C:2<br>Z:27<br>T:1|
 
 # Metadata

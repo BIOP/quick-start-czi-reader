@@ -52,6 +52,13 @@ public class CompareReader {
             "getImageCount",
             "getChannelSamplesPerPixel"));
 
+    public static final Set<String> ignoredDifferences = new HashSet<>(Arrays.asList(
+            "getStageLabelName" // because the new reader actually read the stage position better (IMO)
+    ));
+
+    public static final double timeStampDifferenceAllowedInS = 0.001; // 1 ms
+    public static final double positionDifferenceAllowedInUM = 0.001; // 1nm
+
     static long nanoStart;
     public static void tic() {
         nanoStart = System.nanoTime();
@@ -364,10 +371,14 @@ public class CompareReader {
 
         if (Boolean.logicalXor(exception_1, exception_2)) {
             logger.accept( message + " error: "+exception_1+" | error: "+exception_2+ "|");
-            summary.numberOfDifferences++;
+
             if (criticalMethods.contains(methodName)) {
                 summary.numberOfCriticalDifferences++;
+            } else if (ignoredDifferences.contains(methodName)) {
+                summary.numberOfDifferencesIgnored++;
+                return true;
             }
+            summary.numberOfDifferences++;
             return false;
         } else {
             if ((o1!=null)&&(o2!=null)) {
@@ -384,7 +395,7 @@ public class CompareReader {
 
                         double diff = Math.abs(l1.value(UNITS.MICROMETER).doubleValue() - l2.value(UNITS.MICROMETER).doubleValue());
 
-                        if (diff<0.001) {
+                        if (diff<positionDifferenceAllowedInUM) {
                             return true;
                         } else {
                             logger.accept( message + df.format(l1.value(UNITS.MICROMETER))+" um | "+df.format(l2.value(UNITS.MICROMETER))+" um | "+df.format(diff)+ " um");
@@ -394,7 +405,7 @@ public class CompareReader {
                         Time t2 = (Time) o2;
                         double diff = Math.abs(t1.value(UNITS.SECOND).doubleValue() - t2.value(UNITS.SECOND).doubleValue());
                         //System.out.println( message +"t diff = "+diff+ "\t 1: \t "+o1+"\t 2: \t "+o2);
-                        if (diff<0.001) {
+                        if (diff<timeStampDifferenceAllowedInS) {
                             return true; // below 1 ms = equality, yep that's right.
                         } else {
                             logger.accept( message +" "+df.format(t1.value(UNITS.SECOND))+" s |  "+df.format(t2.value(UNITS.SECOND))+" s | "+df.format(diff)+" s");
@@ -402,10 +413,14 @@ public class CompareReader {
                     } else {
                         logger.accept(message + o1 + "| " + o2 + "|");
                     }
-                    summary.numberOfDifferences++;
+
                     if (criticalMethods.contains(methodName)) {
                         summary.numberOfCriticalDifferences++;
+                    } else if (ignoredDifferences.contains(methodName)) {
+                        summary.numberOfDifferencesIgnored++;
+                        return true;
                     }
+                    summary.numberOfDifferences++;
                     return false;
                 } else {
                     //println( message + "\t 1: \t "+o1+"\t 2: \t "+o2);
@@ -419,7 +434,11 @@ public class CompareReader {
                     summary.numberOfDifferences++;
                     if (criticalMethods.contains(methodName)) {
                         summary.numberOfCriticalDifferences++;
+                    } else if (ignoredDifferences.contains(methodName)) {
+                        summary.numberOfDifferencesIgnored++;
+                        return true;
                     }
+                    summary.numberOfDifferences++;
                     return false;
                 }
             }
@@ -698,13 +717,14 @@ public class CompareReader {
             };
 
             DecimalFormat df = new DecimalFormat("0.0");
-            logTo.accept("|File Name|AutoStitch|#Diffs<br>(Critical)|#Diffs|Mem Gain|Init Time Gain|Read Time Gain|\n");
-            logTo.accept("|---------|----------|--------------------|------|--------|--------------|--------------|\n");
+            logTo.accept("|File Name|AutoStitch|#Diffs<br>(Critical)|#Diffs|#Diffs Ignored|Mem Gain|Init Time Gain|Read Time Gain|\n");
+            logTo.accept("|---------|----------|--------------------|------|--------------|--------|--------------|--------------|\n");
             for (SummaryPerFile summary: summaryList) {
                 logTo.accept("|["+summary.imageName+"]("+summary.urlFullReport+")|");
                 logTo.accept(summary.autoStitch+"|");
                 logTo.accept(summary.numberOfCriticalDifferences+"|");
                 logTo.accept(summary.numberOfDifferences+"|");
+                logTo.accept(summary.numberOfDifferencesIgnored+"|");
                 logTo.accept(df.format(summary.ratioMem)+"|");
                 logTo.accept(df.format(summary.ratioReaderInitialisationDuration)+"|");
                 logTo.accept(df.format(summary.ratioFirstPlaneReadingTime)+"|\n");
@@ -768,6 +788,8 @@ public class CompareReader {
         double ratioFirstPlaneReadingTime; // CZIReader/QuickStartReader
         int numberOfDifferences;
         int numberOfCriticalDifferences;
+
+        int numberOfDifferencesIgnored;
     }
 
 }

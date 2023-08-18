@@ -1872,6 +1872,10 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             this.attachmentDirectory = LibCZI.getAttachmentDirectorySegment(this.fileHeader, id, BUFFER_SIZE, littleEndian);
             if (attachmentDirectory!=null) {
                 this.timeStamps = LibCZI.getTimeStamps(this.attachmentDirectory, id, BUFFER_SIZE, littleEndian);
+                //System.out.println("#ts="+timeStamps.length);
+                /*for (double timeStamp: timeStamps) {
+                    System.out.println(timeStamp);
+                }*/
             } else {
                 this.timeStamps = new double[0];
             }
@@ -3106,11 +3110,15 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
                     double incrementTimeOverZ = 0;
                     if (reader.getSizeZ()>1) {
-                        incrementTimeOverZ = (sbmzfti.timestamp - sbmziti.timestamp) / (double) (reader.getSizeZ() / reader.nRotations);
+                        //System.out.println("DT="+(sbmzfti.timestamp - sbmziti.timestamp));
+                        //System.out.println("Sz="+reader.getSizeZ());
+                        incrementTimeOverZ = (sbmzfti.timestamp - sbmziti.timestamp) / (double) ((reader.getSizeZ()-1) / reader.nRotations);
+                        //System.out.println("incrementTimeOverZ="+incrementTimeOverZ);
                     }
                     double incrementTimeOverT = 0;
                     if (reader.getSizeT()>1) {
-                        incrementTimeOverT = (sbmzitf.timestamp - sbmziti.timestamp) / (double) (reader.getSizeT() / reader.nPhases);
+                        incrementTimeOverT = (sbmzitf.timestamp - sbmziti.timestamp) / (double) ((reader.getSizeT()-1) / reader.nPhases);
+                        //System.out.println("incrementTimeOverT="+incrementTimeOverT);
                     }
                     Time exposure = null;
                     if (sbmziti.exposureTime!=0) {
@@ -3120,6 +3128,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                         if (exposureFromChannel!=null) {
                             exposure = new Time(exposureFromChannel, UNITS.SECOND);
                         }
+                        //System.out.println("exposureFromChannel="+exposureFromChannel);
                     }
 
                     double offsetT0 = (seriesT0==null)?sbmziti.timestamp:sbmziti.timestamp-seriesT0.asInstant().getMillis()/1000.0;
@@ -3147,6 +3156,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                                         UNITS.SECOND);
 
                                 if ((incrementTimeOverZ >= 0) || (incrementTimeOverT >= 0)) {
+                                    //System.out.println("p"+planeIndex+":"+dT);
                                     reader.store.setPlaneDeltaT(dT, reader.series, planeIndex);
                                 }
                                 Length pZ = new Length(offsetZ0 + iZ * stepZ, UNITS.MICROMETER);

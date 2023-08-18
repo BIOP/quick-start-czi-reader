@@ -7,41 +7,37 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size |
 |-------------------|--------------------|------|-----------------|------|
-| Read time (all)   |42 ms|------|50 ms|------|
+| Read time (all)   |39 ms|------|47 ms|------|
 |0|![T=3_Z=5_CH=2.quick_true.flat_true.stitch_true.series_0.jpg](T=3_Z=5_CH=2/T=3_Z=5_CH=2.quick_true.flat_true.stitch_true.series_0.jpg)|X:256<br>Y:256<br>C:2<br>Z:5<br>T:3|![T=3_Z=5_CH=2.quick_false.flat_true.stitch_true.series_0.jpg](T=3_Z=5_CH=2/T=3_Z=5_CH=2.quick_false.flat_true.stitch_true.series_0.jpg)|X:256<br>Y:256<br>C:2<br>Z:5<br>T:3|
 
 # Metadata
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |18 ms|19 ms|        |
+| Initialization     |                  |16 ms|17 ms|        |
 | Reader Size (Mb)     |                  |2.00|2.64|        |
 | getStageLabelName| Image 0 | Current-Position| Scene position #0| |
-| getPlaneDeltaT| Image 0 Plane 2 |  0.817 s |  0.941 s | 0.124 s |
-| getPlaneDeltaT| Image 0 Plane 3 |  1.002 s |  1.111 s | 0.109 s |
-| getPlaneDeltaT| Image 0 Plane 4 |  1.219 s |  1.436 s | 0.217 s |
-| getPlaneDeltaT| Image 0 Plane 5 |  1.404 s |  1.607 s | 0.203 s |
-| getPlaneDeltaT| Image 0 Plane 6 |  1.620 s |  1.931 s | 0.311 s |
-| getPlaneDeltaT| Image 0 Plane 7 |  1.805 s |  2.103 s | 0.298 s |
-| getPlaneDeltaT| Image 0 Plane 8 |  2.022 s |  2.424 s | 0.402 s |
-| getPlaneDeltaT| Image 0 Plane 9 |  2.207 s |  2.608 s | 0.401 s |
-| getPlaneDeltaT| Image 0 Plane 10 |  2.099 s |  2.947 s | 0.848 s |
-| getPlaneDeltaT| Image 0 Plane 11 |  2.281 s |  3.131 s | 0.850 s |
-| getPlaneDeltaT| Image 0 Plane 12 |  2.501 s |  3.456 s | 0.955 s |
-| getPlaneDeltaT| Image 0 Plane 13 |  2.682 s |  3.640 s | 0.958 s |
-| getPlaneDeltaT| Image 0 Plane 14 |  2.903 s |  3.979 s | 1.076 s |
-| getPlaneDeltaT| Image 0 Plane 15 |  3.083 s |  4.150 s | 1.067 s |
-| getPlaneDeltaT| Image 0 Plane 16 |  3.304 s |  4.488 s | 1.184 s |
-| getPlaneDeltaT| Image 0 Plane 17 |  3.485 s |  4.672 s | 1.187 s |
-| getPlaneDeltaT| Image 0 Plane 18 |  3.706 s |  4.983 s | 1.277 s |
-| getPlaneDeltaT| Image 0 Plane 19 |  3.886 s |  5.155 s | 1.269 s |
-| getPlaneDeltaT| Image 0 Plane 20 |  3.783 s |  5.467 s | 1.684 s |
-| getPlaneDeltaT| Image 0 Plane 21 |  3.960 s |  5.640 s | 1.680 s |
-| getPlaneDeltaT| Image 0 Plane 22 |  4.185 s |  5.981 s | 1.796 s |
-| getPlaneDeltaT| Image 0 Plane 23 |  4.362 s |  6.152 s | 1.790 s |
-| getPlaneDeltaT| Image 0 Plane 24 |  4.587 s |  6.463 s | 1.876 s |
-| getPlaneDeltaT| Image 0 Plane 25 |  4.763 s |  6.634 s | 1.871 s |
-| getPlaneDeltaT| Image 0 Plane 26 |  4.988 s |  6.959 s | 1.971 s |
-| getPlaneDeltaT| Image 0 Plane 27 |  5.165 s |  7.142 s | 1.977 s |
-| getPlaneDeltaT| Image 0 Plane 28 |  5.390 s |  7.479 s | 2.089 s |
-| getPlaneDeltaT| Image 0 Plane 29 |  5.566 s |  7.663 s | 2.097 s |
+| getPlaneDeltaT| Image 0 Plane 2 |  0.917 s |  0.941 s | 0.024 s |
+| getPlaneDeltaT| Image 0 Plane 3 |  1.103 s |  1.111 s | 0.008 s |
+| getPlaneDeltaT| Image 0 Plane 4 |  1.420 s |  1.436 s | 0.016 s |
+| getPlaneDeltaT| Image 0 Plane 5 |  1.605 s |  1.607 s | 0.003 s |
+| getPlaneDeltaT| Image 0 Plane 6 |  1.922 s |  1.931 s | 0.009 s |
+| getPlaneDeltaT| Image 0 Plane 7 |  2.106 s |  2.103 s | 0.003 s |
+| getPlaneDeltaT| Image 0 Plane 10 |  2.941 s |  2.947 s | 0.006 s |
+| getPlaneDeltaT| Image 0 Plane 11 |  3.121 s |  3.131 s | 0.010 s |
+| getPlaneDeltaT| Image 0 Plane 12 |  3.443 s |  3.456 s | 0.013 s |
+| getPlaneDeltaT| Image 0 Plane 13 |  3.622 s |  3.640 s | 0.018 s |
+| getPlaneDeltaT| Image 0 Plane 14 |  3.946 s |  3.979 s | 0.034 s |
+| getPlaneDeltaT| Image 0 Plane 15 |  4.124 s |  4.150 s | 0.026 s |
+| getPlaneDeltaT| Image 0 Plane 16 |  4.448 s |  4.488 s | 0.040 s |
+| getPlaneDeltaT| Image 0 Plane 17 |  4.626 s |  4.672 s | 0.046 s |
+| getPlaneDeltaT| Image 0 Plane 18 |  4.950 s |  4.983 s | 0.033 s |
+| getPlaneDeltaT| Image 0 Plane 19 |  5.128 s |  5.155 s | 0.028 s |
+| getPlaneDeltaT| Image 0 Plane 22 |  5.969 s |  5.981 s | 0.012 s |
+| getPlaneDeltaT| Image 0 Plane 23 |  6.142 s |  6.152 s | 0.010 s |
+| getPlaneDeltaT| Image 0 Plane 24 |  6.471 s |  6.463 s | 0.008 s |
+| getPlaneDeltaT| Image 0 Plane 25 |  6.644 s |  6.634 s | 0.010 s |
+| getPlaneDeltaT| Image 0 Plane 26 |  6.974 s |  6.959 s | 0.015 s |
+| getPlaneDeltaT| Image 0 Plane 27 |  7.145 s |  7.142 s | 0.003 s |
+| getPlaneDeltaT| Image 0 Plane 28 |  7.476 s |  7.479 s | 0.003 s |
+| getPlaneDeltaT| Image 0 Plane 29 |  7.647 s |  7.663 s | 0.016 s |

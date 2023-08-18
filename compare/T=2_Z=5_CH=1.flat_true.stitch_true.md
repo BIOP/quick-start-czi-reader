@@ -7,21 +7,19 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size |
 |-------------------|--------------------|------|-----------------|------|
-| Read time (all)   |39 ms|------|48 ms|------|
+| Read time (all)   |39 ms|------|44 ms|------|
 |0|![T=2_Z=5_CH=1.quick_true.flat_true.stitch_true.series_0.jpg](T=2_Z=5_CH=1/T=2_Z=5_CH=1.quick_true.flat_true.stitch_true.series_0.jpg)|X:256<br>Y:256<br>C:1<br>Z:5<br>T:2|![T=2_Z=5_CH=1.quick_false.flat_true.stitch_true.series_0.jpg](T=2_Z=5_CH=1/T=2_Z=5_CH=1.quick_false.flat_true.stitch_true.series_0.jpg)|X:256<br>Y:256<br>C:1<br>Z:5<br>T:2|
 
 # Metadata
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |17 ms|20 ms|        |
+| Initialization     |                  |16 ms|16 ms|        |
 | Reader Size (Mb)     |                  |1.98|2.59|        |
-| getPlaneDeltaT| Image 0 Plane 1 |  0.646 s |  0.709 s | 0.063 s |
-| getPlaneDeltaT| Image 0 Plane 2 |  0.905 s |  1.049 s | 0.144 s |
-| getPlaneDeltaT| Image 0 Plane 3 |  1.165 s |  1.374 s | 0.209 s |
-| getPlaneDeltaT| Image 0 Plane 4 |  1.424 s |  1.684 s | 0.260 s |
-| getPlaneDeltaT| Image 0 Plane 5 |  1.198 s |  2.010 s | 0.812 s |
-| getPlaneDeltaT| Image 0 Plane 6 |  1.458 s |  2.348 s | 0.890 s |
-| getPlaneDeltaT| Image 0 Plane 7 |  1.717 s |  2.688 s | 0.971 s |
-| getPlaneDeltaT| Image 0 Plane 8 |  1.977 s |  3.011 s | 1.034 s |
-| getPlaneDeltaT| Image 0 Plane 9 |  2.236 s |  3.336 s | 1.100 s |
+| getPlaneDeltaT| Image 0 Plane 1 |  0.710 s |  0.709 s | 0.001 s |
+| getPlaneDeltaT| Image 0 Plane 2 |  1.035 s |  1.049 s | 0.014 s |
+| getPlaneDeltaT| Image 0 Plane 3 |  1.359 s |  1.374 s | 0.015 s |
+| getPlaneDeltaT| Image 0 Plane 6 |  2.335 s |  2.348 s | 0.014 s |
+| getPlaneDeltaT| Image 0 Plane 7 |  2.659 s |  2.688 s | 0.029 s |
+| getPlaneDeltaT| Image 0 Plane 8 |  2.984 s |  3.011 s | 0.027 s |
+| getPlaneDeltaT| Image 0 Plane 9 |  3.308 s |  3.336 s | 0.028 s |
