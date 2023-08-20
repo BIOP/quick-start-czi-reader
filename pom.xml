@@ -191,5 +191,19 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>net.preibisch</groupId>
+			<artifactId>BigStitcher</artifactId>
+			<version>1.2.6</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.epfl.biop</groupId>
+			<artifactId>bigdataviewer-biop-tools</artifactId>
+			<version>0.7.1</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 </project>

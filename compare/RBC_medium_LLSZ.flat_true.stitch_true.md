@@ -1,21 +1,21 @@
 # [RBC_medium_LLSZ.czi](https://zenodo.org/record/7117784/files/RBC_medium_LLSZ.czi) report
  - **Autostitch** = true
  - ZeissCZIReader v6.14.0
- - ZeissQuickStartCZIReader v0.1.7-SNAPSHOT
+ - ZeissQuickStartCZIReader v0.1.8-SNAPSHOT
 
 # Images 
 
-| Series            | Quick Start Reader | Size | Original Reader | Size |
-|-------------------|--------------------|------|-----------------|------|
-| Read time (all)   |128 ms|------|292 ms|------|
-|0|![RBC_medium_LLSZ.quick_true.flat_true.stitch_true.series_0.jpg](RBC_medium_LLSZ/RBC_medium_LLSZ.quick_true.flat_true.stitch_true.series_0.jpg)|X:279<br>Y:297<br>C:1<br>Z:834<br>T:5|![RBC_medium_LLSZ.quick_false.flat_true.stitch_true.series_0.jpg](RBC_medium_LLSZ/RBC_medium_LLSZ.quick_false.flat_true.stitch_true.series_0.jpg)|X:279<br>Y:297<br>C:1<br>Z:834<br>T:5|
+| Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
+|-------------------|--------------------|------|-----------------|------|--------|
+| Read time (all)   |180 ms|------|331 ms|------|--------|
+|0|![RBC_medium_LLSZ.quick_true.flat_true.stitch_true.series_0.jpg](RBC_medium_LLSZ/RBC_medium_LLSZ.quick_true.flat_true.stitch_true.series_0.jpg)|X:279<br>Y:297<br>C:1<br>Z:834<br>T:5|![RBC_medium_LLSZ.quick_false.flat_true.stitch_true.series_0.jpg](RBC_medium_LLSZ/RBC_medium_LLSZ.quick_false.flat_true.stitch_true.series_0.jpg)|X:279<br>Y:297<br>C:1<br>Z:834<br>T:5|0|
 
 # Metadata
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |29 ms|174 ms|        |
-| Reader Size (Mb)     |                  |3.41|7.71|        |
+| Initialization     |                  |36 ms|198 ms|        |
+| Reader Size (Mb)     |                  |3.40|7.70|        |
 | getPlanePositionZ| Image 0 Plane 1 | -384.727 um | -385.027 um | 0.300 um |
 | getPlanePositionZ| Image 0 Plane 2 | -384.427 um | -385.027 um | 0.600 um |
 | getPlanePositionZ| Image 0 Plane 3 | -384.127 um | -385.027 um | 0.900 um |

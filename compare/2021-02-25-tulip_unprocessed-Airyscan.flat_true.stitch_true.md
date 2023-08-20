@@ -1,21 +1,21 @@
 # [2021-02-25-tulip_unprocessed-Airyscan.czi](https://zenodo.org/record/4662053/files/2021-02-25-tulip_unprocessed-Airyscan.czi) report
  - **Autostitch** = true
  - ZeissCZIReader v6.14.0
- - ZeissQuickStartCZIReader v0.1.7-SNAPSHOT
+ - ZeissQuickStartCZIReader v0.1.8-SNAPSHOT
 
 # Images 
 
-| Series            | Quick Start Reader | Size | Original Reader | Size |
-|-------------------|--------------------|------|-----------------|------|
-| Read time (all)   |74 ms|------|87 ms|------|
-|0|![2021-02-25-tulip_unprocessed-Airyscan.quick_true.flat_true.stitch_true.series_0.jpg](2021-02-25-tulip_unprocessed-Airyscan/2021-02-25-tulip_unprocessed-Airyscan.quick_true.flat_true.stitch_true.series_0.jpg)|X:1024<br>Y:1024<br>C:2<br>Z:21<br>T:32|![2021-02-25-tulip_unprocessed-Airyscan.quick_false.flat_true.stitch_true.series_0.jpg](2021-02-25-tulip_unprocessed-Airyscan/2021-02-25-tulip_unprocessed-Airyscan.quick_false.flat_true.stitch_true.series_0.jpg)|X:1024<br>Y:1024<br>C:2<br>Z:21<br>T:32|
+| Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
+|-------------------|--------------------|------|-----------------|------|--------|
+| Read time (all)   |107 ms|------|124 ms|------|--------|
+|0|![2021-02-25-tulip_unprocessed-Airyscan.quick_true.flat_true.stitch_true.series_0.jpg](2021-02-25-tulip_unprocessed-Airyscan/2021-02-25-tulip_unprocessed-Airyscan.quick_true.flat_true.stitch_true.series_0.jpg)|X:1024<br>Y:1024<br>C:2<br>Z:21<br>T:32|![2021-02-25-tulip_unprocessed-Airyscan.quick_false.flat_true.stitch_true.series_0.jpg](2021-02-25-tulip_unprocessed-Airyscan/2021-02-25-tulip_unprocessed-Airyscan.quick_false.flat_true.stitch_true.series_0.jpg)|X:1024<br>Y:1024<br>C:2<br>Z:21<br>T:32|0|
 
 # Metadata
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |10 ms|20 ms|        |
-| Reader Size (Mb)     |                  |0.65|1.36|        |
+| Initialization     |                  |15 ms|27 ms|        |
+| Reader Size (Mb)     |                  |0.64|1.35|        |
 | getStageLabelX| Image 0 | 0.000 um | -33280.500 um | 33280.500 um |
 | getStageLabelY| Image 0 | 0.000 um | 1262.370 um | 1262.370 um |
 | getStageLabelZ| Image 0 | 0.000 um | 705.839 um | 705.839 um |

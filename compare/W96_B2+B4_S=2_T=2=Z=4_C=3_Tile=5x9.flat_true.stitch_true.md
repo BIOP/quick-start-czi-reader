@@ -1,26 +1,26 @@
 # [W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.czi](https://zenodo.org/record/7015307/files/W96_B2%2BB4_S%3D2_T%3D2%3DZ%3D4_C%3D3_Tile%3D5x9.czi) report
  - **Autostitch** = true
  - ZeissCZIReader v6.14.0
- - ZeissQuickStartCZIReader v0.1.7-SNAPSHOT
+ - ZeissQuickStartCZIReader v0.1.8-SNAPSHOT
 
 # Images 
 
-| Series            | Quick Start Reader | Size | Original Reader | Size |
-|-------------------|--------------------|------|-----------------|------|
-| Read time (all)   |1029 ms|------|1154 ms|------|
-|0|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_0.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_0.jpg)|X:2944<br>Y:3444<br>C:3<br>Z:4<br>T:2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_0.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_0.jpg)|X:2944<br>Y:3444<br>C:3<br>Z:4<br>T:2|
-|1|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_1.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_1.jpg)|X:1472<br>Y:1722<br>C:3<br>Z:4<br>T:2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_1.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_1.jpg)|X:1472<br>Y:1722<br>C:3<br>Z:4<br>T:2|
-|2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_2.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_2.jpg)|X:736<br>Y:861<br>C:3<br>Z:4<br>T:2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_2.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_2.jpg)|X:736<br>Y:861<br>C:3<br>Z:4<br>T:2|
-|3|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_3.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_3.jpg)|X:2944<br>Y:3444<br>C:3<br>Z:4<br>T:2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_3.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_3.jpg)|X:2944<br>Y:3444<br>C:3<br>Z:4<br>T:2|
-|4|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_4.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_4.jpg)|X:1472<br>Y:1722<br>C:3<br>Z:4<br>T:2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_4.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_4.jpg)|X:1472<br>Y:1722<br>C:3<br>Z:4<br>T:2|
-|5|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_5.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_5.jpg)|X:736<br>Y:861<br>C:3<br>Z:4<br>T:2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_5.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_5.jpg)|X:736<br>Y:861<br>C:3<br>Z:4<br>T:2|
+| Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
+|-------------------|--------------------|------|-----------------|------|--------|
+| Read time (all)   |3554 ms|------|1531 ms|------|--------|
+|0|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_0.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_0.jpg)|X:2944<br>Y:3444<br>C:3<br>Z:4<br>T:2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_0.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_0.jpg)|X:2944<br>Y:3444<br>C:3<br>Z:4<br>T:2|0|
+|1|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_1.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_1.jpg)|X:1472<br>Y:1722<br>C:3<br>Z:4<br>T:2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_1.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_1.jpg)|X:1472<br>Y:1722<br>C:3<br>Z:4<br>T:2|0|
+|2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_2.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_2.jpg)|X:736<br>Y:861<br>C:3<br>Z:4<br>T:2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_2.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_2.jpg)|X:736<br>Y:861<br>C:3<br>Z:4<br>T:2|0|
+|3|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_3.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_3.jpg)|X:2944<br>Y:3444<br>C:3<br>Z:4<br>T:2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_3.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_3.jpg)|X:2944<br>Y:3444<br>C:3<br>Z:4<br>T:2|0|
+|4|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_4.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_4.jpg)|X:1472<br>Y:1722<br>C:3<br>Z:4<br>T:2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_4.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_4.jpg)|X:1472<br>Y:1722<br>C:3<br>Z:4<br>T:2|0|
+|5|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_5.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_5.jpg)|X:736<br>Y:861<br>C:3<br>Z:4<br>T:2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_5.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_5.jpg)|X:736<br>Y:861<br>C:3<br>Z:4<br>T:2|0|
 
 # Metadata
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |43 ms|111 ms|        |
-| Reader Size (Mb)     |                  |2.12|5.30|        |
+| Initialization     |                  |57 ms|133 ms|        |
+| Reader Size (Mb)     |                  |2.11|5.29|        |
 | getStageLabelName| Image 0 | B2| Scene position #0| |
 | getStageLabelX| Image 0 | 13039.200 um | 13500.000 um | 460.800 um |
 | getStageLabelY| Image 0 | 16895.600 um | 17500.400 um | 604.800 um |

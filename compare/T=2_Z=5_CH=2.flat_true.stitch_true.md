@@ -1,21 +1,21 @@
 # [T=2_Z=5_CH=2.czi](https://zenodo.org/record/7015307/files/T%3D2_Z%3D5_CH%3D2.czi) report
  - **Autostitch** = true
  - ZeissCZIReader v6.14.0
- - ZeissQuickStartCZIReader v0.1.7-SNAPSHOT
+ - ZeissQuickStartCZIReader v0.1.8-SNAPSHOT
 
 # Images 
 
-| Series            | Quick Start Reader | Size | Original Reader | Size |
-|-------------------|--------------------|------|-----------------|------|
-| Read time (all)   |38 ms|------|46 ms|------|
-|0|![T=2_Z=5_CH=2.quick_true.flat_true.stitch_true.series_0.jpg](T=2_Z=5_CH=2/T=2_Z=5_CH=2.quick_true.flat_true.stitch_true.series_0.jpg)|X:256<br>Y:256<br>C:2<br>Z:5<br>T:2|![T=2_Z=5_CH=2.quick_false.flat_true.stitch_true.series_0.jpg](T=2_Z=5_CH=2/T=2_Z=5_CH=2.quick_false.flat_true.stitch_true.series_0.jpg)|X:256<br>Y:256<br>C:2<br>Z:5<br>T:2|
+| Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
+|-------------------|--------------------|------|-----------------|------|--------|
+| Read time (all)   |61 ms|------|71 ms|------|--------|
+|0|![T=2_Z=5_CH=2.quick_true.flat_true.stitch_true.series_0.jpg](T=2_Z=5_CH=2/T=2_Z=5_CH=2.quick_true.flat_true.stitch_true.series_0.jpg)|X:256<br>Y:256<br>C:2<br>Z:5<br>T:2|![T=2_Z=5_CH=2.quick_false.flat_true.stitch_true.series_0.jpg](T=2_Z=5_CH=2/T=2_Z=5_CH=2.quick_false.flat_true.stitch_true.series_0.jpg)|X:256<br>Y:256<br>C:2<br>Z:5<br>T:2|0|
 
 # Metadata
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |16 ms|16 ms|        |
-| Reader Size (Mb)     |                  |1.99|2.62|        |
+| Initialization     |                  |37 ms|25 ms|        |
+| Reader Size (Mb)     |                  |1.99|2.61|        |
 | getStageLabelName| Image 0 | Current-Position| Scene position #0| |
 | getPlaneDeltaT| Image 0 Plane 2 |  0.905 s |  0.901 s | 0.004 s |
 | getPlaneDeltaT| Image 0 Plane 3 |  1.081 s |  1.072 s | 0.009 s |

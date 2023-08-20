@@ -4,6 +4,8 @@ import ij.ImagePlus;
 import ij.io.FileSaver;
 import ij.plugin.ContrastEnhancer;
 import ij.plugin.Scaler;
+import ij.process.ImageProcessor;
+import loci.common.DebugTools;
 import loci.common.services.DependencyException;
 import loci.common.services.ServiceException;
 import loci.common.services.ServiceFactory;
@@ -41,6 +43,7 @@ import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class CompareReader {
     public static final Set<String> criticalMethods = new HashSet<>(Arrays.asList(
@@ -448,6 +451,28 @@ public class CompareReader {
     static final int MAX_LINES = 500;
     static final double THUMB_SIZE = 150;
 
+    public static int getNumberOfDifferentPixels(ImagePlus imp1, ImagePlus imp2) {
+        ImageProcessor ip1 = imp1.getProcessor();
+        ImageProcessor ip2 = imp2.getProcessor();
+        int width = Math.min(ip1.getWidth(), ip2.getWidth());
+        int height = Math.min(ip1.getHeight(), ip2.getHeight());
+        int differences = 0;
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int pixelValue1 = ip1.getPixel(x, y);
+                int pixelValue2 = ip2.getPixel(x, y);
+
+                if (pixelValue1 != pixelValue2) {
+                    differences++;
+                }
+            }
+        }
+
+        //System.out.println("Number of different pixels: " + differences);
+        return differences;
+    }
+
     public static void makeReport(String imageFolderPath, String imageName, boolean autoStitch, boolean flattenRes,
                                   String originalURL, SummaryPerFile summary) {
 
@@ -509,6 +534,8 @@ public class CompareReader {
                 List<String> images = new ArrayList<>();
                 List<String> imagesSize = new ArrayList<>();
 
+                List<Integer> pixelsDiffs = new ArrayList<>();
+
                 // Importer settings
                 ImporterOptions options = new ImporterOptions();
                 options.setAutoscale(true);
@@ -526,14 +553,17 @@ public class CompareReader {
                 Duration readTimeQuickStartReader = toc();
                 String readTimeQuick = formatDuration(readTimeQuickStartReader);//System.out.println("init quick = "+toc());
                 int nSeriesQStart = imps.length;
+                List<ImagePlus> qthumbs = new ArrayList<>();
                 for (int i = 0; i < nSeriesQStart; i++) {
                     ImagePlus temp = new ImagePlus("", imps[i].getProcessor());
+                    //temp.show();
                     double scaleFactor = temp.getWidth() > temp.getWidth() ? THUMB_SIZE / (double) temp.getWidth() : THUMB_SIZE / (double) temp.getHeight();
                     ImagePlus thumb = Scaler.resize(temp, (int) (temp.getWidth() * scaleFactor), (int) (temp.getHeight() * scaleFactor), 1, "");
                     thumb.setTitle(imps[i].getTitle());
                     new ContrastEnhancer().equalize(thumb);
                     qImages.add(imageNameNoExt + ".quick_true.flat_" + flattenRes + ".stitch_" + autoStitch + ".series_" + i + ".jpg");
                     new FileSaver(thumb).saveAsJpeg(reportImagePath + qImages.get(qImages.size()-1));
+                    qthumbs.add(thumb);
                     qImagesSize.add("X:"+imps[i].getWidth()+"<br>"+
                             "Y:"+imps[i].getHeight()+"<br>"+
                             "C:"+imps[i].getNChannels()+"<br>"+
@@ -541,7 +571,7 @@ public class CompareReader {
                             "T:"+imps[i].getNFrames()
                     );
                     temp.close();
-                    thumb.close();
+                    //thumb.close();
                     imps[i].close();
                 }
 
@@ -554,14 +584,17 @@ public class CompareReader {
                 String readTime = formatDuration(readTimeReader);//System.out.println("init quick = "+toc());
 
                 int nSeries = imps.length;
+                List<ImagePlus> thumbs = new ArrayList<>();
                 for (int i = 0; i < nSeries; i++) {
                     ImagePlus temp = new ImagePlus("", imps[i].getProcessor());
+                    //temp.show();
                     double scaleFactor = temp.getWidth() > temp.getWidth() ? THUMB_SIZE / (double) temp.getWidth() : THUMB_SIZE / (double) temp.getHeight();
                     ImagePlus thumb = Scaler.resize(temp, (int) (temp.getWidth() * scaleFactor), (int) (temp.getHeight() * scaleFactor), 1, "");
                     thumb.setTitle(imps[i].getTitle());
                     new ContrastEnhancer().equalize(thumb);
                     images.add(imageNameNoExt + ".quick_false.flat_" + flattenRes + ".stitch_" + autoStitch + ".series_" + i + ".jpg");
                     new FileSaver(thumb).saveAsJpeg(reportImagePath + images.get(images.size()-1));
+                    thumbs.add(thumb);
                     imagesSize.add("X:"+imps[i].getWidth()+"<br>"+
                             "Y:"+imps[i].getHeight()+"<br>"+
                             "C:"+imps[i].getNChannels()+"<br>"+
@@ -569,13 +602,26 @@ public class CompareReader {
                             "T:"+imps[i].getNFrames()
                     );
                     temp.close();
-                    thumb.close();
+                    //thumb.close();
                     imps[i].close();
+                    if (i< qthumbs.size()) {
+                        // let's compute the diff
+                        ImagePlus qthumb = qthumbs.get(i);
+                        int numberOfDiffs = getNumberOfDifferentPixels(qthumb, thumb);
+                        pixelsDiffs.add(numberOfDiffs);
+                        summary.numberOfDiffsPixels+=numberOfDiffs;
+                    }
+                }
+                for (ImagePlus image :thumbs) {
+                    image.close();
+                }
+                for (ImagePlus image :qthumbs) {
+                    image.close();
                 }
 
-                logTo.accept("| Series            | Quick Start Reader | Size | Original Reader | Size |");
-                logTo.accept("|-------------------|--------------------|------|-----------------|------|");
-                logTo.accept("| Read time (all)   |"+readTimeQuick+   "|------|"+readTime     +"|------|");
+                logTo.accept("| Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |");
+                logTo.accept("|-------------------|--------------------|------|-----------------|------|--------|");
+                logTo.accept("| Read time (all)   |"+readTimeQuick+   "|------|"+readTime     +"|------|--------|");
                 summary.ratioFirstPlaneReadingTime = (double) (readTimeReader.toMillis()) / (double) (readTimeQuickStartReader.toMillis());
 
 
@@ -590,7 +636,9 @@ public class CompareReader {
                     if (i<images.size()) {
                         img = "!["+images.get(i)+"]("+imageNameNoExt+"/"+images.get(i)+")"+"|"+imagesSize.get(i);
                     } else img = " | ";
-                    logTo.accept("|"+i+"|"+imgQ+"|"+img+"|");
+                    int nDiffs = -1;
+                    if (pixelsDiffs.size()>i) nDiffs = pixelsDiffs.get(i);
+                    logTo.accept("|"+i+"|"+imgQ+"|"+img+"|"+nDiffs+"|");
                 }
             }
 
@@ -618,7 +666,30 @@ public class CompareReader {
 
     public static void main(String... args) {
         //DebugTools.setRootLevel("TRACE");
+        DebugTools.setRootLevel("WARN");
+
+        Function<String, String> decoder = (str) -> {
+            try {
+                return URLDecoder.decode(str, "UTF-8");
+            } catch(Exception e){
+                e.printStackTrace();
+                return str;
+            }
+        };
+
+        // These are parts from a multi-part file: they need to be downloaded, but they are not analyzed
+        DatasetHelper.getDataset("https://zenodo.org/record/8263451/files/Image_1_2023_08_18__14_32_31_964%281%29.czi", decoder);
+        DatasetHelper.getDataset("https://zenodo.org/record/8263451/files/Image_1_2023_08_18__14_32_31_964%282%29.czi", decoder);
+        DatasetHelper.getDataset("https://zenodo.org/record/8263451/files/Image_1_2023_08_18__14_32_31_964%283%29.czi", decoder);
+        DatasetHelper.getDataset("https://zenodo.org/record/8263451/files/test_gray.czi", decoder);
+        DatasetHelper.getDataset("https://zenodo.org/record/8263451/files/Image_1_2023_08_18__14_32_31_964.czi", decoder);
+
+
         String[] cziURLs ={
+                "https://zenodo.org/record/8263451/files/Demo%20LISH%204x8%2015pct%20647.czi",
+                "https://zenodo.org/record/8263451/files/test_gray.czi",
+                "https://zenodo.org/record/8263451/files/Image_1_2023_08_18__14_32_31_964.czi",
+
                 // "https://zenodo.org/record/7147844/files/test-fullplate.czi", // 13.7 GB test full plate -> out of memory
                 "https://zenodo.org/record/7129425/files/test-plate.czi", // test plate, 3.3 GB
                 "https://zenodo.org/record/7254229/files/P1.czi", // Cytoskeleton stack image, 125 MB
@@ -673,14 +744,7 @@ public class CompareReader {
         List<SummaryPerFile> summaryList = new ArrayList<>();
 
         for (String url: cziURLs) {
-            File f = DatasetHelper.getDataset(url, (str) -> {
-                try {
-                    return URLDecoder.decode(str, "UTF-8");
-                } catch(Exception e){
-                    e.printStackTrace();
-                    return str;
-                }
-            });
+            File f = DatasetHelper.getDataset(url, decoder);
             System.out.println("Analysis of file: "+f.getName());
             try {
                 boolean autoStitch, flattenRes;
@@ -717,14 +781,15 @@ public class CompareReader {
             };
 
             DecimalFormat df = new DecimalFormat("0.0");
-            logTo.accept("|File Name|AutoStitch|#Diffs<br>(Critical)|#Diffs|#Diffs Ignored|Mem Gain|Init Time Gain|Read Time Gain|\n");
-            logTo.accept("|---------|----------|--------------------|------|--------------|--------|--------------|--------------|\n");
+            logTo.accept("|File Name|AutoStitch|#Diffs<br>(Critical)|#Diffs|#Diffs Ignored|#DiffsPixels|Mem Gain|Init Time Gain|Read Time Gain|\n");
+            logTo.accept("|---------|----------|--------------------|------|--------------|------------|--------|--------------|--------------|\n");
             for (SummaryPerFile summary: summaryList) {
                 logTo.accept("|["+summary.imageName+"]("+summary.urlFullReport+")|");
                 logTo.accept(summary.autoStitch+"|");
                 logTo.accept(summary.numberOfCriticalDifferences+"|");
                 logTo.accept(summary.numberOfDifferences+"|");
                 logTo.accept(summary.numberOfDifferencesIgnored+"|");
+                logTo.accept(summary.numberOfDiffsPixels+"|");
                 logTo.accept(df.format(summary.ratioMem)+"|");
                 logTo.accept(df.format(summary.ratioReaderInitialisationDuration)+"|");
                 logTo.accept(df.format(summary.ratioFirstPlaneReadingTime)+"|\n");
@@ -788,8 +853,8 @@ public class CompareReader {
         double ratioFirstPlaneReadingTime; // CZIReader/QuickStartReader
         int numberOfDifferences;
         int numberOfCriticalDifferences;
-
         int numberOfDifferencesIgnored;
+        int numberOfDiffsPixels;
     }
 
 }

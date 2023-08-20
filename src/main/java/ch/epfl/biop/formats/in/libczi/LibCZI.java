@@ -382,6 +382,12 @@ public class LibCZI {
         return entryDV;
     }
 
+    private static void skipEntryDV(RandomAccessInputStream in) throws IOException{
+        in.skipBytes(28);
+        int dimensionCount = in.readInt();
+        in.skipBytes(20*dimensionCount);
+    }
+
     /**
      * The stream should be already initialized, its endianness set properly. No raw data is read,
      * but the {@link SubBlockSegment} object has its fields initialized properly
@@ -395,15 +401,17 @@ public class LibCZI {
 
         in.seek(filePosition
                 // Jumps 16 bytes to avoid reading the id, which should be ZISRAWSUBBLOCK anyway
-                // Jumps 4 bytes for used size
-                // Jumps 4 bytes for allocated size
+                // Jumps 8 bytes for used size
+                // Jumps 8 bytes for allocated size
                 +HEADER_SIZE);
 
         long fp = in.getFilePointer();
         subBlock.data.metadataSize = in.readInt();
         subBlock.data.attachmentSize = in.readInt();
         subBlock.data.dataSize = in.readLong();
-
+        // Here is the directory entry (DE, or DV, but we already read it, so
+        // here we just skip it
+        skipEntryDV(in);
         in.skipBytes((int) Math.max(256 - (in.getFilePointer() - fp), 0));
         subBlock.data.metadataOffset = in.getFilePointer();
         in.skipBytes(subBlock.data.metadataSize);

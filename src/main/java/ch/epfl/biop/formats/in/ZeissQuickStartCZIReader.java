@@ -301,6 +301,9 @@ public class ZeissQuickStartCZIReader extends FormatReader {
     @CopyByRef
     transient Set<MinimalDimensionEntry> subBlocksCurrentlyLoading = new HashSet<>();
 
+    @CopyByRef
+    transient boolean useCache = false;
+
     // -- Constructor --
 
     final static String FORMAT = "Zeiss CZI (Quick Start)";
@@ -396,12 +399,13 @@ public class ZeissQuickStartCZIReader extends FormatReader {
     public static boolean allowAutoStitch = false; // TODO CHANGE THIS TO METADATA OPTIONS!
 
     public boolean allowAutostitching() {
+        //return false;
         MetadataOptions options = getMetadataOptions();
         if (options instanceof DynamicMetadataOptions) {
             return ((DynamicMetadataOptions) options).getBoolean(
                     ALLOW_AUTOSTITCHING_KEY, ALLOW_AUTOSTITCHING_DEFAULT);
         }
-        return allowAutoStitch;// ALLOW_AUTOSTITCHING_DEFAULT;
+        return allowAutoStitch;// ALLOW_AUTOSTITCHING_DEFAULT;*/
     }
 
     public boolean canReadAttachments() { // TODO : handle this method
@@ -451,7 +455,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                                    RandomAccessInputStream s, Region tile, byte[] buf) throws FormatException, IOException {
         //s.order(isLittleEndian()); -> it should be already set when calling the method
 
-        if (compression!=UNCOMPRESSED) {
+        if ((useCache)&&(compression!=UNCOMPRESSED)) {
             cacheLock.lock();
             if (subBlockLRUCache.containsKey(block)) {
                 byte[] bytes = subBlockLRUCache.get(block).get();
@@ -620,23 +624,27 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         }
         if (buf != null && buf.length >= data.length) {
             System.arraycopy(data, 0, buf, 0, data.length);
-            cacheLock.lock();
-            // Block just computed
-            subBlockLRUCache.touch(block, buf);
-            // Put in cache
-            subBlocksCurrentlyLoading.remove(block);
-            cacheLock.unlock();
-            synchronized (subBlocksCurrentlyLoading) {
-                subBlocksCurrentlyLoading.notifyAll(); // Wake the threads waiting for this block
+            if (useCache) {
+                cacheLock.lock();
+                // Block just computed
+                subBlockLRUCache.touch(block, buf);
+                // Put in cache
+                subBlocksCurrentlyLoading.remove(block);
+                cacheLock.unlock();
+                synchronized (subBlocksCurrentlyLoading) {
+                    subBlocksCurrentlyLoading.notifyAll(); // Wake the threads waiting for this block
+                }
             }
             return buf;
         }
-        cacheLock.lock();
-        subBlockLRUCache.touch(block, data);
-        subBlocksCurrentlyLoading.remove(block);
-        cacheLock.unlock();
-        synchronized (subBlocksCurrentlyLoading) {
-            subBlocksCurrentlyLoading.notifyAll();
+        if (useCache) {
+            cacheLock.lock();
+            subBlockLRUCache.touch(block, data);
+            subBlocksCurrentlyLoading.remove(block);
+            cacheLock.unlock();
+            synchronized (subBlocksCurrentlyLoading) {
+                subBlocksCurrentlyLoading.notifyAll();
+            }
         }
         return data;
     }
@@ -713,9 +721,9 @@ public class ZeissQuickStartCZIReader extends FormatReader {
     @Override
     public int getOptimalTileWidth() {
         if (maxBlockSizeX>0) {
-            return Math.min(512, maxBlockSizeX);
+            return Math.min(2048, maxBlockSizeX);
         } else {
-            return Math.min(512, getSizeX());
+            return Math.min(2048, getSizeX());
         }
     }
 
@@ -723,9 +731,9 @@ public class ZeissQuickStartCZIReader extends FormatReader {
     @Override
     public int getOptimalTileHeight() {
         if (maxBlockSizeY>0) {
-            return Math.min(512, maxBlockSizeY);
+            return Math.min(2048, maxBlockSizeY);
         } else {
-            return Math.min(512, getSizeY());
+            return Math.min(2048, getSizeY());
         }
     }
 
@@ -859,6 +867,12 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         }
         return buf;
     }
+
+    /*@Override
+    public void setCoreIndex(int coreIndex) {
+        super.setCoreIndex(coreIndex);
+        this.getStream()
+    }*/
 
     /* @see loci.formats.FormatReader#initFile(String) */
     @Override
@@ -1195,7 +1209,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         for (int iCoreIndex = 0; iCoreIndex<core.size(); iCoreIndex++) {
             if (core.get(iCoreIndex).thumbnail) continue; // skips extra images
             CoreSignature coreSignature = orderedCoreSignatureList.get(iCoreIndex);
-            coreIndexToFileName.add(cziPartToSegments.get(filePartFromCoreSignature(coreSignature)).fileName);
+            coreIndexToFileName.add(cziPartToSegments.get(coreSignature.getFilePart()).fileName);
             //coreIndexToFileName.add(id);
             mapCoreTZCToBlocks.add(iCoreIndex, new HashMap<>());
             coreIndexToTZCToMinimalBlocks.add(iCoreIndex, new HashMap<>());
@@ -1475,6 +1489,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             case "Z":
             case "T":
             case "C":
+            case FILE_PART_DIMENSION:
             //case "S":
                 return true;
             case "M":
@@ -1539,14 +1554,21 @@ public class ZeissQuickStartCZIReader extends FormatReader {
     static class CoreSignature implements Comparable<CoreSignature> {
         final String signature;
         final int hashCode;
+
+        final int filePart;
+
+        public int getFilePart() {
+            return filePart;
+        }
         public CoreSignature(ModuloDimensionEntries entries, //LibCZI.SubBlockSegment.SubBlockSegmentData.SubBlockDirectoryEntryDV.DimensionEntry[] entries,
                              String pyramidLevelDimension, int pyramidLevelValue,
                              Function<String, Integer> maxDigitPerDimension, boolean autostitch,
                              String filePartDimension, int filePartValue) {
+            this.filePart = filePartValue;
             final StringBuilder signatureBuilder = new StringBuilder();
-            signatureBuilder.append(filePartDimension);
-            String digitFormat = "%0"+maxDigitPerDimension.apply(filePartDimension)+"d";
-            signatureBuilder.append(String.format(digitFormat, filePartValue));
+            //signatureBuilder.append(filePartDimension);
+            //String digitFormat = "%0"+maxDigitPerDimension.apply(filePartDimension)+"d";
+            //signatureBuilder.append(String.format(digitFormat, filePartValue));
             entries.getList().stream()
                     .sorted(Comparator.comparing(e -> dimensionPriority(e.getDimension())))
                     .forEachOrdered(e -> {
@@ -1558,7 +1580,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     });
             // TODO : put this as a dimension entry directly
             signatureBuilder.append(pyramidLevelDimension);
-            digitFormat = "%0"+maxDigitPerDimension.apply(pyramidLevelDimension)+"d";
+            String digitFormat = "%0"+maxDigitPerDimension.apply(pyramidLevelDimension)+"d";
             signatureBuilder.append(String.format(digitFormat, pyramidLevelValue));
             signature = signatureBuilder.toString();
             hashCode = Objects.hash(signature); // final, so let's precompute the hashcode
@@ -1950,10 +1972,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             cost.clear();
             super.clear();
         }
-    }
-
-    private static int filePartFromCoreSignature(CoreSignature signature) {
-        return signature.getDimensions().get(FILE_PART_DIMENSION);
     }
 
     /**
