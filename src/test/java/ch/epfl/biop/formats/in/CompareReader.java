@@ -780,10 +780,15 @@ public class CompareReader {
             };
 
             DecimalFormat df = new DecimalFormat("0.0");
-            logTo.accept("|File Name|AutoStitch|#Diffs<br>(Critical)|#Diffs|#Diffs Ignored|#DiffsPixels|Mem Gain|Init Time Gain|Read Time Gain|\n");
-            logTo.accept("|---------|----------|--------------------|------|--------------|------------|--------|--------------|--------------|\n");
+            logTo.accept("|OK |File Name|AutoStitch|#Diffs<br>(Critical)|#Diffs|#Diffs Ignored|#DiffsPixels|Mem Gain|Init Time Gain|Read Time Gain|\n");
+            logTo.accept("|---|---------|----------|--------------------|------|--------------|------------|--------|--------------|--------------|\n");
             for (SummaryPerFile summary: summaryList) {
-                logTo.accept("|["+summary.imageName+"]("+summary.urlFullReport+")|");
+                String res = " ";
+                if (summary.numberOfDifferences+summary.numberOfCriticalDifferences+summary.numberOfDiffsPixels==0) {
+                    res = "✓";
+                }
+                logTo.accept("|"+res+"|");
+                logTo.accept("["+summary.imageName+"]("+summary.urlFullReport+")|");
                 logTo.accept(summary.autoStitch+"|");
                 logTo.accept(summary.numberOfCriticalDifferences+"|");
                 logTo.accept(summary.numberOfDifferences+"|");

@@ -7,7 +7,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |3910 ms|------|3824 ms|------|--------|
+| Read time (all)   |4101 ms|------|4002 ms|------|--------|
 |0|![test_gray.quick_true.flat_true.stitch_false.series_0.jpg](test_gray/test_gray.quick_true.flat_true.stitch_false.series_0.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|![test_gray.quick_false.flat_true.stitch_false.series_0.jpg](test_gray/test_gray.quick_false.flat_true.stitch_false.series_0.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|0|
 |1|![test_gray.quick_true.flat_true.stitch_false.series_1.jpg](test_gray/test_gray.quick_true.flat_true.stitch_false.series_1.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|![test_gray.quick_false.flat_true.stitch_false.series_1.jpg](test_gray/test_gray.quick_false.flat_true.stitch_false.series_1.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|0|
 |2|![test_gray.quick_true.flat_true.stitch_false.series_2.jpg](test_gray/test_gray.quick_true.flat_true.stitch_false.series_2.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|![test_gray.quick_false.flat_true.stitch_false.series_2.jpg](test_gray/test_gray.quick_false.flat_true.stitch_false.series_2.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|0|
@@ -49,7 +49,7 @@
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |41 ms|6 ms|        |
+| Initialization     |                  |13 ms|7 ms|        |
 | Reader Size (Mb)     |                  |0.17|0.23|        |
 | getStageLabelX| Image 0 | | 1: null| 2: ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelY| Image 0 | | 1: null| 2: ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer |
