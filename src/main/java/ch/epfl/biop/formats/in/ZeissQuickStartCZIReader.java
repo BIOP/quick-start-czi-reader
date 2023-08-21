@@ -252,15 +252,17 @@ public class ZeissQuickStartCZIReader extends FormatReader {
     // bio-formats core index the downscaling factor of the series.
     @CopyByRef
     private List<Integer> coreIndexToDownscaleFactor = new ArrayList<>();
+
     // Maps bio-formats series index to the filename, in case of multipart file
     @CopyByRef
-    private List<String> coreIndexToFileName = new ArrayList<>(); // TODO: Find a way to not store the absolutepath
+    private List<String> filePartToFileName = new ArrayList<>();
+    //private List<String> coreIndexToFileName = new ArrayList<>(); // TODO: Find a way to not store the absolutepath
 
     @CopyByRef
     private Map<Integer, Integer> coreIndexToSeries = new HashMap<>();
 
     // streamCurrentSeries is a temp field that should maybe be changed when setSeries is called
-    transient int streamCurrentSeries = -1;
+    transient int streamCurrentPart = -1;
 
     // Core map structure for fast access to blocks:
     // - first key: bio-formats core index
@@ -302,7 +304,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
     transient Set<MinimalDimensionEntry> subBlocksCurrentlyLoading = new HashSet<>();
 
     @CopyByRef
-    transient boolean useCache = false;
+    transient boolean useCache = true;
 
     // -- Constructor --
 
@@ -328,7 +330,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         suffixSufficient = false;
         suffixNecessary = false;
 
-        this.streamCurrentSeries = -1;
+        this.streamCurrentPart = -1;
 
         // Copy all annotated fields from this class (does not do anything with the inherited ones)
         Field[] fields = ZeissQuickStartCZIReader.class.getDeclaredFields();
@@ -372,7 +374,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             coreIndexToCompression.clear();
             coreIndexToSignature.clear();
             coreIndexToDownscaleFactor.clear();
-            coreIndexToFileName.clear();
+            filePartToFileName.clear();
             coreIndexToSeries.clear();
             coreIndexToTZCToMinimalBlocks.clear(); // The big one!
             extraImages.clear(); // Can be big as well
@@ -702,15 +704,15 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
     @Override
     public void reopenFile() {
-        streamCurrentSeries = -1;
+        streamCurrentPart = -1;
     }
 
-    private synchronized RandomAccessInputStream getStream() throws IOException {
-        if ((in != null)&&(streamCurrentSeries == getSeries())) {
+    private synchronized RandomAccessInputStream getStream(int filePart) throws IOException {
+        if ((in != null)&&(streamCurrentPart == filePart)) {
             return in;
         }
-        streamCurrentSeries = getSeries();
-        RandomAccessInputStream ris = new RandomAccessInputStream(coreIndexToFileName.get(getCoreIndex()), BUFFER_SIZE);
+        streamCurrentPart = filePart;
+        RandomAccessInputStream ris = new RandomAccessInputStream(filePartToFileName.get(filePart), BUFFER_SIZE);
         in = ris;
         ris.order(isLittleEndian());
         return ris;
@@ -788,7 +790,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             );
 
             if (image.intersects(blockRegion)) {
-                RandomAccessInputStream stream = getStream();
+                RandomAccessInputStream stream = getStream(block.filePart);
 
                 if (image.equals(blockRegion)) {
                     // Best case scenario
@@ -926,7 +928,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         // but only the segments needed for the file initialisation...
         Map<Integer, CZISegments> cziPartToSegments = new HashMap<>();
         cziPartToSegments.put(0, new CZISegments(id, isLittleEndian())); // CZISegments constructor parses CZI file segments
-
+        filePartToFileName.add(id);
         // And we the additional parts.
         Location parent = file.getParentFile();
         String[] list = parent.list(true);
@@ -934,8 +936,10 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             if (f.startsWith(base + "(") || f.startsWith(base + " (")) {
                 String part = f.substring(f.lastIndexOf("(") + 1, f.lastIndexOf(")"));
                 try {
+                    String filePartPath = new Location(parent, f).getAbsolutePath();
                     cziPartToSegments.put(Integer.parseInt(part),
-                            new CZISegments(new Location(parent, f).getAbsolutePath(), isLittleEndian()));
+                            new CZISegments(filePartPath, isLittleEndian()));
+                    filePartToFileName.add(filePartPath);
                 } catch (NumberFormatException e) {
                     LOGGER.debug("{} not included in multi-file dataset", f);
                 }
@@ -1036,7 +1040,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                         // Split by resolution level if flattenedResolutions is true
                         ModuloDimensionEntries moduloEntry = new ModuloDimensionEntries(entry,
                                 nRotations, nIlluminations, nPhases,
-                                nChannels, nSlices, nFrames);
+                                nChannels, nSlices, nFrames, part);
 
                         CoreSignature coreSignature = new CoreSignature(moduloEntry
                                 , RESOLUTION_LEVEL_DIMENSION,
@@ -1209,7 +1213,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         for (int iCoreIndex = 0; iCoreIndex<core.size(); iCoreIndex++) {
             if (core.get(iCoreIndex).thumbnail) continue; // skips extra images
             CoreSignature coreSignature = orderedCoreSignatureList.get(iCoreIndex);
-            coreIndexToFileName.add(cziPartToSegments.get(coreSignature.getFilePart()).fileName);
+            //coreIndexToFileName.add(cziPartToSegments.get(coreSignature.getFilePart()).fileName);
             //coreIndexToFileName.add(id);
             mapCoreTZCToBlocks.add(iCoreIndex, new HashMap<>());
             coreIndexToTZCToMinimalBlocks.add(iCoreIndex, new HashMap<>());
@@ -1686,10 +1690,11 @@ public class ZeissQuickStartCZIReader extends FormatReader {
          */
 
         final List<ModuloDimensionEntry> entryList = new ArrayList<>();
-        final int nRotations, nIlluminations, nPhases;
+        final int nRotations, nIlluminations, nPhases, filePart;
 
         public ModuloDimensionEntries(LibCZI.SubBlockDirectorySegment.SubBlockDirectorySegmentData.SubBlockDirectoryEntry entry,
-                                      int nRotations, int nIlluminations, int nPhases, int nChannels, int nSlices, int nFrames) {
+                                      int nRotations, int nIlluminations, int nPhases, int nChannels, int nSlices, int nFrames, int filePart) {
+            this.filePart = filePart;
             this.nRotations = nRotations;
             this.nIlluminations = nIlluminations;
             this.nPhases = nPhases;
@@ -1851,11 +1856,14 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             }
             storedSizeX = entry.getDimension("X").storedSize;
             storedSizeY = entry.getDimension("Y").storedSize;
+            filePart = entry.filePart;
         }
 
         final long filePosition;
         final int dimensionStartX, dimensionStartY;
         final int storedSizeX, storedSizeY;
+
+        final int filePart;
     }
 
     /** Duplicates this reader for parallel reading.
@@ -3034,8 +3042,8 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     CZTKey ziti = new CZTKey(iChannel,0,0);
                     blocks = mapCoreCZTToBlocks.get(iCoreIndex).get(ziti);
                     if ((blocks==null) || (blocks.size()==0)) break loopChannel;
-                    block = LibCZI.getBlock(reader.getStream(), blocks.get(0).filePosition);
-                    LibCZI.SubBlockMeta sbmziti = LibCZI.readSubBlockMeta(reader.getStream(), block, parser);
+                    block = LibCZI.getBlock(reader.getStream(blocks.get(0).filePart), blocks.get(0).filePosition);
+                    LibCZI.SubBlockMeta sbmziti = LibCZI.readSubBlockMeta(reader.getStream(blocks.get(0).filePart), block, parser);
 
                     Length stagePosX = null;
                     Length stagePosY = null;
@@ -3043,8 +3051,8 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
                     // Look for the min X and Y position over blocks
                     for (MinimalDimensionEntry iBlock : blocks) {
-                        block = LibCZI.getBlock(reader.getStream(), iBlock.filePosition);
-                        LibCZI.SubBlockMeta sbm = LibCZI.readSubBlockMeta(reader.getStream(), block, parser);
+                        block = LibCZI.getBlock(reader.getStream(iBlock.filePart), iBlock.filePosition);
+                        LibCZI.SubBlockMeta sbm = LibCZI.readSubBlockMeta(reader.getStream(iBlock.filePart), block, parser);
                         if (sbm.stageX!=null)
                             if ((stagePosX == null)||(stagePosX.value(UNITS.MICROMETER).doubleValue()>sbm.stageX.value(UNITS.MICROMETER).doubleValue())) {
                                 stagePosX = new Length(sbm.stageX.value(UNITS.MICROMETER).doubleValue()/*+offsetXInMicrons*/, UNITS.MICROMETER);
@@ -3104,8 +3112,8 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                         break loopChannel;
                     }
 
-                    block = LibCZI.getBlock(reader.getStream(), blocks.get(0).filePosition);
-                    LibCZI.SubBlockMeta sbmzfti = LibCZI.readSubBlockMeta(reader.getStream(), block, parser);
+                    block = LibCZI.getBlock(reader.getStream(blocks.get(0).filePart), blocks.get(0).filePosition);
+                    LibCZI.SubBlockMeta sbmzfti = LibCZI.readSubBlockMeta(reader.getStream(blocks.get(0).filePart), block, parser);
 
                     CZTKey zitf = new CZTKey(iChannel,0,reader.getSizeT()-1);
                     blocks = mapCoreCZTToBlocks.get(iCoreIndex).get(zitf);
@@ -3114,8 +3122,8 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                         blocks = mapCoreCZTToBlocks.get(iCoreIndex).get(zitf);
                     }
                     if ((blocks==null) || (blocks.size()==0)) break loopChannel;
-                    block = LibCZI.getBlock(reader.getStream(), blocks.get(0).filePosition);
-                    LibCZI.SubBlockMeta sbmzitf = LibCZI.readSubBlockMeta(reader.getStream(), block, parser);
+                    block = LibCZI.getBlock(reader.getStream(blocks.get(0).filePart), blocks.get(0).filePosition);
+                    LibCZI.SubBlockMeta sbmzitf = LibCZI.readSubBlockMeta(reader.getStream(blocks.get(0).filePart), block, parser);
 
                     if (iChannel==0) {
                         if (sbmziti.timestamp!=0) { // The image was not taken on Jan 1st 1970...

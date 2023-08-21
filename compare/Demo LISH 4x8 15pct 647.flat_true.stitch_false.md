@@ -7,7 +7,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |2601 ms|------|1708 ms|------|--------|
+| Read time (all)   |2719 ms|------|1591 ms|------|--------|
 |0|![Demo LISH 4x8 15pct 647.quick_true.flat_true.stitch_false.series_0.jpg](Demo LISH 4x8 15pct 647/Demo LISH 4x8 15pct 647.quick_true.flat_true.stitch_false.series_0.jpg)|X:1400<br>Y:900<br>C:1<br>Z:56<br>T:1|![Demo LISH 4x8 15pct 647.quick_false.flat_true.stitch_false.series_0.jpg](Demo LISH 4x8 15pct 647/Demo LISH 4x8 15pct 647.quick_false.flat_true.stitch_false.series_0.jpg)|X:1400<br>Y:900<br>C:1<br>Z:56<br>T:1|0|
 |1|![Demo LISH 4x8 15pct 647.quick_true.flat_true.stitch_false.series_1.jpg](Demo LISH 4x8 15pct 647/Demo LISH 4x8 15pct 647.quick_true.flat_true.stitch_false.series_1.jpg)|X:1400<br>Y:900<br>C:1<br>Z:56<br>T:1|![Demo LISH 4x8 15pct 647.quick_false.flat_true.stitch_false.series_1.jpg](Demo LISH 4x8 15pct 647/Demo LISH 4x8 15pct 647.quick_false.flat_true.stitch_false.series_1.jpg)|X:1400<br>Y:900<br>C:1<br>Z:56<br>T:1|0|
 |2|![Demo LISH 4x8 15pct 647.quick_true.flat_true.stitch_false.series_2.jpg](Demo LISH 4x8 15pct 647/Demo LISH 4x8 15pct 647.quick_true.flat_true.stitch_false.series_2.jpg)|X:1400<br>Y:900<br>C:1<br>Z:56<br>T:1|![Demo LISH 4x8 15pct 647.quick_false.flat_true.stitch_false.series_2.jpg](Demo LISH 4x8 15pct 647/Demo LISH 4x8 15pct 647.quick_false.flat_true.stitch_false.series_2.jpg)|X:1400<br>Y:900<br>C:1<br>Z:56<br>T:1|0|
@@ -45,8 +45,8 @@
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |69 ms|92 ms|        |
-| Reader Size (Mb)     |                  |1.07|3.47|        |
+| Initialization     |                  |36 ms|63 ms|        |
+| Reader Size (Mb)     |                  |1.09|3.47|        |
 | getStageLabelX| Image 0 | -3344.305 um | -27.045 um | 3317.260 um |
 | getStageLabelY| Image 0 | -5015.520 um | 17428.300 um | 22443.820 um |
 | getStageLabelName| Image 1 | Scene position #0| Scene position #1| |
