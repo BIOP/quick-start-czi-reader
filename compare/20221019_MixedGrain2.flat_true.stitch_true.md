@@ -7,14 +7,14 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |27 ms|------|44 ms|------|--------|
+| Read time (all)   |27 ms|------|45 ms|------|--------|
 |0|![20221019_MixedGrain2.quick_true.flat_true.stitch_true.series_0.jpg](20221019_MixedGrain2/20221019_MixedGrain2.quick_true.flat_true.stitch_true.series_0.jpg)|X:620<br>Y:620<br>C:2<br>Z:51<br>T:1|![20221019_MixedGrain2.quick_false.flat_true.stitch_true.series_0.jpg](20221019_MixedGrain2/20221019_MixedGrain2.quick_false.flat_true.stitch_true.series_0.jpg)|X:620<br>Y:620<br>C:2<br>Z:51<br>T:1|0|
 
 # Metadata
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |5 ms|7 ms|        |
+| Initialization     |                  |6 ms|7 ms|        |
 | Reader Size (Mb)     |                  |0.18|0.34|        |
 | getStageLabelX| Image 0 | 0.000 um | 4905.320 um | 4905.320 um |
 | getStageLabelY| Image 0 | 0.000 um | -69.713 um | 69.713 um |

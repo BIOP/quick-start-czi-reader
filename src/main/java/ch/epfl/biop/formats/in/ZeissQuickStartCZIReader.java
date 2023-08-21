@@ -450,11 +450,33 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         return check.equals(CZI_MAGIC_STRING);
     }
 
+    private void swapRGBIfnecessary(byte[] buf, int compression, int bpp, int pixel) {
+        if (isRGB() /*&& !emptyTile*/ && compression != JPEGXR) { // TODO: case emptytile
+            // channels are stored in BGR order; red and blue channels need switching
+            // JPEG-XR data has already been reversed during decompression
+            int redOffset = bpp * 2;
+            int index = 0;
+            int nloops=buf.length/pixel;
+            for (int i=0; i<nloops; i++) {
+                //index = i * pixel;
+                for (int b=0; b<bpp; b++) {
+                    int blueIndex = index + b;
+                    int redIndex = index + redOffset + b;
+                    byte red = buf[redIndex];
+                    buf[redIndex] = buf[blueIndex];
+                    buf[blueIndex] = red;
+                }
+                index+=pixel;
+            }
+        }
+    }
+
     private byte[] readRawPixelData(MinimalDimensionEntry block, // TODO What is data size ? I think it's the number of bytes...
                                    int compression,
                                    int storedSizeX,
                                    int storedSizeY,
-                                   RandomAccessInputStream s, Region tile, byte[] buf) throws FormatException, IOException {
+                                   RandomAccessInputStream s, Region tile, byte[] buf,
+                                    int bpp, int totalBpp) throws FormatException, IOException {
         //s.order(isLittleEndian()); -> it should be already set when calling the method
 
         if ((useCache)&&(compression!=UNCOMPRESSED)) {
@@ -525,6 +547,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             else {
                 s.readFully(buf);
             }
+            swapRGBIfnecessary(buf, UNCOMPRESSED, bpp, totalBpp);
             return buf;
         }
 
@@ -624,8 +647,10 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 data = decode12BitCamera(data, options.maxBytes);
                 break;
         }
+
         if (buf != null && buf.length >= data.length) {
             System.arraycopy(data, 0, buf, 0, data.length);
+            swapRGBIfnecessary(buf, UNCOMPRESSED, bpp, totalBpp);
             if (useCache) {
                 cacheLock.lock();
                 // Block just computed
@@ -639,6 +664,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             }
             return buf;
         }
+        swapRGBIfnecessary(data, UNCOMPRESSED, bpp, totalBpp);
         if (useCache) {
             cacheLock.lock();
             subBlockLRUCache.touch(block, data);
@@ -799,7 +825,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                             coreIndexToCompression.get(coreIndex),
                             block.storedSizeX,
                             block.storedSizeY,
-                            stream,null,buf);
+                            stream,null,buf, bpp, bytesPerPixel);
                 } else {
                     // We need to copy, taking in consideration the size taken by the image
                     // We can potentially crop what's read
@@ -824,7 +850,8 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                             block.storedSizeX,
                             block.storedSizeY,
                             stream, compression==UNCOMPRESSED? tileInBlock: null, // can't really optimize with compressed block
-                            compression==UNCOMPRESSED? DataTools.allocate(tileInBlock.width, tileInBlock.height, nCh, bpp): null);
+                            compression==UNCOMPRESSED? DataTools.allocate(tileInBlock.width, tileInBlock.height, nCh, bpp): null,
+                            bpp, bytesPerPixel);
 
                     // We need to basically crop a rectangle with a rectangle, of potentially different sizes
                     // Let's find out the position of the block in the image referential

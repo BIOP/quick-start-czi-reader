@@ -684,7 +684,6 @@ public class CompareReader {
         DatasetHelper.getDataset("https://zenodo.org/record/8263451/files/test_gray.czi", decoder);
         DatasetHelper.getDataset("https://zenodo.org/record/8263451/files/Image_1_2023_08_18__14_32_31_964.czi", decoder);
 
-
         String[] cziURLs ={
                 "https://zenodo.org/record/8263451/files/Demo%20LISH%204x8%2015pct%20647.czi",
                 "https://zenodo.org/record/8263451/files/test_gray.czi",
@@ -729,7 +728,7 @@ public class CompareReader {
                 "https://zenodo.org/record/7260610/files/20221019_MixedGrain.czi", // 113 MB Mixed Grain confocal
                 "https://zenodo.org/record/7260610/files/20221019_MixedGrain2.czi", // 78.6 MB Mixed Grain2
                 "https://zenodo.org/record/5101351/files/Ph488.czi", // 43.1 MB
-                "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031.czi", // 964 MB
+                "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031.czi", // 964 MB*/
                 "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031_pt1.czi", // 3 MB
                 "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031_pt2.czi", // 7.3 MB
                 // There are many more of the same kind that I do not use
