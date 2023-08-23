@@ -7,7 +7,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |2072 ms|------|2478 ms|------|--------|
+| Read time (all)   |1295 ms|------|1690 ms|------|--------|
 |0|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_false.series_0.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_false.series_0.jpg)|X:640<br>Y:420<br>C:3<br>Z:4<br>T:2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_false.series_0.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_false.series_0.jpg)|X:640<br>Y:420<br>C:3<br>Z:4<br>T:2|0|
 |1|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_false.series_1.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_false.series_1.jpg)|X:640<br>Y:420<br>C:3<br>Z:4<br>T:2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_false.series_1.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_false.series_1.jpg)|X:640<br>Y:420<br>C:3<br>Z:4<br>T:2|0|
 |2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_false.series_2.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_false.series_2.jpg)|X:640<br>Y:420<br>C:3<br>Z:4<br>T:2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_false.series_2.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_false.series_2.jpg)|X:640<br>Y:420<br>C:3<br>Z:4<br>T:2|0|
@@ -103,8 +103,8 @@
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |95 ms|136 ms|        |
-| Reader Size (Mb)     |                  |3.47|6.53|        |
+| Initialization     |                  |78 ms|130 ms|        |
+| Reader Size (Mb)     |                  |3.45|6.53|        |
 | getStageLabelName| Image 0 | B2| Scene position #0| |
 | getStageLabelName| Image 1 | B2| Scene position #1| |
 | getStageLabelName| Image 2 | B2| Scene position #2| |

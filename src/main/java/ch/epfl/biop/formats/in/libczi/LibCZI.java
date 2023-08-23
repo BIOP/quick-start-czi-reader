@@ -348,7 +348,13 @@ public class LibCZI {
         try (RandomAccessInputStream in = new RandomAccessInputStream(id, BUFFER_SIZE)) {
             in.order(isLittleEndian);
             in.seek(timeStampEntry.filePosition);
-            in.skipBytes(256); // Hum hum why ? 16 (String) + 8 + 8
+
+            String segmentId = in.readString(16).trim(); // in.skipBytes(16);
+            int dataSize = in.readInt(); // in.skipBytes(4)
+            in.skip(12); // spare
+            //int xmlSize = in.readInt();
+            //int attachSize = in.readInt();
+            in.skipBytes(256); // spare
 
             int size = in.readInt(); // size
             int nTimeStamps = in.readInt();
@@ -506,8 +512,8 @@ public class LibCZI {
 
     // --------------------------- PUBLIC TRANSLATED CZI STRUCTS TO JAVA CLASSES
     public static class SubBlockMeta {
-        public double exposureTime;
-        public double timestamp;
+        public double exposureTime = Double.NaN;
+        public double timestamp = Double.NaN;
         public Length stageX, stageY, stageZ;
     }
     public static class SegmentHeader {

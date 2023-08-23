@@ -59,6 +59,7 @@ import ome.units.quantity.Power;
 import ome.units.quantity.Pressure;
 import ome.units.quantity.Temperature;
 import ome.units.quantity.Time;
+import ome.units.unit.Unit;
 import ome.xml.model.enums.AcquisitionMode;
 import ome.xml.model.enums.Binning;
 import ome.xml.model.enums.IlluminationType;
@@ -2057,7 +2058,8 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
             setExperimenterInformation();
 
-            setSpaceAndTimeInformation(mapCoreTZCToBlocks, parser);
+            // TODO: is everything in the master file ?
+            setSpaceAndTimeInformation(mapCoreTZCToBlocks, parser, cziPartToSegments.get(0));
 
             setImageNames();
 
@@ -2994,12 +2996,25 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
         }
 
+        private LibCZI.SubBlockMeta getSubBlockMeta(int c, int z, int t, int coreIdx,
+                                                    List< // CoreIndex
+                                                            HashMap<CZTKey, // CZT
+                                                                    List<MinimalDimensionEntry>>>
+                                                            mapCoreCZTToBlocks,
+                                                    DocumentBuilder parser) throws IOException {
+            CZTKey czt = new CZTKey(c,z,t);
+            List<MinimalDimensionEntry> blocks = mapCoreCZTToBlocks.get(coreIdx).get(czt);
+            if ((blocks==null) || (blocks.size()==0)) return null;
+            LibCZI.SubBlockSegment block = LibCZI.getBlock(reader.getStream(blocks.get(0).filePart), blocks.get(0).filePosition);
+            return LibCZI.readSubBlockMeta(reader.getStream(blocks.get(0).filePart), block, parser);
+        }
+
         private void setSpaceAndTimeInformation( // of series and of planes
                                                  List< // CoreIndex
                                                          HashMap<CZTKey, // CZT
                                                                  List<MinimalDimensionEntry>>>
                                                          mapCoreCZTToBlocks,
-                                                 DocumentBuilder parser) throws IOException {
+                                                 DocumentBuilder parser, CZISegments cziSegments) throws IOException {
 
             // Time : initialisation of timestamp for all series / core index
             coreIndexTimeStamp = new Timestamp[reader.core.size()];
@@ -3014,17 +3029,21 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 offsetYInMicrons = 0;//allPositionsInformation.scenes.get(0).getMinPosYInMicrons();
             }*/
 
+
+
             // Let's start to set the space and time information for all core index
             for (int iCoreIndex = 0; iCoreIndex<reader.core.size(); iCoreIndex++) {
-                // Let's set properly series and corresponding core index
-                // (the setCoreIndex methods behaves weirdly, that's why it is set as shown below)
-                reader.coreIndex = iCoreIndex;
-
-                // Skips metadata for thumbnails
+                // Skips metadata for thumbnails - it's been fetched, if it exist, in another reader
                 int extraIndex = iCoreIndex - (reader.core.size() - reader.extraImages.size());
                 if (extraIndex >= 0) {
                     continue;
                 }
+
+                Unit<Length> unitLength = coreToPixSizeX.get(iCoreIndex).unit();
+
+                // Let's set properly series and corresponding core index
+                // (the setCoreIndex methods behaves weirdly, that's why it is set as shown below)
+                reader.coreIndex = iCoreIndex;
 
                 reader.series = reader.coreIndexToSeries.get(reader.coreIndex);
 
@@ -3063,94 +3082,91 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 List<MinimalDimensionEntry> blocks;
                 LibCZI.SubBlockSegment block;
 
+                Length stagePosX = null;
+                Length stagePosY = null;
+                Length stagePosZ = null;
+
+                blocks = mapCoreCZTToBlocks.get(iCoreIndex).get(new CZTKey(0,0,0));
+
+                // Look for the min X and Y position over blocks
+                for (MinimalDimensionEntry iBlock : blocks) {
+                    block = LibCZI.getBlock(reader.getStream(iBlock.filePart), iBlock.filePosition);
+                    LibCZI.SubBlockMeta sbm = LibCZI.readSubBlockMeta(reader.getStream(iBlock.filePart), block, parser);
+
+                    if (sbm.stageX!=null) {
+                        //  if true, the unit is micrometer
+                        unitLength = UNITS.MICROMETER;
+                        if ((stagePosX == null) || (stagePosX.value(unitLength).doubleValue() > sbm.stageX.value(unitLength).doubleValue())) {
+                            stagePosX = new Length(sbm.stageX.value(unitLength).doubleValue()/*+offsetXInMicrons*/, unitLength);
+                        }
+                    }
+                    if (sbm.stageY!=null) {
+                        //  if true, the unit is micrometer
+                        unitLength = UNITS.MICROMETER;
+                        if ((stagePosY == null) || (stagePosY.value(unitLength).doubleValue() > sbm.stageY.value(unitLength).doubleValue())) {
+                            stagePosY = new Length(sbm.stageY.value(unitLength).doubleValue()/*+offsetYInMicrons*/, unitLength);
+                        }
+                    }
+                    if ((stagePosZ == null)||(stagePosZ.value(unitLength).doubleValue()>sbm.stageZ.value(unitLength).doubleValue())) {
+                        stagePosZ = sbm.stageZ;
+                    }
+                }
+
+                // Read position from block
+                if (stagePosX == null) {
+
+                    //if (!coreToPixSizeX.get(iCoreIndex).unit().equals(UNITS.REFERENCEFRAME)) {
+                        for (MinimalDimensionEntry iBlock : blocks) {
+                            Length posX = new Length(/*offsetXInMicrons+*/iBlock.dimensionStartX/reader.coreIndexToDownscaleFactor.get(iCoreIndex)
+                                    *coreToPixSizeX.get(iCoreIndex).value(unitLength).doubleValue(), unitLength);
+                            Length posY = new Length(/*offsetYInMicrons+*/iBlock.dimensionStartY/reader.coreIndexToDownscaleFactor.get(iCoreIndex)
+                                    *coreToPixSizeY.get(iCoreIndex).value(unitLength).doubleValue(), unitLength);
+                            if ((stagePosX == null)||(stagePosX.value().doubleValue()>posX.value(unitLength).doubleValue())) {
+                                stagePosX = posX;
+                            }
+                            if ((stagePosY == null)||(stagePosY.value().doubleValue()>posY.value(unitLength).doubleValue())) {
+                                stagePosY = posY;
+                            }
+
+                            if (coreToPixSizeZ.size()!=0) {
+                                Length posZ = new Length(iBlock.dimensionStartZ//.getDimension("Z").start
+                                        * coreToPixSizeZ.get(iCoreIndex).value(unitLength).doubleValue(), unitLength);
+
+                                if ((stagePosZ == null) || (stagePosZ.value().doubleValue() > posZ.value(unitLength).doubleValue())) {
+                                    stagePosZ = posZ;
+                                }
+                            }
+                        }
+                }
+
+                if ((!stageLabelSet)&&(stagePosY!=null)) {
+                    //stageLabelSet = true;
+                    reader.store.setStageLabelX(stagePosX, reader.series);
+                    reader.store.setStageLabelY(stagePosY, reader.series);
+                }
+
+                if ((stagePosZ!=null)&&(!stageLabelZSet)) reader.store.setStageLabelZ(stagePosZ, reader.series);
+
                 loopChannel:
                 for (int iChannel = 0; iChannel<nChannels; iChannel++) {
 
-                    CZTKey ziti = new CZTKey(iChannel,0,0);
-                    blocks = mapCoreCZTToBlocks.get(iCoreIndex).get(ziti);
-                    if ((blocks==null) || (blocks.size()==0)) break loopChannel;
-                    block = LibCZI.getBlock(reader.getStream(blocks.get(0).filePart), blocks.get(0).filePosition);
-                    LibCZI.SubBlockMeta sbmziti = LibCZI.readSubBlockMeta(reader.getStream(blocks.get(0).filePart), block, parser);
+                    LibCZI.SubBlockMeta sbmziti = getSubBlockMeta(
+                            iChannel,
+                            0,
+                            0,
+                            iCoreIndex, mapCoreCZTToBlocks, parser);
+                    LibCZI.SubBlockMeta sbmzfti = getSubBlockMeta(
+                            iChannel,
+                            reader.getSizeZ()/reader.nRotations-1,
+                            0,
+                            iCoreIndex, mapCoreCZTToBlocks, parser);
+                    LibCZI.SubBlockMeta sbmzitf = getSubBlockMeta(
+                            iChannel,
+                            0,
+                            reader.getSizeT()/reader.nPhases-1,
+                            iCoreIndex, mapCoreCZTToBlocks, parser);
 
-                    Length stagePosX = null;
-                    Length stagePosY = null;
-                    Length stagePosZ = null;
-
-                    // Look for the min X and Y position over blocks
-                    for (MinimalDimensionEntry iBlock : blocks) {
-                        block = LibCZI.getBlock(reader.getStream(iBlock.filePart), iBlock.filePosition);
-                        LibCZI.SubBlockMeta sbm = LibCZI.readSubBlockMeta(reader.getStream(iBlock.filePart), block, parser);
-                        if (sbm.stageX!=null)
-                            if ((stagePosX == null)||(stagePosX.value(UNITS.MICROMETER).doubleValue()>sbm.stageX.value(UNITS.MICROMETER).doubleValue())) {
-                                stagePosX = new Length(sbm.stageX.value(UNITS.MICROMETER).doubleValue()/*+offsetXInMicrons*/, UNITS.MICROMETER);
-                            }
-                        if (sbm.stageY!=null)
-                            if ((stagePosY == null)||(stagePosY.value(UNITS.MICROMETER).doubleValue()>sbm.stageY.value(UNITS.MICROMETER).doubleValue())) {
-                                stagePosY = new Length(sbm.stageY.value(UNITS.MICROMETER).doubleValue()/*+offsetYInMicrons*/, UNITS.MICROMETER);
-                            }
-                        if ((stagePosZ == null)||(stagePosZ.value(UNITS.MICROMETER).doubleValue()>sbm.stageZ.value(UNITS.MICROMETER).doubleValue())) {
-                            stagePosZ = sbm.stageZ;
-                        }
-                    }
-
-                    // Read position from block
-                    if (stagePosX == null) {
-                        if (!coreToPixSizeX.get(iCoreIndex).unit().equals(UNITS.REFERENCEFRAME)) {
-                            for (MinimalDimensionEntry iBlock : blocks) {
-                                Length posX = new Length(/*offsetXInMicrons+*/iBlock.dimensionStartX/reader.coreIndexToDownscaleFactor.get(iCoreIndex)
-                                        *coreToPixSizeX.get(iCoreIndex).value(UNITS.MICROMETER).doubleValue(), UNITS.MICROMETER);
-                                Length posY = new Length(/*offsetYInMicrons+*/iBlock.dimensionStartY/reader.coreIndexToDownscaleFactor.get(iCoreIndex)
-                                        *coreToPixSizeY.get(iCoreIndex).value(UNITS.MICROMETER).doubleValue(), UNITS.MICROMETER);
-                                if ((stagePosX == null)||(stagePosX.value().doubleValue()>posX.value(UNITS.MICROMETER).doubleValue())) {
-                                    stagePosX = posX;
-                                }
-                                if ((stagePosY == null)||(stagePosY.value().doubleValue()>posY.value(UNITS.MICROMETER).doubleValue())) {
-                                    stagePosY = posY;
-                                }
-
-                                if (coreToPixSizeZ.size()!=0) {
-                                    Length posZ = new Length(iBlock.dimensionStartZ//.getDimension("Z").start
-                                            * coreToPixSizeZ.get(iCoreIndex).value(UNITS.MICROMETER).doubleValue(), UNITS.MICROMETER);
-
-                                    if ((stagePosZ == null) || (stagePosZ.value().doubleValue() > posZ.value(UNITS.MICROMETER).doubleValue())) {
-                                        stagePosZ = posZ;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    if ((!stageLabelSet)&&(stagePosY!=null)) {
-                        stageLabelSet = true;
-                        reader.store.setStageLabelX(stagePosX, reader.series);
-                        reader.store.setStageLabelY(stagePosY, reader.series);
-                    }
-
-                    if ((stagePosZ!=null)&&(!stageLabelZSet)) reader.store.setStageLabelZ(stagePosZ, reader.series);
-
-                    CZTKey zfti = new CZTKey(iChannel,reader.getSizeZ()-1,0);
-                    blocks = mapCoreCZTToBlocks.get(iCoreIndex).get(zfti);
-                    if ((blocks==null) || (blocks.size()==0)) {
-                        zfti = new CZTKey(iChannel,reader.getSizeZ()/reader.nRotations-1,0);
-                        blocks = mapCoreCZTToBlocks.get(iCoreIndex).get(zfti);
-                    }
-
-                    if ((blocks==null) || (blocks.size()==0)) {
-                        break loopChannel;
-                    }
-
-                    block = LibCZI.getBlock(reader.getStream(blocks.get(0).filePart), blocks.get(0).filePosition);
-                    LibCZI.SubBlockMeta sbmzfti = LibCZI.readSubBlockMeta(reader.getStream(blocks.get(0).filePart), block, parser);
-
-                    CZTKey zitf = new CZTKey(iChannel,0,reader.getSizeT()-1);
-                    blocks = mapCoreCZTToBlocks.get(iCoreIndex).get(zitf);
-                    if ((blocks==null) || (blocks.size()==0)) {
-                        zitf = new CZTKey(iChannel,0,reader.getSizeT()/reader.nPhases-1);
-                        blocks = mapCoreCZTToBlocks.get(iCoreIndex).get(zitf);
-                    }
-                    if ((blocks==null) || (blocks.size()==0)) break loopChannel;
-                    block = LibCZI.getBlock(reader.getStream(blocks.get(0).filePart), blocks.get(0).filePosition);
-                    LibCZI.SubBlockMeta sbmzitf = LibCZI.readSubBlockMeta(reader.getStream(blocks.get(0).filePart), block, parser);
+                    if ((sbmziti==null)||(sbmzfti==null)||(sbmzitf==null)) break loopChannel;
 
                     if (iChannel==0) {
                         if (sbmziti.timestamp!=0) { // The image was not taken on Jan 1st 1970...
@@ -3174,7 +3190,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                         //System.out.println("incrementTimeOverT="+incrementTimeOverT);
                     }
                     Time exposure = null;
-                    if (sbmziti.exposureTime!=0) {
+                    if (!Double.isNaN(sbmziti.exposureTime)) {
                         exposure = new Time(sbmziti.exposureTime*1000, UNITS.SECOND);
                     } else {
                         Double exposureFromChannel = channels.get(iChannel).exposure;
@@ -3184,9 +3200,18 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                         //System.out.println("exposureFromChannel="+exposureFromChannel);
                     }
 
-                    double offsetT0 = (seriesT0==null)?sbmziti.timestamp:sbmziti.timestamp-seriesT0.asInstant().getMillis()/1000.0;
-                    double offsetZ0 = (stagePosZ==null)?0:stagePosZ.value(UNITS.MICROMETER).doubleValue();
-                    double stepZ = (zStep==null)?0:zStep.value(UNITS.MICROMETER).doubleValue();
+                    double offsetT0;
+                    if (!Double.isNaN(sbmziti.timestamp)) {
+                        offsetT0 = (seriesT0 == null) ? sbmziti.timestamp : sbmziti.timestamp - seriesT0.asInstant().getMillis() / 1000.0;
+                    } else {
+                        if (cziSegments.timeStamps.length>0) {
+                            offsetT0 = cziSegments.timeStamps[0]; // In seconds
+                        } else {
+                            offsetT0 = 0;
+                        }
+                    }
+                    double offsetZ0 = (stagePosZ==null)?0:stagePosZ.value(unitLength).doubleValue();
+                    double stepZ = (zStep==null)?0:zStep.value(unitLength).doubleValue();
 
                     boolean resolutionLevel0 = reader.coreIndexToDownscaleFactor.get(reader.coreIndex)==1;
                     if (resolutionLevel0) { // Avoid setting the metadata not for lower resolution levels, because this override proper metadata if flattenresolution = false
@@ -3200,7 +3225,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                                 reader.store.setPlanePositionX(stagePosX, reader.series, planeIndex);
                                 reader.store.setPlanePositionY(stagePosY, reader.series, planeIndex);
 
-                                if (exposure != null) {
+                                if ((exposure != null)&&(!Double.isNaN(exposure.value().doubleValue()))) {
                                     reader.store.setPlaneExposureTime(exposure, reader.series, planeIndex); // 0 exposure do not make sense
                                 }
                                 int iZ = iZori % (reader.getSizeZ() / reader.nRotations);
@@ -3209,10 +3234,11 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                                         UNITS.SECOND);
 
                                 if ((incrementTimeOverZ >= 0) || (incrementTimeOverT >= 0)) {
-                                    //System.out.println("p"+planeIndex+":"+dT);
-                                    reader.store.setPlaneDeltaT(dT, reader.series, planeIndex);
+                                    if (!Double.isNaN(dT.value().doubleValue())) { // To fit the original reader. NaN -> Null
+                                        reader.store.setPlaneDeltaT(dT, reader.series, planeIndex);
+                                    }
                                 }
-                                Length pZ = new Length(offsetZ0 + iZ * stepZ, UNITS.MICROMETER);
+                                Length pZ = new Length(offsetZ0 + iZ * stepZ, unitLength);
                                 reader.store.setPlanePositionZ(pZ, reader.series, planeIndex);
                             }
                         }

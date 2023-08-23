@@ -7,7 +7,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |34445 ms|------|40183 ms|------|--------|
+| Read time (all)   |25666 ms|------|35981 ms|------|--------|
 |0|![v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_0.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_0.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|![v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_0.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_0.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|0|
 |1|![v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_1.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_1.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|![v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_1.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_1.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|0|
 |2|![v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_2.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_2.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|![v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_2.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_2.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|0|
@@ -207,8 +207,8 @@
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |220 ms|157 ms|        |
-| Reader Size (Mb)     |                  |10.88|11.49|        |
+| Initialization     |                  |125 ms|100 ms|        |
+| Reader Size (Mb)     |                  |10.86|11.49|        |
 | getImageCount|(No args)|172| 194| |
 | getStageLabelName| Image 0 | ScanRegion0| Scene position #0| |
 | getStageLabelName| Image 1 | ScanRegion0| Scene position #1| |
@@ -543,7 +543,7 @@
 | getStageLabelY| Image 169 | 15219.654 um | 14284.658 um | 934.996 um |
 | getStageLabelZ| Image 169 | 4163.372 um | 4163.801 um | 0.429 um |
 | getImageName| Image 170 | label image| v.zanotelli_20190509_p165_031.czi #171| |
-| getImageAcquisitionDate| Image 170 | | 1: null| 2: 2019-05-09T15:07:09.494 |
+| getImageAcquisitionDate| Image 170 |  1: null| 2: 2019-05-09T15:07:09.494 |
 | getPlaneCount| Image 170 | 1| 2| |
 | getChannelCount| Image 170 | 1| 2| |
 | getStageLabelName| Image 170 |  error: true | error: false| |
@@ -553,11 +553,11 @@
 | getPixelsSizeX| Image 170 | 541| 1600| |
 | getPixelsSizeY| Image 170 | 705| 1600| |
 | getPixelsSizeC| Image 170 | 3| 2| |
-| getPixelsPhysicalSizeX| Image 170 | | 1: null| 2: ome.units.quantity.Length: value[0.32465132447751116], unit[µm] stored as java.lang.Double |
-| getPixelsPhysicalSizeY| Image 170 | | 1: null| 2: ome.units.quantity.Length: value[0.32465132447751116], unit[µm] stored as java.lang.Double |
+| getPixelsPhysicalSizeX| Image 170 |  1: null| 2: ome.units.quantity.Length: value[0.32465132447751116], unit[µm] stored as java.lang.Double |
+| getPixelsPhysicalSizeY| Image 170 |  1: null| 2: ome.units.quantity.Length: value[0.32465132447751116], unit[µm] stored as java.lang.Double |
 | getPixelsInterleaved| Image 170 | true| false| |
 | getImageName| Image 171 | macro image| v.zanotelli_20190509_p165_031.czi #172| |
-| getImageAcquisitionDate| Image 171 | | 1: null| 2: 2019-05-09T15:07:09.494 |
+| getImageAcquisitionDate| Image 171 |  1: null| 2: 2019-05-09T15:07:09.494 |
 | getPlaneCount| Image 171 | 1| 2| |
 | getChannelCount| Image 171 | 1| 2| |
 | getStageLabelName| Image 171 |  error: true | error: false| |
@@ -567,8 +567,8 @@
 | getPixelsSizeX| Image 171 | 1585| 1600| |
 | getPixelsSizeY| Image 171 | 743| 1600| |
 | getPixelsSizeC| Image 171 | 3| 2| |
-| getPixelsPhysicalSizeX| Image 171 | | 1: null| 2: ome.units.quantity.Length: value[0.32465132447751116], unit[µm] stored as java.lang.Double |
-| getPixelsPhysicalSizeY| Image 171 | | 1: null| 2: ome.units.quantity.Length: value[0.32465132447751116], unit[µm] stored as java.lang.Double |
+| getPixelsPhysicalSizeX| Image 171 |  1: null| 2: ome.units.quantity.Length: value[0.32465132447751116], unit[µm] stored as java.lang.Double |
+| getPixelsPhysicalSizeY| Image 171 |  1: null| 2: ome.units.quantity.Length: value[0.32465132447751116], unit[µm] stored as java.lang.Double |
 | getPixelsInterleaved| Image 171 | true| false| |
 | getImageName| Image 172 |  error: true | error: false| |
 | getImageAcquisitionDate| Image 172 |  error: true | error: false| |

@@ -35,6 +35,7 @@ import java.text.DecimalFormat;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -54,10 +55,6 @@ public class CompareReader {
             "getPixelsSizeT",
             "getImageCount",
             "getChannelSamplesPerPixel"));
-
-    public static final Set<String> ignoredDifferences = new HashSet<>(Arrays.asList(
-            "getStageLabelName" // because the new reader actually read the stage position better (IMO)
-    ));
 
     public static final double timeStampDifferenceAllowedInS = 0.001; // 1 ms
     public static final double positionDifferenceAllowedInUM = 0.001; // 1nm
@@ -355,7 +352,12 @@ public class CompareReader {
         }
     }
 
-    private static boolean isEqualExceptionAndNullSafe(Callable<Object> o1Getter, Callable<Object> o2Getter, String methodName, String arguments, Consumer<String> logger, SummaryPerFile summary) {
+    private static boolean isEqualExceptionAndNullSafe(Callable<Object> o1Getter,
+                                                       Callable<Object> o2Getter,
+                                                       String methodName,
+                                                       String arguments,
+                                                       Consumer<String> logger,
+                                                       SummaryPerFile summary) {
         String message = methodName+arguments;
         DecimalFormat df = new DecimalFormat("0.000");
         Object o1 = null, o2 = null;
@@ -377,31 +379,59 @@ public class CompareReader {
 
             if (criticalMethods.contains(methodName)) {
                 summary.numberOfCriticalDifferences++;
-            } else if (ignoredDifferences.contains(methodName)) {
+            } else if (explanations.get(summary.urlImage).keySet().contains(methodName)) {
                 summary.numberOfDifferencesIgnored++;
-                return true;
+            } else {
+                summary.numberOfDifferences++;
             }
-            summary.numberOfDifferences++;
             return false;
         } else {
             if ((o1!=null)&&(o2!=null)) {
                 if (!o1.equals(o2)) {
-                    if ((o1 instanceof Length) && (o2 instanceof Length) && (((Length) o1).value(UNITS.MICROMETER)!=null) && (((Length) o2).value(UNITS.MICROMETER)!=null)) {
+                    if ((o1 instanceof Length) && (o2 instanceof Length)) {// && (((Length) o1).value(UNITS.MICROMETER)!=null) && (((Length) o2).value(UNITS.MICROMETER)!=null)) {
+
                         Length l1 = (Length) o1;
                         Length l2 = (Length) o2;
 
-                        l1.value(UNITS.MICROMETER);
-                        l1.value(UNITS.MICROMETER).doubleValue();
-
-                        l2.value(UNITS.MICROMETER);
-                        l2.value(UNITS.MICROMETER).doubleValue();
-
-                        double diff = Math.abs(l1.value(UNITS.MICROMETER).doubleValue() - l2.value(UNITS.MICROMETER).doubleValue());
-
-                        if (diff<positionDifferenceAllowedInUM) {
-                            return true;
+                        if ((l1.unit().equals(UNITS.REFERENCEFRAME)) && (l2.unit().equals(UNITS.REFERENCEFRAME))) {
+                            boolean res = (l1.value(UNITS.REFERENCEFRAME).doubleValue()-l2.value(UNITS.REFERENCEFRAME).doubleValue())==0;
+                            if (!res) {
+                                logger.accept(message + o1 + "| " + o2 + "|");
+                                if (criticalMethods.contains(methodName)) {
+                                    summary.numberOfCriticalDifferences++;
+                                } else if (explanations.get(summary.urlImage).keySet().contains(methodName)) {
+                                    summary.numberOfDifferencesIgnored++;
+                                } else {
+                                    summary.numberOfDifferences++;
+                                }
+                            }
+                            return res;
                         } else {
-                            logger.accept( message + df.format(l1.value(UNITS.MICROMETER))+" um | "+df.format(l2.value(UNITS.MICROMETER))+" um | "+df.format(diff)+ " um");
+                            if ((((Length) o1).value(UNITS.MICROMETER)!=null) && (((Length) o2).value(UNITS.MICROMETER)!=null)) {
+                                l1.value(UNITS.MICROMETER);
+                                l1.value(UNITS.MICROMETER).doubleValue();
+
+                                l2.value(UNITS.MICROMETER);
+                                l2.value(UNITS.MICROMETER).doubleValue();
+
+                                double diff = Math.abs(l1.value(UNITS.MICROMETER).doubleValue() - l2.value(UNITS.MICROMETER).doubleValue());
+
+                                if (diff < positionDifferenceAllowedInUM) {
+                                    return true;
+                                } else {
+                                    logger.accept(message + df.format(l1.value(UNITS.MICROMETER)) + " um | " + df.format(l2.value(UNITS.MICROMETER)) + " um | " + df.format(diff) + " um");
+                                }
+                            } else {
+                                logger.accept(message + o1 + "| " + o2 + "|");
+                                if (criticalMethods.contains(methodName)) {
+                                    summary.numberOfCriticalDifferences++;
+                                } else if (explanations.get(summary.urlImage).keySet().contains(methodName)) {
+                                    summary.numberOfDifferencesIgnored++;
+                                } else {
+                                    summary.numberOfDifferences++;
+                                }
+                                return false;
+                            }
                         }
                     } else if ((o1 instanceof Time) && (o2 instanceof Time)) {
                         Time t1 = (Time) o1;
@@ -416,14 +446,13 @@ public class CompareReader {
                     } else {
                         logger.accept(message + o1 + "| " + o2 + "|");
                     }
-
                     if (criticalMethods.contains(methodName)) {
                         summary.numberOfCriticalDifferences++;
-                    } else if (ignoredDifferences.contains(methodName)) {
+                    } else if (explanations.get(summary.urlImage).keySet().contains(methodName)) {
                         summary.numberOfDifferencesIgnored++;
-                        return true;
+                    } else {
+                        summary.numberOfDifferences++;
                     }
-                    summary.numberOfDifferences++;
                     return false;
                 } else {
                     //println( message + "\t 1: \t "+o1+"\t 2: \t "+o2);
@@ -433,15 +462,14 @@ public class CompareReader {
                 if ((o1==null)&&(o2==null)) {
                     return true;
                 } else {
-                    logger.accept( message + "| 1: "+(o1==null?"null":o1)+"| 2: "+(o2==null?"null":o2));
-                    summary.numberOfDifferences++;
+                    logger.accept( message + " 1: "+(o1==null?"null":o1)+"| 2: "+(o2==null?"null":o2));
                     if (criticalMethods.contains(methodName)) {
                         summary.numberOfCriticalDifferences++;
-                    } else if (ignoredDifferences.contains(methodName)) {
+                    } else if (explanations.get(summary.urlImage).keySet().contains(methodName)) {
                         summary.numberOfDifferencesIgnored++;
-                        return true;
+                    } else {
+                        summary.numberOfDifferences++;
                     }
-                    summary.numberOfDifferences++;
                     return false;
                 }
             }
@@ -664,6 +692,14 @@ public class CompareReader {
         }
     }
 
+    public static class IgnoreDiffExplanation {
+        public String explanation;
+        public Note note;
+        enum Note {BETTER, WORSE, SAME}
+    }
+
+    static Map<String, Map<String, IgnoreDiffExplanation>> explanations = new HashMap<>();
+
     public static void main(String... args) {
         //DebugTools.setRootLevel("TRACE");
         DebugTools.setRootLevel("WARN");
@@ -727,8 +763,8 @@ public class CompareReader {
                 "https://zenodo.org/record/7117784/files/RBC_tiny.czi", // 48.9 MB RBC tiny
                 "https://zenodo.org/record/7260610/files/20221019_MixedGrain.czi", // 113 MB Mixed Grain confocal
                 "https://zenodo.org/record/7260610/files/20221019_MixedGrain2.czi", // 78.6 MB Mixed Grain2
-                "https://zenodo.org/record/5101351/files/Ph488.czi", // 43.1 MB
-                "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031.czi", // 964 MB*/
+                "https://zenodo.org/record/5101351/files/Ph488.czi", // 43.1 MB*/
+                "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031.czi", // 964 MB
                 "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031_pt1.czi", // 3 MB
                 "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031_pt2.czi", // 7.3 MB
                 // There are many more of the same kind that I do not use
@@ -739,6 +775,31 @@ public class CompareReader {
 
                 // There are many more of the same kind*/
         };
+
+        for (String url: cziURLs) {
+            explanations.put(url, new HashMap<>());
+        }
+
+        // Set of rules explaining particular choices
+
+        IgnoreDiffExplanation explanation = new IgnoreDiffExplanation();
+        explanation.explanation = "The quick reader reads the czi stage label name, instead of iterating scene indices."+
+        " This fits better with the original CZI file.";
+        explanation.note = IgnoreDiffExplanation.Note.BETTER;
+        for (String url: cziURLs) { // Global rule, same for all files
+            explanations.get(url).put("getStageLabelName",explanation);
+        }
+
+        /*explanation = new IgnoreDiffExplanation();
+        explanation.explanation =
+                "The quick reader reads puts a Z reference frame value in Z, which makes sense because it's "
+                +"the same logic as what's already happening with getPlanePositionX and Y.";
+        explanation.note = IgnoreDiffExplanation.Note.SAME;
+        explanations.get("https://zenodo.org/record/8263451/files/test_gray.czi").put("getPlanePositionZ", explanation);
+        explanations.get("https://zenodo.org/record/8263451/files/test_gray.czi").put("getStageLabelZ", explanation);*/
+
+
+
 
         List<SummaryPerFile> summaryList = new ArrayList<>();
 

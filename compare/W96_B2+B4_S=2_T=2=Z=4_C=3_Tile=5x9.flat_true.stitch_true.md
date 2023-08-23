@@ -7,7 +7,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |1279 ms|------|1410 ms|------|--------|
+| Read time (all)   |946 ms|------|1085 ms|------|--------|
 |0|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_0.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_0.jpg)|X:2944<br>Y:3444<br>C:3<br>Z:4<br>T:2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_0.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_0.jpg)|X:2944<br>Y:3444<br>C:3<br>Z:4<br>T:2|0|
 |1|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_1.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_1.jpg)|X:1472<br>Y:1722<br>C:3<br>Z:4<br>T:2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_1.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_1.jpg)|X:1472<br>Y:1722<br>C:3<br>Z:4<br>T:2|0|
 |2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_2.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_true.flat_true.stitch_true.series_2.jpg)|X:736<br>Y:861<br>C:3<br>Z:4<br>T:2|![W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_2.jpg](W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.quick_false.flat_true.stitch_true.series_2.jpg)|X:736<br>Y:861<br>C:3<br>Z:4<br>T:2|0|
@@ -19,7 +19,7 @@
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |51 ms|127 ms|        |
+| Initialization     |                  |36 ms|117 ms|        |
 | Reader Size (Mb)     |                  |2.13|5.29|        |
 | getStageLabelName| Image 0 | B2| Scene position #0| |
 | getStageLabelX| Image 0 | 13039.200 um | 13500.000 um | 460.800 um |
@@ -27,13 +27,13 @@
 | getStageLabelName| Image 1 | B2| Scene position #1| |
 | getStageLabelX| Image 1 | 12911.200 um | 13500.000 um | 588.800 um |
 | getStageLabelY| Image 1 | 16811.200 um | 17500.400 um | 689.200 um |
-| getStageLabelZ| Image 1 | | 1: ome.units.quantity.Length: value[0.0], unit[µm] stored as java.lang.Double| 2: null |
+| getStageLabelZ| Image 1 |  1: ome.units.quantity.Length: value[0.0], unit[µm] stored as java.lang.Double| 2: null |
 | getPixelsPhysicalSizeX| Image 1 | 0.800 um | 0.400 um | 0.400 um |
 | getPixelsPhysicalSizeY| Image 1 | 0.800 um | 0.400 um | 0.400 um |
 | getStageLabelName| Image 2 | B2| Scene position #2| |
 | getStageLabelX| Image 2 | 12910.400 um | 13500.000 um | 589.600 um |
 | getStageLabelY| Image 2 | 16811.200 um | 17500.400 um | 689.200 um |
-| getStageLabelZ| Image 2 | | 1: ome.units.quantity.Length: value[0.0], unit[µm] stored as java.lang.Double| 2: null |
+| getStageLabelZ| Image 2 |  1: ome.units.quantity.Length: value[0.0], unit[µm] stored as java.lang.Double| 2: null |
 | getPixelsPhysicalSizeX| Image 2 | 1.600 um | 0.400 um | 1.200 um |
 | getPixelsPhysicalSizeY| Image 2 | 1.600 um | 0.400 um | 1.200 um |
 | getStageLabelName| Image 3 | B4| Scene position #3| |
@@ -42,13 +42,13 @@
 | getStageLabelName| Image 4 | B4| Scene position #4| |
 | getStageLabelX| Image 4 | 30911.200 um | 31500.000 um | 588.800 um |
 | getStageLabelY| Image 4 | 16811.200 um | 17500.400 um | 689.200 um |
-| getStageLabelZ| Image 4 | | 1: ome.units.quantity.Length: value[0.0], unit[µm] stored as java.lang.Double| 2: null |
+| getStageLabelZ| Image 4 |  1: ome.units.quantity.Length: value[0.0], unit[µm] stored as java.lang.Double| 2: null |
 | getPixelsPhysicalSizeX| Image 4 | 0.800 um | 0.400 um | 0.400 um |
 | getPixelsPhysicalSizeY| Image 4 | 0.800 um | 0.400 um | 0.400 um |
 | getStageLabelName| Image 5 | B4| Scene position #5| |
 | getStageLabelX| Image 5 | 30910.400 um | 31500.000 um | 589.600 um |
 | getStageLabelY| Image 5 | 16811.200 um | 17500.400 um | 689.200 um |
-| getStageLabelZ| Image 5 | | 1: ome.units.quantity.Length: value[0.0], unit[µm] stored as java.lang.Double| 2: null |
+| getStageLabelZ| Image 5 |  1: ome.units.quantity.Length: value[0.0], unit[µm] stored as java.lang.Double| 2: null |
 | getPixelsPhysicalSizeX| Image 5 | 1.600 um | 0.400 um | 1.200 um |
 | getPixelsPhysicalSizeY| Image 5 | 1.600 um | 0.400 um | 1.200 um |
 | getPlanePositionX| Image 0 Plane 0 | 13039.200 um | 13500.000 um | 460.800 um |
@@ -113,198 +113,198 @@
 | getPlaneDeltaT| Image 0 Plane 23 |  101.775 s |  101.754 s | 0.021 s |
 | getPlanePositionX| Image 0 Plane 23 | 13039.200 um | 13500.000 um | 460.800 um |
 | getPlanePositionY| Image 0 Plane 23 | 16895.600 um | 17500.400 um | 604.800 um |
-| getPlaneDeltaT| Image 1 Plane 0 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 1 Plane 0 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 1 Plane 0 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 1 Plane 0 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 1 Plane 1 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 1 Plane 1 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 1 Plane 1 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 1 Plane 1 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 1 Plane 2 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 1 Plane 2 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 1 Plane 2 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 1 Plane 2 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 1 Plane 3 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 1 Plane 3 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 1 Plane 3 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 1 Plane 3 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 1 Plane 4 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 1 Plane 4 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 1 Plane 4 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 1 Plane 4 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 1 Plane 5 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 1 Plane 5 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 1 Plane 5 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 1 Plane 5 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 1 Plane 6 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 1 Plane 6 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 1 Plane 6 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 1 Plane 6 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 1 Plane 7 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 1 Plane 7 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 1 Plane 7 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 1 Plane 7 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 1 Plane 8 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 1 Plane 8 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 1 Plane 8 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 1 Plane 8 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 1 Plane 9 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 1 Plane 9 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 1 Plane 9 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 1 Plane 9 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 1 Plane 10 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 1 Plane 10 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 1 Plane 10 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 1 Plane 10 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 1 Plane 11 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 1 Plane 11 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 1 Plane 11 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 1 Plane 11 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 1 Plane 12 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 1 Plane 12 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 1 Plane 12 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 1 Plane 12 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 1 Plane 13 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 1 Plane 13 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 1 Plane 13 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 1 Plane 13 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 1 Plane 14 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 1 Plane 14 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 1 Plane 14 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 1 Plane 14 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 1 Plane 15 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 1 Plane 15 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 1 Plane 15 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 1 Plane 15 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 1 Plane 16 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 1 Plane 16 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 1 Plane 16 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 1 Plane 16 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 1 Plane 17 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 1 Plane 17 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 1 Plane 17 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 1 Plane 17 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 1 Plane 18 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 1 Plane 18 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 1 Plane 18 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 1 Plane 18 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 1 Plane 19 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 1 Plane 19 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 1 Plane 19 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 1 Plane 19 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 1 Plane 20 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 1 Plane 20 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 1 Plane 20 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 1 Plane 20 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 1 Plane 21 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 1 Plane 21 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 1 Plane 21 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 1 Plane 21 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 1 Plane 22 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 1 Plane 22 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 1 Plane 22 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 1 Plane 22 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 1 Plane 23 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 1 Plane 23 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 1 Plane 23 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 1 Plane 23 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 2 Plane 0 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 2 Plane 0 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 2 Plane 0 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 2 Plane 0 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 2 Plane 1 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 2 Plane 1 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 2 Plane 1 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 2 Plane 1 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 2 Plane 2 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 2 Plane 2 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 2 Plane 2 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 2 Plane 2 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 2 Plane 3 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 2 Plane 3 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 2 Plane 3 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 2 Plane 3 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 2 Plane 4 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 2 Plane 4 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 2 Plane 4 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 2 Plane 4 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 2 Plane 5 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 2 Plane 5 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 2 Plane 5 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 2 Plane 5 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 2 Plane 6 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 2 Plane 6 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 2 Plane 6 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 2 Plane 6 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 2 Plane 7 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 2 Plane 7 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 2 Plane 7 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 2 Plane 7 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 2 Plane 8 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 2 Plane 8 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 2 Plane 8 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 2 Plane 8 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 2 Plane 9 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 2 Plane 9 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 2 Plane 9 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 2 Plane 9 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 2 Plane 10 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 2 Plane 10 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 2 Plane 10 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 2 Plane 10 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 2 Plane 11 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 2 Plane 11 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 2 Plane 11 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 2 Plane 11 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 2 Plane 12 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 2 Plane 12 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 2 Plane 12 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 2 Plane 12 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 2 Plane 13 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 2 Plane 13 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 2 Plane 13 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 2 Plane 13 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 2 Plane 14 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 2 Plane 14 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 2 Plane 14 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 2 Plane 14 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 2 Plane 15 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 2 Plane 15 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 2 Plane 15 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 2 Plane 15 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 2 Plane 16 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 2 Plane 16 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 2 Plane 16 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 2 Plane 16 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 2 Plane 17 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 2 Plane 17 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 2 Plane 17 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 2 Plane 17 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 2 Plane 18 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 2 Plane 18 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 2 Plane 18 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 2 Plane 18 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 2 Plane 19 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 2 Plane 19 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 2 Plane 19 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 2 Plane 19 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 2 Plane 20 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 2 Plane 20 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 2 Plane 20 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 2 Plane 20 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 2 Plane 21 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 2 Plane 21 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 2 Plane 21 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 2 Plane 21 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 2 Plane 22 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 2 Plane 22 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 2 Plane 22 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 2 Plane 22 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 2 Plane 23 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 2 Plane 23 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 2 Plane 23 | | 1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 2 Plane 23 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 1 Plane 0 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 1 Plane 0 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 1 Plane 0 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 1 Plane 0 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 1 Plane 1 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 1 Plane 1 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 1 Plane 1 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 1 Plane 1 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 1 Plane 2 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 1 Plane 2 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 1 Plane 2 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 1 Plane 2 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 1 Plane 3 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 1 Plane 3 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 1 Plane 3 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 1 Plane 3 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 1 Plane 4 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 1 Plane 4 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 1 Plane 4 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 1 Plane 4 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 1 Plane 5 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 1 Plane 5 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 1 Plane 5 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 1 Plane 5 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 1 Plane 6 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 1 Plane 6 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 1 Plane 6 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 1 Plane 6 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 1 Plane 7 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 1 Plane 7 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 1 Plane 7 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 1 Plane 7 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 1 Plane 8 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 1 Plane 8 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 1 Plane 8 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 1 Plane 8 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 1 Plane 9 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 1 Plane 9 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 1 Plane 9 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 1 Plane 9 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 1 Plane 10 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 1 Plane 10 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 1 Plane 10 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 1 Plane 10 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 1 Plane 11 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 1 Plane 11 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 1 Plane 11 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 1 Plane 11 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 1 Plane 12 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 1 Plane 12 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 1 Plane 12 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 1 Plane 12 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 1 Plane 13 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 1 Plane 13 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 1 Plane 13 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 1 Plane 13 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 1 Plane 14 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 1 Plane 14 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 1 Plane 14 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 1 Plane 14 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 1 Plane 15 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 1 Plane 15 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 1 Plane 15 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 1 Plane 15 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 1 Plane 16 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 1 Plane 16 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 1 Plane 16 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 1 Plane 16 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 1 Plane 17 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 1 Plane 17 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 1 Plane 17 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 1 Plane 17 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 1 Plane 18 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 1 Plane 18 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 1 Plane 18 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 1 Plane 18 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 1 Plane 19 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 1 Plane 19 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 1 Plane 19 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 1 Plane 19 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 1 Plane 20 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 1 Plane 20 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 1 Plane 20 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 1 Plane 20 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 1 Plane 21 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 1 Plane 21 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 1 Plane 21 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 1 Plane 21 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 1 Plane 22 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 1 Plane 22 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 1 Plane 22 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 1 Plane 22 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 1 Plane 23 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 1 Plane 23 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 1 Plane 23 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 1 Plane 23 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 2 Plane 0 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 2 Plane 0 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 2 Plane 0 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 2 Plane 0 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 2 Plane 1 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 2 Plane 1 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 2 Plane 1 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 2 Plane 1 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 2 Plane 2 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 2 Plane 2 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 2 Plane 2 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 2 Plane 2 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 2 Plane 3 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 2 Plane 3 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 2 Plane 3 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 2 Plane 3 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 2 Plane 4 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 2 Plane 4 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 2 Plane 4 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 2 Plane 4 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 2 Plane 5 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 2 Plane 5 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 2 Plane 5 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 2 Plane 5 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 2 Plane 6 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 2 Plane 6 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 2 Plane 6 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 2 Plane 6 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 2 Plane 7 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 2 Plane 7 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 2 Plane 7 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 2 Plane 7 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 2 Plane 8 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 2 Plane 8 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 2 Plane 8 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 2 Plane 8 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 2 Plane 9 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 2 Plane 9 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 2 Plane 9 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 2 Plane 9 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 2 Plane 10 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 2 Plane 10 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 2 Plane 10 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 2 Plane 10 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 2 Plane 11 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 2 Plane 11 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 2 Plane 11 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 2 Plane 11 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 2 Plane 12 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 2 Plane 12 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 2 Plane 12 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 2 Plane 12 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 2 Plane 13 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 2 Plane 13 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 2 Plane 13 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 2 Plane 13 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 2 Plane 14 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 2 Plane 14 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 2 Plane 14 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 2 Plane 14 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 2 Plane 15 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 2 Plane 15 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 2 Plane 15 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 2 Plane 15 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 2 Plane 16 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 2 Plane 16 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 2 Plane 16 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 2 Plane 16 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 2 Plane 17 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 2 Plane 17 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 2 Plane 17 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 2 Plane 17 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 2 Plane 18 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 2 Plane 18 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 2 Plane 18 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 2 Plane 18 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 2 Plane 19 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 2 Plane 19 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 2 Plane 19 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 2 Plane 19 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 2 Plane 20 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 2 Plane 20 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 2 Plane 20 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 2 Plane 20 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 2 Plane 21 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 2 Plane 21 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 2 Plane 21 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 2 Plane 21 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 2 Plane 22 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 2 Plane 22 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 2 Plane 22 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 2 Plane 22 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 2 Plane 23 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 2 Plane 23 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 2 Plane 23 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 2 Plane 23 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
 | getPlanePositionX| Image 3 Plane 0 | 31039.200 um | 31500.000 um | 460.800 um |
 | getPlanePositionY| Image 3 Plane 0 | 16895.600 um | 17500.400 um | 604.800 um |
 | getPlanePositionX| Image 3 Plane 1 | 31039.200 um | 31500.000 um | 460.800 um |
@@ -368,153 +368,153 @@
 | getPlaneDeltaT| Image 3 Plane 23 |  296.815 s |  296.786 s | 0.029 s |
 | getPlanePositionX| Image 3 Plane 23 | 31039.200 um | 31500.000 um | 460.800 um |
 | getPlanePositionY| Image 3 Plane 23 | 16895.600 um | 17500.400 um | 604.800 um |
-| getPlaneDeltaT| Image 4 Plane 0 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 4 Plane 0 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 4 Plane 0 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 4 Plane 0 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 4 Plane 1 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 4 Plane 1 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 4 Plane 1 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 4 Plane 1 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 4 Plane 2 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 4 Plane 2 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 4 Plane 2 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 4 Plane 2 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 4 Plane 3 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 4 Plane 3 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 4 Plane 3 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 4 Plane 3 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 4 Plane 4 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 4 Plane 4 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 4 Plane 4 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 4 Plane 4 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 4 Plane 5 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 4 Plane 5 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 4 Plane 5 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 4 Plane 5 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 4 Plane 6 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 4 Plane 6 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 4 Plane 6 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 4 Plane 6 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 4 Plane 7 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 4 Plane 7 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 4 Plane 7 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 4 Plane 7 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 4 Plane 8 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 4 Plane 8 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 4 Plane 8 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 4 Plane 8 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 4 Plane 9 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 4 Plane 9 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 4 Plane 9 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 4 Plane 9 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 4 Plane 10 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 4 Plane 10 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 4 Plane 10 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 4 Plane 10 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 4 Plane 11 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 4 Plane 11 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 4 Plane 11 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 4 Plane 11 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 4 Plane 12 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 4 Plane 12 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 4 Plane 12 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 4 Plane 12 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 4 Plane 13 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 4 Plane 13 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 4 Plane 13 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 4 Plane 13 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 4 Plane 14 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 4 Plane 14 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 4 Plane 14 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 4 Plane 14 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 4 Plane 15 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 4 Plane 15 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 4 Plane 15 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 4 Plane 15 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 4 Plane 16 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 4 Plane 16 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 4 Plane 16 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 4 Plane 16 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 4 Plane 17 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 4 Plane 17 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 4 Plane 17 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 4 Plane 17 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 4 Plane 18 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 4 Plane 18 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 4 Plane 18 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 4 Plane 18 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 4 Plane 19 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 4 Plane 19 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 4 Plane 19 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 4 Plane 19 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 4 Plane 20 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 4 Plane 20 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 4 Plane 20 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 4 Plane 20 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 4 Plane 21 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 4 Plane 21 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 4 Plane 21 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 4 Plane 21 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 4 Plane 22 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 4 Plane 22 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 4 Plane 22 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 4 Plane 22 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 4 Plane 23 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 4 Plane 23 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 4 Plane 23 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 4 Plane 23 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 5 Plane 0 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 5 Plane 0 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 5 Plane 0 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 5 Plane 0 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 5 Plane 1 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 5 Plane 1 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 5 Plane 1 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 5 Plane 1 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 5 Plane 2 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 5 Plane 2 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 5 Plane 2 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 5 Plane 2 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 5 Plane 3 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 5 Plane 3 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 5 Plane 3 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 5 Plane 3 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 5 Plane 4 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 5 Plane 4 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 5 Plane 4 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 5 Plane 4 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 5 Plane 5 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 5 Plane 5 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 5 Plane 5 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 5 Plane 5 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 5 Plane 6 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 5 Plane 6 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 5 Plane 6 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 5 Plane 6 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 5 Plane 7 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 5 Plane 7 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 5 Plane 7 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 5 Plane 7 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 5 Plane 8 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 5 Plane 8 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 5 Plane 8 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 5 Plane 8 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 5 Plane 9 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 5 Plane 9 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 5 Plane 9 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 5 Plane 9 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 5 Plane 10 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 5 Plane 10 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 5 Plane 10 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 5 Plane 10 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 5 Plane 11 | | 1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 5 Plane 11 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 5 Plane 11 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 5 Plane 11 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
-| getPlaneDeltaT| Image 5 Plane 12 | | 1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
-| getPlaneExposureTime| Image 5 Plane 12 | | 1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
-| getPlanePositionX| Image 5 Plane 12 | | 1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
-| getPlanePositionY| Image 5 Plane 12 | | 1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 4 Plane 0 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 4 Plane 0 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 4 Plane 0 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 4 Plane 0 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 4 Plane 1 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 4 Plane 1 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 4 Plane 1 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 4 Plane 1 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 4 Plane 2 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 4 Plane 2 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 4 Plane 2 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 4 Plane 2 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 4 Plane 3 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 4 Plane 3 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 4 Plane 3 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 4 Plane 3 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 4 Plane 4 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 4 Plane 4 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 4 Plane 4 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 4 Plane 4 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 4 Plane 5 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 4 Plane 5 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 4 Plane 5 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 4 Plane 5 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 4 Plane 6 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 4 Plane 6 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 4 Plane 6 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 4 Plane 6 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 4 Plane 7 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 4 Plane 7 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 4 Plane 7 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 4 Plane 7 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 4 Plane 8 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 4 Plane 8 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 4 Plane 8 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 4 Plane 8 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 4 Plane 9 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 4 Plane 9 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 4 Plane 9 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 4 Plane 9 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 4 Plane 10 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 4 Plane 10 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 4 Plane 10 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 4 Plane 10 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 4 Plane 11 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 4 Plane 11 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 4 Plane 11 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 4 Plane 11 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 4 Plane 12 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 4 Plane 12 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 4 Plane 12 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 4 Plane 12 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 4 Plane 13 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 4 Plane 13 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 4 Plane 13 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 4 Plane 13 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 4 Plane 14 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 4 Plane 14 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 4 Plane 14 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 4 Plane 14 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 4 Plane 15 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 4 Plane 15 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 4 Plane 15 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 4 Plane 15 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 4 Plane 16 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 4 Plane 16 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 4 Plane 16 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 4 Plane 16 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 4 Plane 17 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 4 Plane 17 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 4 Plane 17 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 4 Plane 17 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 4 Plane 18 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 4 Plane 18 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 4 Plane 18 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 4 Plane 18 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 4 Plane 19 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 4 Plane 19 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 4 Plane 19 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 4 Plane 19 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 4 Plane 20 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 4 Plane 20 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 4 Plane 20 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 4 Plane 20 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 4 Plane 21 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 4 Plane 21 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 4 Plane 21 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 4 Plane 21 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 4 Plane 22 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 4 Plane 22 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 4 Plane 22 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 4 Plane 22 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 4 Plane 23 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 4 Plane 23 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 4 Plane 23 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 4 Plane 23 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 5 Plane 0 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 5 Plane 0 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 5 Plane 0 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 5 Plane 0 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 5 Plane 1 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 5 Plane 1 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 5 Plane 1 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 5 Plane 1 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 5 Plane 2 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 5 Plane 2 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 5 Plane 2 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 5 Plane 2 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 5 Plane 3 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 5 Plane 3 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 5 Plane 3 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 5 Plane 3 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 5 Plane 4 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 5 Plane 4 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 5 Plane 4 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 5 Plane 4 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 5 Plane 5 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 5 Plane 5 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 5 Plane 5 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 5 Plane 5 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 5 Plane 6 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 5 Plane 6 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 5 Plane 6 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 5 Plane 6 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 5 Plane 7 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 5 Plane 7 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 5 Plane 7 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 5 Plane 7 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 5 Plane 8 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 5 Plane 8 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 5 Plane 8 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 5 Plane 8 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 5 Plane 9 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 5 Plane 9 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 5 Plane 9 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 5 Plane 9 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 5 Plane 10 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 5 Plane 10 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 5 Plane 10 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 5 Plane 10 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 5 Plane 11 |  1: null| 2: ome.units.quantity.Time: value[0.9310193999999999], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 5 Plane 11 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 5 Plane 11 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 5 Plane 11 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
+| getPlaneDeltaT| Image 5 Plane 12 |  1: null| 2: ome.units.quantity.Time: value[100.1833796], unit[s] stored as java.lang.Double |
+| getPlaneExposureTime| Image 5 Plane 12 |  1: null| 2: ome.units.quantity.Time: value[150.0], unit[s] stored as java.lang.Double |
+| getPlanePositionX| Image 5 Plane 12 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getPlanePositionY| Image 5 Plane 12 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
 
  More than 500 differences.
