@@ -7,17 +7,17 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |77 ms|------|82 ms|------|--------|
+| Read time (all)   |69 ms|------|86 ms|------|--------|
 |0|![2021-02-25-tulip_unprocessed-Airyscan.quick_true.flat_true.stitch_true.series_0.jpg](2021-02-25-tulip_unprocessed-Airyscan/2021-02-25-tulip_unprocessed-Airyscan.quick_true.flat_true.stitch_true.series_0.jpg)|X:1024<br>Y:1024<br>C:2<br>Z:21<br>T:32|![2021-02-25-tulip_unprocessed-Airyscan.quick_false.flat_true.stitch_true.series_0.jpg](2021-02-25-tulip_unprocessed-Airyscan/2021-02-25-tulip_unprocessed-Airyscan.quick_false.flat_true.stitch_true.series_0.jpg)|X:1024<br>Y:1024<br>C:2<br>Z:21<br>T:32|0|
 
 # Metadata
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |10 ms|19 ms|        |
+| Initialization     |                  |11 ms|19 ms|        |
 | Reader Size (Mb)     |                  |0.58|1.35|        |
-| getStageLabelX| Image 0 | 0.000 um | -33280.500 um | 33280.500 um |
-| getStageLabelY| Image 0 | 0.000 um | 1262.370 um | 1262.370 um |
+| getStageLabelX| Image 0 |  1: null| 2: ome.units.quantity.Length: value[-33280.5], unit[µm] stored as java.lang.Double |
+| getStageLabelY| Image 0 |  1: null| 2: ome.units.quantity.Length: value[1262.37], unit[µm] stored as java.lang.Double |
 | getStageLabelZ| Image 0 | 0.000 um | 705.839 um | 705.839 um |
 | getPlaneDeltaT| Image 0 Plane 0 |  1: null| 2: ome.units.quantity.Time: value[6508.476219151515], unit[s] stored as java.lang.Double |
 | getPlanePositionX| Image 0 Plane 0 | 0.000 um | -33280.500 um | 33280.500 um |

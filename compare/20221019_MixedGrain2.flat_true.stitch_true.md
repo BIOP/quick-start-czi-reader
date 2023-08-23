@@ -16,8 +16,8 @@
 | -------------------|------------------|--------------------|-----------------|------- |
 | Initialization     |                  |4 ms|5 ms|        |
 | Reader Size (Mb)     |                  |0.17|0.34|        |
-| getStageLabelX| Image 0 | 0.000 um | 4905.320 um | 4905.320 um |
-| getStageLabelY| Image 0 | 0.000 um | -69.713 um | 69.713 um |
+| getStageLabelX| Image 0 |  1: null| 2: ome.units.quantity.Length: value[4905.32], unit[µm] stored as java.lang.Double |
+| getStageLabelY| Image 0 |  1: null| 2: ome.units.quantity.Length: value[-69.7134], unit[µm] stored as java.lang.Double |
 | getStageLabelZ| Image 0 | 0.000 um | -540.459 um | 540.459 um |
 | getPlaneDeltaT| Image 0 Plane 0 |  1: null| 2: ome.units.quantity.Time: value[5785.240463090909], unit[s] stored as java.lang.Double |
 | getPlanePositionX| Image 0 Plane 0 | 0.000 um | 4905.320 um | 4905.320 um |

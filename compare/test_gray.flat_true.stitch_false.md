@@ -7,7 +7,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |3324 ms|------|3472 ms|------|--------|
+| Read time (all)   |3480 ms|------|3557 ms|------|--------|
 |0|![test_gray.quick_true.flat_true.stitch_false.series_0.jpg](test_gray/test_gray.quick_true.flat_true.stitch_false.series_0.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|![test_gray.quick_false.flat_true.stitch_false.series_0.jpg](test_gray/test_gray.quick_false.flat_true.stitch_false.series_0.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|0|
 |1|![test_gray.quick_true.flat_true.stitch_false.series_1.jpg](test_gray/test_gray.quick_true.flat_true.stitch_false.series_1.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|![test_gray.quick_false.flat_true.stitch_false.series_1.jpg](test_gray/test_gray.quick_false.flat_true.stitch_false.series_1.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|0|
 |2|![test_gray.quick_true.flat_true.stitch_false.series_2.jpg](test_gray/test_gray.quick_true.flat_true.stitch_false.series_2.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|![test_gray.quick_false.flat_true.stitch_false.series_2.jpg](test_gray/test_gray.quick_false.flat_true.stitch_false.series_2.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|0|
@@ -49,78 +49,150 @@
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |12 ms|5 ms|        |
+| Initialization     |                  |11 ms|5 ms|        |
 | Reader Size (Mb)     |                  |0.17|0.23|        |
+| getStageLabelX| Image 0 |  1: null| 2: ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 0 |  1: null| 2: ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 0 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 1 | Scene position #0| Scene position #1| |
+| getStageLabelX| Image 1 |  1: null| 2: ome.units.quantity.Length: value[2048], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 1 |  1: null| 2: ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 1 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 2 | Scene position #0| Scene position #2| |
+| getStageLabelX| Image 2 |  1: null| 2: ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 2 |  1: null| 2: ome.units.quantity.Length: value[2048], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 2 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 3 | Scene position #0| Scene position #3| |
+| getStageLabelX| Image 3 |  1: null| 2: ome.units.quantity.Length: value[2048], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 3 |  1: null| 2: ome.units.quantity.Length: value[2048], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 3 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 4 | Scene position #0| Scene position #4| |
+| getStageLabelX| Image 4 |  1: null| 2: ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 4 |  1: null| 2: ome.units.quantity.Length: value[900], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 4 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 5 | Scene position #0| Scene position #5| |
+| getStageLabelX| Image 5 |  1: null| 2: ome.units.quantity.Length: value[2048], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 5 |  1: null| 2: ome.units.quantity.Length: value[900], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 5 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 6 | Scene position #0| Scene position #6| |
+| getStageLabelX| Image 6 |  1: null| 2: ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 6 |  1: null| 2: ome.units.quantity.Length: value[2948], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 6 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 7 | Scene position #0| Scene position #7| |
+| getStageLabelX| Image 7 |  1: null| 2: ome.units.quantity.Length: value[2048], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 7 |  1: null| 2: ome.units.quantity.Length: value[2948], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 7 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 8 | Scene position #0| Scene position #8| |
+| getStageLabelX| Image 8 |  1: null| 2: ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 8 |  1: null| 2: ome.units.quantity.Length: value[1800], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 8 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 9 | Scene position #0| Scene position #9| |
+| getStageLabelX| Image 9 |  1: null| 2: ome.units.quantity.Length: value[2048], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 9 |  1: null| 2: ome.units.quantity.Length: value[1800], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 9 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 10 | Scene position #0| Scene position #10| |
+| getStageLabelX| Image 10 |  1: null| 2: ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 10 |  1: null| 2: ome.units.quantity.Length: value[3848], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 10 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 11 | Scene position #0| Scene position #11| |
+| getStageLabelX| Image 11 |  1: null| 2: ome.units.quantity.Length: value[2048], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 11 |  1: null| 2: ome.units.quantity.Length: value[3848], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 11 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 12 | Scene position #0| Scene position #12| |
+| getStageLabelX| Image 12 |  1: null| 2: ome.units.quantity.Length: value[300], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 12 |  1: null| 2: ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 12 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 13 | Scene position #0| Scene position #13| |
+| getStageLabelX| Image 13 |  1: null| 2: ome.units.quantity.Length: value[2348], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 13 |  1: null| 2: ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 13 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 14 | Scene position #0| Scene position #14| |
+| getStageLabelX| Image 14 |  1: null| 2: ome.units.quantity.Length: value[4396], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 14 |  1: null| 2: ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 14 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 15 | Scene position #0| Scene position #15| |
+| getStageLabelX| Image 15 |  1: null| 2: ome.units.quantity.Length: value[6444], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 15 |  1: null| 2: ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 15 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 16 | Scene position #0| Scene position #16| |
+| getStageLabelX| Image 16 |  1: null| 2: ome.units.quantity.Length: value[300], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 16 |  1: null| 2: ome.units.quantity.Length: value[900], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 16 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 17 | Scene position #0| Scene position #17| |
+| getStageLabelX| Image 17 |  1: null| 2: ome.units.quantity.Length: value[2348], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 17 |  1: null| 2: ome.units.quantity.Length: value[900], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 17 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 18 | Scene position #0| Scene position #18| |
+| getStageLabelX| Image 18 |  1: null| 2: ome.units.quantity.Length: value[4396], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 18 |  1: null| 2: ome.units.quantity.Length: value[900], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 18 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 19 | Scene position #0| Scene position #19| |
+| getStageLabelX| Image 19 |  1: null| 2: ome.units.quantity.Length: value[6444], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 19 |  1: null| 2: ome.units.quantity.Length: value[900], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 19 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 20 | Scene position #0| Scene position #20| |
+| getStageLabelX| Image 20 |  1: null| 2: ome.units.quantity.Length: value[300], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 20 |  1: null| 2: ome.units.quantity.Length: value[1800], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 20 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 21 | Scene position #0| Scene position #21| |
+| getStageLabelX| Image 21 |  1: null| 2: ome.units.quantity.Length: value[2348], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 21 |  1: null| 2: ome.units.quantity.Length: value[1800], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 21 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 22 | Scene position #0| Scene position #22| |
+| getStageLabelX| Image 22 |  1: null| 2: ome.units.quantity.Length: value[4396], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 22 |  1: null| 2: ome.units.quantity.Length: value[1800], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 22 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 23 | Scene position #0| Scene position #23| |
+| getStageLabelX| Image 23 |  1: null| 2: ome.units.quantity.Length: value[6444], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 23 |  1: null| 2: ome.units.quantity.Length: value[1800], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 23 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 24 | Scene position #0| Scene position #24| |
+| getStageLabelX| Image 24 |  1: null| 2: ome.units.quantity.Length: value[600], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 24 |  1: null| 2: ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 24 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 25 | Scene position #0| Scene position #25| |
+| getStageLabelX| Image 25 |  1: null| 2: ome.units.quantity.Length: value[2648], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 25 |  1: null| 2: ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 25 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 26 | Scene position #0| Scene position #26| |
+| getStageLabelX| Image 26 |  1: null| 2: ome.units.quantity.Length: value[4696], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 26 |  1: null| 2: ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 26 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 27 | Scene position #0| Scene position #27| |
+| getStageLabelX| Image 27 |  1: null| 2: ome.units.quantity.Length: value[6744], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 27 |  1: null| 2: ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 27 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 28 | Scene position #0| Scene position #28| |
+| getStageLabelX| Image 28 |  1: null| 2: ome.units.quantity.Length: value[600], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 28 |  1: null| 2: ome.units.quantity.Length: value[900], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 28 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 29 | Scene position #0| Scene position #29| |
+| getStageLabelX| Image 29 |  1: null| 2: ome.units.quantity.Length: value[2648], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 29 |  1: null| 2: ome.units.quantity.Length: value[900], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 29 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 30 | Scene position #0| Scene position #30| |
+| getStageLabelX| Image 30 |  1: null| 2: ome.units.quantity.Length: value[4696], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 30 |  1: null| 2: ome.units.quantity.Length: value[900], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 30 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 31 | Scene position #0| Scene position #31| |
+| getStageLabelX| Image 31 |  1: null| 2: ome.units.quantity.Length: value[6744], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 31 |  1: null| 2: ome.units.quantity.Length: value[900], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 31 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 32 | Scene position #0| Scene position #32| |
+| getStageLabelX| Image 32 |  1: null| 2: ome.units.quantity.Length: value[600], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 32 |  1: null| 2: ome.units.quantity.Length: value[1800], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 32 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 33 | Scene position #0| Scene position #33| |
+| getStageLabelX| Image 33 |  1: null| 2: ome.units.quantity.Length: value[2648], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 33 |  1: null| 2: ome.units.quantity.Length: value[1800], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 33 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 34 | Scene position #0| Scene position #34| |
+| getStageLabelX| Image 34 |  1: null| 2: ome.units.quantity.Length: value[4696], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 34 |  1: null| 2: ome.units.quantity.Length: value[1800], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 34 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getStageLabelName| Image 35 | Scene position #0| Scene position #35| |
+| getStageLabelX| Image 35 |  1: null| 2: ome.units.quantity.Length: value[6744], unit[reference frame] stored as java.lang.Integer |
+| getStageLabelY| Image 35 |  1: null| 2: ome.units.quantity.Length: value[1800], unit[reference frame] stored as java.lang.Integer |
 | getStageLabelZ| Image 35 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |
 | getPlaneDeltaT| Image 0 Plane 0 |  1: ome.units.quantity.Time: value[0.0], unit[s] stored as java.lang.Double| 2: null |
 | getPlanePositionZ| Image 0 Plane 0 |  1: ome.units.quantity.Length: value[0.0], unit[reference frame] stored as java.lang.Double| 2: null |

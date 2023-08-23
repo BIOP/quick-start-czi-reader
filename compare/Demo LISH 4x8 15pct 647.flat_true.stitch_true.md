@@ -7,17 +7,17 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |926 ms|------|997 ms|------|--------|
+| Read time (all)   |953 ms|------|1000 ms|------|--------|
 |0|![Demo LISH 4x8 15pct 647.quick_true.flat_true.stitch_true.series_0.jpg](Demo LISH 4x8 15pct 647/Demo LISH 4x8 15pct 647.quick_true.flat_true.stitch_true.series_0.jpg)|X:4969<br>Y:6254<br>C:1<br>Z:56<br>T:1|![Demo LISH 4x8 15pct 647.quick_false.flat_true.stitch_true.series_0.jpg](Demo LISH 4x8 15pct 647/Demo LISH 4x8 15pct 647.quick_false.flat_true.stitch_true.series_0.jpg)|X:4969<br>Y:6254<br>C:1<br>Z:56<br>T:1|0|
 
 # Metadata
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |24 ms|53 ms|        |
+| Initialization     |                  |24 ms|45 ms|        |
 | Reader Size (Mb)     |                  |0.23|2.63|        |
-| getStageLabelX| Image 0 | -3344.305 um | -27.045 um | 3317.260 um |
-| getStageLabelY| Image 0 | -5015.520 um | 17428.300 um | 22443.820 um |
+| getStageLabelX| Image 0 |  1: null| 2: ome.units.quantity.Length: value[-27.045], unit[µm] stored as java.lang.Double |
+| getStageLabelY| Image 0 |  1: null| 2: ome.units.quantity.Length: value[17428.3], unit[µm] stored as java.lang.Double |
 | getPlaneDeltaT| Image 0 Plane 0 |  1: null| 2: ome.units.quantity.Time: value[0.0], unit[s] stored as java.lang.Double |
 | getPlanePositionX| Image 0 Plane 0 | -3344.305 um | -27.045 um | 3317.260 um |
 | getPlanePositionY| Image 0 Plane 0 | -5015.520 um | 17428.300 um | 22443.820 um |

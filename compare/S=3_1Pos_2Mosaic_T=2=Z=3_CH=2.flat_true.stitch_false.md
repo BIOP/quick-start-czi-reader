@@ -7,7 +7,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |273 ms|------|499 ms|------|--------|
+| Read time (all)   |255 ms|------|524 ms|------|--------|
 |0|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_false.series_0.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_false.series_0.jpg)|X:256<br>Y:256<br>C:2<br>Z:3<br>T:2|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_false.series_0.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_false.series_0.jpg)|X:256<br>Y:256<br>C:2<br>Z:3<br>T:2|0|
 |1|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_false.series_1.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_false.series_1.jpg)|X:256<br>Y:256<br>C:2<br>Z:3<br>T:2|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_false.series_1.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_false.series_1.jpg)|X:256<br>Y:256<br>C:2<br>Z:3<br>T:2|0|
 |2|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_false.series_2.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_false.series_2.jpg)|X:256<br>Y:256<br>C:2<br>Z:3<br>T:2|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_false.series_2.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_false.series_2.jpg)|X:256<br>Y:256<br>C:2<br>Z:3<br>T:2|0|
@@ -64,7 +64,7 @@
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |33 ms|35 ms|        |
+| Initialization     |                  |28 ms|33 ms|        |
 | Reader Size (Mb)     |                  |2.23|3.36|        |
 | getImageCount|(No args)|28| 51| |
 | getStageLabelName| Image 0 | TR1| Scene position #0| |

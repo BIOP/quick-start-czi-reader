@@ -3082,6 +3082,10 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 List<MinimalDimensionEntry> blocks;
                 LibCZI.SubBlockSegment block;
 
+                Length planePosX = null;
+                Length planePosY = null;
+                Length planePosZ = null;
+
                 Length stagePosX = null;
                 Length stagePosY = null;
                 Length stagePosZ = null;
@@ -3096,24 +3100,27 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     if (sbm.stageX!=null) {
                         //  if true, the unit is micrometer
                         unitLength = UNITS.MICROMETER;
-                        if ((stagePosX == null) || (stagePosX.value(unitLength).doubleValue() > sbm.stageX.value(unitLength).doubleValue())) {
-                            stagePosX = new Length(sbm.stageX.value(unitLength).doubleValue()/*+offsetXInMicrons*/, unitLength);
+                        if ((planePosX == null) || (planePosX.value(unitLength).doubleValue() > sbm.stageX.value(unitLength).doubleValue())) {
+                            planePosX = new Length(sbm.stageX.value(unitLength).doubleValue()/*+offsetXInMicrons*/, unitLength);
+                            stagePosX = planePosX;
                         }
                     }
                     if (sbm.stageY!=null) {
                         //  if true, the unit is micrometer
                         unitLength = UNITS.MICROMETER;
-                        if ((stagePosY == null) || (stagePosY.value(unitLength).doubleValue() > sbm.stageY.value(unitLength).doubleValue())) {
-                            stagePosY = new Length(sbm.stageY.value(unitLength).doubleValue()/*+offsetYInMicrons*/, unitLength);
+                        if ((planePosY == null) || (planePosY.value(unitLength).doubleValue() > sbm.stageY.value(unitLength).doubleValue())) {
+                            planePosY = new Length(sbm.stageY.value(unitLength).doubleValue()/*+offsetYInMicrons*/, unitLength);
+                            stagePosY = planePosY;
                         }
                     }
-                    if ((stagePosZ == null)||(stagePosZ.value(unitLength).doubleValue()>sbm.stageZ.value(unitLength).doubleValue())) {
-                        stagePosZ = sbm.stageZ;
+                    if ((planePosZ == null)||(planePosZ.value(unitLength).doubleValue()>sbm.stageZ.value(unitLength).doubleValue())) {
+                        planePosZ = sbm.stageZ;
+                        stagePosZ = planePosZ;
                     }
                 }
 
                 // Read position from block
-                if (stagePosX == null) {
+                if (planePosX == null) {
 
                     //if (!coreToPixSizeX.get(iCoreIndex).unit().equals(UNITS.REFERENCEFRAME)) {
                         for (MinimalDimensionEntry iBlock : blocks) {
@@ -3121,31 +3128,31 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                                     *coreToPixSizeX.get(iCoreIndex).value(unitLength).doubleValue(), unitLength);
                             Length posY = new Length(/*offsetYInMicrons+*/iBlock.dimensionStartY/reader.coreIndexToDownscaleFactor.get(iCoreIndex)
                                     *coreToPixSizeY.get(iCoreIndex).value(unitLength).doubleValue(), unitLength);
-                            if ((stagePosX == null)||(stagePosX.value().doubleValue()>posX.value(unitLength).doubleValue())) {
-                                stagePosX = posX;
+                            if ((planePosX == null)||(planePosX.value().doubleValue()>posX.value(unitLength).doubleValue())) {
+                                planePosX = posX;
                             }
-                            if ((stagePosY == null)||(stagePosY.value().doubleValue()>posY.value(unitLength).doubleValue())) {
-                                stagePosY = posY;
+                            if ((planePosY == null)||(planePosY.value().doubleValue()>posY.value(unitLength).doubleValue())) {
+                                planePosY = posY;
                             }
 
                             if (coreToPixSizeZ.size()!=0) {
                                 Length posZ = new Length(iBlock.dimensionStartZ//.getDimension("Z").start
                                         * coreToPixSizeZ.get(iCoreIndex).value(unitLength).doubleValue(), unitLength);
 
-                                if ((stagePosZ == null) || (stagePosZ.value().doubleValue() > posZ.value(unitLength).doubleValue())) {
-                                    stagePosZ = posZ;
+                                if ((planePosZ == null) || (planePosZ.value().doubleValue() > posZ.value(unitLength).doubleValue())) {
+                                    planePosZ = posZ;
                                 }
                             }
                         }
                 }
 
-                if ((!stageLabelSet)&&(stagePosY!=null)) {
+                if ((!stageLabelSet)&&(planePosY!=null)) {
                     //stageLabelSet = true;
                     reader.store.setStageLabelX(stagePosX, reader.series);
                     reader.store.setStageLabelY(stagePosY, reader.series);
                 }
 
-                if ((stagePosZ!=null)&&(!stageLabelZSet)) reader.store.setStageLabelZ(stagePosZ, reader.series);
+                if ((planePosZ!=null)&&(!stageLabelZSet)) reader.store.setStageLabelZ(planePosZ, reader.series);
 
                 loopChannel:
                 for (int iChannel = 0; iChannel<nChannels; iChannel++) {
@@ -3210,7 +3217,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                             offsetT0 = 0;
                         }
                     }
-                    double offsetZ0 = (stagePosZ==null)?0:stagePosZ.value(unitLength).doubleValue();
+                    double offsetZ0 = (planePosZ==null)?0:planePosZ.value(unitLength).doubleValue();
                     double stepZ = (zStep==null)?0:zStep.value(unitLength).doubleValue();
 
                     boolean resolutionLevel0 = reader.coreIndexToDownscaleFactor.get(reader.coreIndex)==1;
@@ -3222,8 +3229,8 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                                 // illuminations -> modulo C
                                 // phases -> modulo T
 
-                                reader.store.setPlanePositionX(stagePosX, reader.series, planeIndex);
-                                reader.store.setPlanePositionY(stagePosY, reader.series, planeIndex);
+                                reader.store.setPlanePositionX(planePosX, reader.series, planeIndex);
+                                reader.store.setPlanePositionY(planePosY, reader.series, planeIndex);
 
                                 if ((exposure != null)&&(!Double.isNaN(exposure.value().doubleValue()))) {
                                     reader.store.setPlaneExposureTime(exposure, reader.series, planeIndex); // 0 exposure do not make sense

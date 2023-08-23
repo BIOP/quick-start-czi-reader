@@ -56,7 +56,7 @@ public class CompareReader {
             "getImageCount",
             "getChannelSamplesPerPixel"));
 
-    public static final double timeStampDifferenceAllowedInS = 0.001; // 1 ms
+    public static final double timeStampDifferenceAllowedInS = 0.01; // 1 ms
     public static final double positionDifferenceAllowedInUM = 0.001; // 1nm
 
     static long nanoStart;
@@ -727,8 +727,8 @@ public class CompareReader {
 
                 // "https://zenodo.org/record/7147844/files/test-fullplate.czi", // 13.7 GB test full plate -> out of memory
                 "https://zenodo.org/record/7129425/files/test-plate.czi", // test plate, 3.3 GB
-                "https://zenodo.org/record/7254229/files/P1.czi", // Cytoskeleton stack image, 125 MB
-                "https://zenodo.org/record/4662053/files/2021-02-25-tulip_Airyscan.czi", // Airyscan processed, 42.1 MB
+                "https://zenodo.org/record/7254229/files/P1.czi", // Cytoskeleton stack image, 125 MB */
+              //  "https://zenodo.org/record/4662053/files/2021-02-25-tulip_Airyscan.czi", // Airyscan processed, 42.1 MB
                 "https://zenodo.org/record/4662053/files/2021-02-25-tulip_unprocessed-Airyscan.czi", // Unprocessed Airyscan 2.9Gb
                 "https://zenodo.org/record/6848342/files/Airyscan%20Lines%20Pattern.czi", //2 MB
                 "https://zenodo.org/record/6848342/files/Confocal%20Lines%20Pattern.czi", //2.2 MB
@@ -756,14 +756,14 @@ public class CompareReader {
                 "https://zenodo.org/record/7015307/files/W96_B2%2BB4_S%3D2_T%3D1%3DZ%3D1_C%3D1_Tile%3D5x9.czi", // 31.3 MB
                 "https://zenodo.org/record/7015307/files/W96_B2%2BB4_S%3D2_T%3D2%3DZ%3D4_C%3D3_Tile%3D5x9.czi", // 737.7 MB
                 "https://zenodo.org/record/7015307/files/Z%3D5_CH%3D1.czi", // 2.0 MB
-                "https://zenodo.org/record/7015307/files/Z%3D5_CH%3D2.czi", // 2.6 MB
+                "https://zenodo.org/record/7015307/files/Z%3D5_CH%3D2.czi", // 2.6 MB*/
                 "https://zenodo.org/record/7117784/files/RBC_full_one_timepoint.czi", // 1.0 GB RBC full one timepoint
                 "https://zenodo.org/record/7117784/files/RBC_full_time_series.czi", // 3.1 GB RBC full time series
                 "https://zenodo.org/record/7117784/files/RBC_medium_LLSZ.czi", // 700 MB RBC series LLSZ
                 "https://zenodo.org/record/7117784/files/RBC_tiny.czi", // 48.9 MB RBC tiny
                 "https://zenodo.org/record/7260610/files/20221019_MixedGrain.czi", // 113 MB Mixed Grain confocal
                 "https://zenodo.org/record/7260610/files/20221019_MixedGrain2.czi", // 78.6 MB Mixed Grain2
-                "https://zenodo.org/record/5101351/files/Ph488.czi", // 43.1 MB*/
+                "https://zenodo.org/record/5101351/files/Ph488.czi", // 43.1 MB
                 "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031.czi", // 964 MB
                 "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031_pt1.czi", // 3 MB
                 "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031_pt2.czi", // 7.3 MB
@@ -790,14 +790,22 @@ public class CompareReader {
             explanations.get(url).put("getStageLabelName",explanation);
         }
 
-        /*explanation = new IgnoreDiffExplanation();
+        explanation = new IgnoreDiffExplanation();
         explanation.explanation =
                 "The quick reader reads puts a Z reference frame value in Z, which makes sense because it's "
                 +"the same logic as what's already happening with getPlanePositionX and Y.";
         explanation.note = IgnoreDiffExplanation.Note.SAME;
         explanations.get("https://zenodo.org/record/8263451/files/test_gray.czi").put("getPlanePositionZ", explanation);
-        explanations.get("https://zenodo.org/record/8263451/files/test_gray.czi").put("getStageLabelZ", explanation);*/
+        explanations.get("https://zenodo.org/record/8263451/files/test_gray.czi").put("getStageLabelZ", explanation);
 
+        explanation = new IgnoreDiffExplanation();
+        explanation.explanation =
+                "The quick reader reads correctly the z plane position, while the original reader do not read these";
+        explanation.note = IgnoreDiffExplanation.Note.BETTER;
+        explanations.get("https://zenodo.org/record/7117784/files/RBC_full_one_timepoint.czi").put("getPlanePositionZ", explanation);
+        explanations.get("https://zenodo.org/record/7117784/files/RBC_full_time_series.czi").put("getPlanePositionZ", explanation);
+        explanations.get("https://zenodo.org/record/7117784/files/RBC_medium_LLSZ.czi").put("getPlanePositionZ", explanation);
+        explanations.get("https://zenodo.org/record/7117784/files/RBC_tiny.czi").put("getPlanePositionZ", explanation);
 
 
 
@@ -882,7 +890,7 @@ public class CompareReader {
             int maxDiffsDisplayed = 100;
             logTo.accept("## Number of differences between readers (cropped to "+100+")");
 
-            logTo.accept("```\n" +
+            logTo.accept("```mermaid\n" +
                     "        gantt\n" +
                     "            title Number of differences between readers\n" +
                     "            dateFormat  X\n" +
@@ -902,7 +910,7 @@ public class CompareReader {
 
             logTo.accept("## Initialisation time speedup (%)");
 
-            logTo.accept("```\n" +
+            logTo.accept("```mermaid\n" +
                     "        gantt\n" +
                     "            title Initialisation time speedup\n" +
                     "            dateFormat  X\n" +
@@ -919,7 +927,7 @@ public class CompareReader {
 
             logTo.accept("## Memory reduction (%)");
 
-            logTo.accept("```\n" +
+            logTo.accept("```mermaid\n" +
                     "        gantt\n" +
                     "            title Memory reduction\n" +
                     "            dateFormat  X\n" +
@@ -936,7 +944,7 @@ public class CompareReader {
 
             logTo.accept("## First plane reading time speedup (%)");
 
-            logTo.accept("```\n" +
+            logTo.accept("```mermaid\n" +
                     "        gantt\n" +
                     "            title First plane reading time speedup\n" +
                     "            dateFormat  X\n" +

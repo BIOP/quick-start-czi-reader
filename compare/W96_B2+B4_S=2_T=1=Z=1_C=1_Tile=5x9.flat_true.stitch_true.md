@@ -7,7 +7,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |437 ms|------|469 ms|------|--------|
+| Read time (all)   |442 ms|------|487 ms|------|--------|
 |0|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_true.series_0.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_true.series_0.jpg)|X:2944<br>Y:3444<br>C:1<br>Z:1<br>T:1|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_true.series_0.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_true.series_0.jpg)|X:2944<br>Y:3444<br>C:1<br>Z:1<br>T:1|0|
 |1|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_true.series_1.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_true.series_1.jpg)|X:1472<br>Y:1722<br>C:1<br>Z:1<br>T:1|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_true.series_1.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_true.series_1.jpg)|X:1472<br>Y:1722<br>C:1<br>Z:1<br>T:1|0|
 |2|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_true.series_2.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_true.series_2.jpg)|X:736<br>Y:861<br>C:1<br>Z:1<br>T:1|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_true.series_2.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_true.series_2.jpg)|X:736<br>Y:861<br>C:1<br>Z:1<br>T:1|0|
@@ -25,14 +25,14 @@
 | getStageLabelX| Image 0 | 13039.200 um | 13500.000 um | 460.800 um |
 | getStageLabelY| Image 0 | 16895.600 um | 17500.400 um | 604.800 um |
 | getStageLabelName| Image 1 | B2| Scene position #1| |
-| getStageLabelX| Image 1 | 0.000 um | 13500.000 um | 13500.000 um |
-| getStageLabelY| Image 1 | 0.000 um | 17500.400 um | 17500.400 um |
+| getStageLabelX| Image 1 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getStageLabelY| Image 1 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
 | getStageLabelZ| Image 1 |  1: ome.units.quantity.Length: value[0.0], unit[µm] stored as java.lang.Double| 2: null |
 | getPixelsPhysicalSizeX| Image 1 | 0.800 um | 0.400 um | 0.400 um |
 | getPixelsPhysicalSizeY| Image 1 | 0.800 um | 0.400 um | 0.400 um |
 | getStageLabelName| Image 2 | B2| Scene position #2| |
-| getStageLabelX| Image 2 | 0.000 um | 13500.000 um | 13500.000 um |
-| getStageLabelY| Image 2 | 0.000 um | 17500.400 um | 17500.400 um |
+| getStageLabelX| Image 2 |  1: null| 2: ome.units.quantity.Length: value[13500.0], unit[µm] stored as java.lang.Double |
+| getStageLabelY| Image 2 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
 | getStageLabelZ| Image 2 |  1: ome.units.quantity.Length: value[0.0], unit[µm] stored as java.lang.Double| 2: null |
 | getPixelsPhysicalSizeX| Image 2 | 1.600 um | 0.400 um | 1.200 um |
 | getPixelsPhysicalSizeY| Image 2 | 1.600 um | 0.400 um | 1.200 um |
@@ -40,14 +40,14 @@
 | getStageLabelX| Image 3 | 31039.200 um | 31500.000 um | 460.800 um |
 | getStageLabelY| Image 3 | 16895.600 um | 17500.400 um | 604.800 um |
 | getStageLabelName| Image 4 | B4| Scene position #4| |
-| getStageLabelX| Image 4 | 18000.000 um | 31500.000 um | 13500.000 um |
-| getStageLabelY| Image 4 | 0.000 um | 17500.400 um | 17500.400 um |
+| getStageLabelX| Image 4 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getStageLabelY| Image 4 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
 | getStageLabelZ| Image 4 |  1: ome.units.quantity.Length: value[0.0], unit[µm] stored as java.lang.Double| 2: null |
 | getPixelsPhysicalSizeX| Image 4 | 0.800 um | 0.400 um | 0.400 um |
 | getPixelsPhysicalSizeY| Image 4 | 0.800 um | 0.400 um | 0.400 um |
 | getStageLabelName| Image 5 | B4| Scene position #5| |
-| getStageLabelX| Image 5 | 18000.000 um | 31500.000 um | 13500.000 um |
-| getStageLabelY| Image 5 | 0.000 um | 17500.400 um | 17500.400 um |
+| getStageLabelX| Image 5 |  1: null| 2: ome.units.quantity.Length: value[31500.0], unit[µm] stored as java.lang.Double |
+| getStageLabelY| Image 5 |  1: null| 2: ome.units.quantity.Length: value[17500.4], unit[µm] stored as java.lang.Double |
 | getStageLabelZ| Image 5 |  1: ome.units.quantity.Length: value[0.0], unit[µm] stored as java.lang.Double| 2: null |
 | getPixelsPhysicalSizeX| Image 5 | 1.600 um | 0.400 um | 1.200 um |
 | getPixelsPhysicalSizeY| Image 5 | 1.600 um | 0.400 um | 1.200 um |

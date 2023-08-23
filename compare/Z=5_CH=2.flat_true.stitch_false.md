@@ -7,7 +7,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |41 ms|------|56 ms|------|--------|
+| Read time (all)   |41 ms|------|49 ms|------|--------|
 |0|![Z=5_CH=2.quick_true.flat_true.stitch_false.series_0.jpg](Z=5_CH=2/Z=5_CH=2.quick_true.flat_true.stitch_false.series_0.jpg)|X:256<br>Y:256<br>C:2<br>Z:5<br>T:1|![Z=5_CH=2.quick_false.flat_true.stitch_false.series_0.jpg](Z=5_CH=2/Z=5_CH=2.quick_false.flat_true.stitch_false.series_0.jpg)|X:256<br>Y:256<br>C:2<br>Z:5<br>T:1|0|
 
 # Metadata
