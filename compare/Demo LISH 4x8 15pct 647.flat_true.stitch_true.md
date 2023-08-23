@@ -7,14 +7,14 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |952 ms|------|936 ms|------|--------|
+| Read time (all)   |926 ms|------|997 ms|------|--------|
 |0|![Demo LISH 4x8 15pct 647.quick_true.flat_true.stitch_true.series_0.jpg](Demo LISH 4x8 15pct 647/Demo LISH 4x8 15pct 647.quick_true.flat_true.stitch_true.series_0.jpg)|X:4969<br>Y:6254<br>C:1<br>Z:56<br>T:1|![Demo LISH 4x8 15pct 647.quick_false.flat_true.stitch_true.series_0.jpg](Demo LISH 4x8 15pct 647/Demo LISH 4x8 15pct 647.quick_false.flat_true.stitch_true.series_0.jpg)|X:4969<br>Y:6254<br>C:1<br>Z:56<br>T:1|0|
 
 # Metadata
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |25 ms|54 ms|        |
+| Initialization     |                  |24 ms|53 ms|        |
 | Reader Size (Mb)     |                  |0.23|2.63|        |
 | getStageLabelX| Image 0 | -3344.305 um | -27.045 um | 3317.260 um |
 | getStageLabelY| Image 0 | -5015.520 um | 17428.300 um | 22443.820 um |

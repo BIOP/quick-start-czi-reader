@@ -7,7 +7,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |46 ms|------|55 ms|------|--------|
+| Read time (all)   |46 ms|------|57 ms|------|--------|
 |0|![S=2_T=3_CH=1.quick_true.flat_true.stitch_false.series_0.jpg](S=2_T=3_CH=1/S=2_T=3_CH=1.quick_true.flat_true.stitch_false.series_0.jpg)|X:256<br>Y:256<br>C:1<br>Z:1<br>T:3|![S=2_T=3_CH=1.quick_false.flat_true.stitch_false.series_0.jpg](S=2_T=3_CH=1/S=2_T=3_CH=1.quick_false.flat_true.stitch_false.series_0.jpg)|X:256<br>Y:256<br>C:1<br>Z:1<br>T:3|0|
 |1|![S=2_T=3_CH=1.quick_true.flat_true.stitch_false.series_1.jpg](S=2_T=3_CH=1/S=2_T=3_CH=1.quick_true.flat_true.stitch_false.series_1.jpg)|X:256<br>Y:256<br>C:1<br>Z:1<br>T:3|![S=2_T=3_CH=1.quick_false.flat_true.stitch_false.series_1.jpg](S=2_T=3_CH=1/S=2_T=3_CH=1.quick_false.flat_true.stitch_false.series_1.jpg)|X:256<br>Y:256<br>C:1<br>Z:1<br>T:3|0|
 

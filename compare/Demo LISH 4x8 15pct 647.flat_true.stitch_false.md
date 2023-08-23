@@ -7,7 +7,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |1821 ms|------|1176 ms|------|--------|
+| Read time (all)   |1835 ms|------|1143 ms|------|--------|
 |0|![Demo LISH 4x8 15pct 647.quick_true.flat_true.stitch_false.series_0.jpg](Demo LISH 4x8 15pct 647/Demo LISH 4x8 15pct 647.quick_true.flat_true.stitch_false.series_0.jpg)|X:1400<br>Y:900<br>C:1<br>Z:56<br>T:1|![Demo LISH 4x8 15pct 647.quick_false.flat_true.stitch_false.series_0.jpg](Demo LISH 4x8 15pct 647/Demo LISH 4x8 15pct 647.quick_false.flat_true.stitch_false.series_0.jpg)|X:1400<br>Y:900<br>C:1<br>Z:56<br>T:1|0|
 |1|![Demo LISH 4x8 15pct 647.quick_true.flat_true.stitch_false.series_1.jpg](Demo LISH 4x8 15pct 647/Demo LISH 4x8 15pct 647.quick_true.flat_true.stitch_false.series_1.jpg)|X:1400<br>Y:900<br>C:1<br>Z:56<br>T:1|![Demo LISH 4x8 15pct 647.quick_false.flat_true.stitch_false.series_1.jpg](Demo LISH 4x8 15pct 647/Demo LISH 4x8 15pct 647.quick_false.flat_true.stitch_false.series_1.jpg)|X:1400<br>Y:900<br>C:1<br>Z:56<br>T:1|0|
 |2|![Demo LISH 4x8 15pct 647.quick_true.flat_true.stitch_false.series_2.jpg](Demo LISH 4x8 15pct 647/Demo LISH 4x8 15pct 647.quick_true.flat_true.stitch_false.series_2.jpg)|X:1400<br>Y:900<br>C:1<br>Z:56<br>T:1|![Demo LISH 4x8 15pct 647.quick_false.flat_true.stitch_false.series_2.jpg](Demo LISH 4x8 15pct 647/Demo LISH 4x8 15pct 647.quick_false.flat_true.stitch_false.series_2.jpg)|X:1400<br>Y:900<br>C:1<br>Z:56<br>T:1|0|
@@ -45,7 +45,7 @@
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |35 ms|56 ms|        |
+| Initialization     |                  |39 ms|48 ms|        |
 | Reader Size (Mb)     |                  |1.00|3.47|        |
 | getStageLabelX| Image 0 | -3344.305 um | -27.045 um | 3317.260 um |
 | getStageLabelY| Image 0 | -5015.520 um | 17428.300 um | 22443.820 um |

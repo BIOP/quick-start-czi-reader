@@ -864,6 +864,138 @@ public class CompareReader {
             e.printStackTrace();
         }
 
+
+        reportSummaryFilePath = "comparison_summary_chart.md";
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(reportSummaryFilePath))) {
+            Consumer<String> logTo = (str) ->
+            {
+                try {
+                    bw.write(str+"\n");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            };
+
+            DecimalFormat df = new DecimalFormat("0.0");
+
+            int maxDiffsDisplayed = 100;
+            logTo.accept("## Number of differences between readers (cropped to "+100+")");
+
+            logTo.accept("```\n" +
+                    "        gantt\n" +
+                    "            title Number of differences between readers\n" +
+                    "            dateFormat  X\n" +
+                    "            axisFormat %s\n");
+
+            for (SummaryPerFile summary: summaryList) {
+                int numDiffs = summary.numberOfDifferences+summary.numberOfCriticalDifferences;
+                if (numDiffs>maxDiffsDisplayed) {
+                    numDiffs = maxDiffsDisplayed;
+                }
+                logTo.accept(
+                        "            section "+summary.imageName+"\n" +
+                        "            "+numDiffs+"   : 0, "+numDiffs);
+
+            }
+            logTo.accept("```");
+
+            logTo.accept("## Initialisation time speedup (%)");
+
+            logTo.accept("```\n" +
+                    "        gantt\n" +
+                    "            title Initialisation time speedup\n" +
+                    "            dateFormat  X\n" +
+                    "            axisFormat %s\n");
+
+            for (SummaryPerFile summary: summaryList) {
+                int ratio = (int) (summary.ratioReaderInitialisationDuration*100);
+                logTo.accept(
+                        "            section "+summary.imageName+"\n" +
+                                "            "+ratio+"   : 0, "+ratio);
+
+            }
+            logTo.accept("```");
+
+            logTo.accept("## Memory reduction (%)");
+
+            logTo.accept("```\n" +
+                    "        gantt\n" +
+                    "            title Memory reduction\n" +
+                    "            dateFormat  X\n" +
+                    "            axisFormat %s\n");
+
+            for (SummaryPerFile summary: summaryList) {
+                int ratio = (int) (summary.ratioMem*100);
+                logTo.accept(
+                        "            section "+summary.imageName+"\n" +
+                                "            "+ratio+"   : 0, "+ratio);
+
+            }
+            logTo.accept("```");
+
+            logTo.accept("## First plane reading time speedup (%)");
+
+            logTo.accept("```\n" +
+                    "        gantt\n" +
+                    "            title First plane reading time speedup\n" +
+                    "            dateFormat  X\n" +
+                    "            axisFormat %s\n");
+
+            for (SummaryPerFile summary: summaryList) {
+                int ratio = (int) (summary.ratioReaderInitialisationDuration*100);
+                logTo.accept(
+                        "            section "+summary.imageName+"\n" +
+                                "            "+ratio+"   : 0, "+ratio);
+
+            }
+            logTo.accept("```");
+
+
+
+            /*logTo.accept("|OK |File Name|AutoStitch|#Diffs<br>(Critical)|#Diffs|#Diffs Ignored|#DiffsPixels|Mem Gain|Init Time Gain|Read Time Gain|\n");
+            logTo.accept("|---|---------|----------|--------------------|------|--------------|------------|--------|--------------|--------------|\n");
+            for (SummaryPerFile summary: summaryList) {
+                String res = " ";
+                if (summary.numberOfDifferences+summary.numberOfCriticalDifferences+summary.numberOfDiffsPixels==0) {
+                    res = "✓";
+                }
+                logTo.accept("|"+res+"|");
+                logTo.accept("["+summary.imageName+"]("+summary.urlFullReport+")|");
+                logTo.accept(summary.autoStitch+"|");
+                logTo.accept(summary.numberOfCriticalDifferences+"|");
+                logTo.accept(summary.numberOfDifferences+"|");
+                logTo.accept(summary.numberOfDifferencesIgnored+"|");
+                logTo.accept(summary.numberOfDiffsPixels+"|");
+                logTo.accept(df.format(summary.ratioMem)+"|");
+                logTo.accept(df.format(summary.ratioReaderInitialisationDuration)+"|");
+                logTo.accept(df.format(summary.ratioFirstPlaneReadingTime)+"|\n");
+            }*/
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        /*
+        ```
+        gantt
+            title Git Issues - days since last update
+            dateFormat  X
+            axisFormat %s
+
+            section Issue19062
+            71   : 0, 71
+            section Issue19401
+            36   : 0, 36
+            section Issue193
+            34   : 0, 34
+            section Issue7441
+            9    : 0, 9
+            section Issue1300
+            5    : 0, 5
+        ```
+         */
+
     }
 
     public static CZIReaderBuilder builder() {
