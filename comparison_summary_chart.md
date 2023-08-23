@@ -1,5 +1,5 @@
 ## Number of differences between readers (cropped to 100)
-```
+```mermaid
         gantt
             title Number of differences between readers
             dateFormat  X
@@ -191,7 +191,7 @@
             58   : 0, 58
 ```
 ## Initialisation time speedup (%)
-```
+```mermaid
         gantt
             title Initialisation time speedup
             dateFormat  X
@@ -383,7 +383,7 @@
             114   : 0, 114
 ```
 ## Memory reduction (%)
-```
+```mermaid
         gantt
             title Memory reduction
             dateFormat  X
@@ -575,7 +575,7 @@
             124   : 0, 124
 ```
 ## First plane reading time speedup (%)
-```
+```mermaid
         gantt
             title First plane reading time speedup
             dateFormat  X
