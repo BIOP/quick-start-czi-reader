@@ -56,7 +56,7 @@ public class CompareReader {
             "getImageCount",
             "getChannelSamplesPerPixel"));
 
-    public static final double timeStampDifferenceAllowedInS = 0.01; // 1 ms
+    public static final double timeStampDifferenceAllowedInS = 0.001; // 1 ms
     public static final double positionDifferenceAllowedInUM = 0.001; // 1nm
 
     static long nanoStart;
@@ -700,6 +700,23 @@ public class CompareReader {
 
     static Map<String, Map<String, IgnoreDiffExplanation>> explanations = new HashMap<>();
 
+    public static void addIgnoreRule(
+            String reason, IgnoreDiffExplanation.Note note,
+            String[] cziURLs,
+            String[] methods
+    ) {
+        IgnoreDiffExplanation explanation = new IgnoreDiffExplanation();
+        explanation.explanation = reason;
+        explanation.note = note;
+        for (String url: cziURLs) {
+            if (explanations.containsKey(url)) {
+                for (String method : methods) {
+                    explanations.get(url).put(method, explanation);
+                }
+            }
+        }
+    }
+
     public static void main(String... args) {
         //DebugTools.setRootLevel("TRACE");
         DebugTools.setRootLevel("WARN");
@@ -782,30 +799,42 @@ public class CompareReader {
 
         // Set of rules explaining particular choices
 
-        IgnoreDiffExplanation explanation = new IgnoreDiffExplanation();
-        explanation.explanation = "The quick reader reads the czi stage label name, instead of iterating scene indices."+
-        " This fits better with the original CZI file.";
-        explanation.note = IgnoreDiffExplanation.Note.BETTER;
-        for (String url: cziURLs) { // Global rule, same for all files
-            explanations.get(url).put("getStageLabelName",explanation);
-        }
+        addIgnoreRule("The quick reader reads the czi stage label name, instead of iterating scene indices."+
+                " This fits better with the original CZI file.", IgnoreDiffExplanation.Note.BETTER,
+                cziURLs, new String[]{"getStageLabelName"});
 
-        explanation = new IgnoreDiffExplanation();
-        explanation.explanation =
-                "The quick reader reads puts a Z reference frame value in Z, which makes sense because it's "
-                +"the same logic as what's already happening with getPlanePositionX and Y.";
-        explanation.note = IgnoreDiffExplanation.Note.SAME;
-        explanations.get("https://zenodo.org/record/8263451/files/test_gray.czi").put("getPlanePositionZ", explanation);
-        explanations.get("https://zenodo.org/record/8263451/files/test_gray.czi").put("getStageLabelZ", explanation);
+        addIgnoreRule("The quick reader reads puts a Z reference frame value in Z, which makes sense because it's "
+                        +"the same logic as what's already happening with getPlanePositionX and Y.", IgnoreDiffExplanation.Note.SAME,
+                new String[]{
+                        "https://zenodo.org/record/8263451/files/test_gray.czi",
+                        "https://zenodo.org/record/8263451/files/test_gray.czi",
+                },
+                new String[]{
+                        "getStageLabelName",
+                });
 
-        explanation = new IgnoreDiffExplanation();
-        explanation.explanation =
-                "The quick reader reads correctly the z plane position, while the original reader do not read these";
-        explanation.note = IgnoreDiffExplanation.Note.BETTER;
-        explanations.get("https://zenodo.org/record/7117784/files/RBC_full_one_timepoint.czi").put("getPlanePositionZ", explanation);
-        explanations.get("https://zenodo.org/record/7117784/files/RBC_full_time_series.czi").put("getPlanePositionZ", explanation);
-        explanations.get("https://zenodo.org/record/7117784/files/RBC_medium_LLSZ.czi").put("getPlanePositionZ", explanation);
-        explanations.get("https://zenodo.org/record/7117784/files/RBC_tiny.czi").put("getPlanePositionZ", explanation);
+        addIgnoreRule("The quick reader reads the Z location correctly, and not the original reader.", IgnoreDiffExplanation.Note.BETTER,
+                new String[]{
+                        "https://zenodo.org/record/7117784/files/RBC_full_one_timepoint.czi",
+                        "https://zenodo.org/record/7117784/files/RBC_full_time_series.czi",
+                        "https://zenodo.org/record/7117784/files/RBC_medium_LLSZ.czi",
+                        "https://zenodo.org/record/7117784/files/RBC_tiny.czi"
+                },
+                new String[]{
+                        "getPlanePositionZ",
+                });
+
+        addIgnoreRule("The pixel physical sizes are incorrect for the lower resolution levels in the original reader", IgnoreDiffExplanation.Note.BETTER,
+                new String[]{
+                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_CH%3D1.czi",
+
+                },
+                new String[]{
+                        "getPixelsPhysicalSizeX",
+                        "getPixelsPhysicalSizeY"
+                });
+
+
 
 
 

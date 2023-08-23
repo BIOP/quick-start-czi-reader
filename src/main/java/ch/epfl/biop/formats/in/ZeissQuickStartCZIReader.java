@@ -3030,7 +3030,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             }*/
 
 
-
             // Let's start to set the space and time information for all core index
             for (int iCoreIndex = 0; iCoreIndex<reader.core.size(); iCoreIndex++) {
                 // Skips metadata for thumbnails - it's been fetched, if it exist, in another reader
@@ -3121,33 +3120,30 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
                 // Read position from block
                 if (planePosX == null) {
+                    for (MinimalDimensionEntry iBlock : blocks) {
+                        Length posX = new Length(/*offsetXInMicrons+*/iBlock.dimensionStartX/reader.coreIndexToDownscaleFactor.get(iCoreIndex)
+                                *coreToPixSizeX.get(iCoreIndex).value(unitLength).doubleValue(), unitLength);
+                        Length posY = new Length(/*offsetYInMicrons+*/iBlock.dimensionStartY/reader.coreIndexToDownscaleFactor.get(iCoreIndex)
+                                *coreToPixSizeY.get(iCoreIndex).value(unitLength).doubleValue(), unitLength);
+                        if ((planePosX == null)||(planePosX.value().doubleValue()>posX.value(unitLength).doubleValue())) {
+                            planePosX = posX;
+                        }
+                        if ((planePosY == null)||(planePosY.value().doubleValue()>posY.value(unitLength).doubleValue())) {
+                            planePosY = posY;
+                        }
 
-                    //if (!coreToPixSizeX.get(iCoreIndex).unit().equals(UNITS.REFERENCEFRAME)) {
-                        for (MinimalDimensionEntry iBlock : blocks) {
-                            Length posX = new Length(/*offsetXInMicrons+*/iBlock.dimensionStartX/reader.coreIndexToDownscaleFactor.get(iCoreIndex)
-                                    *coreToPixSizeX.get(iCoreIndex).value(unitLength).doubleValue(), unitLength);
-                            Length posY = new Length(/*offsetYInMicrons+*/iBlock.dimensionStartY/reader.coreIndexToDownscaleFactor.get(iCoreIndex)
-                                    *coreToPixSizeY.get(iCoreIndex).value(unitLength).doubleValue(), unitLength);
-                            if ((planePosX == null)||(planePosX.value().doubleValue()>posX.value(unitLength).doubleValue())) {
-                                planePosX = posX;
-                            }
-                            if ((planePosY == null)||(planePosY.value().doubleValue()>posY.value(unitLength).doubleValue())) {
-                                planePosY = posY;
-                            }
+                        if (coreToPixSizeZ.size()!=0) {
+                            Length posZ = new Length(iBlock.dimensionStartZ//.getDimension("Z").start
+                                    * coreToPixSizeZ.get(iCoreIndex).value(unitLength).doubleValue(), unitLength);
 
-                            if (coreToPixSizeZ.size()!=0) {
-                                Length posZ = new Length(iBlock.dimensionStartZ//.getDimension("Z").start
-                                        * coreToPixSizeZ.get(iCoreIndex).value(unitLength).doubleValue(), unitLength);
-
-                                if ((planePosZ == null) || (planePosZ.value().doubleValue() > posZ.value(unitLength).doubleValue())) {
-                                    planePosZ = posZ;
-                                }
+                            if ((planePosZ == null) || (planePosZ.value().doubleValue() > posZ.value(unitLength).doubleValue())) {
+                                planePosZ = posZ;
                             }
                         }
+                    }
                 }
 
                 if ((!stageLabelSet)&&(planePosY!=null)) {
-                    //stageLabelSet = true;
                     reader.store.setStageLabelX(stagePosX, reader.series);
                     reader.store.setStageLabelY(stagePosY, reader.series);
                 }
@@ -3186,15 +3182,11 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
                     double incrementTimeOverZ = 0;
                     if (reader.getSizeZ()>1) {
-                        //System.out.println("DT="+(sbmzfti.timestamp - sbmziti.timestamp));
-                        //System.out.println("Sz="+reader.getSizeZ());
                         incrementTimeOverZ = (sbmzfti.timestamp - sbmziti.timestamp) / (double) ((reader.getSizeZ()-1) / reader.nRotations);
-                        //System.out.println("incrementTimeOverZ="+incrementTimeOverZ);
                     }
                     double incrementTimeOverT = 0;
                     if (reader.getSizeT()>1) {
                         incrementTimeOverT = (sbmzitf.timestamp - sbmziti.timestamp) / (double) ((reader.getSizeT()-1) / reader.nPhases);
-                        //System.out.println("incrementTimeOverT="+incrementTimeOverT);
                     }
                     Time exposure = null;
                     if (!Double.isNaN(sbmziti.exposureTime)) {
@@ -3204,7 +3196,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                         if (exposureFromChannel!=null) {
                             exposure = new Time(exposureFromChannel, UNITS.SECOND);
                         }
-                        //System.out.println("exposureFromChannel="+exposureFromChannel);
                     }
 
                     double offsetT0;
