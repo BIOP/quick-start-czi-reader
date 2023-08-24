@@ -438,6 +438,7 @@ public class LibCZI {
         SubBlockMeta subBlockMeta = new SubBlockMeta();
         if (subBlock.dataOffset + subBlock.data.dataSize + subBlock.data.attachmentSize < in.length()) {
             in.seek(subBlock.data.metadataOffset);
+            //System.out.println("Offs= "+subBlock.data.metadataOffset);
 
             String metadata = in.readString(subBlock.data.metadataSize).trim();
             if (metadata.length() <= 16) {

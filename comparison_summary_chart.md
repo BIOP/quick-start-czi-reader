@@ -6,41 +6,45 @@
             axisFormat %s
 
             section Demo LISH 4x8 15pct 647.czi
-            100   : 0, 100
+            0   : 0, 0
             section Demo LISH 4x8 15pct 647.czi
-            100   : 0, 100
+            0   : 0, 0
             section test_gray.czi
-            100   : 0, 100
+            0   : 0, 0
             section test_gray.czi
-            3   : 0, 3
+            0   : 0, 0
             section Image_1_2023_08_18__14_32_31_964.czi
-            17   : 0, 17
+            0   : 0, 0
             section Image_1_2023_08_18__14_32_31_964.czi
-            5   : 0, 5
-            section test-plate.czi
             0   : 0, 0
             section test-plate.czi
+            100   : 0, 100
+            section test-plate.czi
+            100   : 0, 100
+            section P1.czi
             0   : 0, 0
             section P1.czi
-            100   : 0, 100
-            section P1.czi
-            100   : 0, 100
+            0   : 0, 0
+            section 2021-02-25-tulip_Airyscan.czi
+            0   : 0, 0
+            section 2021-02-25-tulip_Airyscan.czi
+            0   : 0, 0
             section 2021-02-25-tulip_unprocessed-Airyscan.czi
             100   : 0, 100
             section 2021-02-25-tulip_unprocessed-Airyscan.czi
             100   : 0, 100
             section Airyscan Lines Pattern.czi
-            6   : 0, 6
+            0   : 0, 0
             section Airyscan Lines Pattern.czi
-            6   : 0, 6
+            0   : 0, 0
             section Confocal Lines Pattern.czi
-            6   : 0, 6
+            0   : 0, 0
             section Confocal Lines Pattern.czi
-            6   : 0, 6
+            0   : 0, 0
             section S=1_3x3_T=3_Z=4_CH=2.czi
             100   : 0, 100
             section S=1_3x3_T=3_Z=4_CH=2.czi
-            100   : 0, 100
+            23   : 0, 23
             section S=1_CH=2.czi
             0   : 0, 0
             section S=1_CH=2.czi
@@ -48,143 +52,143 @@
             section S=2_2x2_CH=1.czi
             0   : 0, 0
             section S=2_2x2_CH=1.czi
-            24   : 0, 24
+            0   : 0, 0
             section S=2_2x2_T=1_Z=4_CH=1.czi
-            1   : 0, 1
+            0   : 0, 0
             section S=2_2x2_T=1_Z=4_CH=1.czi
-            62   : 0, 62
+            11   : 0, 11
             section S=2_2x2_T=3_CH=1.czi
-            6   : 0, 6
-            section S=2_2x2_T=3_CH=1.czi
-            48   : 0, 48
-            section S=2_2x2_T=3_Z=4_CH=1.czi
-            41   : 0, 41
-            section S=2_2x2_T=3_Z=4_CH=1.czi
-            100   : 0, 100
-            section S=2_2x2_Z=4_CH=1.czi
-            5   : 0, 5
-            section S=2_2x2_Z=4_CH=1.czi
             64   : 0, 64
-            section S=2_3x3_T=1_Z=4_CH=2.czi
-            17   : 0, 17
+            section S=2_2x2_T=3_CH=1.czi
+            39   : 0, 39
+            section S=2_2x2_T=3_Z=4_CH=1.czi
+            100   : 0, 100
+            section S=2_2x2_T=3_Z=4_CH=1.czi
+            100   : 0, 100
+            section S=2_2x2_Z=4_CH=1.czi
+            80   : 0, 80
+            section S=2_2x2_Z=4_CH=1.czi
+            51   : 0, 51
             section S=2_3x3_T=1_Z=4_CH=2.czi
             100   : 0, 100
+            section S=2_3x3_T=1_Z=4_CH=2.czi
+            19   : 0, 19
             section S=2_3x3_T=3_CH=2.czi
-            29   : 0, 29
+            100   : 0, 100
             section S=2_3x3_T=3_CH=2.czi
-            86   : 0, 86
+            69   : 0, 69
             section S=2_3x3_T=3_Z=1_CH=2.czi
-            34   : 0, 34
+            100   : 0, 100
             section S=2_3x3_T=3_Z=1_CH=2.czi
-            90   : 0, 90
+            13   : 0, 13
             section S=2_T=3_CH=1.czi
-            2   : 0, 2
+            0   : 0, 0
             section S=2_T=3_CH=1.czi
-            2   : 0, 2
+            0   : 0, 0
             section S=2_T=3_Z=5_CH=1.czi
-            9   : 0, 9
+            64   : 0, 64
             section S=2_T=3_Z=5_CH=1.czi
-            9   : 0, 9
+            64   : 0, 64
             section S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.czi
             100   : 0, 100
             section S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.czi
             100   : 0, 100
             section S=3_CH=2.czi
-            0   : 0, 0
+            18   : 0, 18
             section S=3_CH=2.czi
-            0   : 0, 0
+            18   : 0, 18
             section T=1_CH=2.czi
             0   : 0, 0
             section T=1_CH=2.czi
             0   : 0, 0
             section T=1_Z=5_CH=1.czi
-            0   : 0, 0
+            12   : 0, 12
             section T=1_Z=5_CH=1.czi
-            0   : 0, 0
+            12   : 0, 12
             section T=2_CH=1.czi
-            0   : 0, 0
+            6   : 0, 6
             section T=2_CH=1.czi
-            0   : 0, 0
-            section T=2_Z=5_CH=1.czi
             6   : 0, 6
             section T=2_Z=5_CH=1.czi
-            6   : 0, 6
+            22   : 0, 22
+            section T=2_Z=5_CH=1.czi
+            22   : 0, 22
             section T=2_Z=5_CH=2.czi
-            10   : 0, 10
+            42   : 0, 42
             section T=2_Z=5_CH=2.czi
-            10   : 0, 10
+            42   : 0, 42
             section T=3_CH=2.czi
-            0   : 0, 0
+            14   : 0, 14
             section T=3_CH=2.czi
-            0   : 0, 0
+            14   : 0, 14
             section T=3_Z=5_CH=2.czi
-            15   : 0, 15
+            62   : 0, 62
             section T=3_Z=5_CH=2.czi
-            15   : 0, 15
+            62   : 0, 62
             section W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.czi
-            0   : 0, 0
+            100   : 0, 100
             section W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.czi
-            44   : 0, 44
+            22   : 0, 22
             section W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.czi
             100   : 0, 100
             section W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.czi
             100   : 0, 100
             section Z=5_CH=1.czi
-            3   : 0, 3
+            0   : 0, 0
             section Z=5_CH=1.czi
+            0   : 0, 0
+            section Z=5_CH=2.czi
+            0   : 0, 0
+            section Z=5_CH=2.czi
+            0   : 0, 0
+            section RBC_full_one_timepoint.czi
+            0   : 0, 0
+            section RBC_full_one_timepoint.czi
+            0   : 0, 0
+            section RBC_full_time_series.czi
+            1   : 0, 1
+            section RBC_full_time_series.czi
+            1   : 0, 1
+            section RBC_medium_LLSZ.czi
             3   : 0, 3
-            section Z=5_CH=2.czi
-            6   : 0, 6
-            section Z=5_CH=2.czi
-            6   : 0, 6
-            section RBC_full_one_timepoint.czi
-            0   : 0, 0
-            section RBC_full_one_timepoint.czi
-            0   : 0, 0
-            section RBC_full_time_series.czi
-            0   : 0, 0
-            section RBC_full_time_series.czi
-            0   : 0, 0
             section RBC_medium_LLSZ.czi
-            0   : 0, 0
-            section RBC_medium_LLSZ.czi
-            0   : 0, 0
+            3   : 0, 3
             section RBC_tiny.czi
             0   : 0, 0
             section RBC_tiny.czi
             0   : 0, 0
             section 20221019_MixedGrain.czi
-            100   : 0, 100
+            0   : 0, 0
             section 20221019_MixedGrain.czi
-            100   : 0, 100
+            0   : 0, 0
             section 20221019_MixedGrain2.czi
-            100   : 0, 100
+            0   : 0, 0
             section 20221019_MixedGrain2.czi
-            100   : 0, 100
+            0   : 0, 0
             section Ph488.czi
-            100   : 0, 100
+            0   : 0, 0
             section Ph488.czi
-            100   : 0, 100
+            0   : 0, 0
             section v.zanotelli_20190509_p165_031.czi
             100   : 0, 100
             section v.zanotelli_20190509_p165_031.czi
             100   : 0, 100
             section v.zanotelli_20190509_p165_031_pt1.czi
-            0   : 0, 0
+            6   : 0, 6
             section v.zanotelli_20190509_p165_031_pt1.czi
-            0   : 0, 0
-            section v.zanotelli_20190509_p165_031_pt2.czi
             6   : 0, 6
             section v.zanotelli_20190509_p165_031_pt2.czi
-            6   : 0, 6
+            4   : 0, 4
+            section v.zanotelli_20190509_p165_031_pt2.czi
+            4   : 0, 4
             section 10.5 dpc vegfc gapdh Pecam wt 1.czi
-            0   : 0, 0
+            8   : 0, 8
             section 10.5 dpc vegfc gapdh Pecam wt 1.czi
-            0   : 0, 0
+            8   : 0, 8
             section Plate1-Blue-A-12-Scene-3-P3-F2-03.czi
-            58   : 0, 58
+            100   : 0, 100
             section Plate1-Blue-A-12-Scene-3-P3-F2-03.czi
-            58   : 0, 58
+            100   : 0, 100
 ```
 ## Initialisation time speedup (%)
 ```mermaid
@@ -194,185 +198,189 @@
             axisFormat %s
 
             section Demo LISH 4x8 15pct 647.czi
-            130   : 0, 130
+            105   : 0, 105
             section Demo LISH 4x8 15pct 647.czi
-            187   : 0, 187
+            203   : 0, 203
             section test_gray.czi
-            45   : 0, 45
+            31   : 0, 31
             section test_gray.czi
-            140   : 0, 140
+            75   : 0, 75
             section Image_1_2023_08_18__14_32_31_964.czi
-            114   : 0, 114
-            section Image_1_2023_08_18__14_32_31_964.czi
-            112   : 0, 112
-            section test-plate.czi
-            58   : 0, 58
-            section test-plate.czi
-            51   : 0, 51
-            section P1.czi
-            233   : 0, 233
-            section P1.czi
-            200   : 0, 200
-            section 2021-02-25-tulip_unprocessed-Airyscan.czi
-            180   : 0, 180
-            section 2021-02-25-tulip_unprocessed-Airyscan.czi
-            172   : 0, 172
-            section Airyscan Lines Pattern.czi
-            133   : 0, 133
-            section Airyscan Lines Pattern.czi
             100   : 0, 100
+            section Image_1_2023_08_18__14_32_31_964.czi
+            100   : 0, 100
+            section test-plate.czi
+            44   : 0, 44
+            section test-plate.czi
+            48   : 0, 48
+            section P1.czi
+            100   : 0, 100
+            section P1.czi
+            92   : 0, 92
+            section 2021-02-25-tulip_Airyscan.czi
+            100   : 0, 100
+            section 2021-02-25-tulip_Airyscan.czi
+            100   : 0, 100
+            section 2021-02-25-tulip_unprocessed-Airyscan.czi
+            160   : 0, 160
+            section 2021-02-25-tulip_unprocessed-Airyscan.czi
+            190   : 0, 190
+            section Airyscan Lines Pattern.czi
+            133   : 0, 133
+            section Airyscan Lines Pattern.czi
+            133   : 0, 133
             section Confocal Lines Pattern.czi
             133   : 0, 133
             section Confocal Lines Pattern.czi
             133   : 0, 133
             section S=1_3x3_T=3_Z=4_CH=2.czi
-            128   : 0, 128
+            87   : 0, 87
             section S=1_3x3_T=3_Z=4_CH=2.czi
-            122   : 0, 122
+            120   : 0, 120
             section S=1_CH=2.czi
-            147   : 0, 147
+            143   : 0, 143
             section S=1_CH=2.czi
-            147   : 0, 147
+            156   : 0, 156
             section S=2_2x2_CH=1.czi
             94   : 0, 94
             section S=2_2x2_CH=1.czi
-            105   : 0, 105
+            94   : 0, 94
             section S=2_2x2_T=1_Z=4_CH=1.czi
-            105   : 0, 105
+            94   : 0, 94
             section S=2_2x2_T=1_Z=4_CH=1.czi
-            78   : 0, 78
+            111   : 0, 111
             section S=2_2x2_T=3_CH=1.czi
             100   : 0, 100
             section S=2_2x2_T=3_CH=1.czi
             100   : 0, 100
             section S=2_2x2_T=3_Z=4_CH=1.czi
-            110   : 0, 110
+            95   : 0, 95
             section S=2_2x2_T=3_Z=4_CH=1.czi
             116   : 0, 116
             section S=2_2x2_Z=4_CH=1.czi
-            100   : 0, 100
+            94   : 0, 94
             section S=2_2x2_Z=4_CH=1.czi
-            100   : 0, 100
+            105   : 0, 105
             section S=2_3x3_T=1_Z=4_CH=2.czi
-            100   : 0, 100
+            82   : 0, 82
             section S=2_3x3_T=1_Z=4_CH=2.czi
-            104   : 0, 104
+            116   : 0, 116
             section S=2_3x3_T=3_CH=2.czi
-            91   : 0, 91
+            81   : 0, 81
             section S=2_3x3_T=3_CH=2.czi
-            110   : 0, 110
+            100   : 0, 100
             section S=2_3x3_T=3_Z=1_CH=2.czi
-            95   : 0, 95
+            77   : 0, 77
             section S=2_3x3_T=3_Z=1_CH=2.czi
-            109   : 0, 109
-            section S=2_T=3_CH=1.czi
-            100   : 0, 100
-            section S=2_T=3_CH=1.czi
-            94   : 0, 94
-            section S=2_T=3_Z=5_CH=1.czi
-            105   : 0, 105
-            section S=2_T=3_Z=5_CH=1.czi
-            105   : 0, 105
-            section S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.czi
-            117   : 0, 117
-            section S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.czi
-            142   : 0, 142
-            section S=3_CH=2.czi
-            94   : 0, 94
-            section S=3_CH=2.czi
-            105   : 0, 105
-            section T=1_CH=2.czi
-            147   : 0, 147
-            section T=1_CH=2.czi
-            147   : 0, 147
-            section T=1_Z=5_CH=1.czi
-            86   : 0, 86
-            section T=1_Z=5_CH=1.czi
-            94   : 0, 94
-            section T=2_CH=1.czi
-            150   : 0, 150
-            section T=2_CH=1.czi
-            150   : 0, 150
-            section T=2_Z=5_CH=1.czi
-            100   : 0, 100
-            section T=2_Z=5_CH=1.czi
-            100   : 0, 100
-            section T=2_Z=5_CH=2.czi
-            100   : 0, 100
-            section T=2_Z=5_CH=2.czi
-            100   : 0, 100
-            section T=3_CH=2.czi
-            94   : 0, 94
-            section T=3_CH=2.czi
-            100   : 0, 100
-            section T=3_Z=5_CH=2.czi
-            94   : 0, 94
-            section T=3_Z=5_CH=2.czi
-            100   : 0, 100
-            section W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.czi
-            65   : 0, 65
-            section W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.czi
-            91   : 0, 91
-            section W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.czi
-            155   : 0, 155
-            section W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.czi
-            326   : 0, 326
-            section Z=5_CH=1.czi
-            100   : 0, 100
-            section Z=5_CH=1.czi
-            100   : 0, 100
-            section Z=5_CH=2.czi
-            100   : 0, 100
-            section Z=5_CH=2.czi
-            94   : 0, 94
-            section RBC_full_one_timepoint.czi
-            293   : 0, 293
-            section RBC_full_one_timepoint.czi
-            293   : 0, 293
-            section RBC_full_time_series.czi
-            450   : 0, 450
-            section RBC_full_time_series.czi
-            523   : 0, 523
-            section RBC_medium_LLSZ.czi
-            543   : 0, 543
-            section RBC_medium_LLSZ.czi
-            586   : 0, 586
-            section RBC_tiny.czi
-            286   : 0, 286
-            section RBC_tiny.czi
-            275   : 0, 275
-            section 20221019_MixedGrain.czi
-            100   : 0, 100
-            section 20221019_MixedGrain.czi
-            100   : 0, 100
-            section 20221019_MixedGrain2.czi
-            125   : 0, 125
-            section 20221019_MixedGrain2.czi
-            125   : 0, 125
-            section Ph488.czi
-            100   : 0, 100
-            section Ph488.czi
-            80   : 0, 80
-            section v.zanotelli_20190509_p165_031.czi
-            75   : 0, 75
-            section v.zanotelli_20190509_p165_031.czi
             119   : 0, 119
-            section v.zanotelli_20190509_p165_031_pt1.czi
-            122   : 0, 122
-            section v.zanotelli_20190509_p165_031_pt1.czi
-            137   : 0, 137
-            section v.zanotelli_20190509_p165_031_pt2.czi
-            137   : 0, 137
-            section v.zanotelli_20190509_p165_031_pt2.czi
-            137   : 0, 137
-            section 10.5 dpc vegfc gapdh Pecam wt 1.czi
+            section S=2_T=3_CH=1.czi
             94   : 0, 94
-            section 10.5 dpc vegfc gapdh Pecam wt 1.czi
-            94   : 0, 94
-            section Plate1-Blue-A-12-Scene-3-P3-F2-03.czi
+            section S=2_T=3_CH=1.czi
             100   : 0, 100
+            section S=2_T=3_Z=5_CH=1.czi
+            94   : 0, 94
+            section S=2_T=3_Z=5_CH=1.czi
+            94   : 0, 94
+            section S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.czi
+            77   : 0, 77
+            section S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.czi
+            140   : 0, 140
+            section S=3_CH=2.czi
+            94   : 0, 94
+            section S=3_CH=2.czi
+            100   : 0, 100
+            section T=1_CH=2.czi
+            168   : 0, 168
+            section T=1_CH=2.czi
+            143   : 0, 143
+            section T=1_Z=5_CH=1.czi
+            100   : 0, 100
+            section T=1_Z=5_CH=1.czi
+            100   : 0, 100
+            section T=2_CH=1.czi
+            143   : 0, 143
+            section T=2_CH=1.czi
+            143   : 0, 143
+            section T=2_Z=5_CH=1.czi
+            100   : 0, 100
+            section T=2_Z=5_CH=1.czi
+            93   : 0, 93
+            section T=2_Z=5_CH=2.czi
+            100   : 0, 100
+            section T=2_Z=5_CH=2.czi
+            94   : 0, 94
+            section T=3_CH=2.czi
+            94   : 0, 94
+            section T=3_CH=2.czi
+            100   : 0, 100
+            section T=3_Z=5_CH=2.czi
+            100   : 0, 100
+            section T=3_Z=5_CH=2.czi
+            94   : 0, 94
+            section W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.czi
+            57   : 0, 57
+            section W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.czi
+            95   : 0, 95
+            section W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.czi
+            68   : 0, 68
+            section W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.czi
+            302   : 0, 302
+            section Z=5_CH=1.czi
+            100   : 0, 100
+            section Z=5_CH=1.czi
+            93   : 0, 93
+            section Z=5_CH=2.czi
+            100   : 0, 100
+            section Z=5_CH=2.czi
+            100   : 0, 100
+            section RBC_full_one_timepoint.czi
+            307   : 0, 307
+            section RBC_full_one_timepoint.czi
+            300   : 0, 300
+            section RBC_full_time_series.czi
+            520   : 0, 520
+            section RBC_full_time_series.czi
+            481   : 0, 481
+            section RBC_medium_LLSZ.czi
+            600   : 0, 600
+            section RBC_medium_LLSZ.czi
+            618   : 0, 618
+            section RBC_tiny.czi
+            300   : 0, 300
+            section RBC_tiny.czi
+            378   : 0, 378
+            section 20221019_MixedGrain.czi
+            80   : 0, 80
+            section 20221019_MixedGrain.czi
+            100   : 0, 100
+            section 20221019_MixedGrain2.czi
+            100   : 0, 100
+            section 20221019_MixedGrain2.czi
+            100   : 0, 100
+            section Ph488.czi
+            100   : 0, 100
+            section Ph488.czi
+            100   : 0, 100
+            section v.zanotelli_20190509_p165_031.czi
+            78   : 0, 78
+            section v.zanotelli_20190509_p165_031.czi
+            125   : 0, 125
+            section v.zanotelli_20190509_p165_031_pt1.czi
+            125   : 0, 125
+            section v.zanotelli_20190509_p165_031_pt1.czi
+            125   : 0, 125
+            section v.zanotelli_20190509_p165_031_pt2.czi
+            125   : 0, 125
+            section v.zanotelli_20190509_p165_031_pt2.czi
+            137   : 0, 137
+            section 10.5 dpc vegfc gapdh Pecam wt 1.czi
+            100   : 0, 100
+            section 10.5 dpc vegfc gapdh Pecam wt 1.czi
+            94   : 0, 94
             section Plate1-Blue-A-12-Scene-3-P3-F2-03.czi
-            114   : 0, 114
+            80   : 0, 80
+            section Plate1-Blue-A-12-Scene-3-P3-F2-03.czi
+            88   : 0, 88
 ```
 ## Memory reduction (%)
 ```mermaid
@@ -382,17 +390,17 @@
             axisFormat %s
 
             section Demo LISH 4x8 15pct 647.czi
-            346   : 0, 346
+            320   : 0, 320
             section Demo LISH 4x8 15pct 647.czi
-            1130   : 0, 1130
+            1117   : 0, 1117
             section test_gray.czi
-            131   : 0, 131
+            135   : 0, 135
             section test_gray.czi
-            235   : 0, 235
+            236   : 0, 236
             section Image_1_2023_08_18__14_32_31_964.czi
-            156   : 0, 156
+            157   : 0, 157
             section Image_1_2023_08_18__14_32_31_964.czi
-            162   : 0, 162
+            163   : 0, 163
             section test-plate.czi
             132   : 0, 132
             section test-plate.czi
@@ -401,18 +409,22 @@
             180   : 0, 180
             section P1.czi
             180   : 0, 180
+            section 2021-02-25-tulip_Airyscan.czi
+            167   : 0, 167
+            section 2021-02-25-tulip_Airyscan.czi
+            167   : 0, 167
             section 2021-02-25-tulip_unprocessed-Airyscan.czi
-            231   : 0, 231
+            209   : 0, 209
             section 2021-02-25-tulip_unprocessed-Airyscan.czi
-            231   : 0, 231
+            209   : 0, 209
             section Airyscan Lines Pattern.czi
-            157   : 0, 157
+            158   : 0, 158
             section Airyscan Lines Pattern.czi
-            157   : 0, 157
+            158   : 0, 158
             section Confocal Lines Pattern.czi
             159   : 0, 159
             section Confocal Lines Pattern.czi
-            158   : 0, 158
+            159   : 0, 159
             section S=1_3x3_T=3_Z=4_CH=2.czi
             139   : 0, 139
             section S=1_3x3_T=3_Z=4_CH=2.czi
@@ -446,7 +458,7 @@
             section S=2_3x3_T=1_Z=4_CH=2.czi
             137   : 0, 137
             section S=2_3x3_T=3_CH=2.czi
-            132   : 0, 132
+            133   : 0, 133
             section S=2_3x3_T=3_CH=2.czi
             135   : 0, 135
             section S=2_3x3_T=3_Z=1_CH=2.czi
@@ -464,7 +476,7 @@
             section S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.czi
             150   : 0, 150
             section S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.czi
-            149   : 0, 149
+            148   : 0, 148
             section S=3_CH=2.czi
             126   : 0, 126
             section S=3_CH=2.czi
@@ -530,17 +542,17 @@
             section RBC_tiny.czi
             166   : 0, 166
             section 20221019_MixedGrain.czi
-            180   : 0, 180
+            177   : 0, 177
             section 20221019_MixedGrain.czi
-            180   : 0, 180
+            177   : 0, 177
             section 20221019_MixedGrain2.czi
-            198   : 0, 198
+            192   : 0, 192
             section 20221019_MixedGrain2.czi
-            198   : 0, 198
+            192   : 0, 192
             section Ph488.czi
-            173   : 0, 173
+            171   : 0, 171
             section Ph488.czi
-            173   : 0, 173
+            171   : 0, 171
             section v.zanotelli_20190509_p165_031.czi
             105   : 0, 105
             section v.zanotelli_20190509_p165_031.czi
@@ -570,183 +582,187 @@
             axisFormat %s
 
             section Demo LISH 4x8 15pct 647.czi
-            130   : 0, 130
+            105   : 0, 105
             section Demo LISH 4x8 15pct 647.czi
-            187   : 0, 187
+            203   : 0, 203
             section test_gray.czi
-            45   : 0, 45
+            31   : 0, 31
             section test_gray.czi
-            140   : 0, 140
+            75   : 0, 75
             section Image_1_2023_08_18__14_32_31_964.czi
-            114   : 0, 114
-            section Image_1_2023_08_18__14_32_31_964.czi
-            112   : 0, 112
-            section test-plate.czi
-            58   : 0, 58
-            section test-plate.czi
-            51   : 0, 51
-            section P1.czi
-            233   : 0, 233
-            section P1.czi
-            200   : 0, 200
-            section 2021-02-25-tulip_unprocessed-Airyscan.czi
-            180   : 0, 180
-            section 2021-02-25-tulip_unprocessed-Airyscan.czi
-            172   : 0, 172
-            section Airyscan Lines Pattern.czi
-            133   : 0, 133
-            section Airyscan Lines Pattern.czi
             100   : 0, 100
+            section Image_1_2023_08_18__14_32_31_964.czi
+            100   : 0, 100
+            section test-plate.czi
+            44   : 0, 44
+            section test-plate.czi
+            48   : 0, 48
+            section P1.czi
+            100   : 0, 100
+            section P1.czi
+            92   : 0, 92
+            section 2021-02-25-tulip_Airyscan.czi
+            100   : 0, 100
+            section 2021-02-25-tulip_Airyscan.czi
+            100   : 0, 100
+            section 2021-02-25-tulip_unprocessed-Airyscan.czi
+            160   : 0, 160
+            section 2021-02-25-tulip_unprocessed-Airyscan.czi
+            190   : 0, 190
+            section Airyscan Lines Pattern.czi
+            133   : 0, 133
+            section Airyscan Lines Pattern.czi
+            133   : 0, 133
             section Confocal Lines Pattern.czi
             133   : 0, 133
             section Confocal Lines Pattern.czi
             133   : 0, 133
             section S=1_3x3_T=3_Z=4_CH=2.czi
-            128   : 0, 128
+            87   : 0, 87
             section S=1_3x3_T=3_Z=4_CH=2.czi
-            122   : 0, 122
+            120   : 0, 120
             section S=1_CH=2.czi
-            147   : 0, 147
+            143   : 0, 143
             section S=1_CH=2.czi
-            147   : 0, 147
+            156   : 0, 156
             section S=2_2x2_CH=1.czi
             94   : 0, 94
             section S=2_2x2_CH=1.czi
-            105   : 0, 105
+            94   : 0, 94
             section S=2_2x2_T=1_Z=4_CH=1.czi
-            105   : 0, 105
+            94   : 0, 94
             section S=2_2x2_T=1_Z=4_CH=1.czi
-            78   : 0, 78
+            111   : 0, 111
             section S=2_2x2_T=3_CH=1.czi
             100   : 0, 100
             section S=2_2x2_T=3_CH=1.czi
             100   : 0, 100
             section S=2_2x2_T=3_Z=4_CH=1.czi
-            110   : 0, 110
+            95   : 0, 95
             section S=2_2x2_T=3_Z=4_CH=1.czi
             116   : 0, 116
             section S=2_2x2_Z=4_CH=1.czi
-            100   : 0, 100
+            94   : 0, 94
             section S=2_2x2_Z=4_CH=1.czi
-            100   : 0, 100
+            105   : 0, 105
             section S=2_3x3_T=1_Z=4_CH=2.czi
-            100   : 0, 100
+            82   : 0, 82
             section S=2_3x3_T=1_Z=4_CH=2.czi
-            104   : 0, 104
+            116   : 0, 116
             section S=2_3x3_T=3_CH=2.czi
-            91   : 0, 91
+            81   : 0, 81
             section S=2_3x3_T=3_CH=2.czi
-            110   : 0, 110
+            100   : 0, 100
             section S=2_3x3_T=3_Z=1_CH=2.czi
-            95   : 0, 95
+            77   : 0, 77
             section S=2_3x3_T=3_Z=1_CH=2.czi
-            109   : 0, 109
-            section S=2_T=3_CH=1.czi
-            100   : 0, 100
-            section S=2_T=3_CH=1.czi
-            94   : 0, 94
-            section S=2_T=3_Z=5_CH=1.czi
-            105   : 0, 105
-            section S=2_T=3_Z=5_CH=1.czi
-            105   : 0, 105
-            section S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.czi
-            117   : 0, 117
-            section S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.czi
-            142   : 0, 142
-            section S=3_CH=2.czi
-            94   : 0, 94
-            section S=3_CH=2.czi
-            105   : 0, 105
-            section T=1_CH=2.czi
-            147   : 0, 147
-            section T=1_CH=2.czi
-            147   : 0, 147
-            section T=1_Z=5_CH=1.czi
-            86   : 0, 86
-            section T=1_Z=5_CH=1.czi
-            94   : 0, 94
-            section T=2_CH=1.czi
-            150   : 0, 150
-            section T=2_CH=1.czi
-            150   : 0, 150
-            section T=2_Z=5_CH=1.czi
-            100   : 0, 100
-            section T=2_Z=5_CH=1.czi
-            100   : 0, 100
-            section T=2_Z=5_CH=2.czi
-            100   : 0, 100
-            section T=2_Z=5_CH=2.czi
-            100   : 0, 100
-            section T=3_CH=2.czi
-            94   : 0, 94
-            section T=3_CH=2.czi
-            100   : 0, 100
-            section T=3_Z=5_CH=2.czi
-            94   : 0, 94
-            section T=3_Z=5_CH=2.czi
-            100   : 0, 100
-            section W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.czi
-            65   : 0, 65
-            section W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.czi
-            91   : 0, 91
-            section W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.czi
-            155   : 0, 155
-            section W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.czi
-            326   : 0, 326
-            section Z=5_CH=1.czi
-            100   : 0, 100
-            section Z=5_CH=1.czi
-            100   : 0, 100
-            section Z=5_CH=2.czi
-            100   : 0, 100
-            section Z=5_CH=2.czi
-            94   : 0, 94
-            section RBC_full_one_timepoint.czi
-            293   : 0, 293
-            section RBC_full_one_timepoint.czi
-            293   : 0, 293
-            section RBC_full_time_series.czi
-            450   : 0, 450
-            section RBC_full_time_series.czi
-            523   : 0, 523
-            section RBC_medium_LLSZ.czi
-            543   : 0, 543
-            section RBC_medium_LLSZ.czi
-            586   : 0, 586
-            section RBC_tiny.czi
-            286   : 0, 286
-            section RBC_tiny.czi
-            275   : 0, 275
-            section 20221019_MixedGrain.czi
-            100   : 0, 100
-            section 20221019_MixedGrain.czi
-            100   : 0, 100
-            section 20221019_MixedGrain2.czi
-            125   : 0, 125
-            section 20221019_MixedGrain2.czi
-            125   : 0, 125
-            section Ph488.czi
-            100   : 0, 100
-            section Ph488.czi
-            80   : 0, 80
-            section v.zanotelli_20190509_p165_031.czi
-            75   : 0, 75
-            section v.zanotelli_20190509_p165_031.czi
             119   : 0, 119
-            section v.zanotelli_20190509_p165_031_pt1.czi
-            122   : 0, 122
-            section v.zanotelli_20190509_p165_031_pt1.czi
-            137   : 0, 137
-            section v.zanotelli_20190509_p165_031_pt2.czi
-            137   : 0, 137
-            section v.zanotelli_20190509_p165_031_pt2.czi
-            137   : 0, 137
-            section 10.5 dpc vegfc gapdh Pecam wt 1.czi
+            section S=2_T=3_CH=1.czi
             94   : 0, 94
-            section 10.5 dpc vegfc gapdh Pecam wt 1.czi
-            94   : 0, 94
-            section Plate1-Blue-A-12-Scene-3-P3-F2-03.czi
+            section S=2_T=3_CH=1.czi
             100   : 0, 100
+            section S=2_T=3_Z=5_CH=1.czi
+            94   : 0, 94
+            section S=2_T=3_Z=5_CH=1.czi
+            94   : 0, 94
+            section S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.czi
+            77   : 0, 77
+            section S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.czi
+            140   : 0, 140
+            section S=3_CH=2.czi
+            94   : 0, 94
+            section S=3_CH=2.czi
+            100   : 0, 100
+            section T=1_CH=2.czi
+            168   : 0, 168
+            section T=1_CH=2.czi
+            143   : 0, 143
+            section T=1_Z=5_CH=1.czi
+            100   : 0, 100
+            section T=1_Z=5_CH=1.czi
+            100   : 0, 100
+            section T=2_CH=1.czi
+            143   : 0, 143
+            section T=2_CH=1.czi
+            143   : 0, 143
+            section T=2_Z=5_CH=1.czi
+            100   : 0, 100
+            section T=2_Z=5_CH=1.czi
+            93   : 0, 93
+            section T=2_Z=5_CH=2.czi
+            100   : 0, 100
+            section T=2_Z=5_CH=2.czi
+            94   : 0, 94
+            section T=3_CH=2.czi
+            94   : 0, 94
+            section T=3_CH=2.czi
+            100   : 0, 100
+            section T=3_Z=5_CH=2.czi
+            100   : 0, 100
+            section T=3_Z=5_CH=2.czi
+            94   : 0, 94
+            section W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.czi
+            57   : 0, 57
+            section W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.czi
+            95   : 0, 95
+            section W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.czi
+            68   : 0, 68
+            section W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.czi
+            302   : 0, 302
+            section Z=5_CH=1.czi
+            100   : 0, 100
+            section Z=5_CH=1.czi
+            93   : 0, 93
+            section Z=5_CH=2.czi
+            100   : 0, 100
+            section Z=5_CH=2.czi
+            100   : 0, 100
+            section RBC_full_one_timepoint.czi
+            307   : 0, 307
+            section RBC_full_one_timepoint.czi
+            300   : 0, 300
+            section RBC_full_time_series.czi
+            520   : 0, 520
+            section RBC_full_time_series.czi
+            481   : 0, 481
+            section RBC_medium_LLSZ.czi
+            600   : 0, 600
+            section RBC_medium_LLSZ.czi
+            618   : 0, 618
+            section RBC_tiny.czi
+            300   : 0, 300
+            section RBC_tiny.czi
+            378   : 0, 378
+            section 20221019_MixedGrain.czi
+            80   : 0, 80
+            section 20221019_MixedGrain.czi
+            100   : 0, 100
+            section 20221019_MixedGrain2.czi
+            100   : 0, 100
+            section 20221019_MixedGrain2.czi
+            100   : 0, 100
+            section Ph488.czi
+            100   : 0, 100
+            section Ph488.czi
+            100   : 0, 100
+            section v.zanotelli_20190509_p165_031.czi
+            78   : 0, 78
+            section v.zanotelli_20190509_p165_031.czi
+            125   : 0, 125
+            section v.zanotelli_20190509_p165_031_pt1.czi
+            125   : 0, 125
+            section v.zanotelli_20190509_p165_031_pt1.czi
+            125   : 0, 125
+            section v.zanotelli_20190509_p165_031_pt2.czi
+            125   : 0, 125
+            section v.zanotelli_20190509_p165_031_pt2.czi
+            137   : 0, 137
+            section 10.5 dpc vegfc gapdh Pecam wt 1.czi
+            100   : 0, 100
+            section 10.5 dpc vegfc gapdh Pecam wt 1.czi
+            94   : 0, 94
             section Plate1-Blue-A-12-Scene-3-P3-F2-03.czi
-            114   : 0, 114
+            80   : 0, 80
+            section Plate1-Blue-A-12-Scene-3-P3-F2-03.czi
+            88   : 0, 88
 ```

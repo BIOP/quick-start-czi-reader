@@ -14,8 +14,17 @@
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |16 ms|16 ms|        |
+| Initialization     |                  |15 ms|15 ms|        |
 | Reader Size (Mb)     |                  |1.97|2.54|        |
-| getPlaneDeltaT| Image 0 Plane 1 |  0.433 s |  0.447 s | 0.014 s |
-| getPlaneDeltaT| Image 0 Plane 2 |  0.618 s |  0.633 s | 0.014 s |
-| getPlaneDeltaT| Image 0 Plane 3 |  0.804 s |  0.819 s | 0.015 s |
+| getStageLabelX| Image 0 | 98987.200 um | 49500.000 um | 49487.200 um |
+| getStageLabelY| Image 0 | 70987.200 um | 35500.000 um | 35487.200 um |
+| getPlanePositionX| Image 0 Plane 0 | 98987.200 um | 49500.000 um | 49487.200 um |
+| getPlanePositionY| Image 0 Plane 0 | 70987.200 um | 35500.000 um | 35487.200 um |
+| getPlanePositionX| Image 0 Plane 1 | 98987.200 um | 49500.000 um | 49487.200 um |
+| getPlanePositionY| Image 0 Plane 1 | 70987.200 um | 35500.000 um | 35487.200 um |
+| getPlanePositionX| Image 0 Plane 2 | 98987.200 um | 49500.000 um | 49487.200 um |
+| getPlanePositionY| Image 0 Plane 2 | 70987.200 um | 35500.000 um | 35487.200 um |
+| getPlanePositionX| Image 0 Plane 3 | 98987.200 um | 49500.000 um | 49487.200 um |
+| getPlanePositionY| Image 0 Plane 3 | 70987.200 um | 35500.000 um | 35487.200 um |
+| getPlanePositionX| Image 0 Plane 4 | 98987.200 um | 49500.000 um | 49487.200 um |
+| getPlanePositionY| Image 0 Plane 4 | 70987.200 um | 35500.000 um | 35487.200 um |

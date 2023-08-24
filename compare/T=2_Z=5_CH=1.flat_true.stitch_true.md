@@ -7,18 +7,34 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |40 ms|------|51 ms|------|--------|
+| Read time (all)   |38 ms|------|45 ms|------|--------|
 |0|![T=2_Z=5_CH=1.quick_true.flat_true.stitch_true.series_0.jpg](T=2_Z=5_CH=1/T=2_Z=5_CH=1.quick_true.flat_true.stitch_true.series_0.jpg)|X:256<br>Y:256<br>C:1<br>Z:5<br>T:2|![T=2_Z=5_CH=1.quick_false.flat_true.stitch_true.series_0.jpg](T=2_Z=5_CH=1/T=2_Z=5_CH=1.quick_false.flat_true.stitch_true.series_0.jpg)|X:256<br>Y:256<br>C:1<br>Z:5<br>T:2|0|
 
 # Metadata
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |17 ms|17 ms|        |
+| Initialization     |                  |16 ms|15 ms|        |
 | Reader Size (Mb)     |                  |1.97|2.59|        |
-| getPlaneDeltaT| Image 0 Plane 2 |  1.035 s |  1.049 s | 0.014 s |
-| getPlaneDeltaT| Image 0 Plane 3 |  1.359 s |  1.374 s | 0.015 s |
-| getPlaneDeltaT| Image 0 Plane 6 |  2.335 s |  2.348 s | 0.014 s |
-| getPlaneDeltaT| Image 0 Plane 7 |  2.659 s |  2.688 s | 0.029 s |
-| getPlaneDeltaT| Image 0 Plane 8 |  2.984 s |  3.011 s | 0.027 s |
-| getPlaneDeltaT| Image 0 Plane 9 |  3.308 s |  3.336 s | 0.028 s |
+| getStageLabelX| Image 0 | 98987.200 um | 49500.000 um | 49487.200 um |
+| getStageLabelY| Image 0 | 70987.200 um | 35500.000 um | 35487.200 um |
+| getPlanePositionX| Image 0 Plane 0 | 98987.200 um | 49500.000 um | 49487.200 um |
+| getPlanePositionY| Image 0 Plane 0 | 70987.200 um | 35500.000 um | 35487.200 um |
+| getPlanePositionX| Image 0 Plane 1 | 98987.200 um | 49500.000 um | 49487.200 um |
+| getPlanePositionY| Image 0 Plane 1 | 70987.200 um | 35500.000 um | 35487.200 um |
+| getPlanePositionX| Image 0 Plane 2 | 98987.200 um | 49500.000 um | 49487.200 um |
+| getPlanePositionY| Image 0 Plane 2 | 70987.200 um | 35500.000 um | 35487.200 um |
+| getPlanePositionX| Image 0 Plane 3 | 98987.200 um | 49500.000 um | 49487.200 um |
+| getPlanePositionY| Image 0 Plane 3 | 70987.200 um | 35500.000 um | 35487.200 um |
+| getPlanePositionX| Image 0 Plane 4 | 98987.200 um | 49500.000 um | 49487.200 um |
+| getPlanePositionY| Image 0 Plane 4 | 70987.200 um | 35500.000 um | 35487.200 um |
+| getPlanePositionX| Image 0 Plane 5 | 98987.200 um | 49500.000 um | 49487.200 um |
+| getPlanePositionY| Image 0 Plane 5 | 70987.200 um | 35500.000 um | 35487.200 um |
+| getPlanePositionX| Image 0 Plane 6 | 98987.200 um | 49500.000 um | 49487.200 um |
+| getPlanePositionY| Image 0 Plane 6 | 70987.200 um | 35500.000 um | 35487.200 um |
+| getPlanePositionX| Image 0 Plane 7 | 98987.200 um | 49500.000 um | 49487.200 um |
+| getPlanePositionY| Image 0 Plane 7 | 70987.200 um | 35500.000 um | 35487.200 um |
+| getPlanePositionX| Image 0 Plane 8 | 98987.200 um | 49500.000 um | 49487.200 um |
+| getPlanePositionY| Image 0 Plane 8 | 70987.200 um | 35500.000 um | 35487.200 um |
+| getPlanePositionX| Image 0 Plane 9 | 98987.200 um | 49500.000 um | 49487.200 um |
+| getPlanePositionY| Image 0 Plane 9 | 70987.200 um | 35500.000 um | 35487.200 um |

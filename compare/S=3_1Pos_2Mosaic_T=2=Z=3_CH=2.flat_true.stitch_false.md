@@ -7,7 +7,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |255 ms|------|524 ms|------|--------|
+| Read time (all)   |260 ms|------|480 ms|------|--------|
 |0|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_false.series_0.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_false.series_0.jpg)|X:256<br>Y:256<br>C:2<br>Z:3<br>T:2|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_false.series_0.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_false.series_0.jpg)|X:256<br>Y:256<br>C:2<br>Z:3<br>T:2|0|
 |1|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_false.series_1.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_false.series_1.jpg)|X:256<br>Y:256<br>C:2<br>Z:3<br>T:2|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_false.series_1.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_false.series_1.jpg)|X:256<br>Y:256<br>C:2<br>Z:3<br>T:2|0|
 |2|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_false.series_2.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_false.series_2.jpg)|X:256<br>Y:256<br>C:2<br>Z:3<br>T:2|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_false.series_2.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_false.series_2.jpg)|X:256<br>Y:256<br>C:2<br>Z:3<br>T:2|0|
@@ -64,19 +64,39 @@
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |28 ms|33 ms|        |
+| Initialization     |                  |49 ms|38 ms|        |
 | Reader Size (Mb)     |                  |2.23|3.36|        |
 | getImageCount|(No args)|28| 51| |
 | getStageLabelName| Image 0 | TR1| Scene position #0| |
+| getStageLabelX| Image 0 | 38212.800 um | 38212.976 um | 0.176 um |
+| getStageLabelY| Image 0 | 12724.718 um | 12678.638 um | 46.080 um |
 | getStageLabelName| Image 1 | TR1| Scene position #1| |
+| getStageLabelX| Image 1 | 38305.200 um | 38305.136 um | 0.064 um |
+| getStageLabelY| Image 1 | 12724.718 um | 12678.638 um | 46.080 um |
 | getStageLabelName| Image 2 | TR1| Scene position #2| |
+| getStageLabelX| Image 2 | 38397.200 um | 38397.296 um | 0.096 um |
+| getStageLabelY| Image 2 | 12724.718 um | 12678.638 um | 46.080 um |
 | getStageLabelName| Image 3 | TR1| Scene position #3| |
+| getStageLabelX| Image 3 | 38489.600 um | 38489.456 um | 0.144 um |
+| getStageLabelY| Image 3 | 12724.718 um | 12678.638 um | 46.080 um |
 | getStageLabelName| Image 4 | TR1| Scene position #4| |
+| getStageLabelX| Image 4 | 38581.600 um | 38581.616 um | 0.016 um |
+| getStageLabelY| Image 4 | 12724.718 um | 12678.638 um | 46.080 um |
 | getStageLabelName| Image 5 | TR1| Scene position #5| |
+| getStageLabelX| Image 5 | 38581.600 um | 38581.616 um | 0.016 um |
+| getStageLabelY| Image 5 | 12816.718 um | 12770.798 um | 45.920 um |
 | getStageLabelName| Image 6 | TR1| Scene position #6| |
+| getStageLabelX| Image 6 | 38489.600 um | 38489.456 um | 0.144 um |
+| getStageLabelY| Image 6 | 12816.718 um | 12770.798 um | 45.920 um |
 | getStageLabelName| Image 7 | TR1| Scene position #7| |
+| getStageLabelX| Image 7 | 38397.200 um | 38397.296 um | 0.096 um |
+| getStageLabelY| Image 7 | 12816.718 um | 12770.798 um | 45.920 um |
 | getStageLabelName| Image 8 | TR1| Scene position #8| |
+| getStageLabelX| Image 8 | 38305.200 um | 38305.136 um | 0.064 um |
+| getStageLabelY| Image 8 | 12816.718 um | 12770.798 um | 45.920 um |
 | getStageLabelName| Image 9 | TR1| Scene position #9| |
+| getStageLabelX| Image 9 | 38212.800 um | 38212.976 um | 0.176 um |
+| getStageLabelY| Image 9 | 12816.718 um | 12770.798 um | 45.920 um |
 | getStageLabelName| Image 10 |  error: false | error: true| |
 | getStageLabelX| Image 10 |  error: false | error: true| |
 | getStageLabelY| Image 10 |  error: false | error: true| |
@@ -106,8 +126,8 @@
 | getStageLabelY| Image 16 |  error: false | error: true| |
 | getStageLabelZ| Image 16 |  error: false | error: true| |
 | getStageLabelName| Image 17 | TR2| Scene position #17| |
-| getStageLabelX| Image 17 | 38541.172 um | 37980.000 um | 561.172 um |
-| getStageLabelY| Image 17 | 13214.218 um | 13020.000 um | 194.218 um |
+| getStageLabelX| Image 17 | 38541.200 um | 37980.000 um | 561.200 um |
+| getStageLabelY| Image 17 | 13260.318 um | 13020.000 um | 240.318 um |
 | getStageLabelName| Image 18 |  error: false | error: true| |
 | getStageLabelX| Image 18 |  error: false | error: true| |
 | getStageLabelY| Image 18 |  error: false | error: true| |
@@ -541,25 +561,5 @@
 | getPixelsPhysicalSizeY| Image 41 |  error: true | error: false| |
 | getPixelsPhysicalSizeZ| Image 41 |  error: true | error: false| |
 | getPixelsInterleaved| Image 41 |  error: true | error: false| |
-| getPixelsDimensionOrder| Image 41 |  error: true | error: false| |
-| getPixelsBigEndian| Image 41 |  error: true | error: false| |
-| getPixelsID| Image 41 |  error: true | error: false| |
-| getImageName| Image 42 |  error: true | error: false| |
-| getImageAcquisitionDate| Image 42 |  error: true | error: false| |
-| getImageAnnotationRefCount| Image 42 |  error: true | error: false| |
-| getImageDescription| Image 42 |  error: true | error: false| |
-| getImageExperimenterRef| Image 42 |  error: true | error: false| |
-| getImageInstrumentRef| Image 42 |  error: true | error: false| |
-| getImageID| Image 42 |  error: true | error: false| |
-| getImageROIRefCount| Image 42 |  error: true | error: false| |
-| getPlaneCount| Image 42 |  error: true | error: false| |
-| getChannelCount| Image 42 |  error: true | error: false| |
-| getImageROIRefCount| Image 42 |  error: true | error: false| |
-| getPixelsBinDataCount| Image 42 |  error: true | error: false| |
-| getMicrobeamManipulationRefCount| Image 42 |  error: true | error: false| |
-| getTiffDataCount| Image 42 |  error: true | error: false| |
-| getStageLabelName| Image 42 |  error: true | error: false| |
-| getStageLabelX| Image 42 |  error: true | error: false| |
-| getStageLabelY| Image 42 |  error: true | error: false| |
 
  More than 500 differences.

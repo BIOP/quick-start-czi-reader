@@ -7,14 +7,14 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |129 ms|------|281 ms|------|--------|
+| Read time (all)   |126 ms|------|273 ms|------|--------|
 |0|![RBC_medium_LLSZ.quick_true.flat_true.stitch_true.series_0.jpg](RBC_medium_LLSZ/RBC_medium_LLSZ.quick_true.flat_true.stitch_true.series_0.jpg)|X:279<br>Y:297<br>C:1<br>Z:834<br>T:5|![RBC_medium_LLSZ.quick_false.flat_true.stitch_true.series_0.jpg](RBC_medium_LLSZ/RBC_medium_LLSZ.quick_false.flat_true.stitch_true.series_0.jpg)|X:279<br>Y:297<br>C:1<br>Z:834<br>T:5|0|
 
 # Metadata
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |30 ms|176 ms|        |
+| Initialization     |                  |27 ms|167 ms|        |
 | Reader Size (Mb)     |                  |3.43|7.70|        |
 | getPlanePositionZ| Image 0 Plane 1 | -384.727 um | -385.027 um | 0.300 um |
 | getPlanePositionZ| Image 0 Plane 2 | -384.427 um | -385.027 um | 0.600 um |

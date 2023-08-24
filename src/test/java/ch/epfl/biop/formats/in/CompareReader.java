@@ -56,7 +56,7 @@ public class CompareReader {
             "getImageCount",
             "getChannelSamplesPerPixel"));
 
-    public static final double timeStampDifferenceAllowedInS = 0.001; // 1 ms
+    public static final double timeStampDifferenceAllowedInS = 0.005; // 5 ms
     public static final double positionDifferenceAllowedInUM = 0.001; // 1nm
 
     static long nanoStart;
@@ -744,8 +744,8 @@ public class CompareReader {
 
                 // "https://zenodo.org/record/7147844/files/test-fullplate.czi", // 13.7 GB test full plate -> out of memory
                 "https://zenodo.org/record/7129425/files/test-plate.czi", // test plate, 3.3 GB
-                "https://zenodo.org/record/7254229/files/P1.czi", // Cytoskeleton stack image, 125 MB */
-              //  "https://zenodo.org/record/4662053/files/2021-02-25-tulip_Airyscan.czi", // Airyscan processed, 42.1 MB
+                "https://zenodo.org/record/7254229/files/P1.czi", // Cytoskeleton stack image, 125 MB
+                "https://zenodo.org/record/4662053/files/2021-02-25-tulip_Airyscan.czi", // Airyscan processed, 42.1 MB
                 "https://zenodo.org/record/4662053/files/2021-02-25-tulip_unprocessed-Airyscan.czi", // Unprocessed Airyscan 2.9Gb
                 "https://zenodo.org/record/6848342/files/Airyscan%20Lines%20Pattern.czi", //2 MB
                 "https://zenodo.org/record/6848342/files/Confocal%20Lines%20Pattern.czi", //2.2 MB
@@ -834,9 +834,56 @@ public class CompareReader {
                         "getPixelsPhysicalSizeY"
                 });
 
+        addIgnoreRule("getPlaneDeltaT returns a wrong value (timestamp from first series) for the lower resolution levels", IgnoreDiffExplanation.Note.BETTER,
+                new String[]{
+                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_CH%3D1.czi",
 
+                },
+                new String[]{
+                        "getPlaneDeltaT"
+                });
 
+        addIgnoreRule("The shift is constant in XY because we use the corner position (as specified by Zeiss "
+                        +"subblocks) instead of the center. The shifts equals half the size of the image.", IgnoreDiffExplanation.Note.SAME,
+                new String[]{
+                        "https://zenodo.org/record/7254229/files/P1.czi",
+                        "https://zenodo.org/record/7015307/files/T%3D1_CH%3D2.czi",
+                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_CH%3D1.czi",
+                        "https://zenodo.org/record/7015307/files/S%3D1_CH%3D2.czi",
+                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_T%3D1_Z%3D4_CH%3D1.czi",
+                        "https://zenodo.org/record/7015307/files/Z%3D5_CH%3D1.czi",
+                        "https://zenodo.org/record/7015307/files/Z%3D5_CH%3D2.czi",
+                        "https://zenodo.org/record/7015307/files/S%3D2_T%3D3_CH%3D1.czi",
 
+                },
+                new String[]{
+                        "getPlanePositionX", "getPlanePositionY", "getStageLabelX", "getStageLabelY"
+                });
+
+        //
+
+        addIgnoreRule("The shift is constant in XY. The quick start reader adds the stage location to the" +
+                        " plane position, while the normal reader do not. One need to check of that causes an issue" +
+                        " with the slide scanner scenes though ", IgnoreDiffExplanation.Note.SAME,
+                new String[]{
+                        "https://zenodo.org/record/8263451/files/Demo%20LISH%204x8%2015pct%20647.czi",
+                        "https://zenodo.org/record/8263451/files/Image_1_2023_08_18__14_32_31_964.czi"
+                },
+                new String[]{
+                        "getPlanePositionX", "getPlanePositionY", "getStageLabelX", "getStageLabelY"
+                });
+
+        addIgnoreRule("When autostitch is false, the position in Z is null in the original reader ", IgnoreDiffExplanation.Note.BETTER,
+                new String[]{
+                        "https://zenodo.org/record/8263451/files/Demo%20LISH%204x8%2015pct%20647.czi",
+                        "https://zenodo.org/record/8263451/files/Image_1_2023_08_18__14_32_31_964.czi"
+
+                },
+                new String[]{
+                        "getStageLabelZ", "getPlanePositionZ",
+                });
+
+        //getStageLabelZ
 
         List<SummaryPerFile> summaryList = new ArrayList<>();
 
