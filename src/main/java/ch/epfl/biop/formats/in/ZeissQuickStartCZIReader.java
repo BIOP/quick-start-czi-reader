@@ -3181,7 +3181,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 int nChannels = reader.getSizeC();
                 List<MinimalDimensionEntry> blocks;
 
-                Length planePosX, planePosY, planePosZ; // plane position of the current coreindex - do not vary over z and t, but that could happen
+                Length planePosX, planePosY, planePosZ = null; // plane position of the current coreindex - do not vary over z and t, but that could happen
 
                 blocks = mapCoreCZTToBlocks.get(iCoreIndex).get(new CZTKey(0,0,0));
 
@@ -3192,14 +3192,54 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     planePosY = planePosYResolutionLevel0;
                     planePosZ = planePosZResolutionLevel0;
                 } else {
+                    // The most complicated logic
+                    // ------ Here's the available data:
 
+                    // XYZ - Plane position according to the block position (should not be null - compulsory in czi file)
                     Corner blocksCorner = new Corner().fromBlocks(blocks, iCoreIndex, unitLength);
+                    // XYZ - Plane position according to the subblock xml metadata (could be null)
                     Corner subBlockMetaCorner = new Corner().fromSubBlockMeta(blocks, iCoreIndex, unitLength, parser);
+                    // XY - (offsetXInMicrons, offsetYInMicrons) : the top left corner, according to the xml czi header (could be NaN)
+                    // Z - scenePosZ : the z location of the current scene, according to the xml czi header (could be Null)
+                    /*System.out.println("- Id = "+reader.currentId);
+                    System.out.println("- CoreIndex = "+reader.coreIndex+" Res Lev 0 = "+resolutionLevel0);
+                    System.out.println("Min XYZ location according to block start position:");
+                    System.out.println("\tX="+blocksCorner.x);
+                    System.out.println("\tY="+blocksCorner.y);
+                    System.out.println("\tZ="+blocksCorner.z);
+                    System.out.println("Min XYZ location according to subblock metadata position:");
+                    System.out.println("\tX="+subBlockMetaCorner.x);
+                    System.out.println("\tY="+subBlockMetaCorner.y);
+                    System.out.println("\tZ="+subBlockMetaCorner.z);
+                    System.out.println("XY Global offset according to main xml document:");
+                    System.out.println("\tX="+offsetXInMicrons);
+                    System.out.println("\tY="+offsetYInMicrons);
+                    System.out.println("Z position of current scene according to main xml document:");
+                    System.out.println("\tZ="+scenePosZ);*/
+
+                    // XY : keep blocks only
+                    planePosX = blocksCorner.x;
+                    planePosY = blocksCorner.y;
+
+                    if ((blocksCorner.z!=null)&&(subBlockMetaCorner.z!=null)&&(blocksCorner.z.unit().equals(subBlockMetaCorner.z.unit()))) {
+                        Unit<Length> u = blocksCorner.z.unit();
+                        planePosZ = new Length(blocksCorner.z.value(u).doubleValue()+subBlockMetaCorner.z.value(u).doubleValue(), u);
+                    } else if ((blocksCorner.z!=null)&&(scenePosZ!=null)&&(scenePosZ.unit().equals(blocksCorner.z.unit()))) {
+                        Unit<Length> u = blocksCorner.z.unit();
+                        planePosZ = new Length(blocksCorner.z.value(u).doubleValue()+scenePosZ.value(u).doubleValue(), u);
+                    } else if (blocksCorner.z!=null) {
+                        planePosZ = blocksCorner.z;
+                    } else if (subBlockMetaCorner.z!=null) {
+                        planePosZ = subBlockMetaCorner.z;
+                    } else if (scenePosZ!=null) {
+                        planePosZ = scenePosZ;
+                    }
+
                     // Look for the min X and Y position from blocks
-                    planePosX=(blocksCorner.x==null)?subBlockMetaCorner.x:blocksCorner.x;
-                    planePosY=(blocksCorner.y==null)?subBlockMetaCorner.y:blocksCorner.y;
+                    //planePosX=(blocksCorner.x==null)?subBlockMetaCorner.x:blocksCorner.x;
+                    //planePosY=(blocksCorner.y==null)?subBlockMetaCorner.y:blocksCorner.y;
                     // To match the previous reader, using the meta instead
-                    planePosZ=(subBlockMetaCorner.z==null)?blocksCorner.z:subBlockMetaCorner.z;
+                    /*planePosZ=(subBlockMetaCorner.z==null)?blocksCorner.z:subBlockMetaCorner.z;
                     // There's an offset potentially
                     // Scene offset = scenePosX.value(u) scenePosY.value(u) scenePosZ.value(u)
 
@@ -3226,7 +3266,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                             Unit<Length> u = planePosZ.unit();
                             planePosZ = new Length(scenePosZ.value(u).doubleValue() + planePosZ.value(u).doubleValue(), u);
                         }
-                    }
+                    }*/
                 }
 
                 if (resolutionLevel0) {
@@ -3316,8 +3356,28 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     double[] currentTimeStamps = timeStampsResolutionLevel0.get(iChannel);
                     int planeCounter = 0;
                     if ((reader.flattenedResolutions)||(resolutionLevel0)) { // Avoid setting the metadata not for lower resolution levels, because this override proper metadata if flattenresolution = false
-                        for (int iZori = 0; iZori < reader.getSizeZ(); iZori++) {
-                            for (int iTori = 0; iTori < reader.getSizeT(); iTori++) {
+                        for (int iTori = 0; iTori < reader.getSizeT(); iTori++) {
+                            int iT = iTori % (reader.getSizeT() / reader.nPhases);
+                            double timeStartCurrentFrame = 0;
+                            if (interpolateZTPlanePosition) {
+                                // We can afford to read the first block of the first timepoint
+                                LibCZI.SubBlockMeta sbmzt = getSubBlockMeta(
+                                        iChannel,
+                                        0,
+                                        iT,
+                                        iCoreIndex, mapCoreCZTToBlocks, parser);
+                                if (Double.isNaN(sbmzt.timestamp)) {
+                                    if (cziSegments.timeStamps.length>iT) {
+                                        timeStartCurrentFrame = cziSegments.timeStamps[iT];
+                                    }
+                                } else {
+                                    timeStartCurrentFrame = sbmzt.timestamp - realT0;
+                                }
+                            }
+
+                            for (int iZori = 0; iZori < reader.getSizeZ(); iZori++) {
+
+
                                 int planeIndex = reader.getIndex(iZori, iChannel, iTori);
                                 // rotations -> modulo Z
                                 // illuminations -> modulo C
@@ -3330,13 +3390,13 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                                     reader.store.setPlaneExposureTime(exposure, reader.series, planeIndex); // 0 exposure do not make sense
                                 }
                                 int iZ = iZori % (reader.getSizeZ() / reader.nRotations);
-                                int iT = iTori % (reader.getSizeT() / reader.nPhases);
+
                                 Time dT = null;
                                 Length pZ = null;
 
                                 if (interpolateZTPlanePosition) {
                                     if ((incrementTimeOverZ >= 0) || (incrementTimeOverT >= 0)) {
-                                        dT = new Time(offsetT0 + incrementTimeOverT * iT + incrementTimeOverZ * iZ,
+                                        dT = new Time(timeStartCurrentFrame + incrementTimeOverZ * iZ,
                                                 UNITS.SECOND);
                                     }
                                     pZ = new Length(offsetZ0 + iZ * stepZ, unitLength);
