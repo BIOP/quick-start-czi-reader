@@ -7,7 +7,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |31911 ms|------|41469 ms|------|--------|
+| Read time (all)   |33657 ms|------|43760 ms|------|--------|
 |0|![v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_true.series_0.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_true.series_0.jpg)|X:13143<br>Y:13184<br>C:2<br>Z:1<br>T:1|![v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_true.series_0.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_true.series_0.jpg)|X:13143<br>Y:13184<br>C:2<br>Z:1<br>T:1|0|
 |1|![v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_true.series_1.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_true.series_1.jpg)|X:6571<br>Y:6592<br>C:2<br>Z:1<br>T:1|![v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_true.series_1.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_true.series_1.jpg)|X:6571<br>Y:6592<br>C:2<br>Z:1<br>T:1|0|
 |2|![v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_true.series_2.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_true.series_2.jpg)|X:3285<br>Y:3296<br>C:2<br>Z:1<br>T:1|![v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_true.series_2.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_true.series_2.jpg)|X:3285<br>Y:3296<br>C:2<br>Z:1<br>T:1|0|
@@ -30,7 +30,7 @@
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |59 ms|74 ms|        |
+| Initialization     |                  |86 ms|70 ms|        |
 | Reader Size (Mb)     |                  |10.07|10.88|        |
 | getStageLabelName| Image 0 | ScanRegion0| Scene position #0| |
 | getStageLabelX| Image 0 | -74339.607 um | -32465.133 um | 41874.474 um |

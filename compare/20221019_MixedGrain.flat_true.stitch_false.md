@@ -7,12 +7,12 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |39 ms|------|52 ms|------|--------|
+| Read time (all)   |38 ms|------|51 ms|------|--------|
 |0|![20221019_MixedGrain.quick_true.flat_true.stitch_false.series_0.jpg](20221019_MixedGrain/20221019_MixedGrain.quick_true.flat_true.stitch_false.series_0.jpg)|X:1024<br>Y:1024<br>C:2<br>Z:27<br>T:1|![20221019_MixedGrain.quick_false.flat_true.stitch_false.series_0.jpg](20221019_MixedGrain/20221019_MixedGrain.quick_false.flat_true.stitch_false.series_0.jpg)|X:1024<br>Y:1024<br>C:2<br>Z:27<br>T:1|0|
 
 # Metadata
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |5 ms|4 ms|        |
+| Initialization     |                  |4 ms|4 ms|        |
 | Reader Size (Mb)     |                  |0.15|0.27|        |

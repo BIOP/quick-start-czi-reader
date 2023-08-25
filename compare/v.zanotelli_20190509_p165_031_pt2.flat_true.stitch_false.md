@@ -7,7 +7,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |91 ms|------|113 ms|------|--------|
+| Read time (all)   |94 ms|------|105 ms|------|--------|
 |0|![v.zanotelli_20190509_p165_031_pt2.quick_true.flat_true.stitch_false.series_0.jpg](v.zanotelli_20190509_p165_031_pt2/v.zanotelli_20190509_p165_031_pt2.quick_true.flat_true.stitch_false.series_0.jpg)|X:1585<br>Y:743<br>C:3<br>Z:1<br>T:1|![v.zanotelli_20190509_p165_031_pt2.quick_false.flat_true.stitch_false.series_0.jpg](v.zanotelli_20190509_p165_031_pt2/v.zanotelli_20190509_p165_031_pt2.quick_false.flat_true.stitch_false.series_0.jpg)|X:1585<br>Y:743<br>C:3<br>Z:1<br>T:1|0|
 
 # Metadata

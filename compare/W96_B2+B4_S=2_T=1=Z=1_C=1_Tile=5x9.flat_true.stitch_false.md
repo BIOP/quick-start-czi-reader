@@ -7,7 +7,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |773 ms|------|979 ms|------|--------|
+| Read time (all)   |757 ms|------|1057 ms|------|--------|
 |0|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_false.series_0.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_false.series_0.jpg)|X:640<br>Y:420<br>C:1<br>Z:1<br>T:1|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_false.series_0.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_false.series_0.jpg)|X:640<br>Y:420<br>C:1<br>Z:1<br>T:1|0|
 |1|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_false.series_1.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_false.series_1.jpg)|X:640<br>Y:420<br>C:1<br>Z:1<br>T:1|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_false.series_1.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_false.series_1.jpg)|X:640<br>Y:420<br>C:1<br>Z:1<br>T:1|0|
 |2|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_false.series_2.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_false.series_2.jpg)|X:640<br>Y:420<br>C:1<br>Z:1<br>T:1|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_false.series_2.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_false.series_2.jpg)|X:640<br>Y:420<br>C:1<br>Z:1<br>T:1|0|

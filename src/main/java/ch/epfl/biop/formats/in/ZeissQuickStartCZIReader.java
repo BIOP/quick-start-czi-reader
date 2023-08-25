@@ -206,6 +206,7 @@ import static ch.epfl.biop.formats.in.libczi.LibCZI.ZSTD_1;
  *  lazy loading AND memoization functionality.
  *
  *  TODO: The key of the cache should contain a ref to the file part
+ *  TODO: sync https://github.com/ome/bioformats/pull/4088
  *
  */
 
@@ -3094,8 +3095,8 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             // Space : according to czi specs, all blocks are located within a 2D virtual plane
             // but this plane has a global physical offset, set by the stage location. This is
             // this offset that we are looking for in the loop below
-            double offsetXInMicrons = Double.NaN;
-            double offsetYInMicrons = Double.NaN;
+            double cornerXAllScenesMicrons = Double.NaN;
+            double cornerYAllScenesMicrons = Double.NaN;
 
             if ((allPositionsInformation.scenes.size()>0)&&(!coreToPixSizeX.get(0).unit().equals(UNITS.REFERENCEFRAME))) {
                 Length minX = null, minY = null;
@@ -3114,11 +3115,10 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     }
                 }
                 if (minX!=null) {
-                    offsetXInMicrons = minX.value(UNITS.MICROMETER).doubleValue();
-                    offsetYInMicrons = minY.value(UNITS.MICROMETER).doubleValue();
+                    cornerXAllScenesMicrons = minX.value(UNITS.MICROMETER).doubleValue();
+                    cornerYAllScenesMicrons = minY.value(UNITS.MICROMETER).doubleValue();
                 }
             }
-
 
             // Let's start to set the space and time information for all core index
             Map<Integer, double[]> timeStampsResolutionLevel0 = new HashMap<>();
@@ -3221,6 +3221,14 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     planePosX = blocksCorner.x;
                     planePosY = blocksCorner.y;
 
+                    if (planePosX.unit().equals(UNITS.MICROMETER) && (planePosY.unit().equals(UNITS.MICROMETER))) {
+                        // Let's add a global stage offset, if possible
+                        if ((!Double.isNaN(cornerXAllScenesMicrons))&&(!Double.isNaN(cornerXAllScenesMicrons))) {
+                            planePosX = new Length(planePosX.value(UNITS.MICROMETER).doubleValue()+cornerXAllScenesMicrons, UNITS.MICROMETER);
+                            planePosY = new Length(planePosY.value(UNITS.MICROMETER).doubleValue()+cornerYAllScenesMicrons, UNITS.MICROMETER);
+                        }
+                    }
+
                     if ((blocksCorner.z!=null)&&(subBlockMetaCorner.z!=null)&&(blocksCorner.z.unit().equals(subBlockMetaCorner.z.unit()))) {
                         Unit<Length> u = blocksCorner.z.unit();
                         planePosZ = new Length(blocksCorner.z.value(u).doubleValue()+subBlockMetaCorner.z.value(u).doubleValue(), u);
@@ -3235,38 +3243,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                         planePosZ = scenePosZ;
                     }
 
-                    // Look for the min X and Y position from blocks
-                    //planePosX=(blocksCorner.x==null)?subBlockMetaCorner.x:blocksCorner.x;
-                    //planePosY=(blocksCorner.y==null)?subBlockMetaCorner.y:blocksCorner.y;
-                    // To match the previous reader, using the meta instead
-                    /*planePosZ=(subBlockMetaCorner.z==null)?blocksCorner.z:subBlockMetaCorner.z;
-                    // There's an offset potentially
-                    // Scene offset = scenePosX.value(u) scenePosY.value(u) scenePosZ.value(u)
-
-                    if (!Double.isNaN(offsetXInMicrons) && (planePosX.unit().equals(UNITS.MICROMETER))) {
-                        planePosX = new Length(offsetXInMicrons + planePosX.value(UNITS.MICROMETER).doubleValue(), UNITS.MICROMETER);
-                    }
-                    if (!Double.isNaN(offsetYInMicrons) && (planePosY.unit().equals(UNITS.MICROMETER))) {
-                        planePosY = new Length(offsetYInMicrons + planePosY.value(UNITS.MICROMETER).doubleValue(), UNITS.MICROMETER);
-                    }
-
-                    if (reader.isLatticeLightSheet()) {
-                        // RAAAAAAAAHHHH!
-                        planePosX = subBlockMetaCorner.x;
-                        planePosY = subBlockMetaCorner.y;
-                    }
-
-                    if (planePosZ==null) {
-                        // When xy are in um while z is in reference frame
-                        if (scenePosZ!=null) {
-                            planePosZ = scenePosZ;
-                        }
-                    } else {
-                        if ((planePosZ.equals(blocksCorner.z)) && (scenePosZ != null)) {
-                            Unit<Length> u = planePosZ.unit();
-                            planePosZ = new Length(scenePosZ.value(u).doubleValue() + planePosZ.value(u).doubleValue(), u);
-                        }
-                    }*/
                 }
 
                 if (resolutionLevel0) {
@@ -4534,6 +4510,5 @@ public class ZeissQuickStartCZIReader extends FormatReader {
     private boolean isLatticeLightSheet() {
         return isLatticeLightSheet;
     }
-
 
 }

@@ -14,7 +14,7 @@
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |16 ms|15 ms|        |
+| Initialization     |                  |16 ms|16 ms|        |
 | Reader Size (Mb)     |                  |1.97|2.54|        |
 | getStageLabelX| Image 0 | 98987.200 um | 49500.000 um | 49487.200 um |
 | getStageLabelY| Image 0 | 70987.200 um | 35500.000 um | 35487.200 um |

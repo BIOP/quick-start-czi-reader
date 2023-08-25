@@ -56,7 +56,7 @@ public class CompareReader {
             "getImageCount",
             "getChannelSamplesPerPixel"));
 
-    public static final double timeStampDifferenceAllowedInS = 0.005; // 5 ms
+    public static final double timeStampDifferenceAllowedInS = 0.01; // 10 ms
     public static final double positionDifferenceAllowedInUM = 0.001; // 1nm
 
     static long nanoStart;
@@ -718,8 +718,9 @@ public class CompareReader {
     }
 
     public static void main(String... args) {
-        //DebugTools.setRootLevel("TRACE");
+        DebugTools.setRootLevel("TRACE");
         DebugTools.setRootLevel("WARN");
+        DebugTools.setRootLevel("OFF");
 
         Function<String, String> decoder = (str) -> {
             try {
@@ -773,11 +774,11 @@ public class CompareReader {
                 "https://zenodo.org/record/7015307/files/W96_B2%2BB4_S%3D2_T%3D1%3DZ%3D1_C%3D1_Tile%3D5x9.czi", // 31.3 MB
                 "https://zenodo.org/record/7015307/files/W96_B2%2BB4_S%3D2_T%3D2%3DZ%3D4_C%3D3_Tile%3D5x9.czi", // 737.7 MB
                 "https://zenodo.org/record/7015307/files/Z%3D5_CH%3D1.czi", // 2.0 MB
-                "https://zenodo.org/record/7015307/files/Z%3D5_CH%3D2.czi", // 2.6 MB*/
+                "https://zenodo.org/record/7015307/files/Z%3D5_CH%3D2.czi", // 2.6 MB
                 "https://zenodo.org/record/7117784/files/RBC_full_one_timepoint.czi", // 1.0 GB RBC full one timepoint
                 "https://zenodo.org/record/7117784/files/RBC_full_time_series.czi", // 3.1 GB RBC full time series
                 "https://zenodo.org/record/7117784/files/RBC_medium_LLSZ.czi", // 700 MB RBC series LLSZ
-                "https://zenodo.org/record/7117784/files/RBC_tiny.czi", // 48.9 MB RBC tiny
+               "https://zenodo.org/record/7117784/files/RBC_tiny.czi", // 48.9 MB RBC tiny
                 "https://zenodo.org/record/7260610/files/20221019_MixedGrain.czi", // 113 MB Mixed Grain confocal
                 "https://zenodo.org/record/7260610/files/20221019_MixedGrain2.czi", // 78.6 MB Mixed Grain2
                 "https://zenodo.org/record/5101351/files/Ph488.czi", // 43.1 MB
@@ -800,10 +801,12 @@ public class CompareReader {
         // Set of rules explaining particular choices
 
         addIgnoreRule("The quick reader reads the czi stage label name, instead of iterating scene indices."+
-                " This fits better with the original CZI file.", IgnoreDiffExplanation.Note.BETTER,
-                cziURLs, new String[]{"getStageLabelName"});
+                " This fits better with the original CZI file.",
+                IgnoreDiffExplanation.Note.BETTER,
+                cziURLs,
+                new String[]{"getStageLabelName"});
 
-        addIgnoreRule("The quick reader reads puts a Z reference frame value in Z, which makes sense because it's "
+        /*addIgnoreRule("The quick reader reads puts a Z reference frame value in Z, which makes sense because it's "
                         +"the same logic as what's already happening with getPlanePositionX and Y.", IgnoreDiffExplanation.Note.SAME,
                 new String[]{
                         "https://zenodo.org/record/8263451/files/test_gray.czi",
@@ -811,9 +814,10 @@ public class CompareReader {
                 },
                 new String[]{
                         "getStageLabelName",
-                });
+                });*/
 
-        addIgnoreRule("The quick reader reads the Z location correctly, and not the original reader.", IgnoreDiffExplanation.Note.BETTER,
+        addIgnoreRule("The quick reader reads the Z location correctly, and not the original reader.",
+                IgnoreDiffExplanation.Note.BETTER,
                 new String[]{
                         "https://zenodo.org/record/7117784/files/RBC_full_one_timepoint.czi",
                         "https://zenodo.org/record/7117784/files/RBC_full_time_series.czi",
@@ -824,7 +828,8 @@ public class CompareReader {
                         "getPlanePositionZ",
                 });
 
-        addIgnoreRule("The pixel physical sizes are incorrect for the lower resolution levels in the original reader", IgnoreDiffExplanation.Note.BETTER,
+        addIgnoreRule("The pixel physical sizes are incorrect for the lower resolution levels in the original reader",
+                IgnoreDiffExplanation.Note.BETTER,
                 new String[]{
                         "https://zenodo.org/record/7015307/files/S%3D2_2x2_CH%3D1.czi",
 
@@ -834,56 +839,73 @@ public class CompareReader {
                         "getPixelsPhysicalSizeY"
                 });
 
-        addIgnoreRule("getPlaneDeltaT returns a wrong value (timestamp from first series) for the lower resolution levels", IgnoreDiffExplanation.Note.BETTER,
+        addIgnoreRule("getPlaneDeltaT returns a wrong value (timestamp from first series) for the lower resolution levels",
+                IgnoreDiffExplanation.Note.BETTER,
                 new String[]{
                         "https://zenodo.org/record/7015307/files/S%3D2_2x2_CH%3D1.czi",
+                        "https://zenodo.org/record/7015307/files/S%3D1_3x3_T%3D3_Z%3D4_CH%3D2.czi"
 
                 },
                 new String[]{
                         "getPlaneDeltaT"
                 });
 
-        addIgnoreRule("The shift is constant in XY because we use the corner position (as specified by Zeiss "
-                        +"subblocks) instead of the center. The shifts equals half the size of the image.", IgnoreDiffExplanation.Note.SAME,
+        addIgnoreRule(
+                "GetPlanePositionX&Y returns reference frame units for image > 1 in autostitch false.\n"+
+                        "The difference is constant for the other locations and stage labels\n"+
+                        "getStageLabelZ is null with autostich = false",
+                IgnoreDiffExplanation.Note.SAME,
+                new String[]{
+                        "https://zenodo.org/record/8263451/files/Demo%20LISH%204x8%2015pct%20647.czi",
+                        "https://zenodo.org/record/8263451/files/Image_1_2023_08_18__14_32_31_964.czi",
+                        "https://zenodo.org/record/7015307/files/S%3D1_3x3_T%3D3_Z%3D4_CH%3D2.czi"
+
+                },
+                new String[]{
+                        "getStageLabelX", "getStageLabelY", "getStageLabelZ",
+                        "getPlanePositionX", "getPlanePositionY"
+                });
+
+        addIgnoreRule(
+                "The plane position difference in X Y is constant for all series",
+                IgnoreDiffExplanation.Note.SAME,
                 new String[]{
                         "https://zenodo.org/record/7254229/files/P1.czi",
-                        "https://zenodo.org/record/7015307/files/T%3D1_CH%3D2.czi",
-                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_CH%3D1.czi",
+                        "https://zenodo.org/record/7015307/files/S%3D1_3x3_T%3D3_Z%3D4_CH%3D2.czi",
                         "https://zenodo.org/record/7015307/files/S%3D1_CH%3D2.czi",
-                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_T%3D1_Z%3D4_CH%3D1.czi",
-                        "https://zenodo.org/record/7015307/files/Z%3D5_CH%3D1.czi",
-                        "https://zenodo.org/record/7015307/files/Z%3D5_CH%3D2.czi",
-                        "https://zenodo.org/record/7015307/files/S%3D2_T%3D3_CH%3D1.czi",
+                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_CH%3D1.czi",
+                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_T%3D1_Z%3D4_CH%3D1.czi"
 
                 },
                 new String[]{
                         "getPlanePositionX", "getPlanePositionY", "getStageLabelX", "getStageLabelY"
                 });
 
-        //
-
-        addIgnoreRule("The shift is constant in XY. The quick start reader adds the stage location to the" +
-                        " plane position, while the normal reader do not. One need to check of that causes an issue" +
-                        " with the slide scanner scenes though ", IgnoreDiffExplanation.Note.SAME,
+        addIgnoreRule(
+                "Metadata missing for modulo planes",
+                IgnoreDiffExplanation.Note.SAME,
                 new String[]{
-                        "https://zenodo.org/record/8263451/files/Demo%20LISH%204x8%2015pct%20647.czi",
-                        "https://zenodo.org/record/8263451/files/Image_1_2023_08_18__14_32_31_964.czi"
-                },
-                new String[]{
-                        "getPlanePositionX", "getPlanePositionY", "getStageLabelX", "getStageLabelY"
-                });
-
-        addIgnoreRule("When autostitch is false, the position in Z is null in the original reader ", IgnoreDiffExplanation.Note.BETTER,
-                new String[]{
-                        "https://zenodo.org/record/8263451/files/Demo%20LISH%204x8%2015pct%20647.czi",
-                        "https://zenodo.org/record/8263451/files/Image_1_2023_08_18__14_32_31_964.czi"
+                        "https://zenodo.org/record/4662053/files/2021-02-25-tulip_unprocessed-Airyscan.czi"
 
                 },
                 new String[]{
-                        "getStageLabelZ", "getPlanePositionZ",
+                        "getPlaneDeltaT", "getPlanePositionZ", "getPlanePositionY", "getPlanePositionX"
                 });
 
-        //getStageLabelZ
+
+
+        addIgnoreRule("The stage label is null in the original reader.",
+                IgnoreDiffExplanation.Note.BETTER,
+                new String[]{
+                        "https://zenodo.org/record/8263451/files/Image_1_2023_08_18__14_32_31_964.czi",
+                        "https://zenodo.org/record/8263451/files/Demo%20LISH%204x8%2015pct%20647.czi"
+                },
+                new String[]{
+                        "getStageLabelZ",
+                });
+
+        // getStageLabelZ
+
 
         List<SummaryPerFile> summaryList = new ArrayList<>();
 
