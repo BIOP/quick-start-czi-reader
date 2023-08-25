@@ -383,6 +383,7 @@ public class CompareReader {
                 summary.numberOfDifferencesIgnored++;
             } else {
                 summary.numberOfDifferences++;
+                //System.out.println(methodName);
             }
             return false;
         } else {
@@ -403,6 +404,7 @@ public class CompareReader {
                                     summary.numberOfDifferencesIgnored++;
                                 } else {
                                     summary.numberOfDifferences++;
+                                    //System.out.println(methodName);
                                 }
                             }
                             return res;
@@ -429,6 +431,8 @@ public class CompareReader {
                                     summary.numberOfDifferencesIgnored++;
                                 } else {
                                     summary.numberOfDifferences++;
+
+                                    //System.out.println(methodName);
                                 }
                                 return false;
                             }
@@ -452,6 +456,8 @@ public class CompareReader {
                         summary.numberOfDifferencesIgnored++;
                     } else {
                         summary.numberOfDifferences++;
+
+                        //System.out.println(methodName);
                     }
                     return false;
                 } else {
@@ -469,6 +475,8 @@ public class CompareReader {
                         summary.numberOfDifferencesIgnored++;
                     } else {
                         summary.numberOfDifferences++;
+
+                        //System.out.println(methodName);
                     }
                     return false;
                 }
@@ -770,7 +778,7 @@ public class CompareReader {
                 "https://zenodo.org/record/7015307/files/T%3D2_Z%3D5_CH%3D1.czi", // 2.6 MB
                 "https://zenodo.org/record/7015307/files/T%3D2_Z%3D5_CH%3D2.czi", // 4.0MB
                 "https://zenodo.org/record/7015307/files/T%3D3_CH%3D2.czi", // 2.1 MB
-                "https://zenodo.org/record/7015307/files/T%3D3_Z%3D5_CH%3D2.czi", // 5.3 MB
+                "https://zenodo.org/record/7015307/files/T%3D3_Z%3D5_CH%3D2.czi",  // 5.3 MB
                 "https://zenodo.org/record/7015307/files/W96_B2%2BB4_S%3D2_T%3D1%3DZ%3D1_C%3D1_Tile%3D5x9.czi", // 31.3 MB
                 "https://zenodo.org/record/7015307/files/W96_B2%2BB4_S%3D2_T%3D2%3DZ%3D4_C%3D3_Tile%3D5x9.czi", // 737.7 MB
                 "https://zenodo.org/record/7015307/files/Z%3D5_CH%3D1.czi", // 2.0 MB
@@ -778,7 +786,7 @@ public class CompareReader {
                 "https://zenodo.org/record/7117784/files/RBC_full_one_timepoint.czi", // 1.0 GB RBC full one timepoint
                 "https://zenodo.org/record/7117784/files/RBC_full_time_series.czi", // 3.1 GB RBC full time series
                 "https://zenodo.org/record/7117784/files/RBC_medium_LLSZ.czi", // 700 MB RBC series LLSZ
-               "https://zenodo.org/record/7117784/files/RBC_tiny.czi", // 48.9 MB RBC tiny
+                "https://zenodo.org/record/7117784/files/RBC_tiny.czi", // 48.9 MB RBC tiny
                 "https://zenodo.org/record/7260610/files/20221019_MixedGrain.czi", // 113 MB Mixed Grain confocal
                 "https://zenodo.org/record/7260610/files/20221019_MixedGrain2.czi", // 78.6 MB Mixed Grain2
                 "https://zenodo.org/record/5101351/files/Ph488.czi", // 43.1 MB
@@ -791,7 +799,7 @@ public class CompareReader {
                 // There are many more of the same kind
                 "https://downloads.openmicroscopy.org/images/Zeiss-CZI/idr0011/Plate1-Blue-A_TS-Stinger/Plate1-Blue-A-12-Scene-3-P3-F2-03.czi",
 
-                // There are many more of the same kind*/
+                // There are many more of the same kind // */
         };
 
         for (String url: cziURLs) {
@@ -806,32 +814,34 @@ public class CompareReader {
                 cziURLs,
                 new String[]{"getStageLabelName"});
 
-        /*addIgnoreRule("The quick reader reads puts a Z reference frame value in Z, which makes sense because it's "
-                        +"the same logic as what's already happening with getPlanePositionX and Y.", IgnoreDiffExplanation.Note.SAME,
-                new String[]{
-                        "https://zenodo.org/record/8263451/files/test_gray.czi",
-                        "https://zenodo.org/record/8263451/files/test_gray.czi",
-                },
-                new String[]{
-                        "getStageLabelName",
-                });*/
-
         addIgnoreRule("The quick reader reads the Z location correctly, and not the original reader.",
                 IgnoreDiffExplanation.Note.BETTER,
                 new String[]{
                         "https://zenodo.org/record/7117784/files/RBC_full_one_timepoint.czi",
                         "https://zenodo.org/record/7117784/files/RBC_full_time_series.czi",
                         "https://zenodo.org/record/7117784/files/RBC_medium_LLSZ.czi",
-                        "https://zenodo.org/record/7117784/files/RBC_tiny.czi"
+                        "https://zenodo.org/record/7117784/files/RBC_tiny.czi",
+                        "https://downloads.openmicroscopy.org/images/Zeiss-CZI/idr0011/Plate1-Blue-A_TS-Stinger/Plate1-Blue-A-12-Scene-3-P3-F2-03.czi"
                 },
                 new String[]{
                         "getPlanePositionZ",
+                        "https://downloads.openmicroscopy.org/images/Zeiss-CZI/idr0011/Plate1-Blue-A_TS-Stinger/Plate1-Blue-A-12-Scene-3-P3-F2-03.czi"
                 });
 
         addIgnoreRule("The pixel physical sizes are incorrect for the lower resolution levels in the original reader",
                 IgnoreDiffExplanation.Note.BETTER,
                 new String[]{
                         "https://zenodo.org/record/7015307/files/S%3D2_2x2_CH%3D1.czi",
+                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_T%3D1_Z%3D4_CH%3D1.czi",
+                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_T%3D3_CH%3D1.czi", // 5.2MB
+                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_T%3D3_Z%3D4_CH%3D1.czi", // 16.8 MB
+                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_Z%3D4_CH%3D1.czi", // 6.5 MB
+                        "https://zenodo.org/record/7015307/files/S%3D2_3x3_T%3D1_Z%3D4_CH%3D2.czi", // 72.6MB
+                        "https://zenodo.org/record/7015307/files/S%3D2_3x3_T%3D3_CH%3D2.czi", // 55.3 MB
+                        "https://zenodo.org/record/7015307/files/S%3D2_3x3_T%3D3_Z%3D1_CH%3D2.czi",
+                        "https://zenodo.org/record/7015307/files/S%3D3_1Pos_2Mosaic_T%3D2%3DZ%3D3_CH%3D2.czi",
+                        "https://zenodo.org/record/7015307/files/W96_B2%2BB4_S%3D2_T%3D1%3DZ%3D1_C%3D1_Tile%3D5x9.czi", // 31.3 MB
+                        "https://zenodo.org/record/7015307/files/W96_B2%2BB4_S%3D2_T%3D2%3DZ%3D4_C%3D3_Tile%3D5x9.czi"
 
                 },
                 new String[]{
@@ -843,56 +853,31 @@ public class CompareReader {
                 IgnoreDiffExplanation.Note.BETTER,
                 new String[]{
                         "https://zenodo.org/record/7015307/files/S%3D2_2x2_CH%3D1.czi",
-                        "https://zenodo.org/record/7015307/files/S%3D1_3x3_T%3D3_Z%3D4_CH%3D2.czi"
-
+                        "https://zenodo.org/record/7015307/files/S%3D1_3x3_T%3D3_Z%3D4_CH%3D2.czi",
+                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_T%3D1_Z%3D4_CH%3D1.czi",
+                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_T%3D3_CH%3D1.czi", // 5.2MB
+                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_T%3D3_Z%3D4_CH%3D1.czi", // 16.8 MB
+                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_Z%3D4_CH%3D1.czi", // 6.5 MB
+                        "https://zenodo.org/record/7015307/files/S%3D2_3x3_T%3D1_Z%3D4_CH%3D2.czi", // 72.6MB
+                        "https://zenodo.org/record/7015307/files/S%3D2_3x3_T%3D3_CH%3D2.czi", // 55.3 MB
+                        "https://zenodo.org/record/7015307/files/S%3D2_3x3_T%3D3_Z%3D1_CH%3D2.czi",
+                        "https://zenodo.org/record/7015307/files/S%3D3_1Pos_2Mosaic_T%3D2%3DZ%3D3_CH%3D2.czi",
+                        "https://zenodo.org/record/7015307/files/W96_B2%2BB4_S%3D2_T%3D1%3DZ%3D1_C%3D1_Tile%3D5x9.czi", // 31.3 MB
+                        "https://zenodo.org/record/7015307/files/W96_B2%2BB4_S%3D2_T%3D2%3DZ%3D4_C%3D3_Tile%3D5x9.czi"
                 },
                 new String[]{
                         "getPlaneDeltaT"
                 });
 
         addIgnoreRule(
-                "GetPlanePositionX&Y returns reference frame units for image > 1 in autostitch false.\n"+
-                        "The difference is constant for the other locations and stage labels\n"+
-                        "getStageLabelZ is null with autostich = false",
-                IgnoreDiffExplanation.Note.SAME,
-                new String[]{
-                        "https://zenodo.org/record/8263451/files/Demo%20LISH%204x8%2015pct%20647.czi",
-                        "https://zenodo.org/record/8263451/files/Image_1_2023_08_18__14_32_31_964.czi",
-                        "https://zenodo.org/record/7015307/files/S%3D1_3x3_T%3D3_Z%3D4_CH%3D2.czi"
-
-                },
-                new String[]{
-                        "getStageLabelX", "getStageLabelY", "getStageLabelZ",
-                        "getPlanePositionX", "getPlanePositionY"
-                });
-
-        addIgnoreRule(
-                "The plane position difference in X Y is constant for all series",
-                IgnoreDiffExplanation.Note.SAME,
-                new String[]{
-                        "https://zenodo.org/record/7254229/files/P1.czi",
-                        "https://zenodo.org/record/7015307/files/S%3D1_3x3_T%3D3_Z%3D4_CH%3D2.czi",
-                        "https://zenodo.org/record/7015307/files/S%3D1_CH%3D2.czi",
-                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_CH%3D1.czi",
-                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_T%3D1_Z%3D4_CH%3D1.czi"
-
-                },
-                new String[]{
-                        "getPlanePositionX", "getPlanePositionY", "getStageLabelX", "getStageLabelY"
-                });
-
-        addIgnoreRule(
-                "Metadata missing for modulo planes",
+                "Metadata not present for modulo planes in original reader",
                 IgnoreDiffExplanation.Note.SAME,
                 new String[]{
                         "https://zenodo.org/record/4662053/files/2021-02-25-tulip_unprocessed-Airyscan.czi"
-
                 },
                 new String[]{
                         "getPlaneDeltaT", "getPlanePositionZ", "getPlanePositionY", "getPlanePositionX"
                 });
-
-
 
         addIgnoreRule("The stage label is null in the original reader.",
                 IgnoreDiffExplanation.Note.BETTER,
@@ -904,8 +889,74 @@ public class CompareReader {
                         "getStageLabelZ",
                 });
 
-        // getStageLabelZ
+        addIgnoreRule("The pixel size (X, Y) is not defined, the stage and plane location is in reference frame in"+
+                " the new reader, and in micrometer in the original reader",
+                IgnoreDiffExplanation.Note.SAME,
+                new String[]{
+                        "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031_pt1.czi",
+                },
+                new String[]{
+                        "getStageLabelX", "getStageLabelY",
+                        "getPlanePositionX", "getPlanePositionY"
+                });
 
+        addIgnoreRule("The pixel size (Z) is not defined, so one has to add a 0 in reference frame unit"+
+                " and a micrometer value in the metadata. This reader chooses to set this operation as null,"+
+                " while the original reader keeps the micrometer value only",
+                IgnoreDiffExplanation.Note.WORSE,
+                new String[]{
+                        "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031_pt1.czi",
+                },
+                new String[]{
+                        "getStageLabelZ", "getPlanePositionZ",
+                });
+
+        addIgnoreRule("This reader sets the plane location as 0 micrometer, while the "+
+                " original reader sets it as 0 in reference frame unit.",
+                IgnoreDiffExplanation.Note.SAME,
+                new String[]{
+                        "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031_pt2.czi",
+                },
+                new String[]{
+                        "getStageLabelX", "getStageLabelY", "getPlanePositionX", "getPlanePositionY"
+                });
+
+        addIgnoreRule("A constant shift in XY (40 nm) that is below half a pixel (100 nm) ",
+                IgnoreDiffExplanation.Note.SAME,
+                new String[]{
+                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_CH%3D1.czi",
+                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_T%3D1_Z%3D4_CH%3D1.czi",
+                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_T%3D3_CH%3D1.czi", // 5.2MB
+                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_T%3D3_Z%3D4_CH%3D1.czi", // 16.8 MB
+                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_Z%3D4_CH%3D1.czi"
+                },
+                new String[]{
+                        "getStageLabelX", "getStageLabelY", "getPlanePositionX", "getPlanePositionY"
+                });
+
+        addIgnoreRule("The original reader is not consistent when setting the plane positions:"+
+                " it returns the top left corner of all images, except when a plane contains many blocks (mosaic)"+
+                " and autostitching  is set to true. In contrast, this reader consistently returns the top"+
+                " left corner of the image, whether autostitch is true or false.",
+                IgnoreDiffExplanation.Note.BETTER,
+                new String[]{
+                        "https://zenodo.org/record/7015307/files/S%3D1_3x3_T%3D3_Z%3D4_CH%3D2.czi",
+                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_T%3D1_Z%3D4_CH%3D1.czi", //6.5MB
+                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_T%3D3_CH%3D1.czi", // 5.2MB
+                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_T%3D3_Z%3D4_CH%3D1.czi", // 16.8 MB
+                        "https://zenodo.org/record/7015307/files/S%3D2_2x2_Z%3D4_CH%3D1.czi", // 6.5 MB
+                        "https://zenodo.org/record/7015307/files/S%3D2_3x3_T%3D1_Z%3D4_CH%3D2.czi", // 72.6MB
+                        "https://zenodo.org/record/7015307/files/S%3D2_3x3_T%3D3_CH%3D2.czi", // 55.3 MB
+                        "https://zenodo.org/record/7015307/files/S%3D2_3x3_T%3D3_Z%3D1_CH%3D2.czi", // 54.6 MB
+                        "https://zenodo.org/record/7015307/files/S%3D2_T%3D3_CH%3D1.czi", // 2.1 MB
+                        "https://zenodo.org/record/7015307/files/S%3D2_T%3D3_Z%3D5_CH%3D1.czi", // 5.3 MB
+                        "https://zenodo.org/record/7015307/files/S%3D3_1Pos_2Mosaic_T%3D2%3DZ%3D3_CH%3D2.czi",
+                        "https://zenodo.org/record/7015307/files/W96_B2%2BB4_S%3D2_T%3D1%3DZ%3D1_C%3D1_Tile%3D5x9.czi", // 31.3 MB
+                        "https://zenodo.org/record/7015307/files/W96_B2%2BB4_S%3D2_T%3D2%3DZ%3D4_C%3D3_Tile%3D5x9.czi"
+                },
+                new String[]{
+                        "getStageLabelX", "getStageLabelY", "getPlanePositionX", "getPlanePositionY"
+                });
 
         List<SummaryPerFile> summaryList = new ArrayList<>();
 

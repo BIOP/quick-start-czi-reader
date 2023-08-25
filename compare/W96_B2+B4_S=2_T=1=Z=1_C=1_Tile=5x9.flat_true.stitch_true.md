@@ -7,7 +7,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |352 ms|------|408 ms|------|--------|
+| Read time (all)   |1066 ms|------|907 ms|------|--------|
 |0|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_true.series_0.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_true.series_0.jpg)|X:2944<br>Y:3444<br>C:1<br>Z:1<br>T:1|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_true.series_0.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_true.series_0.jpg)|X:2944<br>Y:3444<br>C:1<br>Z:1<br>T:1|0|
 |1|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_true.series_1.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_true.series_1.jpg)|X:1472<br>Y:1722<br>C:1<br>Z:1<br>T:1|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_true.series_1.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_true.series_1.jpg)|X:1472<br>Y:1722<br>C:1<br>Z:1<br>T:1|0|
 |2|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_true.series_2.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_true.series_2.jpg)|X:736<br>Y:861<br>C:1<br>Z:1<br>T:1|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_true.series_2.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_true.series_2.jpg)|X:736<br>Y:861<br>C:1<br>Z:1<br>T:1|0|
@@ -19,33 +19,45 @@
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |21 ms|21 ms|        |
+| Initialization     |                  |59 ms|50 ms|        |
 | Reader Size (Mb)     |                  |1.95|2.65|        |
 | getStageLabelName| Image 0 | B2| Scene position #0| |
-| getStageLabelY| Image 0 | 17500.000 um | 17500.400 um | 0.400 um |
+| getStageLabelX| Image 0 | 13039.200 um | 13500.000 um | 460.800 um |
+| getStageLabelY| Image 0 | 16895.600 um | 17500.400 um | 604.800 um |
 | getStageLabelName| Image 1 | B2| Scene position #1| |
-| getStageLabelY| Image 1 | 17500.000 um | 17500.400 um | 0.400 um |
+| getStageLabelX| Image 1 | 13039.200 um | 13500.000 um | 460.800 um |
+| getStageLabelY| Image 1 | 16895.600 um | 17500.400 um | 604.800 um |
 | getPixelsPhysicalSizeX| Image 1 | 0.800 um | 0.400 um | 0.400 um |
 | getPixelsPhysicalSizeY| Image 1 | 0.800 um | 0.400 um | 0.400 um |
 | getStageLabelName| Image 2 | B2| Scene position #2| |
-| getStageLabelY| Image 2 | 17500.000 um | 17500.400 um | 0.400 um |
+| getStageLabelX| Image 2 | 13039.200 um | 13500.000 um | 460.800 um |
+| getStageLabelY| Image 2 | 16895.600 um | 17500.400 um | 604.800 um |
 | getPixelsPhysicalSizeX| Image 2 | 1.600 um | 0.400 um | 1.200 um |
 | getPixelsPhysicalSizeY| Image 2 | 1.600 um | 0.400 um | 1.200 um |
 | getStageLabelName| Image 3 | B4| Scene position #3| |
-| getStageLabelY| Image 3 | 17500.000 um | 17500.400 um | 0.400 um |
+| getStageLabelX| Image 3 | 31039.200 um | 31500.000 um | 460.800 um |
+| getStageLabelY| Image 3 | 16895.600 um | 17500.400 um | 604.800 um |
 | getStageLabelName| Image 4 | B4| Scene position #4| |
-| getStageLabelY| Image 4 | 17500.000 um | 17500.400 um | 0.400 um |
+| getStageLabelX| Image 4 | 31039.200 um | 31500.000 um | 460.800 um |
+| getStageLabelY| Image 4 | 16895.600 um | 17500.400 um | 604.800 um |
 | getPixelsPhysicalSizeX| Image 4 | 0.800 um | 0.400 um | 0.400 um |
 | getPixelsPhysicalSizeY| Image 4 | 0.800 um | 0.400 um | 0.400 um |
 | getStageLabelName| Image 5 | B4| Scene position #5| |
-| getStageLabelY| Image 5 | 17500.000 um | 17500.400 um | 0.400 um |
+| getStageLabelX| Image 5 | 31039.200 um | 31500.000 um | 460.800 um |
+| getStageLabelY| Image 5 | 16895.600 um | 17500.400 um | 604.800 um |
 | getPixelsPhysicalSizeX| Image 5 | 1.600 um | 0.400 um | 1.200 um |
 | getPixelsPhysicalSizeY| Image 5 | 1.600 um | 0.400 um | 1.200 um |
-| getPlanePositionY| Image 0 Plane 0 | 17500.000 um | 17500.400 um | 0.400 um |
-| getPlanePositionY| Image 1 Plane 0 | 17500.000 um | 17500.400 um | 0.400 um |
-| getPlanePositionY| Image 2 Plane 0 | 17500.000 um | 17500.400 um | 0.400 um |
-| getPlanePositionY| Image 3 Plane 0 | 17500.000 um | 17500.400 um | 0.400 um |
+| getPlanePositionX| Image 0 Plane 0 | 13039.200 um | 13500.000 um | 460.800 um |
+| getPlanePositionY| Image 0 Plane 0 | 16895.600 um | 17500.400 um | 604.800 um |
+| getPlanePositionX| Image 1 Plane 0 | 13039.200 um | 13500.000 um | 460.800 um |
+| getPlanePositionY| Image 1 Plane 0 | 16895.600 um | 17500.400 um | 604.800 um |
+| getPlanePositionX| Image 2 Plane 0 | 13039.200 um | 13500.000 um | 460.800 um |
+| getPlanePositionY| Image 2 Plane 0 | 16895.600 um | 17500.400 um | 604.800 um |
+| getPlanePositionX| Image 3 Plane 0 | 31039.200 um | 31500.000 um | 460.800 um |
+| getPlanePositionY| Image 3 Plane 0 | 16895.600 um | 17500.400 um | 604.800 um |
 | getPlaneDeltaT| Image 4 Plane 0 |  200.046 s |  0.931 s | 199.115 s |
-| getPlanePositionY| Image 4 Plane 0 | 17500.000 um | 17500.400 um | 0.400 um |
+| getPlanePositionX| Image 4 Plane 0 | 31039.200 um | 31500.000 um | 460.800 um |
+| getPlanePositionY| Image 4 Plane 0 | 16895.600 um | 17500.400 um | 604.800 um |
 | getPlaneDeltaT| Image 5 Plane 0 |  200.046 s |  0.931 s | 199.115 s |
-| getPlanePositionY| Image 5 Plane 0 | 17500.000 um | 17500.400 um | 0.400 um |
+| getPlanePositionX| Image 5 Plane 0 | 31039.200 um | 31500.000 um | 460.800 um |
+| getPlanePositionY| Image 5 Plane 0 | 16895.600 um | 17500.400 um | 604.800 um |

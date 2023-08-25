@@ -7,7 +7,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |25459 ms|------|34504 ms|------|--------|
+| Read time (all)   |44971 ms|------|56140 ms|------|--------|
 |0|![v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_0.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_0.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|![v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_0.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_0.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|0|
 |1|![v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_1.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_1.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|![v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_1.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_1.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|0|
 |2|![v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_2.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_2.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|![v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_2.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_2.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|0|
@@ -207,351 +207,341 @@
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |124 ms|82 ms|        |
-| Reader Size (Mb)     |                  |10.85|11.49|        |
+| Initialization     |                  |317 ms|254 ms|        |
+| Reader Size (Mb)     |                  |10.86|11.49|        |
 | getImageCount|(No args)|172| 194| |
 | getStageLabelName| Image 0 | ScanRegion0| Scene position #0| |
-| getStageLabelX| Image 0 | -73416.298 um | -33400.129 um | 40016.169 um |
-| getStageLabelY| Image 0 | 13320.339 um | 5869.696 um | 7450.643 um |
 | getStageLabelName| Image 1 | ScanRegion0| Scene position #1| |
-| getStageLabelX| Image 1 | -72948.151 um | -32932.629 um | 40015.522 um |
-| getStageLabelY| Image 1 | 13315.144 um | 5869.696 um | 7445.449 um |
+| getStageLabelX| Image 1 | -32931.982 um | -32932.629 um | 0.647 um |
+| getStageLabelY| Image 1 | 5864.501 um | 5869.696 um | 5.194 um |
 | getStageLabelName| Image 2 | ScanRegion0| Scene position #2| |
-| getStageLabelX| Image 2 | -72480.004 um | -32465.133 um | 40014.871 um |
-| getStageLabelY| Image 2 | 13309.950 um | 5869.696 um | 7440.254 um |
+| getStageLabelX| Image 2 | -32463.834 um | -32465.133 um | 1.298 um |
+| getStageLabelY| Image 2 | 5859.307 um | 5869.696 um | 10.389 um |
 | getStageLabelName| Image 3 | ScanRegion0| Scene position #3| |
-| getStageLabelX| Image 3 | -72011.857 um | -31997.635 um | 40014.222 um |
-| getStageLabelY| Image 3 | 13304.756 um | 5869.696 um | 7435.060 um |
+| getStageLabelX| Image 3 | -31995.687 um | -31997.635 um | 1.947 um |
+| getStageLabelY| Image 3 | 5854.113 um | 5869.696 um | 15.583 um |
 | getStageLabelName| Image 4 | ScanRegion0| Scene position #4| |
-| getStageLabelX| Image 4 | -71546.307 um | -31530.137 um | 40016.170 um |
-| getStageLabelY| Image 4 | 13320.339 um | 5869.696 um | 7450.643 um |
 | getStageLabelName| Image 5 | ScanRegion0| Scene position #5| |
-| getStageLabelX| Image 5 | -71077.186 um | -31062.639 um | 40014.547 um |
-| getStageLabelY| Image 5 | 13756.346 um | 6337.194 um | 7419.152 um |
+| getStageLabelX| Image 5 | -31061.016 um | -31062.639 um | 1.623 um |
+| getStageLabelY| Image 5 | 6305.703 um | 6337.194 um | 31.491 um |
 | getStageLabelName| Image 6 | ScanRegion0| Scene position #6| |
-| getStageLabelX| Image 6 | -71545.657 um | -31530.137 um | 40015.521 um |
-| getStageLabelY| Image 6 | 13761.540 um | 6337.194 um | 7424.346 um |
+| getStageLabelX| Image 6 | -31529.488 um | -31530.137 um | 0.649 um |
+| getStageLabelY| Image 6 | 6310.897 um | 6337.194 um | 26.297 um |
 | getStageLabelName| Image 7 | ScanRegion0| Scene position #7| |
-| getStageLabelX| Image 7 | -72014.129 um | -31997.635 um | 40016.494 um |
-| getStageLabelY| Image 7 | 13766.734 um | 6337.194 um | 7429.541 um |
+| getStageLabelX| Image 7 | -31997.960 um | -31997.635 um | 0.325 um |
+| getStageLabelY| Image 7 | 6316.091 um | 6337.194 um | 21.102 um |
 | getStageLabelName| Image 8 | ScanRegion0| Scene position #8| |
-| getStageLabelX| Image 8 | -72482.601 um | -32465.133 um | 40017.468 um |
-| getStageLabelY| Image 8 | 13771.929 um | 6337.194 um | 7434.735 um |
+| getStageLabelX| Image 8 | -32466.432 um | -32465.133 um | 1.299 um |
+| getStageLabelY| Image 8 | 6321.286 um | 6337.194 um | 15.908 um |
 | getStageLabelName| Image 9 | ScanRegion0| Scene position #9| |
-| getStageLabelX| Image 9 | -72950.424 um | -32932.629 um | 40017.795 um |
-| getStageLabelY| Image 9 | 13777.123 um | 6337.194 um | 7439.929 um |
+| getStageLabelX| Image 9 | -32934.254 um | -32932.629 um | 1.625 um |
+| getStageLabelY| Image 9 | 6326.480 um | 6337.194 um | 10.714 um |
 | getStageLabelName| Image 10 | ScanRegion0| Scene position #10| |
-| getStageLabelX| Image 10 | -73420.519 um | -33400.129 um | 40020.390 um |
-| getStageLabelY| Image 10 | 13782.642 um | 6337.194 um | 7445.449 um |
+| getStageLabelX| Image 10 | -33404.349 um | -33400.129 um | 4.220 um |
+| getStageLabelY| Image 10 | 6331.999 um | 6337.194 um | 5.195 um |
 | getStageLabelName| Image 11 | ScanRegion0| Scene position #11| |
-| getStageLabelX| Image 11 | -73888.341 um | -33867.625 um | 40020.716 um |
-| getStageLabelY| Image 11 | 13787.837 um | 6337.194 um | 7450.643 um |
+| getStageLabelX| Image 11 | -33872.172 um | -33867.625 um | 4.547 um |
 | getStageLabelName| Image 12 | ScanRegion0| Scene position #12| |
-| getStageLabelX| Image 12 | -73883.796 um | -33867.625 um | 40016.171 um |
-| getStageLabelY| Image 12 | 14255.335 um | 6804.692 um | 7450.643 um |
+| getStageLabelX| Image 12 | -33867.627 um | -33867.625 um | 0.002 um |
 | getStageLabelName| Image 13 | ScanRegion0| Scene position #13| |
-| getStageLabelX| Image 13 | -73418.571 um | -33400.129 um | 40018.442 um |
-| getStageLabelY| Image 13 | 14250.465 um | 6804.692 um | 7445.773 um |
+| getStageLabelX| Image 13 | -33402.401 um | -33400.129 um | 2.273 um |
+| getStageLabelY| Image 13 | 6799.822 um | 6804.692 um | 4.870 um |
 | getStageLabelName| Image 14 | ScanRegion0| Scene position #14| |
-| getStageLabelX| Image 14 | -72949.125 um | -32932.629 um | 40016.496 um |
-| getStageLabelY| Image 14 | 14245.271 um | 6804.692 um | 7440.579 um |
+| getStageLabelX| Image 14 | -32932.956 um | -32932.629 um | 0.327 um |
+| getStageLabelY| Image 14 | 6794.627 um | 6804.692 um | 10.064 um |
 | getStageLabelName| Image 15 | ScanRegion0| Scene position #15| |
-| getStageLabelX| Image 15 | -72480.653 um | -32465.133 um | 40015.520 um |
-| getStageLabelY| Image 15 | 14240.076 um | 6804.692 um | 7435.384 um |
+| getStageLabelX| Image 15 | -32464.484 um | -32465.133 um | 0.649 um |
+| getStageLabelY| Image 15 | 6789.433 um | 6804.692 um | 15.259 um |
 | getStageLabelName| Image 16 | ScanRegion0| Scene position #16| |
-| getStageLabelX| Image 16 | -72015.428 um | -31997.635 um | 40017.793 um |
-| getStageLabelY| Image 16 | 14235.531 um | 6804.692 um | 7430.839 um |
+| getStageLabelX| Image 16 | -31999.258 um | -31997.635 um | 1.624 um |
+| getStageLabelY| Image 16 | 6784.888 um | 6804.692 um | 19.804 um |
 | getStageLabelName| Image 17 | ScanRegion0| Scene position #17| |
-| getStageLabelX| Image 17 | -71545.333 um | -31530.137 um | 40015.196 um |
-| getStageLabelY| Image 17 | 14230.012 um | 6804.692 um | 7425.320 um |
+| getStageLabelX| Image 17 | -31529.163 um | -31530.137 um | 0.973 um |
+| getStageLabelY| Image 17 | 6779.369 um | 6804.692 um | 25.323 um |
 | getStageLabelName| Image 18 | ScanRegion0| Scene position #18| |
-| getStageLabelX| Image 18 | -71077.510 um | -31062.639 um | 40014.872 um |
-| getStageLabelY| Image 18 | 14224.817 um | 6804.692 um | 7420.126 um |
+| getStageLabelX| Image 18 | -31061.341 um | -31062.639 um | 1.298 um |
+| getStageLabelY| Image 18 | 6774.174 um | 6804.692 um | 30.518 um |
 | getStageLabelName| Image 19 | ScanRegion0| Scene position #19| |
-| getStageLabelX| Image 19 | -70609.688 um | -30595.141 um | 40014.547 um |
-| getStageLabelY| Image 19 | 14219.623 um | 6804.692 um | 7414.931 um |
+| getStageLabelX| Image 19 | -30593.518 um | -30595.141 um | 1.622 um |
+| getStageLabelY| Image 19 | 6768.980 um | 6804.692 um | 35.712 um |
 | getStageLabelName| Image 20 | ScanRegion0| Scene position #20| |
-| getStageLabelX| Image 20 | -70602.870 um | -30595.141 um | 40007.729 um |
-| getStageLabelY| Image 20 | 14687.770 um | 7272.189 um | 7415.581 um |
+| getStageLabelX| Image 20 | -30586.701 um | -30595.141 um | 8.440 um |
+| getStageLabelY| Image 20 | 7237.127 um | 7272.189 um | 35.062 um |
 | getStageLabelName| Image 21 | ScanRegion0| Scene position #21| |
-| getStageLabelX| Image 21 | -71070.693 um | -31062.639 um | 40008.054 um |
-| getStageLabelY| Image 21 | 14692.965 um | 7272.189 um | 7420.775 um |
+| getStageLabelX| Image 21 | -31054.523 um | -31062.639 um | 8.116 um |
+| getStageLabelY| Image 21 | 7242.322 um | 7272.189 um | 29.868 um |
 | getStageLabelName| Image 22 | ScanRegion0| Scene position #22| |
-| getStageLabelX| Image 22 | -71538.515 um | -31530.137 um | 40008.378 um |
-| getStageLabelY| Image 22 | 14698.159 um | 7272.189 um | 7425.970 um |
+| getStageLabelX| Image 22 | -31522.346 um | -31530.137 um | 7.791 um |
+| getStageLabelY| Image 22 | 7247.516 um | 7272.189 um | 24.673 um |
 | getStageLabelName| Image 23 | ScanRegion0| Scene position #23| |
-| getStageLabelX| Image 23 | -72006.987 um | -31997.635 um | 40009.352 um |
-| getStageLabelY| Image 23 | 14703.354 um | 7272.189 um | 7431.164 um |
+| getStageLabelX| Image 23 | -31990.818 um | -31997.635 um | 6.817 um |
+| getStageLabelY| Image 23 | 7252.710 um | 7272.189 um | 19.479 um |
 | getStageLabelName| Image 24 | ScanRegion0| Scene position #24| |
-| getStageLabelX| Image 24 | -72474.485 um | -32465.133 um | 40009.352 um |
-| getStageLabelY| Image 24 | 14708.223 um | 7272.189 um | 7436.034 um |
+| getStageLabelX| Image 24 | -32458.315 um | -32465.133 um | 6.817 um |
+| getStageLabelY| Image 24 | 7257.580 um | 7272.189 um | 14.609 um |
 | getStageLabelName| Image 25 | ScanRegion0| Scene position #25| |
-| getStageLabelX| Image 25 | -72941.333 um | -32932.629 um | 40008.705 um |
-| getStageLabelY| Image 25 | 14713.093 um | 7272.189 um | 7440.904 um |
+| getStageLabelX| Image 25 | -32925.164 um | -32932.629 um | 7.465 um |
+| getStageLabelY| Image 25 | 7262.450 um | 7272.189 um | 9.739 um |
 | getStageLabelName| Image 26 | ScanRegion0| Scene position #26| |
-| getStageLabelX| Image 26 | -73410.130 um | -33400.129 um | 40010.001 um |
-| getStageLabelY| Image 26 | 14718.287 um | 7272.189 um | 7446.098 um |
+| getStageLabelX| Image 26 | -33393.961 um | -33400.129 um | 6.168 um |
+| getStageLabelY| Image 26 | 7267.644 um | 7272.189 um | 4.545 um |
 | getStageLabelName| Image 27 | ScanRegion0| Scene position #27| |
-| getStageLabelX| Image 27 | -73878.277 um | -33867.625 um | 40010.652 um |
-| getStageLabelY| Image 27 | 14723.482 um | 7272.189 um | 7451.292 um |
+| getStageLabelX| Image 27 | -33862.108 um | -33867.625 um | 5.517 um |
+| getStageLabelY| Image 27 | 7272.839 um | 7272.189 um | 0.649 um |
 | getStageLabelName| Image 28 | ScanRegion0| Scene position #28| |
-| getStageLabelX| Image 28 | -74339.607 um | -34335.125 um | 40004.482 um |
-| getStageLabelY| Image 28 | 15195.525 um | 7739.688 um | 7455.837 um |
+| getStageLabelX| Image 28 | -34323.437 um | -34335.125 um | 11.688 um |
+| getStageLabelY| Image 28 | 7744.882 um | 7739.688 um | 5.194 um |
 | getStageLabelName| Image 29 | ScanRegion0| Scene position #29| |
-| getStageLabelX| Image 29 | -73874.381 um | -33867.625 um | 40006.756 um |
-| getStageLabelY| Image 29 | 15190.980 um | 7739.688 um | 7451.292 um |
+| getStageLabelX| Image 29 | -33858.212 um | -33867.625 um | 9.413 um |
+| getStageLabelY| Image 29 | 7740.337 um | 7739.688 um | 0.649 um |
 | getStageLabelName| Image 30 | ScanRegion0| Scene position #30| |
-| getStageLabelX| Image 30 | -73408.507 um | -33400.129 um | 40008.378 um |
-| getStageLabelY| Image 30 | 15186.110 um | 7739.688 um | 7446.423 um |
+| getStageLabelX| Image 30 | -33392.337 um | -33400.129 um | 7.792 um |
+| getStageLabelY| Image 30 | 7735.467 um | 7739.688 um | 4.221 um |
 | getStageLabelName| Image 31 | ScanRegion0| Scene position #31| |
-| getStageLabelX| Image 31 | -72940.035 um | -32932.629 um | 40007.406 um |
-| getStageLabelY| Image 31 | 15180.916 um | 7739.688 um | 7441.228 um |
+| getStageLabelX| Image 31 | -32923.865 um | -32932.629 um | 8.763 um |
+| getStageLabelY| Image 31 | 7730.273 um | 7739.688 um | 9.415 um |
 | getStageLabelName| Image 32 | ScanRegion0| Scene position #32| |
-| getStageLabelX| Image 32 | -72471.238 um | -32465.133 um | 40006.106 um |
-| getStageLabelY| Image 32 | 15175.721 um | 7739.688 um | 7436.034 um |
+| getStageLabelX| Image 32 | -32455.069 um | -32465.133 um | 10.064 um |
+| getStageLabelY| Image 32 | 7725.078 um | 7739.688 um | 14.609 um |
 | getStageLabelName| Image 33 | ScanRegion0| Scene position #33| |
-| getStageLabelX| Image 33 | -72005.039 um | -31997.635 um | 40007.404 um |
-| getStageLabelY| Image 33 | 15171.176 um | 7739.688 um | 7431.489 um |
+| getStageLabelX| Image 33 | -31988.870 um | -31997.635 um | 8.765 um |
+| getStageLabelY| Image 33 | 7720.533 um | 7739.688 um | 19.154 um |
 | getStageLabelName| Image 34 | ScanRegion0| Scene position #34| |
-| getStageLabelX| Image 34 | -71535.593 um | -31530.137 um | 40005.456 um |
-| getStageLabelY| Image 34 | 15166.306 um | 7739.688 um | 7426.619 um |
+| getStageLabelX| Image 34 | -31519.424 um | -31530.137 um | 10.713 um |
+| getStageLabelY| Image 34 | 7715.663 um | 7739.688 um | 24.024 um |
 | getStageLabelName| Image 35 | ScanRegion0| Scene position #35| |
-| getStageLabelX| Image 35 | -71068.420 um | -31062.639 um | 40005.781 um |
-| getStageLabelY| Image 35 | 15161.437 um | 7739.688 um | 7421.749 um |
+| getStageLabelX| Image 35 | -31052.251 um | -31062.639 um | 10.388 um |
+| getStageLabelY| Image 35 | 7710.793 um | 7739.688 um | 28.894 um |
 | getStageLabelName| Image 36 | ScanRegion0| Scene position #36| |
-| getStageLabelX| Image 36 | -70601.247 um | -30595.141 um | 40006.106 um |
-| getStageLabelY| Image 36 | 15156.567 um | 7739.688 um | 7416.879 um |
+| getStageLabelX| Image 36 | -30585.077 um | -30595.141 um | 10.063 um |
+| getStageLabelY| Image 36 | 7705.924 um | 7739.688 um | 33.764 um |
 | getStageLabelName| Image 37 | ScanRegion0| Scene position #37| |
-| getStageLabelX| Image 37 | -70592.156 um | -30595.141 um | 39997.016 um |
-| getStageLabelY| Image 37 | 15625.039 um | 8207.186 um | 7417.853 um |
+| getStageLabelX| Image 37 | -30575.987 um | -30595.141 um | 19.154 um |
+| getStageLabelY| Image 37 | 8174.396 um | 8207.186 um | 32.790 um |
 | getStageLabelName| Image 38 | ScanRegion0| Scene position #38| |
-| getStageLabelX| Image 38 | -71059.979 um | -31062.639 um | 39997.340 um |
-| getStageLabelY| Image 38 | 15629.908 um | 8207.186 um | 7422.723 um |
+| getStageLabelX| Image 38 | -31043.810 um | -31062.639 um | 18.829 um |
+| getStageLabelY| Image 38 | 8179.265 um | 8207.186 um | 27.920 um |
 | getStageLabelName| Image 39 | ScanRegion0| Scene position #39| |
-| getStageLabelX| Image 39 | -71527.802 um | -31530.137 um | 39997.665 um |
-| getStageLabelY| Image 39 | 15634.778 um | 8207.186 um | 7427.593 um |
+| getStageLabelX| Image 39 | -31511.632 um | -31530.137 um | 18.505 um |
+| getStageLabelY| Image 39 | 8184.135 um | 8207.186 um | 23.050 um |
 | getStageLabelName| Image 40 | ScanRegion0| Scene position #40| |
-| getStageLabelX| Image 40 | -71996.923 um | -31997.635 um | 39999.288 um |
-| getStageLabelY| Image 40 | 15639.973 um | 8207.186 um | 7432.787 um |
+| getStageLabelX| Image 40 | -31980.753 um | -31997.635 um | 16.881 um |
+| getStageLabelY| Image 40 | 8189.330 um | 8207.186 um | 17.856 um |
 | getStageLabelName| Image 41 | ScanRegion0| Scene position #41| |
-| getStageLabelX| Image 41 | -72464.745 um | -32465.133 um | 39999.612 um |
-| getStageLabelY| Image 41 | 15644.842 um | 8207.186 um | 7437.657 um |
+| getStageLabelX| Image 41 | -32448.576 um | -32465.133 um | 16.557 um |
+| getStageLabelY| Image 41 | 8194.199 um | 8207.186 um | 12.986 um |
 | getStageLabelName| Image 42 | ScanRegion0| Scene position #42| |
-| getStageLabelX| Image 42 | -72931.919 um | -32932.629 um | 39999.290 um |
-| getStageLabelY| Image 42 | 15649.712 um | 8207.186 um | 7442.527 um |
+| getStageLabelX| Image 42 | -32915.749 um | -32932.629 um | 16.880 um |
+| getStageLabelY| Image 42 | 8199.069 um | 8207.186 um | 8.116 um |
 | getStageLabelName| Image 43 | ScanRegion0| Scene position #43| |
-| getStageLabelX| Image 43 | -73400.066 um | -33400.129 um | 39999.937 um |
-| getStageLabelY| Image 43 | 15654.907 um | 8207.186 um | 7447.721 um |
+| getStageLabelX| Image 43 | -33383.896 um | -33400.129 um | 16.233 um |
+| getStageLabelY| Image 43 | 8204.263 um | 8207.186 um | 2.922 um |
 | getStageLabelName| Image 44 | ScanRegion0| Scene position #44| |
-| getStageLabelX| Image 44 | -73868.213 um | -33867.625 um | 40000.588 um |
-| getStageLabelY| Image 44 | 15659.776 um | 8207.186 um | 7452.591 um |
+| getStageLabelX| Image 44 | -33852.044 um | -33867.625 um | 15.581 um |
+| getStageLabelY| Image 44 | 8209.133 um | 8207.186 um | 1.948 um |
 | getStageLabelName| Image 45 | ScanRegion0| Scene position #45| |
-| getStageLabelX| Image 45 | -74334.412 um | -34335.125 um | 39999.287 um |
-| getStageLabelY| Image 45 | 15664.646 um | 8207.186 um | 7457.461 um |
+| getStageLabelX| Image 45 | -34318.243 um | -34335.125 um | 16.882 um |
+| getStageLabelY| Image 45 | 8214.003 um | 8207.186 um | 6.817 um |
 | getStageLabelName| Image 46 | ScanRegion0| Scene position #46| |
-| getStageLabelX| Image 46 | -74329.542 um | -34335.125 um | 39994.417 um |
-| getStageLabelY| Image 46 | 16132.793 um | 8674.684 um | 7458.110 um |
+| getStageLabelX| Image 46 | -34313.373 um | -34335.125 um | 21.752 um |
+| getStageLabelY| Image 46 | 8682.150 um | 8674.684 um | 7.467 um |
 | getStageLabelName| Image 47 | ScanRegion0| Scene position #47| |
-| getStageLabelX| Image 47 | -73864.317 um | -33867.625 um | 39996.692 um |
-| getStageLabelY| Image 47 | 16127.924 um | 8674.684 um | 7453.240 um |
+| getStageLabelX| Image 47 | -33848.148 um | -33867.625 um | 19.477 um |
+| getStageLabelY| Image 47 | 8677.280 um | 8674.684 um | 2.597 um |
 | getStageLabelName| Image 48 | ScanRegion0| Scene position #48| |
-| getStageLabelX| Image 48 | -73398.118 um | -33400.129 um | 39997.989 um |
-| getStageLabelY| Image 48 | 16123.378 um | 8674.684 um | 7448.695 um |
+| getStageLabelX| Image 48 | -33381.948 um | -33400.129 um | 18.180 um |
+| getStageLabelY| Image 48 | 8672.735 um | 8674.684 um | 1.948 um |
 | getStageLabelName| Image 49 | ScanRegion0| Scene position #49| |
-| getStageLabelX| Image 49 | -72929.971 um | -32932.629 um | 39997.342 um |
-| getStageLabelY| Image 49 | 16118.184 um | 8674.684 um | 7443.500 um |
+| getStageLabelX| Image 49 | -32913.801 um | -32932.629 um | 18.828 um |
+| getStageLabelY| Image 49 | 8667.541 um | 8674.684 um | 7.143 um |
 | getStageLabelName| Image 50 | ScanRegion0| Scene position #50| |
-| getStageLabelX| Image 50 | -72460.849 um | -32465.133 um | 39995.717 um |
-| getStageLabelY| Image 50 | 16113.314 um | 8674.684 um | 7438.631 um |
+| getStageLabelX| Image 50 | -32444.680 um | -32465.133 um | 20.453 um |
+| getStageLabelY| Image 50 | 8662.671 um | 8674.684 um | 12.012 um |
 | getStageLabelName| Image 51 | ScanRegion0| Scene position #51| |
-| getStageLabelX| Image 51 | -71994.975 um | -31997.635 um | 39997.340 um |
-| getStageLabelY| Image 51 | 16108.444 um | 8674.684 um | 7433.761 um |
+| getStageLabelX| Image 51 | -31978.805 um | -31997.635 um | 18.829 um |
+| getStageLabelY| Image 51 | 8657.801 um | 8674.684 um | 16.882 um |
 | getStageLabelName| Image 52 | ScanRegion0| Scene position #52| |
-| getStageLabelX| Image 52 | -71525.529 um | -31530.137 um | 39995.392 um |
-| getStageLabelY| Image 52 | 16103.250 um | 8674.684 um | 7428.566 um |
+| getStageLabelX| Image 52 | -31509.360 um | -31530.137 um | 20.777 um |
+| getStageLabelY| Image 52 | 8652.607 um | 8674.684 um | 22.077 um |
 | getStageLabelName| Image 53 | ScanRegion0| Scene position #53| |
-| getStageLabelX| Image 53 | -71058.031 um | -31062.639 um | 39995.392 um |
-| getStageLabelY| Image 53 | 16098.380 um | 8674.684 um | 7423.697 um |
+| getStageLabelX| Image 53 | -31041.862 um | -31062.639 um | 20.777 um |
+| getStageLabelY| Image 53 | 8647.737 um | 8674.684 um | 26.946 um |
 | getStageLabelName| Image 54 | ScanRegion0| Scene position #54| |
-| getStageLabelX| Image 54 | -71518.387 um | -31530.137 um | 39988.250 um |
-| getStageLabelY| Image 54 | 16571.073 um | 9142.182 um | 7428.891 um |
+| getStageLabelX| Image 54 | -31502.217 um | -31530.137 um | 27.919 um |
+| getStageLabelY| Image 54 | 9120.430 um | 9142.182 um | 21.752 um |
 | getStageLabelName| Image 55 | ScanRegion0| Scene position #55| |
-| getStageLabelX| Image 55 | -71986.534 um | -31997.635 um | 39988.899 um |
-| getStageLabelY| Image 55 | 16575.942 um | 9142.182 um | 7433.761 um |
+| getStageLabelX| Image 55 | -31970.364 um | -31997.635 um | 27.270 um |
+| getStageLabelY| Image 55 | 9125.299 um | 9142.182 um | 16.882 um |
 | getStageLabelName| Image 56 | ScanRegion0| Scene position #56| |
-| getStageLabelX| Image 56 | -72454.356 um | -32465.133 um | 39989.224 um |
-| getStageLabelY| Image 56 | 16580.487 um | 9142.182 um | 7438.306 um |
+| getStageLabelX| Image 56 | -32438.187 um | -32465.133 um | 26.946 um |
+| getStageLabelY| Image 56 | 9129.844 um | 9142.182 um | 12.337 um |
 | getStageLabelName| Image 57 | ScanRegion0| Scene position #57| |
-| getStageLabelX| Image 57 | -72921.530 um | -32932.629 um | 39988.901 um |
-| getStageLabelY| Image 57 | 16585.682 um | 9142.182 um | 7443.500 um |
+| getStageLabelX| Image 57 | -32905.360 um | -32932.629 um | 27.269 um |
+| getStageLabelY| Image 57 | 9135.039 um | 9142.182 um | 7.143 um |
 | getStageLabelName| Image 58 | ScanRegion0| Scene position #58| |
-| getStageLabelX| Image 58 | -73390.002 um | -33400.129 um | 39989.873 um |
-| getStageLabelY| Image 58 | 16590.876 um | 9142.182 um | 7448.695 um |
+| getStageLabelX| Image 58 | -33373.832 um | -33400.129 um | 26.297 um |
+| getStageLabelY| Image 58 | 9140.233 um | 9142.182 um | 1.948 um |
 | getStageLabelName| Image 59 | ScanRegion0| Scene position #59| |
-| getStageLabelX| Image 59 | -73858.473 um | -33867.625 um | 39990.848 um |
-| getStageLabelY| Image 59 | 16595.746 um | 9142.182 um | 7453.564 um |
+| getStageLabelX| Image 59 | -33842.304 um | -33867.625 um | 25.321 um |
+| getStageLabelY| Image 59 | 9145.103 um | 9142.182 um | 2.921 um |
 | getStageLabelName| Image 60 | ScanRegion0| Scene position #60| |
-| getStageLabelX| Image 60 | -73374.418 um | -33400.129 um | 39974.289 um |
-| getStageLabelY| Image 60 | 17065.517 um | 9609.680 um | 7455.837 um |
+| getStageLabelX| Image 60 | -33358.249 um | -33400.129 um | 41.880 um |
+| getStageLabelY| Image 60 | 9614.873 um | 9609.680 um | 5.194 um |
 | getStageLabelName| Image 61 | ScanRegion0| Scene position #61| |
-| getStageLabelX| Image 61 | -72906.596 um | -32932.629 um | 39973.967 um |
-| getStageLabelY| Image 61 | 17060.647 um | 9609.680 um | 7450.967 um |
+| getStageLabelX| Image 61 | -32890.426 um | -32932.629 um | 42.203 um |
+| getStageLabelY| Image 61 | 9610.004 um | 9609.680 um | 0.324 um |
 | getStageLabelName| Image 62 | ScanRegion0| Scene position #62| |
-| getStageLabelX| Image 62 | -72438.773 um | -32465.133 um | 39973.640 um |
-| getStageLabelY| Image 62 | 17055.777 um | 9609.680 um | 7446.097 um |
+| getStageLabelX| Image 62 | -32422.604 um | -32465.133 um | 42.529 um |
+| getStageLabelY| Image 62 | 9605.134 um | 9609.680 um | 4.546 um |
 | getStageLabelName| Image 63 | ScanRegion0| Scene position #63| |
-| getStageLabelX| Image 63 | -71970.951 um | -31997.635 um | 39973.316 um |
-| getStageLabelY| Image 63 | 17050.907 um | 9609.680 um | 7441.228 um |
+| getStageLabelX| Image 63 | -31954.781 um | -31997.635 um | 42.854 um |
+| getStageLabelY| Image 63 | 9600.264 um | 9609.680 um | 9.416 um |
 | getStageLabelName| Image 64 | ScanRegion1| Scene position #64| |
-| getStageLabelX| Image 64 | -62196.349 um | -22180.178 um | 40016.171 um |
-| getStageLabelY| Image 64 | 14255.335 um | 6804.692 um | 7450.643 um |
+| getStageLabelX| Image 64 | -22180.179 um | -22180.178 um | 0.001 um |
 | getStageLabelName| Image 65 | ScanRegion1| Scene position #65| |
-| getStageLabelX| Image 65 | -61728.851 um | -21712.680 um | 40016.171 um |
-| getStageLabelY| Image 65 | 14250.140 um | 6804.692 um | 7445.448 um |
+| getStageLabelX| Image 65 | -21712.681 um | -21712.680 um | 0.002 um |
+| getStageLabelY| Image 65 | 6799.497 um | 6804.692 um | 5.195 um |
 | getStageLabelName| Image 66 | ScanRegion1| Scene position #66| |
-| getStageLabelX| Image 66 | -61261.353 um | -21245.184 um | 40016.169 um |
-| getStageLabelY| Image 66 | 14244.946 um | 6804.692 um | 7440.254 um |
+| getStageLabelY| Image 66 | 6794.303 um | 6804.692 um | 10.389 um |
 | getStageLabelName| Image 67 | ScanRegion1| Scene position #67| |
-| getStageLabelX| Image 67 | -60793.855 um | -20777.686 um | 40016.169 um |
-| getStageLabelY| Image 67 | 14255.335 um | 6804.692 um | 7450.643 um |
 | getStageLabelName| Image 68 | ScanRegion1| Scene position #68| |
-| getStageLabelX| Image 68 | -60331.876 um | -20310.188 um | 40021.688 um |
-| getStageLabelY| Image 68 | 14702.055 um | 7272.189 um | 7429.865 um |
+| getStageLabelX| Image 68 | -20315.707 um | -20310.188 um | 5.519 um |
+| getStageLabelY| Image 68 | 7251.412 um | 7272.189 um | 20.778 um |
 | getStageLabelName| Image 69 | ScanRegion1| Scene position #69| |
-| getStageLabelX| Image 69 | -60799.374 um | -20777.686 um | 40021.688 um |
-| getStageLabelY| Image 69 | 14707.249 um | 7272.189 um | 7435.060 um |
+| getStageLabelX| Image 69 | -20783.204 um | -20777.686 um | 5.519 um |
+| getStageLabelY| Image 69 | 7256.606 um | 7272.189 um | 15.583 um |
 | getStageLabelName| Image 70 | ScanRegion1| Scene position #70| |
-| getStageLabelX| Image 70 | -61266.547 um | -21245.184 um | 40021.364 um |
-| getStageLabelY| Image 70 | 14712.444 um | 7272.189 um | 7440.254 um |
+| getStageLabelX| Image 70 | -21250.378 um | -21245.184 um | 5.194 um |
+| getStageLabelY| Image 70 | 7261.801 um | 7272.189 um | 10.389 um |
 | getStageLabelName| Image 71 | ScanRegion1| Scene position #71| |
-| getStageLabelX| Image 71 | -61734.694 um | -21712.680 um | 40022.015 um |
-| getStageLabelY| Image 71 | 14717.638 um | 7272.189 um | 7445.449 um |
+| getStageLabelX| Image 71 | -21718.525 um | -21712.680 um | 5.845 um |
+| getStageLabelY| Image 71 | 7266.995 um | 7272.189 um | 5.194 um |
 | getStageLabelName| Image 72 | ScanRegion1| Scene position #72| |
-| getStageLabelX| Image 72 | -62203.166 um | -22180.178 um | 40022.988 um |
-| getStageLabelY| Image 72 | 14723.157 um | 7272.189 um | 7450.968 um |
+| getStageLabelX| Image 72 | -22186.997 um | -22180.178 um | 6.819 um |
+| getStageLabelY| Image 72 | 7272.514 um | 7272.189 um | 0.325 um |
 | getStageLabelName| Image 73 | ScanRegion1| Scene position #73| |
-| getStageLabelX| Image 73 | -62669.041 um | -22647.676 um | 40021.365 um |
-| getStageLabelY| Image 73 | 14728.027 um | 7272.189 um | 7455.838 um |
+| getStageLabelX| Image 73 | -22652.871 um | -22647.676 um | 5.196 um |
+| getStageLabelY| Image 73 | 7277.384 um | 7272.189 um | 5.194 um |
 | getStageLabelName| Image 74 | ScanRegion1| Scene position #74| |
-| getStageLabelX| Image 74 | -62664.171 um | -22647.676 um | 40016.495 um |
-| getStageLabelY| Image 74 | 15195.525 um | 7739.688 um | 7455.837 um |
+| getStageLabelX| Image 74 | -22648.002 um | -22647.676 um | 0.326 um |
+| getStageLabelY| Image 74 | 7744.882 um | 7739.688 um | 5.194 um |
 | getStageLabelName| Image 75 | ScanRegion1| Scene position #75| |
-| getStageLabelX| Image 75 | -62199.920 um | -22180.178 um | 40019.742 um |
-| getStageLabelY| Image 75 | 15190.655 um | 7739.688 um | 7450.968 um |
+| getStageLabelX| Image 75 | -22183.750 um | -22180.178 um | 3.573 um |
+| getStageLabelY| Image 75 | 7740.012 um | 7739.688 um | 0.325 um |
 | getStageLabelName| Image 76 | ScanRegion1| Scene position #76| |
-| getStageLabelX| Image 76 | -61732.097 um | -21712.680 um | 40019.417 um |
-| getStageLabelY| Image 76 | 15185.461 um | 7739.688 um | 7445.773 um |
+| getStageLabelX| Image 76 | -21715.928 um | -21712.680 um | 3.248 um |
+| getStageLabelY| Image 76 | 7734.818 um | 7739.688 um | 4.870 um |
 | getStageLabelName| Image 77 | ScanRegion1| Scene position #77| |
-| getStageLabelX| Image 77 | -61264.599 um | -21245.184 um | 40019.416 um |
-| getStageLabelY| Image 77 | 15180.591 um | 7739.688 um | 7440.903 um |
+| getStageLabelX| Image 77 | -21248.430 um | -21245.184 um | 3.246 um |
+| getStageLabelY| Image 77 | 7729.948 um | 7739.688 um | 9.740 um |
 | getStageLabelName| Image 78 | ScanRegion1| Scene position #78| |
-| getStageLabelX| Image 78 | -60796.777 um | -20777.686 um | 40019.091 um |
-| getStageLabelY| Image 78 | 15175.397 um | 7739.688 um | 7435.709 um |
+| getStageLabelX| Image 78 | -20780.607 um | -20777.686 um | 2.922 um |
+| getStageLabelY| Image 78 | 7724.753 um | 7739.688 um | 14.934 um |
 | getStageLabelName| Image 79 | ScanRegion1| Scene position #79| |
-| getStageLabelX| Image 79 | -60327.980 um | -20310.188 um | 40017.793 um |
-| getStageLabelY| Image 79 | 15170.202 um | 7739.688 um | 7430.515 um |
+| getStageLabelX| Image 79 | -20311.811 um | -20310.188 um | 1.623 um |
+| getStageLabelY| Image 79 | 7719.559 um | 7739.688 um | 20.128 um |
 | getStageLabelName| Image 80 | ScanRegion1| Scene position #80| |
-| getStageLabelX| Image 80 | -60323.110 um | -20310.188 um | 40012.923 um |
-| getStageLabelY| Image 80 | 15638.999 um | 8207.186 um | 7431.813 um |
+| getStageLabelX| Image 80 | -20306.941 um | -20310.188 um | 3.247 um |
+| getStageLabelY| Image 80 | 8188.356 um | 8207.186 um | 18.830 um |
 | getStageLabelName| Image 81 | ScanRegion1| Scene position #81| |
-| getStageLabelX| Image 81 | -60788.985 um | -20777.686 um | 40011.300 um |
-| getStageLabelY| Image 81 | 15644.193 um | 8207.186 um | 7437.008 um |
+| getStageLabelX| Image 81 | -20772.816 um | -20777.686 um | 4.870 um |
+| getStageLabelY| Image 81 | 8193.550 um | 8207.186 um | 13.636 um |
 | getStageLabelName| Image 82 | ScanRegion1| Scene position #82| |
-| getStageLabelX| Image 82 | -61256.158 um | -21245.184 um | 40010.975 um |
-| getStageLabelY| Image 82 | 15649.387 um | 8207.186 um | 7442.202 um |
+| getStageLabelX| Image 82 | -21239.989 um | -21245.184 um | 5.195 um |
+| getStageLabelY| Image 82 | 8198.744 um | 8207.186 um | 8.441 um |
 | getStageLabelName| Image 83 | ScanRegion1| Scene position #83| |
-| getStageLabelX| Image 83 | -61724.306 um | -21712.680 um | 40011.626 um |
-| getStageLabelY| Image 83 | 15654.257 um | 8207.186 um | 7447.072 um |
+| getStageLabelX| Image 83 | -21708.136 um | -21712.680 um | 4.544 um |
+| getStageLabelY| Image 83 | 8203.614 um | 8207.186 um | 3.571 um |
 | getStageLabelName| Image 84 | ScanRegion1| Scene position #84| |
-| getStageLabelX| Image 84 | -62192.453 um | -22180.178 um | 40012.275 um |
-| getStageLabelY| Image 84 | 15659.452 um | 8207.186 um | 7452.266 um |
+| getStageLabelX| Image 84 | -22176.283 um | -22180.178 um | 3.894 um |
+| getStageLabelY| Image 84 | 8208.809 um | 8207.186 um | 1.623 um |
 | getStageLabelName| Image 85 | ScanRegion1| Scene position #85| |
-| getStageLabelX| Image 85 | -62658.977 um | -22647.676 um | 40011.301 um |
-| getStageLabelY| Image 85 | 15664.321 um | 8207.186 um | 7457.136 um |
+| getStageLabelX| Image 85 | -22642.807 um | -22647.676 um | 4.869 um |
+| getStageLabelY| Image 85 | 8213.678 um | 8207.186 um | 6.493 um |
 | getStageLabelName| Image 86 | ScanRegion1| Scene position #86| |
-| getStageLabelX| Image 86 | -63127.449 um | -23115.174 um | 40012.275 um |
-| getStageLabelY| Image 86 | 15669.191 um | 8207.186 um | 7462.006 um |
+| getStageLabelX| Image 86 | -23111.279 um | -23115.174 um | 3.895 um |
+| getStageLabelY| Image 86 | 8218.548 um | 8207.186 um | 11.363 um |
 | getStageLabelName| Image 87 | ScanRegion1| Scene position #87| |
-| getStageLabelX| Image 87 | -63122.579 um | -23115.174 um | 40007.405 um |
-| getStageLabelY| Image 87 | 16137.338 um | 8674.684 um | 7462.655 um |
+| getStageLabelX| Image 87 | -23106.409 um | -23115.174 um | 8.764 um |
+| getStageLabelY| Image 87 | 8686.695 um | 8674.684 um | 12.012 um |
 | getStageLabelName| Image 88 | ScanRegion1| Scene position #88| |
-| getStageLabelX| Image 88 | -62657.029 um | -22647.676 um | 40009.353 um |
-| getStageLabelY| Image 88 | 16132.469 um | 8674.684 um | 7457.785 um |
+| getStageLabelX| Image 88 | -22640.859 um | -22647.676 um | 6.816 um |
+| getStageLabelY| Image 88 | 8681.826 um | 8674.684 um | 7.142 um |
 | getStageLabelName| Image 89 | ScanRegion1| Scene position #89| |
-| getStageLabelX| Image 89 | -62189.856 um | -22180.178 um | 40009.678 um |
-| getStageLabelY| Image 89 | 16127.924 um | 8674.684 um | 7453.240 um |
+| getStageLabelX| Image 89 | -22173.686 um | -22180.178 um | 6.492 um |
+| getStageLabelY| Image 89 | 8677.280 um | 8674.684 um | 2.597 um |
 | getStageLabelName| Image 90 | ScanRegion1| Scene position #90| |
-| getStageLabelX| Image 90 | -61721.708 um | -21712.680 um | 40009.029 um |
-| getStageLabelY| Image 90 | 16122.729 um | 8674.684 um | 7448.046 um |
+| getStageLabelX| Image 90 | -21705.539 um | -21712.680 um | 7.141 um |
+| getStageLabelY| Image 90 | 8672.086 um | 8674.684 um | 2.598 um |
 | getStageLabelName| Image 91 | ScanRegion1| Scene position #91| |
-| getStageLabelX| Image 91 | -61254.535 um | -21245.184 um | 40009.351 um |
-| getStageLabelY| Image 91 | 16117.859 um | 8674.684 um | 7443.176 um |
+| getStageLabelX| Image 91 | -21238.366 um | -21245.184 um | 6.818 um |
+| getStageLabelY| Image 91 | 8667.216 um | 8674.684 um | 7.467 um |
 | getStageLabelName| Image 92 | ScanRegion1| Scene position #92| |
-| getStageLabelX| Image 92 | -60786.388 um | -20777.686 um | 40008.702 um |
-| getStageLabelY| Image 92 | 16112.665 um | 8674.684 um | 7437.981 um |
+| getStageLabelX| Image 92 | -20770.218 um | -20777.686 um | 7.467 um |
+| getStageLabelY| Image 92 | 8662.022 um | 8674.684 um | 12.662 um |
 | getStageLabelName| Image 93 | ScanRegion1| Scene position #93| |
-| getStageLabelX| Image 93 | -60317.591 um | -20310.188 um | 40007.404 um |
-| getStageLabelY| Image 93 | 16107.471 um | 8674.684 um | 7432.787 um |
+| getStageLabelX| Image 93 | -20301.422 um | -20310.188 um | 8.766 um |
+| getStageLabelY| Image 93 | 8656.827 um | 8674.684 um | 17.856 um |
 | getStageLabelName| Image 94 | ScanRegion1| Scene position #94| |
-| getStageLabelX| Image 94 | -60310.124 um | -20310.188 um | 39999.937 um |
-| getStageLabelY| Image 94 | 16575.293 um | 9142.182 um | 7433.111 um |
+| getStageLabelX| Image 94 | -20293.955 um | -20310.188 um | 16.233 um |
+| getStageLabelY| Image 94 | 9124.650 um | 9142.182 um | 17.532 um |
 | getStageLabelName| Image 95 | ScanRegion1| Scene position #95| |
-| getStageLabelX| Image 95 | -60777.947 um | -20777.686 um | 40000.261 um |
-| getStageLabelY| Image 95 | 16580.163 um | 9142.182 um | 7437.981 um |
+| getStageLabelX| Image 95 | -20761.777 um | -20777.686 um | 15.908 um |
+| getStageLabelY| Image 95 | 9129.520 um | 9142.182 um | 12.662 um |
 | getStageLabelName| Image 96 | ScanRegion1| Scene position #96| |
-| getStageLabelX| Image 96 | -61245.445 um | -21245.184 um | 40000.261 um |
-| getStageLabelY| Image 96 | 16585.357 um | 9142.182 um | 7443.176 um |
+| getStageLabelX| Image 96 | -21229.275 um | -21245.184 um | 15.908 um |
+| getStageLabelY| Image 96 | 9134.714 um | 9142.182 um | 7.467 um |
 | getStageLabelName| Image 97 | ScanRegion1| Scene position #97| |
-| getStageLabelX| Image 97 | -61713.917 um | -21712.680 um | 40001.237 um |
-| getStageLabelY| Image 97 | 16590.227 um | 9142.182 um | 7448.045 um |
+| getStageLabelX| Image 97 | -21697.747 um | -21712.680 um | 14.932 um |
+| getStageLabelY| Image 97 | 9139.584 um | 9142.182 um | 2.598 um |
 | getStageLabelName| Image 98 | ScanRegion1| Scene position #98| |
-| getStageLabelX| Image 98 | -62182.064 um | -22180.178 um | 40001.886 um |
-| getStageLabelY| Image 98 | 16595.421 um | 9142.182 um | 7453.240 um |
+| getStageLabelX| Image 98 | -22165.894 um | -22180.178 um | 14.283 um |
+| getStageLabelY| Image 98 | 9144.778 um | 9142.182 um | 2.597 um |
 | getStageLabelName| Image 99 | ScanRegion1| Scene position #99| |
-| getStageLabelX| Image 99 | -62648.912 um | -22647.676 um | 40001.237 um |
-| getStageLabelY| Image 99 | 16600.291 um | 9142.182 um | 7458.110 um |
+| getStageLabelX| Image 99 | -22632.743 um | -22647.676 um | 14.933 um |
+| getStageLabelY| Image 99 | 9149.648 um | 9142.182 um | 7.466 um |
 | getStageLabelName| Image 100 | ScanRegion1| Scene position #100| |
-| getStageLabelX| Image 100 | -62644.043 um | -22647.676 um | 39996.367 um |
-| getStageLabelY| Image 100 | 17068.763 um | 9609.680 um | 7459.083 um |
+| getStageLabelX| Image 100 | -22627.873 um | -22647.676 um | 19.802 um |
+| getStageLabelY| Image 100 | 9618.120 um | 9609.680 um | 8.440 um |
 | getStageLabelName| Image 101 | ScanRegion1| Scene position #101| |
-| getStageLabelX| Image 101 | -62179.142 um | -22180.178 um | 39998.964 um |
-| getStageLabelY| Image 101 | 17063.893 um | 9609.680 um | 7454.214 um |
+| getStageLabelX| Image 101 | -22162.973 um | -22180.178 um | 17.205 um |
+| getStageLabelY| Image 101 | 9613.250 um | 9609.680 um | 3.571 um |
 | getStageLabelName| Image 102 | ScanRegion1| Scene position #102| |
-| getStageLabelX| Image 102 | -61710.995 um | -21712.680 um | 39998.315 um |
-| getStageLabelY| Image 102 | 17058.699 um | 9609.680 um | 7449.019 um |
+| getStageLabelX| Image 102 | -21694.825 um | -21712.680 um | 17.854 um |
+| getStageLabelY| Image 102 | 9608.056 um | 9609.680 um | 1.624 um |
 | getStageLabelName| Image 103 | ScanRegion1| Scene position #103| |
-| getStageLabelX| Image 103 | -61243.497 um | -21245.184 um | 39998.313 um |
-| getStageLabelY| Image 103 | 17053.829 um | 9609.680 um | 7444.149 um |
+| getStageLabelX| Image 103 | -21227.327 um | -21245.184 um | 17.856 um |
+| getStageLabelY| Image 103 | 9603.186 um | 9609.680 um | 6.494 um |
 | getStageLabelName| Image 104 | ScanRegion1| Scene position #104| |
-| getStageLabelX| Image 104 | -60775.674 um | -20777.686 um | 39997.989 um |
-| getStageLabelY| Image 104 | 17048.635 um | 9609.680 um | 7438.955 um |
+| getStageLabelX| Image 104 | -20759.505 um | -20777.686 um | 18.181 um |
+| getStageLabelY| Image 104 | 9597.992 um | 9609.680 um | 11.688 um |
 | getStageLabelName| Image 105 | ScanRegion1| Scene position #105| |
-| getStageLabelX| Image 105 | -60308.501 um | -20310.188 um | 39998.314 um |
-| getStageLabelY| Image 105 | 17043.440 um | 9609.680 um | 7433.761 um |
+| getStageLabelX| Image 105 | -20292.332 um | -20310.188 um | 17.856 um |
+| getStageLabelY| Image 105 | 9592.797 um | 9609.680 um | 16.882 um |
 | getStageLabelName| Image 106 | ScanRegion1| Scene position #106| |
-| getStageLabelX| Image 106 | -60301.034 um | -20310.188 um | 39990.847 um |
-| getStageLabelY| Image 106 | 17511.587 um | 10077.177 um | 7434.411 um |
+| getStageLabelX| Image 106 | -20284.865 um | -20310.188 um | 25.323 um |
+| getStageLabelY| Image 106 | 10060.944 um | 10077.177 um | 16.232 um |
 | getStageLabelName| Image 107 | ScanRegion1| Scene position #107| |
-| getStageLabelX| Image 107 | -60768.532 um | -20777.686 um | 39990.846 um |
-| getStageLabelY| Image 107 | 17516.782 um | 10077.177 um | 7439.605 um |
+| getStageLabelX| Image 107 | -20752.363 um | -20777.686 um | 25.323 um |
+| getStageLabelY| Image 107 | 10066.139 um | 10077.177 um | 11.038 um |
 | getStageLabelName| Image 108 | ScanRegion1| Scene position #108| |
-| getStageLabelX| Image 108 | -61236.030 um | -21245.184 um | 39990.846 um |
-| getStageLabelY| Image 108 | 17521.976 um | 10077.177 um | 7444.800 um |
+| getStageLabelX| Image 108 | -21219.861 um | -21245.184 um | 25.323 um |
+| getStageLabelY| Image 108 | 10071.333 um | 10077.177 um | 5.844 um |
 | getStageLabelName| Image 109 | ScanRegion1| Scene position #109| |
-| getStageLabelX| Image 109 | -61703.528 um | -21712.680 um | 39990.848 um |
-| getStageLabelY| Image 109 | 17527.171 um | 10077.177 um | 7449.994 um |
+| getStageLabelX| Image 109 | -21687.358 um | -21712.680 um | 25.321 um |
+| getStageLabelY| Image 109 | 10076.528 um | 10077.177 um | 0.649 um |
 | getStageLabelName| Image 110 | ScanRegion1| Scene position #110| |
-| getStageLabelX| Image 110 | -62171.026 um | -22180.178 um | 39990.848 um |
-| getStageLabelY| Image 110 | 17532.365 um | 10077.177 um | 7455.188 um |
+| getStageLabelX| Image 110 | -22154.856 um | -22180.178 um | 25.321 um |
+| getStageLabelY| Image 110 | 10081.722 um | 10077.177 um | 4.545 um |
 | getStageLabelName| Image 111 | ScanRegion1| Scene position #111| |
-| getStageLabelX| Image 111 | -61692.165 um | -21712.680 um | 39979.485 um |
-| getStageLabelY| Image 111 | 17996.617 um | 10544.675 um | 7451.942 um |
+| getStageLabelX| Image 111 | -21675.996 um | -21712.680 um | 36.684 um |
+| getStageLabelY| Image 111 | 10545.973 um | 10544.675 um | 1.299 um |
 | getStageLabelName| Image 112 | ScanRegion1| Scene position #112| |
-| getStageLabelX| Image 112 | -61224.667 um | -21245.184 um | 39979.484 um |
-| getStageLabelY| Image 112 | 17991.422 um | 10544.675 um | 7446.747 um |
+| getStageLabelX| Image 112 | -21208.498 um | -21245.184 um | 36.686 um |
+| getStageLabelY| Image 112 | 10540.779 um | 10544.675 um | 3.896 um |
 | getStageLabelName| Image 113 | ScanRegion1| Scene position #113| |
-| getStageLabelX| Image 113 | -60757.169 um | -20777.686 um | 39979.484 um |
-| getStageLabelY| Image 113 | 17986.228 um | 10544.675 um | 7441.553 um |
+| getStageLabelX| Image 113 | -20741.000 um | -20777.686 um | 36.686 um |
+| getStageLabelY| Image 113 | 10535.585 um | 10544.675 um | 9.090 um |
 | getStageLabelName| Image 114 |  error: false | error: true| |
 | getStageLabelX| Image 114 |  error: false | error: true| |
 | getStageLabelY| Image 114 |  error: false | error: true| |
@@ -609,100 +599,110 @@
 | getStageLabelY| Image 127 |  error: false | error: true| |
 | getStageLabelZ| Image 127 |  error: false | error: true| |
 | getStageLabelName| Image 128 | ScanRegion2| Scene position #128| |
-| getStageLabelX| Image 128 | -78091.277 um | -39945.098 um | 38146.180 um |
-| getStageLabelY| Image 128 | 19840.961 um | 11479.671 um | 8361.290 um |
+| getStageLabelX| Image 128 | -38075.108 um | -39945.098 um | 1869.990 um |
+| getStageLabelY| Image 128 | 12390.318 um | 11479.671 um | 910.647 um |
 | getStageLabelZ| Image 128 | 4159.811 um | 4161.548 um | 1.737 um |
 | getStageLabelName| Image 129 | ScanRegion2| Scene position #129| |
-| getStageLabelX| Image 129 | -78082.187 um | -39477.602 um | 38604.586 um |
-| getStageLabelY| Image 129 | 20308.134 um | 11479.671 um | 8828.463 um |
+| getStageLabelX| Image 129 | -38066.018 um | -39477.602 um | 1411.584 um |
+| getStageLabelY| Image 129 | 12857.491 um | 11479.671 um | 1377.820 um |
 | getStageLabelZ| Image 129 | 4160.526 um | 4161.469 um | 0.943 um |
 | getStageLabelName| Image 130 | ScanRegion2| Scene position #130| |
-| getStageLabelX| Image 130 | -78550.010 um | -39010.102 um | 39539.908 um |
-| getStageLabelY| Image 130 | 20313.328 um | 11479.671 um | 8833.658 um |
+| getStageLabelX| Image 130 | -38533.840 um | -39010.102 um | 476.261 um |
+| getStageLabelY| Image 130 | 12862.685 um | 11479.671 um | 1383.014 um |
 | getStageLabelZ| Image 130 | 4162.283 um | 4160.803 um | 1.480 um |
 | getStageLabelName| Image 131 | ScanRegion2| Scene position #131| |
-| getStageLabelX| Image 131 | -79017.832 um | -38542.605 um | 40475.227 um |
-| getStageLabelY| Image 131 | 20318.523 um | 11947.169 um | 8371.354 um |
+| getStageLabelX| Image 131 | -39001.663 um | -38542.605 um | 459.057 um |
+| getStageLabelY| Image 131 | 12867.880 um | 11947.169 um | 920.711 um |
 | getStageLabelZ| Image 131 | 4163.452 um | 4160.685 um | 2.768 um |
 | getStageLabelName| Image 132 | ScanRegion2| Scene position #132| |
-| getStageLabelX| Image 132 | -79485.979 um | -39010.102 um | 40475.878 um |
-| getStageLabelY| Image 132 | 20323.717 um | 11947.169 um | 8376.548 um |
+| getStageLabelX| Image 132 | -39469.810 um | -39010.102 um | 459.709 um |
+| getStageLabelY| Image 132 | 12873.074 um | 11947.169 um | 925.905 um |
 | getStageLabelZ| Image 132 | 4164.033 um | 4161.911 um | 2.123 um |
 | getStageLabelName| Image 133 | ScanRegion2| Scene position #133| |
-| getStageLabelX| Image 133 | -79954.776 um | -39477.602 um | 40477.174 um |
-| getStageLabelY| Image 133 | 20328.912 um | 11947.169 um | 8381.743 um |
+| getStageLabelX| Image 133 | -39938.607 um | -39477.602 um | 461.005 um |
+| getStageLabelY| Image 133 | 12878.269 um | 11947.169 um | 931.100 um |
 | getStageLabelZ| Image 133 | 4164.027 um | 4162.549 um | 1.478 um |
 | getStageLabelName| Image 134 | ScanRegion2| Scene position #134| |
-| getStageLabelX| Image 134 | -80420.975 um | -39945.098 um | 40475.878 um |
-| getStageLabelY| Image 134 | 20333.457 um | 11947.169 um | 8386.288 um |
+| getStageLabelX| Image 134 | -40404.806 um | -39945.098 um | 459.708 um |
+| getStageLabelY| Image 134 | 12882.814 um | 11947.169 um | 935.645 um |
 | getStageLabelZ| Image 134 | 4163.432 um | 4162.600 um | 0.833 um |
 | getStageLabelName| Image 135 | ScanRegion2| Scene position #135| |
-| getStageLabelX| Image 135 | -80889.447 um | -40412.598 um | 40476.850 um |
-| getStageLabelY| Image 135 | 20338.651 um | 11947.169 um | 8391.482 um |
+| getStageLabelX| Image 135 | -40873.278 um | -40412.598 um | 460.680 um |
+| getStageLabelY| Image 135 | 12888.008 um | 11947.169 um | 940.839 um |
 | getStageLabelZ| Image 135 | 4162.250 um | 4162.062 um | 0.188 um |
 | getStageLabelName| Image 136 | ScanRegion2| Scene position #136| |
-| getStageLabelX| Image 136 | -81357.270 um | -40880.094 um | 40477.176 um |
-| getStageLabelY| Image 136 | 20343.846 um | 12414.667 um | 7929.179 um |
+| getStageLabelX| Image 136 | -41341.100 um | -40880.094 um | 461.007 um |
+| getStageLabelY| Image 136 | 12893.203 um | 12414.667 um | 478.536 um |
 | getStageLabelZ| Image 136 | 4160.480 um | 4161.706 um | 1.226 um |
 | getStageLabelName| Image 137 | ScanRegion2| Scene position #137| |
-| getStageLabelX| Image 137 | -81353.049 um | -40412.598 um | 40940.452 um |
-| getStageLabelY| Image 137 | 20812.318 um | 12414.667 um | 8397.651 um |
+| getStageLabelX| Image 137 | -41336.880 um | -40412.598 um | 924.282 um |
+| getStageLabelY| Image 137 | 13361.674 um | 12414.667 um | 947.007 um |
 | getStageLabelZ| Image 137 | 4160.771 um | 4162.859 um | 2.089 um |
 | getStageLabelName| Image 138 | ScanRegion2| Scene position #138| |
-| getStageLabelX| Image 138 | -80887.499 um | -39945.098 um | 40942.402 um |
-| getStageLabelY| Image 138 | 20807.448 um | 12414.667 um | 8392.781 um |
+| getStageLabelX| Image 138 | -40871.330 um | -39945.098 um | 926.232 um |
+| getStageLabelY| Image 138 | 13356.805 um | 12414.667 um | 942.138 um |
 | getStageLabelZ| Image 138 | 4162.569 um | 4163.425 um | 0.856 um |
 | getStageLabelName| Image 139 | ScanRegion2| Scene position #139| |
-| getStageLabelX| Image 139 | -80418.703 um | -39477.602 um | 40941.101 um |
-| getStageLabelY| Image 139 | 20802.253 um | 12414.667 um | 8387.586 um |
+| getStageLabelX| Image 139 | -40402.533 um | -39477.602 um | 924.932 um |
+| getStageLabelY| Image 139 | 13351.610 um | 12414.667 um | 936.943 um |
 | getStageLabelZ| Image 139 | 4163.780 um | 4163.404 um | 0.376 um |
 | getStageLabelName| Image 140 | ScanRegion2| Scene position #140| |
-| getStageLabelX| Image 140 | -79950.880 um | -39010.102 um | 40940.779 um |
-| getStageLabelY| Image 140 | 20797.708 um | 12414.667 um | 8383.041 um |
+| getStageLabelX| Image 140 | -39934.711 um | -39010.102 um | 924.609 um |
+| getStageLabelY| Image 140 | 13347.065 um | 12414.667 um | 932.398 um |
 | getStageLabelZ| Image 140 | 4164.403 um | 4162.794 um | 1.609 um |
 | getStageLabelName| Image 141 | ScanRegion2| Scene position #141| |
-| getStageLabelX| Image 141 | -79483.707 um | -38542.605 um | 40941.101 um |
-| getStageLabelY| Image 141 | 20793.163 um | 12414.667 um | 8378.496 um |
+| getStageLabelX| Image 141 | -39467.538 um | -38542.605 um | 924.932 um |
+| getStageLabelY| Image 141 | 13342.520 um | 12414.667 um | 927.853 um |
 | getStageLabelZ| Image 141 | 4164.438 um | 4161.596 um | 2.842 um |
 | getStageLabelName| Image 142 | ScanRegion2| Scene position #142| |
-| getStageLabelX| Image 142 | -79015.560 um | -38075.105 um | 40940.454 um |
-| getStageLabelY| Image 142 | 20788.293 um | 12414.667 um | 8373.626 um |
+| getStageLabelX| Image 142 | -38999.390 um | -38075.105 um | 924.285 um |
+| getStageLabelY| Image 142 | 13337.650 um | 12414.667 um | 922.983 um |
 | getStageLabelZ| Image 142 | 4163.886 um | 4159.811 um | 4.075 um |
 | getStageLabelName| Image 143 | ScanRegion2| Scene position #143| |
-| getStageLabelX| Image 143 | -78547.088 um | -38075.105 um | 40471.982 um |
-| getStageLabelY| Image 143 | 20783.099 um | 12882.165 um | 7900.934 um |
+| getStageLabelX| Image 143 | -38530.918 um | -38075.105 um | 455.813 um |
+| getStageLabelY| Image 143 | 13332.456 um | 12882.165 um | 450.291 um |
 | getStageLabelZ| Image 143 | 4162.746 um | 4160.526 um | 2.219 um |
 | getStageLabelName| Image 144 | ScanRegion2| Scene position #144| |
-| getStageLabelX| Image 144 | -78080.564 um | -38542.605 um | 39537.958 um |
-| getStageLabelY| Image 144 | 20778.554 um | 12882.165 um | 7896.389 um |
+| getStageLabelX| Image 144 | -38064.394 um | -38542.605 um | 478.211 um |
+| getStageLabelY| Image 144 | 13327.911 um | 12882.165 um | 445.746 um |
 | getStageLabelZ| Image 144 | 4161.017 um | 4162.283 um | 1.266 um |
 | getStageLabelName| Image 145 | ScanRegion2| Scene position #145| |
-| getStageLabelX| Image 145 | -78071.798 um | -39010.102 um | 39061.697 um |
-| getStageLabelY| Image 145 | 21245.727 um | 12882.165 um | 8363.562 um |
+| getStageLabelX| Image 145 | -38055.629 um | -39010.102 um | 954.473 um |
+| getStageLabelY| Image 145 | 13795.084 um | 12882.165 um | 912.919 um |
 | getStageLabelZ| Image 145 | 4161.283 um | 4163.452 um | 2.169 um |
 | getStageLabelName| Image 146 | ScanRegion2| Scene position #146| |
-| getStageLabelX| Image 146 | -78539.946 um | -39477.602 um | 39062.344 um |
-| getStageLabelY| Image 146 | 21250.597 um | 12882.165 um | 8368.432 um |
+| getStageLabelX| Image 146 | -38523.776 um | -39477.602 um | 953.825 um |
+| getStageLabelY| Image 146 | 13799.954 um | 12882.165 um | 917.789 um |
 | getStageLabelZ| Image 146 | 4162.983 um | 4164.033 um | 1.050 um |
 | getStageLabelName| Image 147 | ScanRegion2| Scene position #147| |
-| getStageLabelX| Image 147 | -79007.443 um | -39945.098 um | 39062.346 um |
-| getStageLabelY| Image 147 | 21255.791 um | 12882.165 um | 8373.626 um |
+| getStageLabelX| Image 147 | -38991.274 um | -39945.098 um | 953.824 um |
+| getStageLabelY| Image 147 | 13805.148 um | 12882.165 um | 922.983 um |
 | getStageLabelZ| Image 147 | 4164.095 um | 4164.027 um | 0.068 um |
 | getStageLabelName| Image 148 | ScanRegion2| Scene position #148| |
-| getStageLabelX| Image 148 | -79475.915 um | -40412.598 um | 39063.318 um |
-| getStageLabelY| Image 148 | 21260.661 um | 12882.165 um | 8378.496 um |
+| getStageLabelX| Image 148 | -39459.746 um | -40412.598 um | 952.852 um |
+| getStageLabelY| Image 148 | 13810.018 um | 12882.165 um | 927.853 um |
 | getStageLabelZ| Image 148 | 4164.619 um | 4163.432 um | 1.187 um |
 | getStageLabelName| Image 149 | ScanRegion2| Scene position #149| |
-| getStageLabelX| Image 149 | -79944.387 um | -40880.094 um | 39064.293 um |
-| getStageLabelY| Image 149 | 21265.531 um | 12882.165 um | 8383.366 um |
+| getStageLabelX| Image 149 | -39928.218 um | -40880.094 um | 951.876 um |
+| getStageLabelY| Image 149 | 13814.888 um | 12882.165 um | 932.723 um |
 | getStageLabelZ| Image 149 | 4164.555 um | 4162.250 um | 2.305 um |
 | getStageLabelName| Image 150 | ScanRegion2| Scene position #150| |
-| getStageLabelX| Image 150 | -80410.586 um | -41347.594 um | 39062.993 um |
-| getStageLabelY| Image 150 | 21270.401 um | 12882.165 um | 8388.235 um |
+| getStageLabelX| Image 150 | -40394.417 um | -41347.594 um | 953.177 um |
+| getStageLabelY| Image 150 | 13819.757 um | 12882.165 um | 937.592 um |
 | getStageLabelZ| Image 150 | 4163.903 um | 4160.480 um | 3.423 um |
 | getStageLabelName| Image 151 | ScanRegion2| Scene position #151| |
-| getStageLabelX| Image 151 | -80879.383 um | -41347.594 um | 39531.789 um |
-| getStageLabelY| Image 151 | 21275.595 um | 13349.662 um | 7925.933 um |
+| getStageLabelX| Image 151 | -40863.214 um | -41347.594 um | 484.380 um |
+| getStageLabelY| Image 151 | 13824.952 um | 13349.662 um | 475.290 um |
 | getStageLabelZ| Image 151 | 4162.664 um | 4160.771 um | 1.894 um |
+| getStageLabelName| Image 152 | ScanRegion2| Scene position #152| |
+| getStageLabelX| Image 152 | -41331.685 um | -40880.094 um | 451.592 um |
+| getStageLabelY| Image 152 | 13829.822 um | 13349.662 um | 480.160 um |
+| getStageLabelZ| Image 152 | 4160.836 um | 4162.569 um | 1.733 um |
+| getStageLabelName| Image 153 | ScanRegion2| Scene position #153| |
+| getStageLabelX| Image 153 | -41326.816 um | -40412.598 um | 914.218 um |
+| getStageLabelY| Image 153 | 14298.293 um | 13349.662 um | 948.631 um |
+| getStageLabelZ| Image 153 | 4160.678 um | 4163.780 um | 3.103 um |
+| getStageLabelName| Image 154 | ScanRegion2| Scene position #154| |
+| getStageLabelX| Image 154 | -40860.941 um | -39945.098 um | 915.843 um |
 
  More than 500 differences.

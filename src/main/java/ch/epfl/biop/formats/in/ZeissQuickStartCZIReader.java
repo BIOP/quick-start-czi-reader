@@ -3093,30 +3093,67 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             boolean interpolateZTPlanePosition = reader.isLatticeLightSheet();
 
             // Space : according to czi specs, all blocks are located within a 2D virtual plane
-            // but this plane has a global physical offset, set by the stage location. This is
-            // this offset that we are looking for in the loop below
+            // but this plane has a global physical offset, set by the stage location.
             double cornerXAllScenesMicrons = Double.NaN;
             double cornerYAllScenesMicrons = Double.NaN;
+            // See thread https://forum.image.sc/t/czi-plane-position-what-to-pick/85484
+            // Here's the strategy:
+            // - Let's pick the first subblock of the first core index
+            int coreUsedForXYOffset = 0;
+            MinimalDimensionEntry firstSubBlock = mapCoreCZTToBlocks.get(coreUsedForXYOffset).get(new CZTKey(0, 0, 0)).get(0);
 
-            if ((allPositionsInformation.scenes.size()>0)&&(!coreToPixSizeX.get(0).unit().equals(UNITS.REFERENCEFRAME))) {
-                Length minX = null, minY = null;
-                for (SceneProperties scene:allPositionsInformation.scenes) {
-                    Length scenePosX = scene.getMinPosXInMicrons();
-                    Length scenePosY = scene.getMinPosYInMicrons();
-                    if ((scenePosX!=null)&&(scenePosX.unit().equals(UNITS.MICROMETER))) {
-                        if ((minX==null)||(minX.value(UNITS.MICROMETER).doubleValue()>scenePosX.value(UNITS.MICROMETER).doubleValue())) {
-                            minX = scenePosX;
+            LibCZI.SubBlockSegment block = LibCZI.getBlock(reader.getStream(firstSubBlock.filePart), firstSubBlock.filePosition);
+            LibCZI.SubBlockMeta sbm = LibCZI.readSubBlockMeta(reader.getStream(firstSubBlock.filePart), block, parser);
+            // Here we assume the first core is not a special weird image like label or overview
+            if (((sbm.stageX!=null)&&(sbm.stageX.unit().equals(UNITS.MICROMETER)))&&
+                    ((sbm.stageY!=null)&&(sbm.stageY.unit().equals(UNITS.MICROMETER)))&&
+                    (coreToPixSizeX.get(coreUsedForXYOffset).unit().equals(UNITS.MICROMETER))&&
+                    (coreToPixSizeY.get(coreUsedForXYOffset).unit().equals(UNITS.MICROMETER))) {
+                // What is the block coordinates in pixel?
+                int coordX = firstSubBlock.dimensionStartX;
+                int coordY = firstSubBlock.dimensionStartY;
+                // Let's add the center of the block offset, because we assume that's where
+                // the stage location is defined
+                int coordXMiddleBlock = coordX;//+firstSubBlock.storedSizeX/2; // Not necessary apparently
+                int coordYMiddleBlock = coordY;//+firstSubBlock.storedSizeY/2;
+                // Let's compute this middle block coordinates in micrometer
+                double pixSizeXMicrometer = coreToPixSizeX.get(coreUsedForXYOffset).value(UNITS.MICROMETER).doubleValue();
+                double pixSizeYMicrometer = coreToPixSizeY.get(coreUsedForXYOffset).value(UNITS.MICROMETER).doubleValue();
+                double coordXMiddleBlockMicrometer = coordXMiddleBlock*pixSizeXMicrometer;
+                double coordYMiddleBlockMicrometer = coordYMiddleBlock*pixSizeYMicrometer;
+                // Ok, now we have the correspondance between block dimension entry coordinates in micrometer:
+                // (coordXMiddleBlockMicrometer, coordYMiddleBlockMicrometer)
+                // and the subblock coordinates from the stage metadata:
+                double metaStageCoordX = sbm.stageX.value(UNITS.MICROMETER).doubleValue();
+                double metaStageCoordY = sbm.stageY.value(UNITS.MICROMETER).doubleValue();
+                cornerXAllScenesMicrons = metaStageCoordX-coordXMiddleBlockMicrometer;
+                cornerYAllScenesMicrons = metaStageCoordY-coordYMiddleBlockMicrometer;
+                /*System.out.println("metaStageCoord = ("+metaStageCoordX+" : "+metaStageCoordY+")");
+                System.out.println("blockUmCoord = ("+coordXMiddleBlockMicrometer+" : "+coordYMiddleBlockMicrometer+")");
+                System.out.println("cornerXAllScenesMicrons = "+cornerXAllScenesMicrons);
+                System.out.println("cornerYAllScenesMicrons = "+cornerYAllScenesMicrons);*/
+
+            } else {
+                if ((allPositionsInformation.scenes.size()>0)&&(!coreToPixSizeX.get(0).unit().equals(UNITS.REFERENCEFRAME))) {
+                    Length minX = null, minY = null;
+                    for (SceneProperties scene:allPositionsInformation.scenes) {
+                        Length scenePosX = scene.getMinPosXInMicrons();
+                        Length scenePosY = scene.getMinPosYInMicrons();
+                        if ((scenePosX!=null)&&(scenePosX.unit().equals(UNITS.MICROMETER))) {
+                            if ((minX==null)||(minX.value(UNITS.MICROMETER).doubleValue()>scenePosX.value(UNITS.MICROMETER).doubleValue())) {
+                                minX = scenePosX;
+                            }
+                        }
+                        if ((scenePosY!=null)&&(scenePosY.unit().equals(UNITS.MICROMETER))) {
+                            if ((minY==null)||(minY.value(UNITS.MICROMETER).doubleValue()>scenePosY.value(UNITS.MICROMETER).doubleValue())) {
+                                minY = scenePosY;
+                            }
                         }
                     }
-                    if ((scenePosY!=null)&&(scenePosY.unit().equals(UNITS.MICROMETER))) {
-                        if ((minY==null)||(minY.value(UNITS.MICROMETER).doubleValue()>scenePosY.value(UNITS.MICROMETER).doubleValue())) {
-                            minY = scenePosY;
-                        }
+                    if (minX!=null) {
+                        cornerXAllScenesMicrons = minX.value(UNITS.MICROMETER).doubleValue();
+                        cornerYAllScenesMicrons = minY.value(UNITS.MICROMETER).doubleValue();
                     }
-                }
-                if (minX!=null) {
-                    cornerXAllScenesMicrons = minX.value(UNITS.MICROMETER).doubleValue();
-                    cornerYAllScenesMicrons = minY.value(UNITS.MICROMETER).doubleValue();
                 }
             }
 
