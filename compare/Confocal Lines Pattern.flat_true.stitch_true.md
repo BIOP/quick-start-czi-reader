@@ -7,12 +7,12 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |66 ms|------|99 ms|------|--------|
+| Read time (all)   |37 ms|------|49 ms|------|--------|
 |0|![Confocal Lines Pattern.quick_true.flat_true.stitch_true.series_0.jpg](Confocal Lines Pattern/Confocal Lines Pattern.quick_true.flat_true.stitch_true.series_0.jpg)|X:1024<br>Y:1024<br>C:1<br>Z:1<br>T:1|![Confocal Lines Pattern.quick_false.flat_true.stitch_true.series_0.jpg](Confocal Lines Pattern/Confocal Lines Pattern.quick_false.flat_true.stitch_true.series_0.jpg)|X:1024<br>Y:1024<br>C:1<br>Z:1<br>T:1|0|
 
 # Metadata
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |11 ms|11 ms|        |
+| Initialization     |                  |4 ms|6 ms|        |
 | Reader Size (Mb)     |                  |0.12|0.19|        |

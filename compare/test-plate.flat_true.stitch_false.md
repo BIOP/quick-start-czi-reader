@@ -7,7 +7,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |34668 ms|------|37282 ms|------|--------|
+| Read time (all)   |34311 ms|------|34038 ms|------|--------|
 |0|![test-plate.quick_true.flat_true.stitch_false.series_0.jpg](test-plate/test-plate.quick_true.flat_true.stitch_false.series_0.jpg)|X:2048<br>Y:2048<br>C:4<br>Z:1<br>T:1|![test-plate.quick_false.flat_true.stitch_false.series_0.jpg](test-plate/test-plate.quick_false.flat_true.stitch_false.series_0.jpg)|X:2048<br>Y:2048<br>C:4<br>Z:1<br>T:1|0|
 |1|![test-plate.quick_true.flat_true.stitch_false.series_1.jpg](test-plate/test-plate.quick_true.flat_true.stitch_false.series_1.jpg)|X:2048<br>Y:2048<br>C:4<br>Z:1<br>T:1|![test-plate.quick_false.flat_true.stitch_false.series_1.jpg](test-plate/test-plate.quick_false.flat_true.stitch_false.series_1.jpg)|X:2048<br>Y:2048<br>C:4<br>Z:1<br>T:1|0|
 |2|![test-plate.quick_true.flat_true.stitch_false.series_2.jpg](test-plate/test-plate.quick_true.flat_true.stitch_false.series_2.jpg)|X:2048<br>Y:2048<br>C:4<br>Z:1<br>T:1|![test-plate.quick_false.flat_true.stitch_false.series_2.jpg](test-plate/test-plate.quick_false.flat_true.stitch_false.series_2.jpg)|X:2048<br>Y:2048<br>C:4<br>Z:1<br>T:1|0|
@@ -112,7 +112,7 @@
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |226 ms|97 ms|        |
+| Initialization     |                  |227 ms|73 ms|        |
 | Reader Size (Mb)     |                  |3.52|4.66|        |
 | getStageLabelName| Image 0 | P1| Scene position #0| |
 | getStageLabelName| Image 1 | P2| Scene position #1| |

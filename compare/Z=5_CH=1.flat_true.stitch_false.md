@@ -7,12 +7,12 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |117 ms|------|129 ms|------|--------|
+| Read time (all)   |64 ms|------|65 ms|------|--------|
 |0|![Z=5_CH=1.quick_true.flat_true.stitch_false.series_0.jpg](Z=5_CH=1/Z=5_CH=1.quick_true.flat_true.stitch_false.series_0.jpg)|X:256<br>Y:256<br>C:1<br>Z:5<br>T:1|![Z=5_CH=1.quick_false.flat_true.stitch_false.series_0.jpg](Z=5_CH=1/Z=5_CH=1.quick_false.flat_true.stitch_false.series_0.jpg)|X:256<br>Y:256<br>C:1<br>Z:5<br>T:1|0|
 
 # Metadata
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |42 ms|38 ms|        |
+| Initialization     |                  |23 ms|22 ms|        |
 | Reader Size (Mb)     |                  |1.97|2.54|        |

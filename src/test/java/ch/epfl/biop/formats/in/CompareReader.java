@@ -352,6 +352,23 @@ public class CompareReader {
         }
     }
 
+    private static void registerDiff(String methodName, SummaryPerFile summary) {
+        if (criticalMethods.contains(methodName)) {
+            summary.numberOfCriticalDifferences++;
+        } else if (explanations.get(summary.urlImage).keySet().contains(methodName)) {
+            summary.numberOfDifferencesIgnored++;
+            explanations.get(summary.urlImage).get(methodName).forEach(ignoreRule -> {
+                String key = summary.imageName+".autoStitch."+summary.autoStitch;
+                if (!ignoreRule.occurencesPerReader.containsKey(key)) {
+                    ignoreRule.occurencesPerReader.put(key,0);
+                }
+                ignoreRule.occurencesPerReader.put(key,ignoreRule.occurencesPerReader.get(key)+1);
+            });
+        } else {
+            summary.numberOfDifferences++;
+        }
+    }
+
     private static boolean isEqualExceptionAndNullSafe(Callable<Object> o1Getter,
                                                        Callable<Object> o2Getter,
                                                        String methodName,
@@ -376,21 +393,12 @@ public class CompareReader {
 
         if (Boolean.logicalXor(exception_1, exception_2)) {
             logger.accept( message + " error: "+exception_1+" | error: "+exception_2+ "|");
-
-            if (criticalMethods.contains(methodName)) {
-                summary.numberOfCriticalDifferences++;
-            } else if (explanations.get(summary.urlImage).keySet().contains(methodName)) {
-                summary.numberOfDifferencesIgnored++;
-            } else {
-                summary.numberOfDifferences++;
-                //System.out.println(methodName);
-            }
+            registerDiff(methodName, summary);
             return false;
         } else {
             if ((o1!=null)&&(o2!=null)) {
                 if (!o1.equals(o2)) {
-                    if ((o1 instanceof Length) && (o2 instanceof Length)) {// && (((Length) o1).value(UNITS.MICROMETER)!=null) && (((Length) o2).value(UNITS.MICROMETER)!=null)) {
-
+                    if ((o1 instanceof Length) && (o2 instanceof Length)) {
                         Length l1 = (Length) o1;
                         Length l2 = (Length) o2;
 
@@ -398,14 +406,7 @@ public class CompareReader {
                             boolean res = (l1.value(UNITS.REFERENCEFRAME).doubleValue()-l2.value(UNITS.REFERENCEFRAME).doubleValue())==0;
                             if (!res) {
                                 logger.accept(message + o1 + "| " + o2 + "|");
-                                if (criticalMethods.contains(methodName)) {
-                                    summary.numberOfCriticalDifferences++;
-                                } else if (explanations.get(summary.urlImage).keySet().contains(methodName)) {
-                                    summary.numberOfDifferencesIgnored++;
-                                } else {
-                                    summary.numberOfDifferences++;
-                                    //System.out.println(methodName);
-                                }
+                                registerDiff(methodName, summary);
                             }
                             return res;
                         } else {
@@ -425,15 +426,7 @@ public class CompareReader {
                                 }
                             } else {
                                 logger.accept(message + o1 + "| " + o2 + "|");
-                                if (criticalMethods.contains(methodName)) {
-                                    summary.numberOfCriticalDifferences++;
-                                } else if (explanations.get(summary.urlImage).keySet().contains(methodName)) {
-                                    summary.numberOfDifferencesIgnored++;
-                                } else {
-                                    summary.numberOfDifferences++;
-
-                                    //System.out.println(methodName);
-                                }
+                                registerDiff(methodName, summary);
                                 return false;
                             }
                         }
@@ -450,18 +443,9 @@ public class CompareReader {
                     } else {
                         logger.accept(message + o1 + "| " + o2 + "|");
                     }
-                    if (criticalMethods.contains(methodName)) {
-                        summary.numberOfCriticalDifferences++;
-                    } else if (explanations.get(summary.urlImage).keySet().contains(methodName)) {
-                        summary.numberOfDifferencesIgnored++;
-                    } else {
-                        summary.numberOfDifferences++;
-
-                        //System.out.println(methodName);
-                    }
+                    registerDiff(methodName, summary);
                     return false;
                 } else {
-                    //println( message + "\t 1: \t "+o1+"\t 2: \t "+o2);
                     return true;
                 }
             } else {
@@ -469,15 +453,7 @@ public class CompareReader {
                     return true;
                 } else {
                     logger.accept( message + " 1: "+(o1==null?"null":o1)+"| 2: "+(o2==null?"null":o2));
-                    if (criticalMethods.contains(methodName)) {
-                        summary.numberOfCriticalDifferences++;
-                    } else if (explanations.get(summary.urlImage).keySet().contains(methodName)) {
-                        summary.numberOfDifferencesIgnored++;
-                    } else {
-                        summary.numberOfDifferences++;
-
-                        //System.out.println(methodName);
-                    }
+                    registerDiff(methodName, summary);
                     return false;
                 }
             }
@@ -486,6 +462,8 @@ public class CompareReader {
 
     static final int MAX_LINES = 500;
     static final double THUMB_SIZE = 150;
+
+    static int ruleNumber = 0;
 
     public static int getNumberOfDifferentPixels(ImagePlus imp1, ImagePlus imp2) {
         ImageProcessor ip1 = imp1.getProcessor();
@@ -704,9 +682,11 @@ public class CompareReader {
         public String explanation;
         public Note note;
         enum Note {BETTER, WORSE, SAME}
+        public Map<String, Integer> occurencesPerReader = new HashMap<>();
     }
 
-    static Map<String, Map<String, IgnoreDiffExplanation>> explanations = new HashMap<>();
+    static List<IgnoreDiffExplanation> allExplanations = new ArrayList<>();
+    static Map<String, Map<String, List<IgnoreDiffExplanation>>> explanations = new HashMap<>();
 
     public static void addIgnoreRule(
             String reason, IgnoreDiffExplanation.Note note,
@@ -719,10 +699,14 @@ public class CompareReader {
         for (String url: cziURLs) {
             if (explanations.containsKey(url)) {
                 for (String method : methods) {
-                    explanations.get(url).put(method, explanation);
+                    if (!explanations.get(url).containsKey(method)) {
+                        explanations.get(url).put(method, new ArrayList<>());
+                    }
+                    explanations.get(url).get(method).add(explanation);
                 }
             }
         }
+        allExplanations.add(explanation);
     }
 
     public static void main(String... args) {
@@ -828,7 +812,8 @@ public class CompareReader {
                         "https://downloads.openmicroscopy.org/images/Zeiss-CZI/idr0011/Plate1-Blue-A_TS-Stinger/Plate1-Blue-A-12-Scene-3-P3-F2-03.czi"
                 });
 
-        addIgnoreRule("The pixel physical sizes are incorrect for the lower resolution levels in the original reader",
+        addIgnoreRule("The quick reader reads correctly the physical pixel for the lower resolution levels, in contrast to the original reader, " +
+                        " which sets the same pixel size for all resolution levels (the one of the highest resolution).",
                 IgnoreDiffExplanation.Note.BETTER,
                 new String[]{
                         "https://zenodo.org/record/7015307/files/S%3D2_2x2_CH%3D1.czi",
@@ -849,7 +834,7 @@ public class CompareReader {
                         "getPixelsPhysicalSizeY"
                 });
 
-        addIgnoreRule("getPlaneDeltaT returns a wrong value (timestamp from first series) for the lower resolution levels",
+        addIgnoreRule("getPlaneDeltaT returns a wrong value (timestamp from first series) for the lower resolution levels in the original reader",
                 IgnoreDiffExplanation.Note.BETTER,
                 new String[]{
                         "https://zenodo.org/record/7015307/files/S%3D2_2x2_CH%3D1.czi",
@@ -889,8 +874,8 @@ public class CompareReader {
                         "getStageLabelZ",
                 });
 
-        addIgnoreRule("The pixel size (X, Y) is not defined, the stage and plane location is in reference frame in"+
-                " the new reader, and in micrometer in the original reader",
+        addIgnoreRule("When the pixel size is not defined (label / overview), the stage and plane location is in reference frame in"+
+                " the quick reader, and in micrometer in the original reader.",
                 IgnoreDiffExplanation.Note.SAME,
                 new String[]{
                         "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031_pt1.czi",
@@ -900,8 +885,8 @@ public class CompareReader {
                         "getPlanePositionX", "getPlanePositionY"
                 });
 
-        addIgnoreRule("The pixel size (Z) is not defined, so one has to add a 0 in reference frame unit"+
-                " and a micrometer value in the metadata. This reader chooses to set this operation as null,"+
+        addIgnoreRule("An edge case when the pixel size in Z is not defined, so one has to add a 0 in reference frame unit"+
+                " and a micrometer value in the metadata. The new reader chooses to set this operation as null,"+
                 " while the original reader keeps the micrometer value only",
                 IgnoreDiffExplanation.Note.WORSE,
                 new String[]{
@@ -911,7 +896,7 @@ public class CompareReader {
                         "getStageLabelZ", "getPlanePositionZ",
                 });
 
-        addIgnoreRule("This reader sets the plane location as 0 micrometer, while the "+
+        addIgnoreRule("The quick reader sets the plane location as 0 micrometer, while the "+
                 " original reader sets it as 0 in reference frame unit.",
                 IgnoreDiffExplanation.Note.SAME,
                 new String[]{
@@ -921,7 +906,7 @@ public class CompareReader {
                         "getStageLabelX", "getStageLabelY", "getPlanePositionX", "getPlanePositionY"
                 });
 
-        addIgnoreRule("A constant shift in XY (40 nm) that is below half a pixel (100 nm) ",
+        addIgnoreRule("A constant shift in XY (40 nm) that is below half a pixel (100 nm),",
                 IgnoreDiffExplanation.Note.SAME,
                 new String[]{
                         "https://zenodo.org/record/7015307/files/S%3D2_2x2_CH%3D1.czi",
@@ -936,7 +921,8 @@ public class CompareReader {
 
         addIgnoreRule("The original reader is not consistent when setting the plane positions:"+
                 " it returns the top left corner of all images, except when a plane contains many blocks (mosaic)"+
-                " and autostitching  is set to true. In contrast, this reader consistently returns the top"+
+                " and autostitching is set to true: in this case the original reader return the center location of the image." +
+                        " In comparison, the quick reader consistently returns the top"+
                 " left corner of the image, whether autostitch is true or false.",
                 IgnoreDiffExplanation.Note.BETTER,
                 new String[]{
@@ -997,6 +983,34 @@ public class CompareReader {
                 }
             };
 
+            logTo.accept("# Explained metadata differences between ZeissQuickStartCZIReader and ZeissCZI Reader\n");
+
+            allExplanations.forEach(exp -> {
+                ruleNumber++;
+                logTo.accept("## Rule #"+ruleNumber);
+                switch (exp.note) {
+                    case BETTER:
+                        logTo.accept("  IMPROVEMENT ");
+                        break;
+                    case WORSE:
+                        logTo.accept("  ISSUE ");
+                        break;
+                    case SAME:
+                        logTo.accept("  IDENTICAL ");
+                        break;
+
+                };
+                logTo.accept("\n");
+                logTo.accept(exp.explanation+"\n");
+                logTo.accept("\n");
+                logTo.accept("Affected images:\n");
+                exp.occurencesPerReader.forEach((imageName, number) -> {
+                    logTo.accept("* (x "+number+") "+imageName+"\n");
+                });
+            });
+
+            logTo.accept("\n");
+            logTo.accept("# Table\n");
             DecimalFormat df = new DecimalFormat("0.0");
             logTo.accept("|OK |File Name|AutoStitch|#Diffs<br>(Critical)|#Diffs|#Diffs Ignored|#DiffsPixels|Mem Gain|Init Time Gain|Read Time Gain|\n");
             logTo.accept("|---|---------|----------|--------------------|------|--------------|------------|--------|--------------|--------------|\n");
@@ -1033,8 +1047,6 @@ public class CompareReader {
                     throw new RuntimeException(e);
                 }
             };
-
-            DecimalFormat df = new DecimalFormat("0.0");
 
             int maxDiffsDisplayed = 100;
             logTo.accept("## Number of differences between readers (cropped to "+100+")");
@@ -1108,50 +1120,9 @@ public class CompareReader {
             }
             logTo.accept("```");
 
-
-
-            /*logTo.accept("|OK |File Name|AutoStitch|#Diffs<br>(Critical)|#Diffs|#Diffs Ignored|#DiffsPixels|Mem Gain|Init Time Gain|Read Time Gain|\n");
-            logTo.accept("|---|---------|----------|--------------------|------|--------------|------------|--------|--------------|--------------|\n");
-            for (SummaryPerFile summary: summaryList) {
-                String res = " ";
-                if (summary.numberOfDifferences+summary.numberOfCriticalDifferences+summary.numberOfDiffsPixels==0) {
-                    res = "✓";
-                }
-                logTo.accept("|"+res+"|");
-                logTo.accept("["+summary.imageName+"]("+summary.urlFullReport+")|");
-                logTo.accept(summary.autoStitch+"|");
-                logTo.accept(summary.numberOfCriticalDifferences+"|");
-                logTo.accept(summary.numberOfDifferences+"|");
-                logTo.accept(summary.numberOfDifferencesIgnored+"|");
-                logTo.accept(summary.numberOfDiffsPixels+"|");
-                logTo.accept(df.format(summary.ratioMem)+"|");
-                logTo.accept(df.format(summary.ratioReaderInitialisationDuration)+"|");
-                logTo.accept(df.format(summary.ratioFirstPlaneReadingTime)+"|\n");
-            }*/
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        /*
-        ```
-        gantt
-            title Git Issues - days since last update
-            dateFormat  X
-            axisFormat %s
-
-            section Issue19062
-            71   : 0, 71
-            section Issue19401
-            36   : 0, 36
-            section Issue193
-            34   : 0, 34
-            section Issue7441
-            9    : 0, 9
-            section Issue1300
-            5    : 0, 5
-        ```
-         */
 
     }
 

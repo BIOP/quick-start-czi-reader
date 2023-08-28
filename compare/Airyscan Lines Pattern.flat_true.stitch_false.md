@@ -7,12 +7,12 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |87 ms|------|116 ms|------|--------|
+| Read time (all)   |55 ms|------|53 ms|------|--------|
 |0|![Airyscan Lines Pattern.quick_true.flat_true.stitch_false.series_0.jpg](Airyscan Lines Pattern/Airyscan Lines Pattern.quick_true.flat_true.stitch_false.series_0.jpg)|X:1000<br>Y:1000<br>C:1<br>Z:1<br>T:1|![Airyscan Lines Pattern.quick_false.flat_true.stitch_false.series_0.jpg](Airyscan Lines Pattern/Airyscan Lines Pattern.quick_false.flat_true.stitch_false.series_0.jpg)|X:1000<br>Y:1000<br>C:1<br>Z:1<br>T:1|0|
 
 # Metadata
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |11 ms|15 ms|        |
+| Initialization     |                  |5 ms|5 ms|        |
 | Reader Size (Mb)     |                  |0.12|0.19|        |
