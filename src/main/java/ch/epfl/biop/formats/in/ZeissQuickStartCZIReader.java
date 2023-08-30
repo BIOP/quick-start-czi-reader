@@ -205,6 +205,7 @@ import static ch.epfl.biop.formats.in.libczi.LibCZI.ZSTD_1;
  *  lazy loading AND memoization functionality.
  *
  *  TODO: sync https://github.com/ome/bioformats/pull/4088, that was fixed after this reader was branched from bio-formats
+ *  TODO: implement getfillcolor
  *
  */
 
@@ -471,7 +472,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         }
     }
 
-    private byte[] readRawPixelData(MinimalDimensionEntry block, // TODO What is data size ? I think it's the number of bytes...
+    private byte[] readRawPixelData(MinimalDimensionEntry block,
                                    int compression,
                                    int storedSizeX,
                                    int storedSizeY,
@@ -1038,11 +1039,25 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
         int nFrames = maxValuePerDimension.containsKey("T")? maxValuePerDimension.get("T")+1:1;
 
-        // TODO!!! CHANGE DIGIT AFTER MODULO!!! Or it may break!!
         Map<String, Integer> maxDigitPerDimension = new HashMap<>();
-        maxValuePerDimension.keySet().forEach(dim ->
-            maxDigitPerDimension.put(dim, String.valueOf(maxValuePerDimension.get(dim)).length())
-        );
+        maxValuePerDimension.keySet().forEach(dim -> {
+            switch (dim) {
+                case "C":
+                    // illuminations -> modulo C
+                    maxDigitPerDimension.put(dim, String.valueOf(maxValuePerDimension.get(dim)*nIlluminations).length());
+                    break;
+                case "Z":
+                    // rotations -> modulo Z
+                    maxDigitPerDimension.put(dim, String.valueOf(maxValuePerDimension.get(dim)*nRotations).length());
+                    break;
+                case "T":
+                    // phases -> modulo T
+                    maxDigitPerDimension.put(dim, String.valueOf(maxValuePerDimension.get(dim)*nPhases).length());
+                    break;
+                default:
+                    maxDigitPerDimension.put(dim, String.valueOf(maxValuePerDimension.get(dim)).length());
+            }
+        });
 
         // Ready to build the signature
         Map<CoreSignature, List<ModuloDimensionEntries>> coreSignatureToBlocks = new HashMap<>();
@@ -3344,9 +3359,11 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     if (!Double.isNaN(sbmziti.exposureTime)) {
                         exposure = new Time(sbmziti.exposureTime*1000, UNITS.SECOND);
                     } else {
-                        Double exposureFromChannel = channels.get(iChannel).exposure;
-                        if (exposureFromChannel!=null) {
-                            exposure = new Time(exposureFromChannel, UNITS.SECOND);
+                        if (channels.size()>iChannel) { // Could be an issue with illumination TODO check
+                            Double exposureFromChannel = channels.get(iChannel).exposure;
+                            if (exposureFromChannel != null) {
+                                exposure = new Time(exposureFromChannel, UNITS.SECOND);
+                            }
                         }
                     }
 

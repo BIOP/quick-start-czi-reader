@@ -91,6 +91,7 @@ public class LibCZI {
      * @throws IOException invalid file, invalid file location, segment not found
      */
     public static SubBlockDirectorySegment getSubBlockDirectorySegment(FileHeaderSegment fileHeader, String id, int BUFFER_SIZE, boolean isLittleEndian) throws IOException {
+        // TODO (maybe) : increase buffer size to limit the number of IO calls, especially when the file is mounted on a network drive
         try (RandomAccessInputStream in = new RandomAccessInputStream(id, BUFFER_SIZE)) {
             SubBlockDirectorySegment directorySegment = new SubBlockDirectorySegment();
 
