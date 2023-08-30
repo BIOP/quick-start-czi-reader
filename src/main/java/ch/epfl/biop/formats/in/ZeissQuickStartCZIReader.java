@@ -3460,9 +3460,9 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                                             dT = new Time(sbmzt.timestamp - realT0,
                                                     UNITS.SECOND);
                                         }
-
-                                        pZ = new Length(offsetZ0 + iZ * stepZ, unitLength);
                                     }
+
+                                    pZ = new Length(offsetZ0 + iZ * stepZ, unitLength);
                                 }
                                 if (resolutionLevel0) {
                                     if ((dT != null) && (!Double.isNaN(dT.value().doubleValue()))) { // To fit the original reader. NaN -> Null

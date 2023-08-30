@@ -785,6 +785,10 @@ public class CompareReader {
 
                 // There are many more of the same kind // */
         };
+        // Local files - too big and/or private, not available on Zenodo
+        cziURLs = new String[] {
+          "F:/czis/27052022_MouseE11_ToPRO_test_5x_z1.czi"
+        };
 
         for (String url: cziURLs) {
             explanations.put(url, new HashMap<>());
@@ -947,7 +951,12 @@ public class CompareReader {
         List<SummaryPerFile> summaryList = new ArrayList<>();
 
         for (String url: cziURLs) {
-            File f = DatasetHelper.getDataset(url, decoder);
+            File f = null;
+            if (url.startsWith("https://")) {
+                f = DatasetHelper.getDataset(url, decoder);
+            } else {
+                f = new File(url);
+            }
             System.out.println("Analysis of file: "+f.getName());
             try {
                 boolean autoStitch, flattenRes;
