@@ -50,7 +50,6 @@ import loci.formats.in.DynamicMetadataOptions;
 import loci.formats.in.JPEGReader;
 import loci.formats.in.MetadataOptions;
 import ch.epfl.biop.formats.in.libczi.LibCZI;
-import loci.formats.meta.IMetadata;
 import loci.formats.meta.MetadataStore;
 import loci.formats.ome.OMEXMLMetadata;
 import loci.formats.services.OMEXMLService;
@@ -196,9 +195,6 @@ import static ch.epfl.biop.formats.in.libczi.LibCZI.ZSTD_1;
  *  - add a method that returns a 3D matrix per series (for lattice skewed dataset?) take care with version
  *  Issues:
  *  - some absolute path are stored in the reader, thus the memo fails if the file is moved
- *  - CRITICAL!! Since the implementation of modulo, the string of the core signature may be wrong: 5 channels
- *  and 4 illuminations lead to 20 channels, and this uses 2 digits for the channel string signature
- *  instead of one
  *  - improve: slide preview and label image are stored directly in the reader as a byte array. That does not look optimal
  *  but loading these bytes on demand is quite tedious: hard to explain, but a reader is created inside the reader and
  *  maps the file 'temporarily' to a fake file. That's pretty clever and convenient, but prevents (most probably)
@@ -478,7 +474,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                                    int storedSizeY,
                                    RandomAccessInputStream s, Region tile, byte[] buf,
                                     int bpp, int totalBpp) throws FormatException, IOException {
-        //s.order(isLittleEndian()); -> it should be already set when calling the method
+        //s.order(isLittleEndian()); -> it is already set when calling the method
 
         if ((useCache)&&(compression!=UNCOMPRESSED)) {
             cacheLock.lock();
@@ -493,7 +489,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             }
 
             // - block not in cache
-
             if (subBlocksCurrentlyLoading.contains(block)) {
                 // There's already, in a different thread, a reader instance
                 // computing the same block. We need to wait for it to finish
@@ -734,7 +729,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         streamCurrentPart = -1;
     }
 
-    private synchronized RandomAccessInputStream getStream(int filePart) throws IOException {
+    private synchronized RandomAccessInputStream getStream(int filePart) throws IOException { // TODO : remove synchronized which is useless, a single reader is not multithreaded
         if ((in != null)&&(streamCurrentPart == filePart)) {
             return in;
         }

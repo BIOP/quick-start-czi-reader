@@ -783,12 +783,25 @@ public class CompareReader {
                 // There are many more of the same kind
                 "https://downloads.openmicroscopy.org/images/Zeiss-CZI/idr0011/Plate1-Blue-A_TS-Stinger/Plate1-Blue-A-12-Scene-3-P3-F2-03.czi",
 
-                // There are many more of the same kind // */
+                // There are many more of the same kind //,
+                "https://zenodo.org/record/8303129/files/xt-scan-lsm980.czi",
+                "https://zenodo.org/record/8303129/files/xz-scan-lsm980.czi",
+                "https://zenodo.org/record/8303129/files/xzt-scan-lsm980.czi",
+
+                // Multi illumination, multi angle
+                "https://zenodo.org/record/8305531/files/MouseBrain_41Slices_1Tile_1Channel_2Illuminations_2Angles.czi",
+                "https://zenodo.org/record/8305531/files/MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.czi",
+                "https://zenodo.org/record/8305531/files/MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.czi"
+
+                // */
         };
         // Local files - too big and/or private, not available on Zenodo
-        cziURLs = new String[] {
-          "F:/czis/27052022_MouseE11_ToPRO_test_5x_z1.czi"
-        };
+        /*cziURLs = new String[] {
+          //"F:/czis/27052022_MouseE11_ToPRO_test_5x_z1.czi"
+                "C:\\Users\\nicol\\Dropbox\\czis\\xt-scan-lsm980.czi",
+                "C:\\Users\\nicol\\Dropbox\\czis\\xz-scan-lsm980.czi",
+                "C:\\Users\\nicol\\Dropbox\\czis\\xzt-scan-lsm980.czi"
+        };*/
 
         for (String url: cziURLs) {
             explanations.put(url, new HashMap<>());
@@ -942,7 +955,10 @@ public class CompareReader {
                         "https://zenodo.org/record/7015307/files/S%3D2_T%3D3_Z%3D5_CH%3D1.czi", // 5.3 MB
                         "https://zenodo.org/record/7015307/files/S%3D3_1Pos_2Mosaic_T%3D2%3DZ%3D3_CH%3D2.czi",
                         "https://zenodo.org/record/7015307/files/W96_B2%2BB4_S%3D2_T%3D1%3DZ%3D1_C%3D1_Tile%3D5x9.czi", // 31.3 MB
-                        "https://zenodo.org/record/7015307/files/W96_B2%2BB4_S%3D2_T%3D2%3DZ%3D4_C%3D3_Tile%3D5x9.czi"
+                        "https://zenodo.org/record/7015307/files/W96_B2%2BB4_S%3D2_T%3D2%3DZ%3D4_C%3D3_Tile%3D5x9.czi",
+                        "https://zenodo.org/record/8305531/files/MouseBrain_41Slices_1Tile_1Channel_2Illuminations_2Angles.czi",
+                        "https://zenodo.org/record/8305531/files/MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.czi",
+                        "https://zenodo.org/record/8305531/files/MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.czi"
                 },
                 new String[]{
                         "getStageLabelX", "getStageLabelY", "getPlanePositionX", "getPlanePositionY"
