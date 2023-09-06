@@ -729,6 +729,8 @@ public class CompareReader {
         DatasetHelper.getDataset("https://zenodo.org/record/8263451/files/Image_1_2023_08_18__14_32_31_964%283%29.czi", decoder);
         DatasetHelper.getDataset("https://zenodo.org/record/8263451/files/test_gray.czi", decoder);
         DatasetHelper.getDataset("https://zenodo.org/record/8263451/files/Image_1_2023_08_18__14_32_31_964.czi", decoder);
+        DatasetHelper.getDataset("https://zenodo.org/record/8305531/files/MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.czi", decoder);
+
 
         String[] cziURLs ={
                 "https://zenodo.org/record/8263451/files/Demo%20LISH%204x8%2015pct%20647.czi",
@@ -791,9 +793,10 @@ public class CompareReader {
                 // Multi illumination, multi angle
                 "https://zenodo.org/record/8305531/files/MouseBrain_41Slices_1Tile_1Channel_2Illuminations_2Angles.czi",
                 "https://zenodo.org/record/8305531/files/MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.czi",
-                "https://zenodo.org/record/8305531/files/MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.czi"
+                "https://zenodo.org/record/8305531/files/MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.czi",
 
-                // */
+                // LSM880
+                "https://zenodo.org/record/8321543/files/3Dexample.czi"
         };
         // Local files - too big and/or private, not available on Zenodo
         /*cziURLs = new String[] {

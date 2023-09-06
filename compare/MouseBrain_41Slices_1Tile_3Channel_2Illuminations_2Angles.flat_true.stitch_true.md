@@ -7,7 +7,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |285 ms|------|312 ms|------|--------|
+| Read time (all)   |268 ms|------|270 ms|------|--------|
 |0|![MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.quick_true.flat_true.stitch_true.series_0.jpg](MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles/MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.quick_true.flat_true.stitch_true.series_0.jpg)|X:1500<br>Y:1000<br>C:6<br>Z:41<br>T:1|![MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.quick_false.flat_true.stitch_true.series_0.jpg](MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles/MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.quick_false.flat_true.stitch_true.series_0.jpg)|X:1500<br>Y:1000<br>C:6<br>Z:41<br>T:1|0|
 |1|![MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.quick_true.flat_true.stitch_true.series_1.jpg](MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles/MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.quick_true.flat_true.stitch_true.series_1.jpg)|X:1500<br>Y:1000<br>C:6<br>Z:41<br>T:1|![MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.quick_false.flat_true.stitch_true.series_1.jpg](MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles/MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.quick_false.flat_true.stitch_true.series_1.jpg)|X:1500<br>Y:1000<br>C:6<br>Z:41<br>T:1|0|
 
@@ -15,8 +15,8 @@
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |12 ms|12 ms|        |
-| Reader Size (Mb)     |                  |0.40|0.94|        |
+| Initialization     |                  |11 ms|11 ms|        |
+| Reader Size (Mb)     |                  |0.39|0.93|        |
 | getStageLabelName| Image 1 | Scene position #0| Scene position #1| |
 | getStageLabelX| Image 1 | ome.units.quantity.Length: value[-388.443], unit[µm] stored as java.lang.Double| ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer| |
 | getStageLabelY| Image 1 | ome.units.quantity.Length: value[16038.1], unit[µm] stored as java.lang.Double| ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer| |

@@ -7,15 +7,15 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |234 ms|------|226 ms|------|--------|
+| Read time (all)   |219 ms|------|216 ms|------|--------|
 |0|![xzt-scan-lsm980.quick_true.flat_true.stitch_true.series_0.jpg](xzt-scan-lsm980/xzt-scan-lsm980.quick_true.flat_true.stitch_true.series_0.jpg)|X:512<br>Y:1<br>C:1<br>Z:715<br>T:5|![xzt-scan-lsm980.quick_false.flat_true.stitch_true.series_0.jpg](xzt-scan-lsm980/xzt-scan-lsm980.quick_false.flat_true.stitch_true.series_0.jpg)|X:512<br>Y:1<br>C:1<br>Z:715<br>T:5|0|
 
 # Metadata
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |140 ms|126 ms|        |
-| Reader Size (Mb)     |                  |4.22|8.79|        |
+| Initialization     |                  |140 ms|123 ms|        |
+| Reader Size (Mb)     |                  |4.21|8.79|        |
 | getPlanePositionZ| Image 0 Plane 13 | 5794.730 um | 5794.731 um | 0.001 um |
 | getPlanePositionZ| Image 0 Plane 14 | 5794.940 um | 5794.941 um | 0.001 um |
 | getPlanePositionZ| Image 0 Plane 15 | 5795.150 um | 5795.151 um | 0.001 um |

@@ -7,7 +7,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |3773 ms|------|3574 ms|------|--------|
+| Read time (all)   |2696 ms|------|3404 ms|------|--------|
 |0|![test_gray.quick_true.flat_true.stitch_false.series_0.jpg](test_gray/test_gray.quick_true.flat_true.stitch_false.series_0.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|![test_gray.quick_false.flat_true.stitch_false.series_0.jpg](test_gray/test_gray.quick_false.flat_true.stitch_false.series_0.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|0|
 |1|![test_gray.quick_true.flat_true.stitch_false.series_1.jpg](test_gray/test_gray.quick_true.flat_true.stitch_false.series_1.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|![test_gray.quick_false.flat_true.stitch_false.series_1.jpg](test_gray/test_gray.quick_false.flat_true.stitch_false.series_1.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|0|
 |2|![test_gray.quick_true.flat_true.stitch_false.series_2.jpg](test_gray/test_gray.quick_true.flat_true.stitch_false.series_2.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|![test_gray.quick_false.flat_true.stitch_false.series_2.jpg](test_gray/test_gray.quick_false.flat_true.stitch_false.series_2.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|0|

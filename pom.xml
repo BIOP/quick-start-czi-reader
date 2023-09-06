@@ -95,6 +95,16 @@
 
 		<!-- NB: Deploy releases to the SciJava Maven repository. -->
 		<releaseProfiles>sign,deploy-to-scijava</releaseProfiles>
+		<!--<maven.compiler.source>21</maven.compiler.source>
+		<maven.compiler.target>21</maven.compiler.target>
+
+		<scijava.jvm.version>19</scijava.jvm.version>
+		<scijava.jvm.test.version>19</scijava.jvm.test.version>
+		<scijava.jvm.build.version>19</scijava.jvm.build.version>
+		<maven.compiler.source>19</maven.compiler.source>
+		<maven.compiler.target>19</maven.compiler.target>
+		<maven.compiler.testSource>19</maven.compiler.testSource>
+		<maven.compiler.testTarget>19</maven.compiler.testTarget>-->
 	</properties>
 
 	<repositories>

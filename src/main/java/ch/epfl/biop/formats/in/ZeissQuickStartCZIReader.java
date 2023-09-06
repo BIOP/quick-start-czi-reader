@@ -163,7 +163,7 @@ import static ch.epfl.biop.formats.in.libczi.LibCZI.ZSTD_1;
  * czi size files. To save memory, the data structures used for reading are trimmed to the minimal amount of data
  * necessary for the reading after the reader has been initialized To illustrate this point, for a 6Tb dataset, each 'int'
  * saved per block saves 7Mb (in RAM and in memo file). Trimming down libczi dimension entries
- * to {@link MinimalDimensionEntry} leads to a memo file of around 100Mb for a 4Tb czi file. Its initialisation
+ * to {@link MinDimEntry} leads to a memo file of around 100Mb for a 4Tb czi file. Its initialisation
  * takes below a minute, with memo building. Then a few seconds to generate a new reader from a memo file is sufficient.
  * <p>
  * 4. Even with memoization, at runtime, a reader for a multi Tb file will take around 300Mb on the heap. While this
@@ -202,6 +202,8 @@ import static ch.epfl.biop.formats.in.libczi.LibCZI.ZSTD_1;
  *
  *  TODO: sync https://github.com/ome/bioformats/pull/4088, that was fixed after this reader was branched from bio-formats
  *  TODO: implement getfillcolor
+ *  TODO: test PALM file
+ *  TODO: ask how to get rid of absolute file path in memo that do not crash the reader when the file is moved
  *
  */
 
@@ -267,7 +269,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
     @CopyByRef
     private List< // CoreIndex
             HashMap<CZTKey, // CZT
-                    List<MinimalDimensionEntry>>>
+                    List<MinDimEntry>>>
             coreIndexToTZCToMinimalBlocks = new ArrayList<>();
 
     @CopyByRef
@@ -298,7 +300,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
     transient Lock cacheLock = new ReentrantLock();
 
     @CopyByRef
-    transient Set<MinimalDimensionEntry> subBlocksCurrentlyLoading = new HashSet<>();
+    transient Set<MinDimEntry> subBlocksCurrentlyLoading = new HashSet<>();
 
     @CopyByRef
     transient boolean useCache = true;
@@ -468,11 +470,11 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         }
     }
 
-    private byte[] readRawPixelData(MinimalDimensionEntry block,
-                                   int compression,
-                                   int storedSizeX,
-                                   int storedSizeY,
-                                   RandomAccessInputStream s, Region tile, byte[] buf,
+    private byte[] readRawPixelData(MinDimEntry block,
+                                    int compression,
+                                    int storedSizeX,
+                                    int storedSizeY,
+                                    RandomAccessInputStream s, Region tile, byte[] buf,
                                     int bpp, int totalBpp) throws FormatException, IOException {
         //s.order(isLittleEndian()); -> it is already set when calling the method
 
@@ -799,11 +801,11 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         }
 
         // The data is somewhere in these blocks
-        List<MinimalDimensionEntry> blocks = coreIndexToTZCToMinimalBlocks.get(currentIndex).get(key);
+        List<MinDimEntry> blocks = coreIndexToTZCToMinimalBlocks.get(currentIndex).get(key);
 
         if (blocks == null) return buf; // No block found -> empty image. TODO : black or white ?
 
-        for (MinimalDimensionEntry block : blocks) {
+        for (MinDimEntry block : blocks) {
             Region blockRegion = new Region(
                     block.dimensionStartX/ coreIndexToDownscaleFactor.get(coreIndex) - coreIndexToOx.get(coreIndex),
                     block.dimensionStartY/ coreIndexToDownscaleFactor.get(coreIndex) - coreIndexToOy.get(coreIndex),
@@ -1230,7 +1232,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         List< // CoreIndex
                 HashMap<CZTKey, // CZT
                        // List<LibCZI.SubBlockDirectorySegment.SubBlockDirectorySegmentData.SubBlockDirectoryEntry>>>
-                        List<MinimalDimensionEntry>>>
+                        List<MinDimEntry>>>
                 mapCoreTZCToBlocks = new ArrayList<>();
 
         for (int iCoreIndex = 0; iCoreIndex<core.size(); iCoreIndex++) {
@@ -1238,8 +1240,8 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             CoreSignature coreSignature = orderedCoreSignatureList.get(iCoreIndex);
             mapCoreTZCToBlocks.add(iCoreIndex, new HashMap<>());
             coreIndexToTZCToMinimalBlocks.add(iCoreIndex, new HashMap<>());
-            HashMap<CZTKey, List<MinimalDimensionEntry>> blocksInCore = mapCoreTZCToBlocks.get(iCoreIndex);
-            HashMap<CZTKey, List<MinimalDimensionEntry>> minimalBlocksInCore = coreIndexToTZCToMinimalBlocks.get(iCoreIndex);
+            HashMap<CZTKey, List<MinDimEntry>> blocksInCore = mapCoreTZCToBlocks.get(iCoreIndex);
+            HashMap<CZTKey, List<MinDimEntry>> minimalBlocksInCore = coreIndexToTZCToMinimalBlocks.get(iCoreIndex);
             for (ModuloDimensionEntries block: coreSignatureToBlocks.get(coreSignature)) {
                 int c = block.getDimension("C").start;
                 int z = (block.hasDimension("Z"))? block.getDimension("Z").start: 0;
@@ -1249,7 +1251,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     blocksInCore.put(k, new ArrayList<>());
                     minimalBlocksInCore.put(k, new ArrayList<>());
                 }
-                MinimalDimensionEntry mde = new MinimalDimensionEntry(block); // Makes a trimmed down version of the block in order to reduce the reader memory footprint
+                MinDimEntry mde = new MinDimEntry(block); // Makes a trimmed down version of the block in order to reduce the reader memory footprint getMinimalEntry(block);//
                 blocksInCore.get(k).add(mde);
                 minimalBlocksInCore.get(k).add(mde);
             }
@@ -1880,16 +1882,18 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         }
     }
 
+
+
     /**
      * A stripped down version of
      * {@link LibCZI.SubBlockDirectorySegment.SubBlockDirectorySegmentData.SubBlockDirectoryEntry}
      * Because we have really many of these objects, and it's critical to keep these objects as small as possible
      */
-    static class MinimalDimensionEntry {
+    static class MinDimEntry {
 
         final int dimensionStartZ;
 
-        public MinimalDimensionEntry(ModuloDimensionEntries entry) {
+        public MinDimEntry(ModuloDimensionEntries entry) {
             filePosition = entry.getFilePosition();
             dimensionStartX = entry.getDimension("X").start;
             dimensionStartY = entry.getDimension("Y").start;
@@ -1908,7 +1912,29 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         final int storedSizeX, storedSizeY;
 
         final int filePart;
+
+
     }
+
+
+    //MinimalDimensionEntry - for Java > 17
+    /*public record MinDimEntry(int dimensionStartZ, long filePosition,
+
+                              int dimensionStartX,int dimensionStartY, int storedSizeX, int storedSizeY, int filePart) {}
+
+    public static MinDimEntry getMinimalEntry(ModuloDimensionEntries entry) {
+        long filePosition = entry.getFilePosition();
+        int dimensionStartX = entry.getDimension("X").start;
+        int dimensionStartY = entry.getDimension("Y").start;
+        int dimensionStartZ = 0;
+        if (entry.hasDimension("Z")) {
+            dimensionStartZ = entry.getDimension("Z").start;
+        }
+        int storedSizeX = entry.getDimension("X").storedSize;
+        int storedSizeY = entry.getDimension("Y").storedSize;
+        int filePart = entry.filePart;
+        return new MinDimEntry(dimensionStartZ, filePosition, dimensionStartX, dimensionStartY, storedSizeX, storedSizeY, filePart);
+    }*/
 
     /** Duplicates this reader for parallel reading.
      * Creating a reader with this method allows to keep a very low memory footprint
@@ -1957,7 +1983,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
     }
 
     static class SubBlockLRUCache extends
-            LinkedHashMap<MinimalDimensionEntry, SoftReference<byte[]>>
+            LinkedHashMap<MinDimEntry, SoftReference<byte[]>>
     {
 
         private static final long serialVersionUID = 1L;
@@ -1966,7 +1992,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
         AtomicLong totalWeight = new AtomicLong();
 
-        HashMap<MinimalDimensionEntry, Long> cost = new HashMap<>();
+        HashMap<MinDimEntry, Long> cost = new HashMap<>();
 
         public SubBlockLRUCache(final int iniSize, final long maxCost) {
             super(iniSize, 0.75f, true);
@@ -1987,7 +2013,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
         @Override
         protected boolean removeEldestEntry(
-                final Map.Entry<MinimalDimensionEntry, SoftReference<byte[]>> eldest)
+                final Map.Entry<MinDimEntry, SoftReference<byte[]>> eldest)
         {
             if (totalWeight.get() > maxCost) {
                 totalWeight.addAndGet(-cost.get(eldest.getKey()));
@@ -1999,7 +2025,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             else return false;
         }
 
-        synchronized public void touch(final MinimalDimensionEntry key,
+        synchronized public void touch(final MinDimEntry key,
                                        final byte[] value)
         {
             final SoftReference<byte[]> ref = get(key);
@@ -2057,7 +2083,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                                 List< // CoreIndex
                                         HashMap<CZTKey, // CZT
                                                 // List<LibCZI.SubBlockDirectorySegment.SubBlockDirectorySegmentData.SubBlockDirectoryEntry>>>
-                                                List<MinimalDimensionEntry>>>
+                                                List<MinDimEntry>>>
                                         mapCoreTZCToBlocks) throws FormatException, IOException {
             // MetaData from xml file
             DocumentBuilder parser = XMLTools.createBuilder();
@@ -3017,11 +3043,11 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         private LibCZI.SubBlockMeta getSubBlockMeta(int c, int z, int t, int coreIdx,
                                                     List< // CoreIndex
                                                             HashMap<CZTKey, // CZT
-                                                                    List<MinimalDimensionEntry>>>
+                                                                    List<MinDimEntry>>>
                                                             mapCoreCZTToBlocks,
                                                     DocumentBuilder parser) throws IOException {
             CZTKey czt = new CZTKey(c,z,t);
-            List<MinimalDimensionEntry> blocks = mapCoreCZTToBlocks.get(coreIdx).get(czt);
+            List<MinDimEntry> blocks = mapCoreCZTToBlocks.get(coreIdx).get(czt);
             if ((blocks==null) || (blocks.size()==0)) return null;
             LibCZI.SubBlockSegment block = LibCZI.getBlock(reader.getStream(blocks.get(0).filePart), blocks.get(0).filePosition);
             return LibCZI.readSubBlockMeta(reader.getStream(blocks.get(0).filePart), block, parser);
@@ -3030,9 +3056,9 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         private class Corner {
             Length x, y, z;
 
-            Corner fromSubBlockMeta(Collection<MinimalDimensionEntry> blocks, int iCoreIndex, Unit<Length> unitLength, DocumentBuilder parser) {
+            Corner fromSubBlockMeta(Collection<MinDimEntry> blocks, int iCoreIndex, Unit<Length> unitLength, DocumentBuilder parser) {
 
-                for (MinimalDimensionEntry iBlock : blocks) {
+                for (MinDimEntry iBlock : blocks) {
                     try {
                         LibCZI.SubBlockSegment block = LibCZI.getBlock(reader.getStream(iBlock.filePart), iBlock.filePosition);
                         LibCZI.SubBlockMeta sbm = LibCZI.readSubBlockMeta(reader.getStream(iBlock.filePart), block, parser);
@@ -3063,8 +3089,8 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 return this;
             }
 
-            Corner fromBlocks(Collection<MinimalDimensionEntry> blocks, int iCoreIndex, Unit<Length> unitLength) {
-                for (MinimalDimensionEntry iBlock : blocks) {
+            Corner fromBlocks(Collection<MinDimEntry> blocks, int iCoreIndex, Unit<Length> unitLength) {
+                for (MinDimEntry iBlock : blocks) {
                     Length posX = new Length((double) iBlock.dimensionStartX/(double) reader.coreIndexToDownscaleFactor.get(iCoreIndex)
                             *coreToPixSizeX.get(iCoreIndex).value(unitLength).doubleValue(), unitLength);
                     if ((x == null)||(x.value().doubleValue()>posX.value(unitLength).doubleValue())) {
@@ -3093,7 +3119,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         private void setSpaceAndTimeInformation( // of series and of planes
                                                  List< // CoreIndex
                                                          HashMap<CZTKey, // CZT
-                                                                 List<MinimalDimensionEntry>>>
+                                                                 List<MinDimEntry>>>
                                                          mapCoreCZTToBlocks,
                                                  DocumentBuilder parser, CZISegments cziSegments) throws IOException {
 
@@ -3120,7 +3146,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             // Attempt strategy 1:
             // - Let's pick the first subblock of the first core index
             int coreUsedForXYOffset = 0;
-            MinimalDimensionEntry firstSubBlock = mapCoreCZTToBlocks.get(coreUsedForXYOffset).get(new CZTKey(0, 0, 0)).get(0);
+            MinDimEntry firstSubBlock = mapCoreCZTToBlocks.get(coreUsedForXYOffset).get(new CZTKey(0, 0, 0)).get(0);
 
             LibCZI.SubBlockSegment block = LibCZI.getBlock(reader.getStream(firstSubBlock.filePart), firstSubBlock.filePosition);
             LibCZI.SubBlockMeta sbm = LibCZI.readSubBlockMeta(reader.getStream(firstSubBlock.filePart), block, parser);
@@ -3238,7 +3264,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 }
 
                 int nChannels = reader.getSizeC();
-                List<MinimalDimensionEntry> blocks;
+                List<MinDimEntry> blocks;
 
                 Length planePosX, planePosY, planePosZ = null; // plane position of the current coreindex - do not vary over z and t, but that could happen
 

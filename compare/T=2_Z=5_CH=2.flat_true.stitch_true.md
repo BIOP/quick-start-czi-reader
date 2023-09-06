@@ -7,13 +7,13 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |43 ms|------|50 ms|------|--------|
+| Read time (all)   |42 ms|------|48 ms|------|--------|
 |0|![T=2_Z=5_CH=2.quick_true.flat_true.stitch_true.series_0.jpg](T=2_Z=5_CH=2/T=2_Z=5_CH=2.quick_true.flat_true.stitch_true.series_0.jpg)|X:256<br>Y:256<br>C:2<br>Z:5<br>T:2|![T=2_Z=5_CH=2.quick_false.flat_true.stitch_true.series_0.jpg](T=2_Z=5_CH=2/T=2_Z=5_CH=2.quick_false.flat_true.stitch_true.series_0.jpg)|X:256<br>Y:256<br>C:2<br>Z:5<br>T:2|0|
 
 # Metadata
 
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |18 ms|19 ms|        |
-| Reader Size (Mb)     |                  |1.99|2.62|        |
+| Initialization     |                  |16 ms|16 ms|        |
+| Reader Size (Mb)     |                  |1.99|2.61|        |
 | getStageLabelName| Image 0 | Current-Position| Scene position #0| |
