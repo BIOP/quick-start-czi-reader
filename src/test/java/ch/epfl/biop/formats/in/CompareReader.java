@@ -6,6 +6,7 @@ import ij.plugin.ContrastEnhancer;
 import ij.plugin.Scaler;
 import ij.process.ImageProcessor;
 import loci.common.DebugTools;
+import loci.common.Region;
 import loci.common.services.DependencyException;
 import loci.common.services.ServiceException;
 import loci.common.services.ServiceFactory;
@@ -22,6 +23,7 @@ import ome.units.quantity.Length;
 import ome.units.quantity.Time;
 import ome.xml.meta.MetadataRetrieve;
 import org.apache.commons.io.FilenameUtils;
+import org.jruby.RubyProcess;
 import org.openjdk.jol.info.GraphLayout;
 import org.scijava.util.VersionUtils;
 
@@ -78,6 +80,8 @@ public class CompareReader {
         }
     }
 
+    static List<Boolean> skipSeriesReader1 = new ArrayList<>(),
+            skipSeriesReader2 = new ArrayList<>();
     public static void compareFileMeta(String imagePath, boolean flattenResolutions, boolean autoStitch, Consumer<String> logger, SummaryPerFile summary) throws DependencyException, ServiceException, IOException, FormatException {
 
         ServiceFactory factory = new ServiceFactory();
@@ -89,6 +93,18 @@ public class CompareReader {
         reader_1.setMetadataStore(omeXML_1);
         tic();
         reader_1.setId(imagePath);
+
+        if (flattenResolutions) {
+            int nSeries = reader_1.getSeriesCount();
+            for (int s=0; s<nSeries; s++) {
+                reader_1.setSeries(s);
+                skipSeriesReader1.add(
+                        (reader_1.getSizeX()>MAX_PIXEL_READ)||(reader_1.getSizeY()>MAX_PIXEL_READ)
+                );
+                System.out.println("R1 Series "+s+": "+skipSeriesReader1.get(s));
+            }
+        }
+
         Duration readerIniTime1 = toc();
         String quickStartInit = formatDuration(readerIniTime1);
 
@@ -100,6 +116,17 @@ public class CompareReader {
         reader_2.setId(imagePath);
         Duration readerIniTime2 = toc();
         String init = formatDuration(readerIniTime2);
+
+        if (flattenResolutions) {
+            int nSeries = reader_2.getSeriesCount();
+            for (int s=0; s<nSeries; s++) {
+                reader_2.setSeries(s);
+                skipSeriesReader2.add(
+                        (reader_2.getSizeX()>MAX_PIXEL_READ)||(reader_2.getSizeY()>MAX_PIXEL_READ)
+                );
+                System.out.println("R2 Series "+s+": "+skipSeriesReader2.get(s)+" "+reader_1.getSizeX());
+            }
+        }
 
         logger.accept(" Method            | Parameters       | Quick Start Reader | Original Reader | Delta ");
         logger.accept("-------------------|------------------|--------------------|-----------------|-------");
@@ -461,6 +488,9 @@ public class CompareReader {
     }
 
     static final int MAX_LINES = 500;
+
+    static final int MAX_SERIES = 5000;
+    static final int MAX_PIXEL_READ = 10_000;
     static final double THUMB_SIZE = 150;
 
     static int ruleNumber = 0;
@@ -532,6 +562,19 @@ public class CompareReader {
                 }
             };
 
+            // Build the rest of the comparison
+            AtomicInteger counter = new AtomicInteger();
+            counter.set(0);
+            compareFileMeta(imagePath, flattenRes, autoStitch, (str) -> {
+                int count = counter.incrementAndGet();
+                if (count<MAX_LINES) {
+                    logTo.accept("| " + str + " |");
+                } else if (count==MAX_LINES) {
+                    logTo.accept("");
+                    logTo.accept(" More than "+MAX_LINES+" differences.");
+                }
+            }, summary);
+
             logTo.accept("# ["+imageName+"]("+originalURL+") report" );
             logTo.accept(" - **Autostitch** = "+autoStitch);
             logTo.accept(" - ZeissCZIReader v"+ VersionUtils.getVersion(ZeissCZIReader.class));
@@ -557,6 +600,7 @@ public class CompareReader {
                 options.setOpenAllSeries(true);
                 options.setShowOMEXML(false);
                 options.setVirtual(true);
+
                 ImagePlus[] imps;
 
                 // Quick Start
@@ -569,24 +613,26 @@ public class CompareReader {
                 int nSeriesQStart = imps.length;
                 List<ImagePlus> qthumbs = new ArrayList<>();
                 for (int i = 0; i < nSeriesQStart; i++) {
-                    ImagePlus temp = new ImagePlus("", imps[i].getProcessor());
-                    //temp.show();
-                    double scaleFactor = temp.getWidth() > temp.getWidth() ? THUMB_SIZE / (double) temp.getWidth() : THUMB_SIZE / (double) temp.getHeight();
-                    ImagePlus thumb = Scaler.resize(temp, (int) (temp.getWidth() * scaleFactor), (int) (temp.getHeight() * scaleFactor), 1, "");
-                    thumb.setTitle(imps[i].getTitle());
-                    new ContrastEnhancer().equalize(thumb);
-                    qImages.add(imageNameNoExt + ".quick_true.flat_" + flattenRes + ".stitch_" + autoStitch + ".series_" + i + ".jpg");
-                    new FileSaver(thumb).saveAsJpeg(reportImagePath + qImages.get(qImages.size()-1));
-                    qthumbs.add(thumb);
-                    qImagesSize.add("X:"+imps[i].getWidth()+"<br>"+
-                            "Y:"+imps[i].getHeight()+"<br>"+
-                            "C:"+imps[i].getNChannels()+"<br>"+
-                            "Z:"+imps[i].getNSlices()+"<br>"+
-                            "T:"+imps[i].getNFrames()
-                    );
-                    temp.close();
-                    //thumb.close();
-                    imps[i].close();
+                    if (!skipSeriesReader1.get(i)) {
+                        ImagePlus temp = new ImagePlus("", imps[i].getProcessor());
+                        //temp.show();
+                        double scaleFactor = temp.getWidth() > temp.getWidth() ? THUMB_SIZE / (double) temp.getWidth() : THUMB_SIZE / (double) temp.getHeight();
+                        ImagePlus thumb = Scaler.resize(temp, (int) (temp.getWidth() * scaleFactor), (int) (temp.getHeight() * scaleFactor), 1, "");
+                        thumb.setTitle(imps[i].getTitle());
+                        new ContrastEnhancer().equalize(thumb);
+                        qImages.add(imageNameNoExt + ".quick_true.flat_" + flattenRes + ".stitch_" + autoStitch + ".series_" + i + ".jpg");
+                        new FileSaver(thumb).saveAsJpeg(reportImagePath + qImages.get(qImages.size() - 1));
+                        qthumbs.add(thumb);
+                        qImagesSize.add("X:" + imps[i].getWidth() + "<br>" +
+                                "Y:" + imps[i].getHeight() + "<br>" +
+                                "C:" + imps[i].getNChannels() + "<br>" +
+                                "Z:" + imps[i].getNSlices() + "<br>" +
+                                "T:" + imps[i].getNFrames()
+                        );
+                        temp.close();
+                        //thumb.close();
+                        imps[i].close();
+                    }
                 }
 
                 // Default reader
@@ -600,30 +646,32 @@ public class CompareReader {
                 int nSeries = imps.length;
                 List<ImagePlus> thumbs = new ArrayList<>();
                 for (int i = 0; i < nSeries; i++) {
-                    ImagePlus temp = new ImagePlus("", imps[i].getProcessor());
-                    //temp.show();
-                    double scaleFactor = temp.getWidth() > temp.getWidth() ? THUMB_SIZE / (double) temp.getWidth() : THUMB_SIZE / (double) temp.getHeight();
-                    ImagePlus thumb = Scaler.resize(temp, (int) (temp.getWidth() * scaleFactor), (int) (temp.getHeight() * scaleFactor), 1, "");
-                    thumb.setTitle(imps[i].getTitle());
-                    new ContrastEnhancer().equalize(thumb);
-                    images.add(imageNameNoExt + ".quick_false.flat_" + flattenRes + ".stitch_" + autoStitch + ".series_" + i + ".jpg");
-                    new FileSaver(thumb).saveAsJpeg(reportImagePath + images.get(images.size()-1));
-                    thumbs.add(thumb);
-                    imagesSize.add("X:"+imps[i].getWidth()+"<br>"+
-                            "Y:"+imps[i].getHeight()+"<br>"+
-                            "C:"+imps[i].getNChannels()+"<br>"+
-                            "Z:"+imps[i].getNSlices()+"<br>"+
-                            "T:"+imps[i].getNFrames()
-                    );
-                    temp.close();
-                    //thumb.close();
-                    imps[i].close();
-                    if (i< qthumbs.size()) {
-                        // let's compute the diff
-                        ImagePlus qthumb = qthumbs.get(i);
-                        int numberOfDiffs = getNumberOfDifferentPixels(qthumb, thumb);
-                        pixelsDiffs.add(numberOfDiffs);
-                        summary.numberOfDiffsPixels+=numberOfDiffs;
+                    if (!skipSeriesReader2.get(i)) {
+                        ImagePlus temp = new ImagePlus("", imps[i].getProcessor());
+                        //temp.show();
+                        double scaleFactor = temp.getWidth() > temp.getWidth() ? THUMB_SIZE / (double) temp.getWidth() : THUMB_SIZE / (double) temp.getHeight();
+                        ImagePlus thumb = Scaler.resize(temp, (int) (temp.getWidth() * scaleFactor), (int) (temp.getHeight() * scaleFactor), 1, "");
+                        thumb.setTitle(imps[i].getTitle());
+                        new ContrastEnhancer().equalize(thumb);
+                        images.add(imageNameNoExt + ".quick_false.flat_" + flattenRes + ".stitch_" + autoStitch + ".series_" + i + ".jpg");
+                        new FileSaver(thumb).saveAsJpeg(reportImagePath + images.get(images.size() - 1));
+                        thumbs.add(thumb);
+                        imagesSize.add("X:" + imps[i].getWidth() + "<br>" +
+                                "Y:" + imps[i].getHeight() + "<br>" +
+                                "C:" + imps[i].getNChannels() + "<br>" +
+                                "Z:" + imps[i].getNSlices() + "<br>" +
+                                "T:" + imps[i].getNFrames()
+                        );
+                        temp.close();
+                        //thumb.close();
+                        imps[i].close();
+                        if (i < qthumbs.size()) {
+                            // let's compute the diff
+                            ImagePlus qthumb = qthumbs.get(i);
+                            int numberOfDiffs = getNumberOfDifferentPixels(qthumb, thumb);
+                            pixelsDiffs.add(numberOfDiffs);
+                            summary.numberOfDiffsPixels += numberOfDiffs;
+                        }
                     }
                 }
                 for (ImagePlus image :thumbs) {
@@ -660,18 +708,7 @@ public class CompareReader {
             logTo.accept("# Metadata");
             logTo.accept("");
 
-            // Build the rest of the comparison
-            AtomicInteger counter = new AtomicInteger();
-            counter.set(0);
-            compareFileMeta(imagePath, flattenRes, autoStitch, (str) -> {
-                int count = counter.incrementAndGet();
-                if (count<MAX_LINES) {
-                    logTo.accept("| " + str + " |");
-                } else if (count==MAX_LINES) {
-                    logTo.accept("");
-                    logTo.accept(" More than "+MAX_LINES+" differences.");
-                }
-            }, summary);
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -796,14 +833,53 @@ public class CompareReader {
                 "https://zenodo.org/record/8305531/files/MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.czi",
 
                 // LSM880
-                "https://zenodo.org/record/8321543/files/3Dexample.czi"
+                "https://zenodo.org/record/8321543/files/3Dexample.czi",
+
+                //
+                "https://zenodo.org/record/5911450/files/mf20_NF_sox9_Paroedura_PO18_2.czi",
+                "https://zenodo.org/record/5823010/files/2_mouse_02_01.czi",
+                "https://zenodo.org/record/3737795/files/qDII-CLV3-DR5-E27-LD-SAM11-T10.czi",
+
+               // "https://zenodo.org/record/7149674/files/raw_TMA_images.czi", too big
+                "https://zenodo.org/record/7884760/files/Skin-Positive.czi", // Takes too long
+                "https://zenodo.org/record/4017923/files/03_12_2020_DSGN0673_fov_11_561.czi",
+                "https://zenodo.org/record/8015721/files/split_hcr_probes_plasmid_pos_fov_tile3_Airyscan_Processing_Stitch.czi",
+                "https://zenodo.org/record/4994280/files/Nyre_5-1_Strep_100_DBE_500_mikro.czi",
+                "https://zenodo.org/record/3457096/files/09_10_2018_hiprfish_mix_1_fov_10_561.czi",
+                "https://zenodo.org/record/3457096/files/09_10_2018_hiprfish_mix_1_fov_15_405.czi",
+                "https://zenodo.org/record/6385351/files/Figure2_G.czi",
+                "https://zenodo.org/record/7240927/files/group1-08.czi",
+                "https://zenodo.org/record/8139356/files/CHMP2B_IF_A13410_CR-Gauss-15.czi",
+                "https://zenodo.org/record/7818783/files/Rat_100um_MOR1_x500_TSA.czi",
+                "https://zenodo.org/record/6865142/files/SIM%20Synapsed%20homologs%20of%20meiotic%20mouse%20chromosomes%20full%20FOV.czi",
+                //"https://zenodo.org/record/6637864/files/ferret-slices-mosaic-encoding.czi", // Too big
+                "https://zenodo.org/record/5172827/files/example_image_2c_1z_1t_.czi",
+                "https://zenodo.org/record/7994589/files/190731_EV38_1_Collagen_ITSwithAsc%2BDexa%2BIGF%2BTGF_63x_zstack_3.czi",
+                "https://zenodo.org/record/5068754/files/HepG2_ND100_ctrl_FASTZ.czi",
+                "https://zenodo.org/record/5016179/files/Fig1-source_data_1-B__Max.czi",
+                "https://zenodo.org/record/5016179/files/Fig1-source_data_1-B_.czi",
+                "https://zenodo.org/record/4627738/files/19juil05a1.czi",
+                "https://zenodo.org/record/6685822/files/Fig1B_left.czi",
+                "https://zenodo.org/record/6795923/files/0.7_L_side_LSO_b6_7_Nissl_first.czi",
+                "https://zenodo.org/record/4283106/files/190729S%20LP%20x63Z%20mCK13rCK17.czi",
+                "https://zenodo.org/record/4942564/files/NIP51_Int1570_mRNA670_%20%282%29.czi",
+                "https://zenodo.org/record/5908580/files/Figure2D-eGFPCdt1_2MKCl.czi",
+            //    "https://zenodo.org/record/8015833/files/GFP_plasmid_Ecoli_plus_plaque_sample_ecoli_fov_01tile_Airyscan_Processing_stitch.czi", line too long
+                "https://zenodo.org/record/4243557/files/63x_tile_du145_tf_647_k27ac_488_dapi_r2.czi",
+                "https://zenodo.org/record/5602160/files/daf-12%20L1%201.czi",
+                "https://zenodo.org/record/5714530/files/dO%2030%20min%20nr%2013.czi"
         };
         // Local files - too big and/or private, not available on Zenodo
         /*cziURLs = new String[] {
           //"F:/czis/27052022_MouseE11_ToPRO_test_5x_z1.czi"
-                "C:\\Users\\nicol\\Dropbox\\czis\\xt-scan-lsm980.czi",
-                "C:\\Users\\nicol\\Dropbox\\czis\\xz-scan-lsm980.czi",
-                "C:\\Users\\nicol\\Dropbox\\czis\\xzt-scan-lsm980.czi"
+           //     "C:\\Users\\nicol\\Dropbox\\czis\\xt-scan-lsm980.czi",
+           //     "C:\\Users\\nicol\\Dropbox\\czis\\xz-scan-lsm980.czi",
+           //     "C:\\Users\\nicol\\Dropbox\\czis\\xzt-scan-lsm980.czi"
+                //"F:\\czis\\TL-03.czi",
+                "\\\\sv-01-154\\d$\\SWAP\\Data\\2023-02-16_Marine\\2023-02-16\\New-02.czi" // never ends remotely
+                //"\\\\sv-01-154\\d$\\SWAP\\Data\\Marine\\2023-03-16\\Cfra_LS2-02.czi", // 27 Gb, remote
+                //"\\\\sv-01-154\\d$\\SWAP\\Data\\2022-11-07-Omaya\\2022-11-07\\New-04.czi" // 155 Gb, on server
+                //"\\\\sv-01-154\\d$\\SWAP\\Data\\NicoBIOP\\2022-06-30\\New-07.czi"
         };*/
 
         for (String url: cziURLs) {

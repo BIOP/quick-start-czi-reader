@@ -1,21 +1,7 @@
-# [MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.czi](https://zenodo.org/record/8305531/files/MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.czi) report
- - **Autostitch** = true
- - ZeissCZIReader v6.14.0
- - ZeissQuickStartCZIReader v0.1.8-SNAPSHOT
-
-# Images 
-
-| Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
-|-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |449 ms|------|492 ms|------|--------|
-|0|![MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.quick_true.flat_true.stitch_true.series_0.jpg](MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle/MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.quick_true.flat_true.stitch_true.series_0.jpg)|X:2774<br>Y:1850<br>C:6<br>Z:41<br>T:1|![MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.quick_false.flat_true.stitch_true.series_0.jpg](MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle/MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.quick_false.flat_true.stitch_true.series_0.jpg)|X:2774<br>Y:1850<br>C:6<br>Z:41<br>T:1|0|
-
-# Metadata
-
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
 | Initialization     |                  |12 ms|17 ms|        |
-| Reader Size (Mb)     |                  |0.30|1.40|        |
+| Reader Size (Mb)     |                  |0.31|1.41|        |
 | getStageLabelX| Image 0 | -2023.375 um | -388.639 um | 1634.736 um |
 | getStageLabelY| Image 0 | 14947.420 um | 16038.100 um | 1090.680 um |
 | getPlanePositionX| Image 0 Plane 0 | -2023.375 um | -388.639 um | 1634.736 um |
@@ -510,3 +496,17 @@
 | getPlanePositionY| Image 0 Plane 244 | 14947.420 um | 16038.100 um | 1090.680 um |
 | getPlanePositionX| Image 0 Plane 245 | -2023.375 um | -388.639 um | 1634.736 um |
 | getPlanePositionY| Image 0 Plane 245 | 14947.420 um | 16038.100 um | 1090.680 um |
+# [MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.czi](https://zenodo.org/record/8305531/files/MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.czi) report
+ - **Autostitch** = true
+ - ZeissCZIReader v6.14.0
+ - ZeissQuickStartCZIReader v0.2.1-SNAPSHOT
+
+# Images 
+
+| Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
+|-------------------|--------------------|------|-----------------|------|--------|
+| Read time (all)   |478 ms|------|447 ms|------|--------|
+|0|![MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.quick_true.flat_true.stitch_true.series_0.jpg](MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle/MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.quick_true.flat_true.stitch_true.series_0.jpg)|X:2774<br>Y:1850<br>C:6<br>Z:41<br>T:1|![MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.quick_false.flat_true.stitch_true.series_0.jpg](MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle/MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.quick_false.flat_true.stitch_true.series_0.jpg)|X:2774<br>Y:1850<br>C:6<br>Z:41<br>T:1|0|
+
+# Metadata
+

@@ -1,25 +1,7 @@
-# [S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.czi](https://zenodo.org/record/7015307/files/S%3D3_1Pos_2Mosaic_T%3D2%3DZ%3D3_CH%3D2.czi) report
- - **Autostitch** = true
- - ZeissCZIReader v6.14.0
- - ZeissQuickStartCZIReader v0.1.8-SNAPSHOT
-
-# Images 
-
-| Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
-|-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |138 ms|------|170 ms|------|--------|
-|0|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_true.series_0.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_true.series_0.jpg)|X:1178<br>Y:486<br>C:2<br>Z:3<br>T:2|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_true.series_0.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_true.series_0.jpg)|X:1178<br>Y:486<br>C:2<br>Z:3<br>T:2|0|
-|1|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_true.series_1.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_true.series_1.jpg)|X:589<br>Y:243<br>C:2<br>Z:3<br>T:2|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_true.series_1.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_true.series_1.jpg)|X:589<br>Y:243<br>C:2<br>Z:3<br>T:2|0|
-|2|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_true.series_2.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_true.series_2.jpg)|X:256<br>Y:256<br>C:2<br>Z:3<br>T:2|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_true.series_2.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_true.series_2.jpg)|X:256<br>Y:256<br>C:2<br>Z:3<br>T:2|0|
-|3|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_true.series_3.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_true.series_3.jpg)|X:1408<br>Y:947<br>C:2<br>Z:3<br>T:2|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_true.series_3.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_true.series_3.jpg)|X:1408<br>Y:947<br>C:2<br>Z:3<br>T:2|0|
-|4|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_true.series_4.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_true.series_4.jpg)|X:704<br>Y:473<br>C:2<br>Z:3<br>T:2|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_true.series_4.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_true.series_4.jpg)|X:704<br>Y:473<br>C:2<br>Z:3<br>T:2|0|
-
-# Metadata
-
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |21 ms|29 ms|        |
-| Reader Size (Mb)     |                  |2.01|2.99|        |
+| Initialization     |                  |22 ms|31 ms|        |
+| Reader Size (Mb)     |                  |2.02|3.00|        |
 | getStageLabelName| Image 0 | TR1| Scene position #0| |
 | getStageLabelX| Image 0 | 38212.976 um | 38397.296 um | 184.320 um |
 | getStageLabelY| Image 0 | 12678.638 um | 12724.718 um | 46.080 um |
@@ -207,3 +189,21 @@
 | getPlanePositionX| Image 4 Plane 11 | 38449.376 um | 38679.412 um | 230.036 um |
 | getPlanePositionY| Image 4 Plane 11 | 13121.838 um | 13260.298 um | 138.460 um |
 | getPlanePositionZ| Image 4 Plane 11 |  1: ome.units.quantity.Length: value[112.842], unit[µm] stored as java.lang.Double| 2: null |
+# [S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.czi](https://zenodo.org/record/7015307/files/S%3D3_1Pos_2Mosaic_T%3D2%3DZ%3D3_CH%3D2.czi) report
+ - **Autostitch** = true
+ - ZeissCZIReader v6.14.0
+ - ZeissQuickStartCZIReader v0.2.1-SNAPSHOT
+
+# Images 
+
+| Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
+|-------------------|--------------------|------|-----------------|------|--------|
+| Read time (all)   |156 ms|------|188 ms|------|--------|
+|0|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_true.series_0.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_true.series_0.jpg)|X:1178<br>Y:486<br>C:2<br>Z:3<br>T:2|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_true.series_0.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_true.series_0.jpg)|X:1178<br>Y:486<br>C:2<br>Z:3<br>T:2|0|
+|1|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_true.series_1.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_true.series_1.jpg)|X:589<br>Y:243<br>C:2<br>Z:3<br>T:2|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_true.series_1.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_true.series_1.jpg)|X:589<br>Y:243<br>C:2<br>Z:3<br>T:2|0|
+|2|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_true.series_2.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_true.series_2.jpg)|X:256<br>Y:256<br>C:2<br>Z:3<br>T:2|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_true.series_2.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_true.series_2.jpg)|X:256<br>Y:256<br>C:2<br>Z:3<br>T:2|0|
+|3|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_true.series_3.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_true.series_3.jpg)|X:1408<br>Y:947<br>C:2<br>Z:3<br>T:2|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_true.series_3.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_true.series_3.jpg)|X:1408<br>Y:947<br>C:2<br>Z:3<br>T:2|0|
+|4|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_true.series_4.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_true.series_4.jpg)|X:704<br>Y:473<br>C:2<br>Z:3<br>T:2|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_true.series_4.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_true.series_4.jpg)|X:704<br>Y:473<br>C:2<br>Z:3<br>T:2|0|
+
+# Metadata
+

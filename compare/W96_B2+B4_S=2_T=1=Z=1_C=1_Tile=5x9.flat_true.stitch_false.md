@@ -1,13 +1,107 @@
+|  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
+| -------------------|------------------|--------------------|-----------------|------- |
+| Initialization     |                  |38 ms|21 ms|        |
+| Reader Size (Mb)     |                  |2.31|2.99|        |
+| getStageLabelName| Image 0 | B2| Scene position #0| |
+| getStageLabelName| Image 1 | B2| Scene position #1| |
+| getStageLabelName| Image 2 | B2| Scene position #2| |
+| getStageLabelName| Image 3 | B2| Scene position #3| |
+| getStageLabelName| Image 4 | B2| Scene position #4| |
+| getStageLabelName| Image 5 | B2| Scene position #5| |
+| getStageLabelName| Image 6 | B2| Scene position #6| |
+| getStageLabelName| Image 7 | B2| Scene position #7| |
+| getStageLabelName| Image 8 | B2| Scene position #8| |
+| getStageLabelName| Image 9 | B2| Scene position #9| |
+| getStageLabelName| Image 10 | B2| Scene position #10| |
+| getStageLabelName| Image 11 | B2| Scene position #11| |
+| getStageLabelName| Image 12 | B2| Scene position #12| |
+| getStageLabelName| Image 13 | B2| Scene position #13| |
+| getStageLabelName| Image 14 | B2| Scene position #14| |
+| getStageLabelName| Image 15 | B2| Scene position #15| |
+| getStageLabelName| Image 16 | B2| Scene position #16| |
+| getStageLabelName| Image 17 | B2| Scene position #17| |
+| getStageLabelName| Image 18 | B2| Scene position #18| |
+| getStageLabelName| Image 19 | B2| Scene position #19| |
+| getStageLabelName| Image 20 | B2| Scene position #20| |
+| getStageLabelName| Image 21 | B2| Scene position #21| |
+| getStageLabelName| Image 22 | B2| Scene position #22| |
+| getStageLabelName| Image 23 | B2| Scene position #23| |
+| getStageLabelName| Image 24 | B2| Scene position #24| |
+| getStageLabelName| Image 25 | B2| Scene position #25| |
+| getStageLabelName| Image 26 | B2| Scene position #26| |
+| getStageLabelName| Image 27 | B2| Scene position #27| |
+| getStageLabelName| Image 28 | B2| Scene position #28| |
+| getStageLabelName| Image 29 | B2| Scene position #29| |
+| getStageLabelName| Image 30 | B2| Scene position #30| |
+| getStageLabelName| Image 31 | B2| Scene position #31| |
+| getStageLabelName| Image 32 | B2| Scene position #32| |
+| getStageLabelName| Image 33 | B2| Scene position #33| |
+| getStageLabelName| Image 34 | B2| Scene position #34| |
+| getStageLabelName| Image 35 | B2| Scene position #35| |
+| getStageLabelName| Image 36 | B2| Scene position #36| |
+| getStageLabelName| Image 37 | B2| Scene position #37| |
+| getStageLabelName| Image 38 | B2| Scene position #38| |
+| getStageLabelName| Image 39 | B2| Scene position #39| |
+| getStageLabelName| Image 40 | B2| Scene position #40| |
+| getStageLabelName| Image 41 | B2| Scene position #41| |
+| getStageLabelName| Image 42 | B2| Scene position #42| |
+| getStageLabelName| Image 43 | B2| Scene position #43| |
+| getStageLabelName| Image 44 | B2| Scene position #44| |
+| getStageLabelName| Image 45 | B4| Scene position #45| |
+| getStageLabelName| Image 46 | B4| Scene position #46| |
+| getStageLabelName| Image 47 | B4| Scene position #47| |
+| getStageLabelName| Image 48 | B4| Scene position #48| |
+| getStageLabelName| Image 49 | B4| Scene position #49| |
+| getStageLabelName| Image 50 | B4| Scene position #50| |
+| getStageLabelName| Image 51 | B4| Scene position #51| |
+| getStageLabelName| Image 52 | B4| Scene position #52| |
+| getStageLabelName| Image 53 | B4| Scene position #53| |
+| getStageLabelName| Image 54 | B4| Scene position #54| |
+| getStageLabelName| Image 55 | B4| Scene position #55| |
+| getStageLabelName| Image 56 | B4| Scene position #56| |
+| getStageLabelName| Image 57 | B4| Scene position #57| |
+| getStageLabelName| Image 58 | B4| Scene position #58| |
+| getStageLabelName| Image 59 | B4| Scene position #59| |
+| getStageLabelName| Image 60 | B4| Scene position #60| |
+| getStageLabelName| Image 61 | B4| Scene position #61| |
+| getStageLabelName| Image 62 | B4| Scene position #62| |
+| getStageLabelName| Image 63 | B4| Scene position #63| |
+| getStageLabelName| Image 64 | B4| Scene position #64| |
+| getStageLabelName| Image 65 | B4| Scene position #65| |
+| getStageLabelName| Image 66 | B4| Scene position #66| |
+| getStageLabelName| Image 67 | B4| Scene position #67| |
+| getStageLabelName| Image 68 | B4| Scene position #68| |
+| getStageLabelName| Image 69 | B4| Scene position #69| |
+| getStageLabelName| Image 70 | B4| Scene position #70| |
+| getStageLabelName| Image 71 | B4| Scene position #71| |
+| getStageLabelName| Image 72 | B4| Scene position #72| |
+| getStageLabelName| Image 73 | B4| Scene position #73| |
+| getStageLabelName| Image 74 | B4| Scene position #74| |
+| getStageLabelName| Image 75 | B4| Scene position #75| |
+| getStageLabelName| Image 76 | B4| Scene position #76| |
+| getStageLabelName| Image 77 | B4| Scene position #77| |
+| getStageLabelName| Image 78 | B4| Scene position #78| |
+| getStageLabelName| Image 79 | B4| Scene position #79| |
+| getStageLabelName| Image 80 | B4| Scene position #80| |
+| getStageLabelName| Image 81 | B4| Scene position #81| |
+| getStageLabelName| Image 82 | B4| Scene position #82| |
+| getStageLabelName| Image 83 | B4| Scene position #83| |
+| getStageLabelName| Image 84 | B4| Scene position #84| |
+| getStageLabelName| Image 85 | B4| Scene position #85| |
+| getStageLabelName| Image 86 | B4| Scene position #86| |
+| getStageLabelName| Image 87 | B4| Scene position #87| |
+| getStageLabelName| Image 88 | B4| Scene position #88| |
+| getStageLabelName| Image 89 | B4| Scene position #89| |
 # [W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.czi](https://zenodo.org/record/7015307/files/W96_B2%2BB4_S%3D2_T%3D1%3DZ%3D1_C%3D1_Tile%3D5x9.czi) report
  - **Autostitch** = false
  - ZeissCZIReader v6.14.0
- - ZeissQuickStartCZIReader v0.1.8-SNAPSHOT
+ - ZeissQuickStartCZIReader v0.2.1-SNAPSHOT
 
 # Images 
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |746 ms|------|903 ms|------|--------|
+| Read time (all)   |785 ms|------|994 ms|------|--------|
 |0|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_false.series_0.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_false.series_0.jpg)|X:640<br>Y:420<br>C:1<br>Z:1<br>T:1|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_false.series_0.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_false.series_0.jpg)|X:640<br>Y:420<br>C:1<br>Z:1<br>T:1|0|
 |1|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_false.series_1.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_false.series_1.jpg)|X:640<br>Y:420<br>C:1<br>Z:1<br>T:1|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_false.series_1.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_false.series_1.jpg)|X:640<br>Y:420<br>C:1<br>Z:1<br>T:1|0|
 |2|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_false.series_2.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_false.series_2.jpg)|X:640<br>Y:420<br>C:1<br>Z:1<br>T:1|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_false.series_2.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_false.series_2.jpg)|X:640<br>Y:420<br>C:1<br>Z:1<br>T:1|0|
@@ -101,97 +195,3 @@
 
 # Metadata
 
-|  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
-| -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |35 ms|21 ms|        |
-| Reader Size (Mb)     |                  |2.30|2.97|        |
-| getStageLabelName| Image 0 | B2| Scene position #0| |
-| getStageLabelName| Image 1 | B2| Scene position #1| |
-| getStageLabelName| Image 2 | B2| Scene position #2| |
-| getStageLabelName| Image 3 | B2| Scene position #3| |
-| getStageLabelName| Image 4 | B2| Scene position #4| |
-| getStageLabelName| Image 5 | B2| Scene position #5| |
-| getStageLabelName| Image 6 | B2| Scene position #6| |
-| getStageLabelName| Image 7 | B2| Scene position #7| |
-| getStageLabelName| Image 8 | B2| Scene position #8| |
-| getStageLabelName| Image 9 | B2| Scene position #9| |
-| getStageLabelName| Image 10 | B2| Scene position #10| |
-| getStageLabelName| Image 11 | B2| Scene position #11| |
-| getStageLabelName| Image 12 | B2| Scene position #12| |
-| getStageLabelName| Image 13 | B2| Scene position #13| |
-| getStageLabelName| Image 14 | B2| Scene position #14| |
-| getStageLabelName| Image 15 | B2| Scene position #15| |
-| getStageLabelName| Image 16 | B2| Scene position #16| |
-| getStageLabelName| Image 17 | B2| Scene position #17| |
-| getStageLabelName| Image 18 | B2| Scene position #18| |
-| getStageLabelName| Image 19 | B2| Scene position #19| |
-| getStageLabelName| Image 20 | B2| Scene position #20| |
-| getStageLabelName| Image 21 | B2| Scene position #21| |
-| getStageLabelName| Image 22 | B2| Scene position #22| |
-| getStageLabelName| Image 23 | B2| Scene position #23| |
-| getStageLabelName| Image 24 | B2| Scene position #24| |
-| getStageLabelName| Image 25 | B2| Scene position #25| |
-| getStageLabelName| Image 26 | B2| Scene position #26| |
-| getStageLabelName| Image 27 | B2| Scene position #27| |
-| getStageLabelName| Image 28 | B2| Scene position #28| |
-| getStageLabelName| Image 29 | B2| Scene position #29| |
-| getStageLabelName| Image 30 | B2| Scene position #30| |
-| getStageLabelName| Image 31 | B2| Scene position #31| |
-| getStageLabelName| Image 32 | B2| Scene position #32| |
-| getStageLabelName| Image 33 | B2| Scene position #33| |
-| getStageLabelName| Image 34 | B2| Scene position #34| |
-| getStageLabelName| Image 35 | B2| Scene position #35| |
-| getStageLabelName| Image 36 | B2| Scene position #36| |
-| getStageLabelName| Image 37 | B2| Scene position #37| |
-| getStageLabelName| Image 38 | B2| Scene position #38| |
-| getStageLabelName| Image 39 | B2| Scene position #39| |
-| getStageLabelName| Image 40 | B2| Scene position #40| |
-| getStageLabelName| Image 41 | B2| Scene position #41| |
-| getStageLabelName| Image 42 | B2| Scene position #42| |
-| getStageLabelName| Image 43 | B2| Scene position #43| |
-| getStageLabelName| Image 44 | B2| Scene position #44| |
-| getStageLabelName| Image 45 | B4| Scene position #45| |
-| getStageLabelName| Image 46 | B4| Scene position #46| |
-| getStageLabelName| Image 47 | B4| Scene position #47| |
-| getStageLabelName| Image 48 | B4| Scene position #48| |
-| getStageLabelName| Image 49 | B4| Scene position #49| |
-| getStageLabelName| Image 50 | B4| Scene position #50| |
-| getStageLabelName| Image 51 | B4| Scene position #51| |
-| getStageLabelName| Image 52 | B4| Scene position #52| |
-| getStageLabelName| Image 53 | B4| Scene position #53| |
-| getStageLabelName| Image 54 | B4| Scene position #54| |
-| getStageLabelName| Image 55 | B4| Scene position #55| |
-| getStageLabelName| Image 56 | B4| Scene position #56| |
-| getStageLabelName| Image 57 | B4| Scene position #57| |
-| getStageLabelName| Image 58 | B4| Scene position #58| |
-| getStageLabelName| Image 59 | B4| Scene position #59| |
-| getStageLabelName| Image 60 | B4| Scene position #60| |
-| getStageLabelName| Image 61 | B4| Scene position #61| |
-| getStageLabelName| Image 62 | B4| Scene position #62| |
-| getStageLabelName| Image 63 | B4| Scene position #63| |
-| getStageLabelName| Image 64 | B4| Scene position #64| |
-| getStageLabelName| Image 65 | B4| Scene position #65| |
-| getStageLabelName| Image 66 | B4| Scene position #66| |
-| getStageLabelName| Image 67 | B4| Scene position #67| |
-| getStageLabelName| Image 68 | B4| Scene position #68| |
-| getStageLabelName| Image 69 | B4| Scene position #69| |
-| getStageLabelName| Image 70 | B4| Scene position #70| |
-| getStageLabelName| Image 71 | B4| Scene position #71| |
-| getStageLabelName| Image 72 | B4| Scene position #72| |
-| getStageLabelName| Image 73 | B4| Scene position #73| |
-| getStageLabelName| Image 74 | B4| Scene position #74| |
-| getStageLabelName| Image 75 | B4| Scene position #75| |
-| getStageLabelName| Image 76 | B4| Scene position #76| |
-| getStageLabelName| Image 77 | B4| Scene position #77| |
-| getStageLabelName| Image 78 | B4| Scene position #78| |
-| getStageLabelName| Image 79 | B4| Scene position #79| |
-| getStageLabelName| Image 80 | B4| Scene position #80| |
-| getStageLabelName| Image 81 | B4| Scene position #81| |
-| getStageLabelName| Image 82 | B4| Scene position #82| |
-| getStageLabelName| Image 83 | B4| Scene position #83| |
-| getStageLabelName| Image 84 | B4| Scene position #84| |
-| getStageLabelName| Image 85 | B4| Scene position #85| |
-| getStageLabelName| Image 86 | B4| Scene position #86| |
-| getStageLabelName| Image 87 | B4| Scene position #87| |
-| getStageLabelName| Image 88 | B4| Scene position #88| |
-| getStageLabelName| Image 89 | B4| Scene position #89| |

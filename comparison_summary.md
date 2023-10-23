@@ -14,6 +14,7 @@ Affected images:
 * (x 1) Plate1-Blue-A-12-Scene-3-P3-F2-03.czi.autoStitch.true
 * (x 5) S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.czi.autoStitch.true
 * (x 184) v.zanotelli_20190509_p165_031.czi.autoStitch.false
+* (x 2) split_hcr_probes_plasmid_pos_fov_tile3_Airyscan_Processing_Stitch.czi.autoStitch.true
 * (x 6) W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.czi.autoStitch.true
 * (x 18) S=2_3x3_T=1_Z=4_CH=2.czi.autoStitch.false
 * (x 5) 3Dexample.czi.autoStitch.false
@@ -34,6 +35,7 @@ Affected images:
 * (x 8) S=2_2x2_T=3_Z=4_CH=1.czi.autoStitch.false
 * (x 1) T=3_Z=5_CH=2.czi.autoStitch.true
 * (x 1) MouseBrain_41Slices_1Tile_1Channel_2Illuminations_2Angles.czi.autoStitch.true
+* (x 64) Skin-Positive.czi.autoStitch.false
 * (x 1) Plate1-Blue-A-12-Scene-3-P3-F2-03.czi.autoStitch.false
 * (x 2) S=2_T=3_Z=5_CH=1.czi.autoStitch.true
 * (x 45) S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.czi.autoStitch.false
@@ -48,6 +50,7 @@ Affected images:
 * (x 1) T=1_CH=2.czi.autoStitch.false
 * (x 1) T=2_Z=5_CH=2.czi.autoStitch.true
 * (x 90) W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.czi.autoStitch.false
+* (x 1) Skin-Positive.czi.autoStitch.true
 * (x 3) S=3_CH=2.czi.autoStitch.false
 * (x 1) MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.czi.autoStitch.false
 * (x 3) Image_1_2023_08_18__14_32_31_964.czi.autoStitch.false
@@ -181,109 +184,167 @@ Affected images:
 # Table
 |OK |File Name|AutoStitch|#Diffs<br>(Critical)|#Diffs|#Diffs Ignored|#DiffsPixels|Mem Gain|Init Time Gain|Read Time Gain|
 |---|---------|----------|--------------------|------|--------------|------------|--------|--------------|--------------|
-| |[Demo LISH 4x8 15pct 647.czi](compare/Demo LISH 4x8 15pct 647.flat_true.stitch_false.md)|false|0|5384|62|0|3.2|1.2|0.6|
-| |[Demo LISH 4x8 15pct 647.czi](compare/Demo LISH 4x8 15pct 647.flat_true.stitch_true.md)|true|0|114|0|0|11.2|2.1|0.9|
-|✓|[test_gray.czi](compare/test_gray.flat_true.stitch_false.md)|false|0|0|35|0|1.4|0.4|1.3|
-|✓|[test_gray.czi](compare/test_gray.flat_true.stitch_true.md)|true|0|0|0|0|2.4|0.6|0.9|
-| |[Image_1_2023_08_18__14_32_31_964.czi](compare/Image_1_2023_08_18__14_32_31_964.flat_true.stitch_false.md)|false|0|19|6|0|1.6|1.0|1.1|
-| |[Image_1_2023_08_18__14_32_31_964.czi](compare/Image_1_2023_08_18__14_32_31_964.flat_true.stitch_true.md)|true|0|4|0|0|1.6|1.0|1.1|
-| |[test-plate.czi](compare/test-plate.flat_true.stitch_false.md)|false|0|495|99|0|1.3|0.5|1.0|
+| |[Demo LISH 4x8 15pct 647.czi](compare/Demo LISH 4x8 15pct 647.flat_true.stitch_false.md)|false|0|5384|62|0|3.2|0.3|0.9|
+| |[Demo LISH 4x8 15pct 647.czi](compare/Demo LISH 4x8 15pct 647.flat_true.stitch_true.md)|true|0|114|0|0|10.7|1.5|0.9|
+|✓|[test_gray.czi](compare/test_gray.flat_true.stitch_false.md)|false|0|0|35|0|1.3|0.4|1.1|
+|✓|[test_gray.czi](compare/test_gray.flat_true.stitch_true.md)|true|0|0|0|0|2.1|1.0|0.8|
+| |[Image_1_2023_08_18__14_32_31_964.czi](compare/Image_1_2023_08_18__14_32_31_964.flat_true.stitch_false.md)|false|0|19|6|0|1.5|1.2|1.0|
+| |[Image_1_2023_08_18__14_32_31_964.czi](compare/Image_1_2023_08_18__14_32_31_964.flat_true.stitch_true.md)|true|0|4|0|0|1.6|1.3|1.0|
+| |[test-plate.czi](compare/test-plate.flat_true.stitch_false.md)|false|0|495|99|0|1.3|0.4|1.1|
 | |[test-plate.czi](compare/test-plate.flat_true.stitch_true.md)|true|0|495|99|0|1.3|0.5|1.1|
-|✓|[P1.czi](compare/P1.flat_true.stitch_false.md)|false|0|0|0|0|1.8|1.0|1.2|
-|✓|[P1.czi](compare/P1.flat_true.stitch_true.md)|true|0|0|0|0|1.8|0.8|1.2|
-|✓|[2021-02-25-tulip_Airyscan.czi](compare/2021-02-25-tulip_Airyscan.flat_true.stitch_false.md)|false|0|0|0|0|1.7|1.0|1.4|
-|✓|[2021-02-25-tulip_Airyscan.czi](compare/2021-02-25-tulip_Airyscan.flat_true.stitch_true.md)|true|0|0|0|0|1.7|1.0|1.3|
-|✓|[2021-02-25-tulip_unprocessed-Airyscan.czi](compare/2021-02-25-tulip_unprocessed-Airyscan.flat_true.stitch_false.md)|false|0|0|3255|0|2.1|0.9|0.9|
-|✓|[2021-02-25-tulip_unprocessed-Airyscan.czi](compare/2021-02-25-tulip_unprocessed-Airyscan.flat_true.stitch_true.md)|true|0|0|3255|0|2.1|0.9|1.1|
-|✓|[Airyscan Lines Pattern.czi](compare/Airyscan Lines Pattern.flat_true.stitch_false.md)|false|0|0|0|0|1.6|1.3|1.3|
-|✓|[Airyscan Lines Pattern.czi](compare/Airyscan Lines Pattern.flat_true.stitch_true.md)|true|0|0|0|0|1.6|1.3|1.2|
-|✓|[Confocal Lines Pattern.czi](compare/Confocal Lines Pattern.flat_true.stitch_false.md)|false|0|0|0|0|1.6|1.3|1.4|
-|✓|[Confocal Lines Pattern.czi](compare/Confocal Lines Pattern.flat_true.stitch_true.md)|true|0|0|0|0|1.6|1.3|1.3|
-|✓|[S=1_3x3_T=3_Z=4_CH=2.czi](compare/S=1_3x3_T=3_Z=4_CH=2.flat_true.stitch_false.md)|false|0|0|9|0|1.4|0.9|1.1|
-| |[S=1_3x3_T=3_Z=4_CH=2.czi](compare/S=1_3x3_T=3_Z=4_CH=2.flat_true.stitch_true.md)|true|0|27|123|0|1.4|1.4|1.2|
-|✓|[S=1_CH=2.czi](compare/S=1_CH=2.flat_true.stitch_false.md)|false|0|0|1|0|1.3|1.5|1.3|
-|✓|[S=1_CH=2.czi](compare/S=1_CH=2.flat_true.stitch_true.md)|true|0|0|1|0|1.3|1.4|1.4|
-|✓|[S=2_2x2_CH=1.czi](compare/S=2_2x2_CH=1.flat_true.stitch_false.md)|false|0|0|24|0|1.3|0.9|1.2|
-| |[S=2_2x2_CH=1.czi](compare/S=2_2x2_CH=1.flat_true.stitch_true.md)|true|0|4|25|0|1.3|1.0|1.2|
-|✓|[S=2_2x2_T=1_Z=4_CH=1.czi](compare/S=2_2x2_T=1_Z=4_CH=1.flat_true.stitch_false.md)|false|0|0|48|0|1.3|0.9|1.4|
-| |[S=2_2x2_T=1_Z=4_CH=1.czi](compare/S=2_2x2_T=1_Z=4_CH=1.flat_true.stitch_true.md)|true|0|10|55|0|1.3|1.0|1.4|
-|✓|[S=2_2x2_T=3_CH=1.czi](compare/S=2_2x2_T=3_CH=1.flat_true.stitch_false.md)|false|0|0|40|0|1.3|0.9|1.2|
+|✓|[P1.czi](compare/P1.flat_true.stitch_false.md)|false|0|0|0|0|1.8|0.9|1.2|
+|✓|[P1.czi](compare/P1.flat_true.stitch_true.md)|true|0|0|0|0|1.8|0.9|1.3|
+|✓|[2021-02-25-tulip_Airyscan.czi](compare/2021-02-25-tulip_Airyscan.flat_true.stitch_false.md)|false|0|0|0|0|1.6|1.0|1.5|
+|✓|[2021-02-25-tulip_Airyscan.czi](compare/2021-02-25-tulip_Airyscan.flat_true.stitch_true.md)|true|0|0|0|0|1.6|1.3|1.4|
+|✓|[2021-02-25-tulip_unprocessed-Airyscan.czi](compare/2021-02-25-tulip_unprocessed-Airyscan.flat_true.stitch_false.md)|false|0|0|3255|0|2.1|0.9|1.0|
+|✓|[2021-02-25-tulip_unprocessed-Airyscan.czi](compare/2021-02-25-tulip_unprocessed-Airyscan.flat_true.stitch_true.md)|true|0|0|3255|0|2.1|0.9|1.2|
+|✓|[Airyscan Lines Pattern.czi](compare/Airyscan Lines Pattern.flat_true.stitch_false.md)|false|0|0|0|0|1.5|1.3|1.4|
+|✓|[Airyscan Lines Pattern.czi](compare/Airyscan Lines Pattern.flat_true.stitch_true.md)|true|0|0|0|0|1.5|1.3|1.5|
+|✓|[Confocal Lines Pattern.czi](compare/Confocal Lines Pattern.flat_true.stitch_false.md)|false|0|0|0|0|1.5|1.3|1.5|
+|✓|[Confocal Lines Pattern.czi](compare/Confocal Lines Pattern.flat_true.stitch_true.md)|true|0|0|0|0|1.5|1.3|1.5|
+|✓|[S=1_3x3_T=3_Z=4_CH=2.czi](compare/S=1_3x3_T=3_Z=4_CH=2.flat_true.stitch_false.md)|false|0|0|9|0|1.4|0.8|1.3|
+| |[S=1_3x3_T=3_Z=4_CH=2.czi](compare/S=1_3x3_T=3_Z=4_CH=2.flat_true.stitch_true.md)|true|0|27|123|0|1.4|1.3|1.1|
+|✓|[S=1_CH=2.czi](compare/S=1_CH=2.flat_true.stitch_false.md)|false|0|0|1|0|1.3|1.6|1.4|
+|✓|[S=1_CH=2.czi](compare/S=1_CH=2.flat_true.stitch_true.md)|true|0|0|1|0|1.3|1.5|1.4|
+|✓|[S=2_2x2_CH=1.czi](compare/S=2_2x2_CH=1.flat_true.stitch_false.md)|false|0|0|24|0|1.3|0.9|1.1|
+| |[S=2_2x2_CH=1.czi](compare/S=2_2x2_CH=1.flat_true.stitch_true.md)|true|0|4|25|0|1.3|0.9|1.2|
+|✓|[S=2_2x2_T=1_Z=4_CH=1.czi](compare/S=2_2x2_T=1_Z=4_CH=1.flat_true.stitch_false.md)|false|0|0|48|0|1.3|0.9|1.3|
+| |[S=2_2x2_T=1_Z=4_CH=1.czi](compare/S=2_2x2_T=1_Z=4_CH=1.flat_true.stitch_true.md)|true|0|10|55|0|1.3|1.1|0.4|
+|✓|[S=2_2x2_T=3_CH=1.czi](compare/S=2_2x2_T=3_CH=1.flat_true.stitch_false.md)|false|0|0|40|0|1.3|0.9|1.4|
 | |[S=2_2x2_T=3_CH=1.czi](compare/S=2_2x2_T=3_CH=1.flat_true.stitch_true.md)|true|0|8|43|0|1.3|1.0|1.2|
-|✓|[S=2_2x2_T=3_Z=4_CH=1.czi](compare/S=2_2x2_T=3_Z=4_CH=1.flat_true.stitch_false.md)|false|0|0|112|0|1.3|1.0|1.2|
-| |[S=2_2x2_T=3_Z=4_CH=1.czi](compare/S=2_2x2_T=3_Z=4_CH=1.flat_true.stitch_true.md)|true|0|26|133|0|1.3|1.1|1.1|
-|✓|[S=2_2x2_Z=4_CH=1.czi](compare/S=2_2x2_Z=4_CH=1.flat_true.stitch_false.md)|false|0|0|48|0|1.3|0.9|1.2|
+|✓|[S=2_2x2_T=3_Z=4_CH=1.czi](compare/S=2_2x2_T=3_Z=4_CH=1.flat_true.stitch_false.md)|false|0|0|112|0|1.3|0.9|1.3|
+| |[S=2_2x2_T=3_Z=4_CH=1.czi](compare/S=2_2x2_T=3_Z=4_CH=1.flat_true.stitch_true.md)|true|0|26|133|0|1.3|1.1|1.3|
+|✓|[S=2_2x2_Z=4_CH=1.czi](compare/S=2_2x2_Z=4_CH=1.flat_true.stitch_false.md)|false|0|0|48|0|1.3|0.7|1.3|
 | |[S=2_2x2_Z=4_CH=1.czi](compare/S=2_2x2_Z=4_CH=1.flat_true.stitch_true.md)|true|0|10|55|0|1.3|1.0|1.2|
-|✓|[S=2_3x3_T=1_Z=4_CH=2.czi](compare/S=2_3x3_T=1_Z=4_CH=2.flat_true.stitch_false.md)|false|0|0|18|0|1.3|0.8|1.1|
-| |[S=2_3x3_T=1_Z=4_CH=2.czi](compare/S=2_3x3_T=1_Z=4_CH=2.flat_true.stitch_true.md)|true|0|18|95|0|1.4|1.1|1.1|
-|✓|[S=2_3x3_T=3_CH=2.czi](compare/S=2_3x3_T=3_CH=2.flat_true.stitch_false.md)|false|0|0|18|0|1.3|0.6|1.1|
-| |[S=2_3x3_T=3_CH=2.czi](compare/S=2_3x3_T=3_CH=2.flat_true.stitch_true.md)|true|0|14|73|0|1.4|1.1|1.1|
-|✓|[S=2_3x3_T=3_Z=1_CH=2.czi](compare/S=2_3x3_T=3_Z=1_CH=2.flat_true.stitch_false.md)|false|0|0|18|0|1.3|0.8|1.1|
-| |[S=2_3x3_T=3_Z=1_CH=2.czi](compare/S=2_3x3_T=3_Z=1_CH=2.flat_true.stitch_true.md)|true|0|14|73|0|1.3|1.1|1.1|
-|✓|[S=2_T=3_CH=1.czi](compare/S=2_T=3_CH=1.flat_true.stitch_false.md)|false|0|0|2|0|1.3|0.9|1.2|
-|✓|[S=2_T=3_CH=1.czi](compare/S=2_T=3_CH=1.flat_true.stitch_true.md)|true|0|0|2|0|1.3|1.4|1.1|
-|✓|[S=2_T=3_Z=5_CH=1.czi](compare/S=2_T=3_Z=5_CH=1.flat_true.stitch_false.md)|false|0|0|2|0|1.3|1.0|1.1|
-|✓|[S=2_T=3_Z=5_CH=1.czi](compare/S=2_T=3_Z=5_CH=1.flat_true.stitch_true.md)|true|0|0|2|0|1.3|0.9|1.1|
+|✓|[S=2_3x3_T=1_Z=4_CH=2.czi](compare/S=2_3x3_T=1_Z=4_CH=2.flat_true.stitch_false.md)|false|0|0|18|0|1.3|0.8|1.2|
+| |[S=2_3x3_T=1_Z=4_CH=2.czi](compare/S=2_3x3_T=1_Z=4_CH=2.flat_true.stitch_true.md)|true|0|18|95|0|1.4|1.2|1.0|
+|✓|[S=2_3x3_T=3_CH=2.czi](compare/S=2_3x3_T=3_CH=2.flat_true.stitch_false.md)|false|0|0|18|0|1.3|0.9|1.1|
+| |[S=2_3x3_T=3_CH=2.czi](compare/S=2_3x3_T=3_CH=2.flat_true.stitch_true.md)|true|0|14|73|0|1.3|1.1|1.0|
+|✓|[S=2_3x3_T=3_Z=1_CH=2.czi](compare/S=2_3x3_T=3_Z=1_CH=2.flat_true.stitch_false.md)|false|0|0|18|0|1.3|0.8|1.2|
+| |[S=2_3x3_T=3_Z=1_CH=2.czi](compare/S=2_3x3_T=3_Z=1_CH=2.flat_true.stitch_true.md)|true|0|14|73|0|1.3|1.1|1.0|
+|✓|[S=2_T=3_CH=1.czi](compare/S=2_T=3_CH=1.flat_true.stitch_false.md)|false|0|0|2|0|1.3|1.0|1.3|
+|✓|[S=2_T=3_CH=1.czi](compare/S=2_T=3_CH=1.flat_true.stitch_true.md)|true|0|0|2|0|1.3|1.0|1.1|
+|✓|[S=2_T=3_Z=5_CH=1.czi](compare/S=2_T=3_Z=5_CH=1.flat_true.stitch_false.md)|false|0|0|2|0|1.3|1.3|1.2|
+|✓|[S=2_T=3_Z=5_CH=1.czi](compare/S=2_T=3_Z=5_CH=1.flat_true.stitch_true.md)|true|0|0|2|0|1.3|1.0|1.1|
 | |[S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.czi](compare/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.flat_true.stitch_false.md)|false|116|925|978|404999|1.5|0.7|1.8|
 | |[S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.czi](compare/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.flat_true.stitch_true.md)|true|0|26|161|0|1.5|1.4|1.2|
-|✓|[S=3_CH=2.czi](compare/S=3_CH=2.flat_true.stitch_false.md)|false|0|0|3|0|1.3|0.9|1.3|
+|✓|[S=3_CH=2.czi](compare/S=3_CH=2.flat_true.stitch_false.md)|false|0|0|3|0|1.3|1.2|1.3|
 |✓|[S=3_CH=2.czi](compare/S=3_CH=2.flat_true.stitch_true.md)|true|0|0|3|0|1.3|0.9|1.2|
 |✓|[T=1_CH=2.czi](compare/T=1_CH=2.flat_true.stitch_false.md)|false|0|0|1|0|1.3|1.5|1.4|
-|✓|[T=1_CH=2.czi](compare/T=1_CH=2.flat_true.stitch_true.md)|true|0|0|1|0|1.3|1.4|1.4|
-|✓|[T=1_Z=5_CH=1.czi](compare/T=1_Z=5_CH=1.flat_true.stitch_false.md)|false|0|0|0|0|1.3|1.0|1.1|
+|✓|[T=1_CH=2.czi](compare/T=1_CH=2.flat_true.stitch_true.md)|true|0|0|1|0|1.3|1.5|1.4|
+|✓|[T=1_Z=5_CH=1.czi](compare/T=1_Z=5_CH=1.flat_true.stitch_false.md)|false|0|0|0|0|1.3|1.0|1.3|
 |✓|[T=1_Z=5_CH=1.czi](compare/T=1_Z=5_CH=1.flat_true.stitch_true.md)|true|0|0|0|0|1.3|1.0|1.1|
 |✓|[T=2_CH=1.czi](compare/T=2_CH=1.flat_true.stitch_false.md)|false|0|0|0|0|1.3|1.4|1.4|
-|✓|[T=2_CH=1.czi](compare/T=2_CH=1.flat_true.stitch_true.md)|true|0|0|0|0|1.3|1.5|1.4|
-|✓|[T=2_Z=5_CH=1.czi](compare/T=2_Z=5_CH=1.flat_true.stitch_false.md)|false|0|0|0|0|1.3|1.0|1.1|
-|✓|[T=2_Z=5_CH=1.czi](compare/T=2_Z=5_CH=1.flat_true.stitch_true.md)|true|0|0|0|0|1.3|0.9|1.2|
-|✓|[T=2_Z=5_CH=2.czi](compare/T=2_Z=5_CH=2.flat_true.stitch_false.md)|false|0|0|1|0|1.3|1.0|1.0|
-|✓|[T=2_Z=5_CH=2.czi](compare/T=2_Z=5_CH=2.flat_true.stitch_true.md)|true|0|0|1|0|1.3|1.0|1.1|
-|✓|[T=3_CH=2.czi](compare/T=3_CH=2.flat_true.stitch_false.md)|false|0|0|1|0|1.3|0.9|1.2|
+|✓|[T=2_CH=1.czi](compare/T=2_CH=1.flat_true.stitch_true.md)|true|0|0|0|0|1.3|1.1|1.4|
+|✓|[T=2_Z=5_CH=1.czi](compare/T=2_Z=5_CH=1.flat_true.stitch_false.md)|false|0|0|0|0|1.3|1.0|1.2|
+|✓|[T=2_Z=5_CH=1.czi](compare/T=2_Z=5_CH=1.flat_true.stitch_true.md)|true|0|0|0|0|1.3|1.0|1.2|
+|✓|[T=2_Z=5_CH=2.czi](compare/T=2_Z=5_CH=2.flat_true.stitch_false.md)|false|0|0|1|0|1.3|1.0|1.2|
+|✓|[T=2_Z=5_CH=2.czi](compare/T=2_Z=5_CH=2.flat_true.stitch_true.md)|true|0|0|1|0|1.3|1.0|0.9|
+|✓|[T=3_CH=2.czi](compare/T=3_CH=2.flat_true.stitch_false.md)|false|0|0|1|0|1.3|1.0|1.2|
 |✓|[T=3_CH=2.czi](compare/T=3_CH=2.flat_true.stitch_true.md)|true|0|0|1|0|1.3|0.9|1.2|
-|✓|[T=3_Z=5_CH=2.czi](compare/T=3_Z=5_CH=2.flat_true.stitch_false.md)|false|0|0|1|0|1.3|1.0|1.1|
+|✓|[T=3_Z=5_CH=2.czi](compare/T=3_Z=5_CH=2.flat_true.stitch_false.md)|false|0|0|1|0|1.3|1.0|1.2|
 |✓|[T=3_Z=5_CH=2.czi](compare/T=3_Z=5_CH=2.flat_true.stitch_true.md)|true|0|0|1|0|1.3|1.0|1.2|
-|✓|[W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.czi](compare/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.flat_true.stitch_false.md)|false|0|0|90|0|1.3|0.6|1.2|
+|✓|[W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.czi](compare/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.flat_true.stitch_false.md)|false|0|0|90|0|1.3|0.6|1.3|
 | |[W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.czi](compare/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.flat_true.stitch_true.md)|true|0|8|40|0|1.4|0.9|1.1|
-|✓|[W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.czi](compare/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.flat_true.stitch_false.md)|false|0|0|90|0|1.9|0.7|1.1|
-| |[W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.czi](compare/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.flat_true.stitch_true.md)|true|0|100|406|0|2.5|3.0|1.2|
-|✓|[Z=5_CH=1.czi](compare/Z=5_CH=1.flat_true.stitch_false.md)|false|0|0|0|0|1.3|1.0|1.2|
-|✓|[Z=5_CH=1.czi](compare/Z=5_CH=1.flat_true.stitch_true.md)|true|0|0|0|0|1.3|1.1|1.1|
-|✓|[Z=5_CH=2.czi](compare/Z=5_CH=2.flat_true.stitch_false.md)|false|0|0|1|0|1.3|0.9|1.2|
-|✓|[Z=5_CH=2.czi](compare/Z=5_CH=2.flat_true.stitch_true.md)|true|0|0|1|0|1.3|1.0|1.3|
-|✓|[RBC_full_one_timepoint.czi](compare/RBC_full_one_timepoint.flat_true.stitch_false.md)|false|0|0|833|0|1.7|3.0|1.6|
-|✓|[RBC_full_one_timepoint.czi](compare/RBC_full_one_timepoint.flat_true.stitch_true.md)|true|0|0|833|0|1.7|3.2|1.6|
-|✓|[RBC_full_time_series.czi](compare/RBC_full_time_series.flat_true.stitch_false.md)|false|0|0|2499|0|2.0|5.2|2.0|
-|✓|[RBC_full_time_series.czi](compare/RBC_full_time_series.flat_true.stitch_true.md)|true|0|0|2499|0|2.0|5.4|2.0|
-|✓|[RBC_medium_LLSZ.czi](compare/RBC_medium_LLSZ.flat_true.stitch_false.md)|false|0|0|4165|0|2.2|6.4|2.0|
-|✓|[RBC_medium_LLSZ.czi](compare/RBC_medium_LLSZ.flat_true.stitch_true.md)|true|0|0|4165|0|2.2|6.2|2.2|
-|✓|[RBC_tiny.czi](compare/RBC_tiny.flat_true.stitch_false.md)|false|0|0|833|0|1.7|2.9|1.9|
-|✓|[RBC_tiny.czi](compare/RBC_tiny.flat_true.stitch_true.md)|true|0|0|833|0|1.7|3.1|1.7|
-|✓|[20221019_MixedGrain.czi](compare/20221019_MixedGrain.flat_true.stitch_false.md)|false|0|0|0|0|1.8|1.0|1.3|
-|✓|[20221019_MixedGrain.czi](compare/20221019_MixedGrain.flat_true.stitch_true.md)|true|0|0|0|0|1.8|1.0|1.4|
-|✓|[20221019_MixedGrain2.czi](compare/20221019_MixedGrain2.flat_true.stitch_false.md)|false|0|0|0|0|1.9|1.0|1.4|
-|✓|[20221019_MixedGrain2.czi](compare/20221019_MixedGrain2.flat_true.stitch_true.md)|true|0|0|0|0|1.9|1.2|1.4|
-|✓|[Ph488.czi](compare/Ph488.flat_true.stitch_false.md)|false|0|0|0|0|1.7|1.0|1.3|
-|✓|[Ph488.czi](compare/Ph488.flat_true.stitch_true.md)|true|0|0|0|0|1.7|1.0|1.3|
-| |[v.zanotelli_20190509_p165_031.czi](compare/v.zanotelli_20190509_p165_031.flat_true.stitch_false.md)|false|117|1864|184|1299741|1.1|0.8|1.4|
+|✓|[W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.czi](compare/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.flat_true.stitch_false.md)|false|0|0|90|0|1.9|0.7|1.3|
+| |[W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.czi](compare/W96_B2+B4_S=2_T=2=Z=4_C=3_Tile=5x9.flat_true.stitch_true.md)|true|0|100|406|0|2.5|2.9|1.0|
+|✓|[Z=5_CH=1.czi](compare/Z=5_CH=1.flat_true.stitch_false.md)|false|0|0|0|0|1.3|1.1|1.2|
+|✓|[Z=5_CH=1.czi](compare/Z=5_CH=1.flat_true.stitch_true.md)|true|0|0|0|0|1.3|1.1|1.3|
+|✓|[Z=5_CH=2.czi](compare/Z=5_CH=2.flat_true.stitch_false.md)|false|0|0|1|0|1.3|0.9|1.1|
+|✓|[Z=5_CH=2.czi](compare/Z=5_CH=2.flat_true.stitch_true.md)|true|0|0|1|0|1.3|0.9|1.0|
+|✓|[RBC_full_one_timepoint.czi](compare/RBC_full_one_timepoint.flat_true.stitch_false.md)|false|0|0|833|0|1.7|3.3|1.8|
+|✓|[RBC_full_one_timepoint.czi](compare/RBC_full_one_timepoint.flat_true.stitch_true.md)|true|0|0|833|0|1.7|3.1|1.7|
+|✓|[RBC_full_time_series.czi](compare/RBC_full_time_series.flat_true.stitch_false.md)|false|0|0|2499|0|2.0|4.1|2.7|
+|✓|[RBC_full_time_series.czi](compare/RBC_full_time_series.flat_true.stitch_true.md)|true|0|0|2499|0|2.0|5.3|2.0|
+|✓|[RBC_medium_LLSZ.czi](compare/RBC_medium_LLSZ.flat_true.stitch_false.md)|false|0|0|4165|0|2.2|6.4|2.3|
+|✓|[RBC_medium_LLSZ.czi](compare/RBC_medium_LLSZ.flat_true.stitch_true.md)|true|0|0|4165|0|2.2|5.9|2.1|
+|✓|[RBC_tiny.czi](compare/RBC_tiny.flat_true.stitch_false.md)|false|0|0|833|0|1.7|3.0|1.7|
+|✓|[RBC_tiny.czi](compare/RBC_tiny.flat_true.stitch_true.md)|true|0|0|833|0|1.7|3.0|1.8|
+|✓|[20221019_MixedGrain.czi](compare/20221019_MixedGrain.flat_true.stitch_false.md)|false|0|0|0|0|1.7|1.0|1.4|
+|✓|[20221019_MixedGrain.czi](compare/20221019_MixedGrain.flat_true.stitch_true.md)|true|0|0|0|0|1.7|1.0|1.7|
+|✓|[20221019_MixedGrain2.czi](compare/20221019_MixedGrain2.flat_true.stitch_false.md)|false|0|0|0|0|1.9|1.0|1.5|
+|✓|[20221019_MixedGrain2.czi](compare/20221019_MixedGrain2.flat_true.stitch_true.md)|true|0|0|0|0|1.9|1.3|1.5|
+|✓|[Ph488.czi](compare/Ph488.flat_true.stitch_false.md)|false|0|0|0|0|1.7|1.0|1.4|
+|✓|[Ph488.czi](compare/Ph488.flat_true.stitch_true.md)|true|0|0|0|0|1.7|1.0|1.5|
+| |[v.zanotelli_20190509_p165_031.czi](compare/v.zanotelli_20190509_p165_031.flat_true.stitch_false.md)|false|117|1864|184|1299741|1.1|0.6|1.3|
 | |[v.zanotelli_20190509_p165_031.czi](compare/v.zanotelli_20190509_p165_031.flat_true.stitch_true.md)|true|0|179|15|127797|1.1|1.3|1.3|
-|✓|[v.zanotelli_20190509_p165_031_pt1.czi](compare/v.zanotelli_20190509_p165_031_pt1.flat_true.stitch_false.md)|false|0|0|6|0|1.2|1.4|1.2|
-|✓|[v.zanotelli_20190509_p165_031_pt1.czi](compare/v.zanotelli_20190509_p165_031_pt1.flat_true.stitch_true.md)|true|0|0|6|0|1.2|1.1|2.7|
-|✓|[v.zanotelli_20190509_p165_031_pt2.czi](compare/v.zanotelli_20190509_p165_031_pt2.flat_true.stitch_false.md)|false|0|0|4|0|1.2|1.4|1.1|
-|✓|[v.zanotelli_20190509_p165_031_pt2.czi](compare/v.zanotelli_20190509_p165_031_pt2.flat_true.stitch_true.md)|true|0|0|4|0|1.2|1.2|1.1|
-|✓|[10.5 dpc vegfc gapdh Pecam wt 1.czi](compare/10.5 dpc vegfc gapdh Pecam wt 1.flat_true.stitch_false.md)|false|0|0|0|0|1.4|1.0|1.1|
-|✓|[10.5 dpc vegfc gapdh Pecam wt 1.czi](compare/10.5 dpc vegfc gapdh Pecam wt 1.flat_true.stitch_true.md)|true|0|0|0|0|1.4|0.9|1.1|
-|✓|[Plate1-Blue-A-12-Scene-3-P3-F2-03.czi](compare/Plate1-Blue-A-12-Scene-3-P3-F2-03.flat_true.stitch_false.md)|false|0|0|21|0|1.2|0.8|1.1|
-|✓|[Plate1-Blue-A-12-Scene-3-P3-F2-03.czi](compare/Plate1-Blue-A-12-Scene-3-P3-F2-03.flat_true.stitch_true.md)|true|0|0|21|0|1.2|0.8|1.2|
-|✓|[xt-scan-lsm980.czi](compare/xt-scan-lsm980.flat_true.stitch_false.md)|false|0|0|0|0|1.5|1.0|1.2|
+|✓|[v.zanotelli_20190509_p165_031_pt1.czi](compare/v.zanotelli_20190509_p165_031_pt1.flat_true.stitch_false.md)|false|0|0|6|0|1.2|1.2|1.2|
+|✓|[v.zanotelli_20190509_p165_031_pt1.czi](compare/v.zanotelli_20190509_p165_031_pt1.flat_true.stitch_true.md)|true|0|0|6|0|1.2|1.4|1.1|
+|✓|[v.zanotelli_20190509_p165_031_pt2.czi](compare/v.zanotelli_20190509_p165_031_pt2.flat_true.stitch_false.md)|false|0|0|4|0|1.2|1.4|2.0|
+|✓|[v.zanotelli_20190509_p165_031_pt2.czi](compare/v.zanotelli_20190509_p165_031_pt2.flat_true.stitch_true.md)|true|0|0|4|0|1.2|1.2|1.2|
+|✓|[10.5 dpc vegfc gapdh Pecam wt 1.czi](compare/10.5 dpc vegfc gapdh Pecam wt 1.flat_true.stitch_false.md)|false|0|0|0|0|1.4|0.9|1.2|
+|✓|[10.5 dpc vegfc gapdh Pecam wt 1.czi](compare/10.5 dpc vegfc gapdh Pecam wt 1.flat_true.stitch_true.md)|true|0|0|0|0|1.4|1.0|1.1|
+|✓|[Plate1-Blue-A-12-Scene-3-P3-F2-03.czi](compare/Plate1-Blue-A-12-Scene-3-P3-F2-03.flat_true.stitch_false.md)|false|0|0|21|0|1.2|0.8|1.2|
+|✓|[Plate1-Blue-A-12-Scene-3-P3-F2-03.czi](compare/Plate1-Blue-A-12-Scene-3-P3-F2-03.flat_true.stitch_true.md)|true|0|0|21|0|1.2|0.8|1.3|
+|✓|[xt-scan-lsm980.czi](compare/xt-scan-lsm980.flat_true.stitch_false.md)|false|0|0|0|0|1.5|1.0|0.9|
 |✓|[xt-scan-lsm980.czi](compare/xt-scan-lsm980.flat_true.stitch_true.md)|true|0|0|0|0|1.5|1.0|1.1|
 | |[xz-scan-lsm980.czi](compare/xz-scan-lsm980.flat_true.stitch_false.md)|false|0|702|0|0|1.6|1.0|1.0|
-| |[xz-scan-lsm980.czi](compare/xz-scan-lsm980.flat_true.stitch_true.md)|true|0|702|0|0|1.6|1.0|1.1|
-| |[xzt-scan-lsm980.czi](compare/xzt-scan-lsm980.flat_true.stitch_false.md)|false|0|3510|0|0|2.1|0.9|1.0|
+| |[xz-scan-lsm980.czi](compare/xz-scan-lsm980.flat_true.stitch_true.md)|true|0|702|0|0|1.6|0.9|1.0|
+| |[xzt-scan-lsm980.czi](compare/xzt-scan-lsm980.flat_true.stitch_false.md)|false|0|3510|0|0|2.1|0.9|1.3|
 | |[xzt-scan-lsm980.czi](compare/xzt-scan-lsm980.flat_true.stitch_true.md)|true|0|3510|0|0|2.1|0.9|1.0|
-| |[MouseBrain_41Slices_1Tile_1Channel_2Illuminations_2Angles.czi](compare/MouseBrain_41Slices_1Tile_1Channel_2Illuminations_2Angles.flat_true.stitch_false.md)|false|0|83|167|0|2.3|1.0|1.1|
-| |[MouseBrain_41Slices_1Tile_1Channel_2Illuminations_2Angles.czi](compare/MouseBrain_41Slices_1Tile_1Channel_2Illuminations_2Angles.flat_true.stitch_true.md)|true|0|83|167|0|2.3|1.0|1.1|
-| |[MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.czi](compare/MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.flat_true.stitch_false.md)|false|0|247|495|0|2.4|1.1|1.1|
-| |[MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.czi](compare/MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.flat_true.stitch_true.md)|true|0|247|495|0|2.4|1.0|1.0|
-| |[MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.czi](compare/MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.flat_true.stitch_false.md)|false|0|741|1979|0|2.7|1.1|1.0|
-|✓|[MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.czi](compare/MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.flat_true.stitch_true.md)|true|0|0|494|0|4.7|1.4|1.1|
-| |[3Dexample.czi](compare/3Dexample.flat_true.stitch_false.md)|false|0|153|5|0|1.7|1.0|1.1|
-| |[3Dexample.czi](compare/3Dexample.flat_true.stitch_true.md)|true|0|18|0|0|1.9|1.3|1.2|
+| |[MouseBrain_41Slices_1Tile_1Channel_2Illuminations_2Angles.czi](compare/MouseBrain_41Slices_1Tile_1Channel_2Illuminations_2Angles.flat_true.stitch_false.md)|false|0|83|167|0|2.2|1.1|1.2|
+| |[MouseBrain_41Slices_1Tile_1Channel_2Illuminations_2Angles.czi](compare/MouseBrain_41Slices_1Tile_1Channel_2Illuminations_2Angles.flat_true.stitch_true.md)|true|0|83|167|0|2.2|1.0|1.3|
+| |[MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.czi](compare/MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.flat_true.stitch_false.md)|false|0|247|495|0|2.3|1.0|1.2|
+| |[MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.czi](compare/MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.flat_true.stitch_true.md)|true|0|247|495|0|2.3|1.4|1.2|
+| |[MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.czi](compare/MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.flat_true.stitch_false.md)|false|0|741|1979|0|2.7|0.9|1.1|
+|✓|[MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.czi](compare/MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.flat_true.stitch_true.md)|true|0|0|494|0|4.6|1.4|0.9|
+| |[3Dexample.czi](compare/3Dexample.flat_true.stitch_false.md)|false|0|153|5|0|1.6|1.0|1.3|
+| |[3Dexample.czi](compare/3Dexample.flat_true.stitch_true.md)|true|0|18|0|0|1.8|1.3|1.2|
+| |[mf20_NF_sox9_Paroedura_PO18_2.czi](compare/mf20_NF_sox9_Paroedura_PO18_2.flat_true.stitch_false.md)|false|0|902|0|0|2.1|1.0|1.3|
+| |[mf20_NF_sox9_Paroedura_PO18_2.czi](compare/mf20_NF_sox9_Paroedura_PO18_2.flat_true.stitch_true.md)|true|0|902|0|0|2.1|1.0|1.2|
+|✓|[2_mouse_02_01.czi](compare/2_mouse_02_01.flat_true.stitch_false.md)|false|0|0|0|0|1.5|0.8|0.9|
+|✓|[2_mouse_02_01.czi](compare/2_mouse_02_01.flat_true.stitch_true.md)|true|0|0|0|0|1.5|1.0|1.3|
+|✓|[qDII-CLV3-DR5-E27-LD-SAM11-T10.czi](compare/qDII-CLV3-DR5-E27-LD-SAM11-T10.flat_true.stitch_false.md)|false|0|0|0|0|1.9|1.0|1.3|
+|✓|[qDII-CLV3-DR5-E27-LD-SAM11-T10.czi](compare/qDII-CLV3-DR5-E27-LD-SAM11-T10.flat_true.stitch_true.md)|true|0|0|0|0|1.9|1.2|1.3|
+| |[Skin-Positive.czi](compare/Skin-Positive.flat_true.stitch_false.md)|false|0|192|64|0|1.2|0.4|1.0|
+| |[Skin-Positive.czi](compare/Skin-Positive.flat_true.stitch_true.md)|true|0|4|1|0|1.3|0.8|1.0|
+|✓|[03_12_2020_DSGN0673_fov_11_561.czi](compare/03_12_2020_DSGN0673_fov_11_561.flat_true.stitch_false.md)|false|0|0|0|0|1.4|0.5|1.1|
+|✓|[03_12_2020_DSGN0673_fov_11_561.czi](compare/03_12_2020_DSGN0673_fov_11_561.flat_true.stitch_true.md)|true|0|0|0|0|1.4|1.0|1.1|
+|✓|[split_hcr_probes_plasmid_pos_fov_tile3_Airyscan_Processing_Stitch.czi](compare/split_hcr_probes_plasmid_pos_fov_tile3_Airyscan_Processing_Stitch.flat_true.stitch_false.md)|false|0|0|0|0|1.5|0.6|1.2|
+| |[split_hcr_probes_plasmid_pos_fov_tile3_Airyscan_Processing_Stitch.czi](compare/split_hcr_probes_plasmid_pos_fov_tile3_Airyscan_Processing_Stitch.flat_true.stitch_true.md)|true|6|4|2|67475|1.6|1.2|1.0|
+|✓|[Nyre_5-1_Strep_100_DBE_500_mikro.czi](compare/Nyre_5-1_Strep_100_DBE_500_mikro.flat_true.stitch_false.md)|false|0|0|0|0|1.8|0.4|1.4|
+|✓|[Nyre_5-1_Strep_100_DBE_500_mikro.czi](compare/Nyre_5-1_Strep_100_DBE_500_mikro.flat_true.stitch_true.md)|true|0|0|0|0|1.8|1.0|1.4|
+|✓|[09_10_2018_hiprfish_mix_1_fov_10_561.czi](compare/09_10_2018_hiprfish_mix_1_fov_10_561.flat_true.stitch_false.md)|false|0|0|0|0|1.4|0.4|1.3|
+|✓|[09_10_2018_hiprfish_mix_1_fov_10_561.czi](compare/09_10_2018_hiprfish_mix_1_fov_10_561.flat_true.stitch_true.md)|true|0|0|0|0|1.4|1.0|1.2|
+|✓|[09_10_2018_hiprfish_mix_1_fov_15_405.czi](compare/09_10_2018_hiprfish_mix_1_fov_15_405.flat_true.stitch_false.md)|false|0|0|0|0|1.4|0.0|1.3|
+|✓|[09_10_2018_hiprfish_mix_1_fov_15_405.czi](compare/09_10_2018_hiprfish_mix_1_fov_15_405.flat_true.stitch_true.md)|true|0|0|0|0|1.4|1.0|1.1|
+|✓|[Figure2_G.czi](compare/Figure2_G.flat_true.stitch_false.md)|false|0|0|0|0|1.8|0.6|1.2|
+|✓|[Figure2_G.czi](compare/Figure2_G.flat_true.stitch_true.md)|true|0|0|0|0|1.8|0.9|1.2|
+|✓|[group1-08.czi](compare/group1-08.flat_true.stitch_false.md)|false|0|0|0|0|1.9|0.6|1.3|
+|✓|[group1-08.czi](compare/group1-08.flat_true.stitch_true.md)|true|0|0|0|0|1.9|1.0|1.2|
+|✓|[CHMP2B_IF_A13410_CR-Gauss-15.czi](compare/CHMP2B_IF_A13410_CR-Gauss-15.flat_true.stitch_false.md)|false|0|0|0|0|1.4|0.2|1.2|
+|✓|[CHMP2B_IF_A13410_CR-Gauss-15.czi](compare/CHMP2B_IF_A13410_CR-Gauss-15.flat_true.stitch_true.md)|true|0|0|0|0|1.4|1.0|1.2|
+|✓|[Rat_100um_MOR1_x500_TSA.czi](compare/Rat_100um_MOR1_x500_TSA.flat_true.stitch_false.md)|false|0|0|0|0|1.2|0.6|1.3|
+|✓|[Rat_100um_MOR1_x500_TSA.czi](compare/Rat_100um_MOR1_x500_TSA.flat_true.stitch_true.md)|true|0|0|0|0|1.2|1.3|1.4|
+|✓|[SIM Synapsed homologs of meiotic mouse chromosomes full FOV.czi](compare/SIM Synapsed homologs of meiotic mouse chromosomes full FOV.flat_true.stitch_false.md)|false|0|0|0|0|1.4|0.4|1.3|
+|✓|[SIM Synapsed homologs of meiotic mouse chromosomes full FOV.czi](compare/SIM Synapsed homologs of meiotic mouse chromosomes full FOV.flat_true.stitch_true.md)|true|0|0|0|0|1.4|1.2|1.3|
+|✓|[example_image_2c_1z_1t_.czi](compare/example_image_2c_1z_1t_.flat_true.stitch_false.md)|false|0|0|0|0|1.2|0.7|1.2|
+|✓|[example_image_2c_1z_1t_.czi](compare/example_image_2c_1z_1t_.flat_true.stitch_true.md)|true|0|0|0|0|1.2|1.4|1.3|
+|✓|[190731_EV38_1_Collagen_ITSwithAsc+Dexa+IGF+TGF_63x_zstack_3.czi](compare/190731_EV38_1_Collagen_ITSwithAsc+Dexa+IGF+TGF_63x_zstack_3.flat_true.stitch_false.md)|false|0|0|0|0|1.7|0.3|1.4|
+|✓|[190731_EV38_1_Collagen_ITSwithAsc+Dexa+IGF+TGF_63x_zstack_3.czi](compare/190731_EV38_1_Collagen_ITSwithAsc+Dexa+IGF+TGF_63x_zstack_3.flat_true.stitch_true.md)|true|0|0|0|0|1.7|1.2|1.3|
+|✓|[HepG2_ND100_ctrl_FASTZ.czi](compare/HepG2_ND100_ctrl_FASTZ.flat_true.stitch_false.md)|false|0|0|0|0|2.0|0.4|1.3|
+|✓|[HepG2_ND100_ctrl_FASTZ.czi](compare/HepG2_ND100_ctrl_FASTZ.flat_true.stitch_true.md)|true|0|0|0|0|2.0|1.0|1.6|
+|✓|[Fig1-source_data_1-B__Max.czi](compare/Fig1-source_data_1-B__Max.flat_true.stitch_false.md)|false|0|0|0|0|1.5|1.0|1.4|
+|✓|[Fig1-source_data_1-B__Max.czi](compare/Fig1-source_data_1-B__Max.flat_true.stitch_true.md)|true|0|0|0|0|1.5|1.3|1.5|
+|✓|[Fig1-source_data_1-B_.czi](compare/Fig1-source_data_1-B_.flat_true.stitch_false.md)|false|0|0|0|0|1.8|0.2|1.5|
+|✓|[Fig1-source_data_1-B_.czi](compare/Fig1-source_data_1-B_.flat_true.stitch_true.md)|true|0|0|0|0|1.8|1.2|1.5|
+|✓|[19juil05a1.czi](compare/19juil05a1.flat_true.stitch_false.md)|false|0|0|0|0|1.6|0.5|1.2|
+|✓|[19juil05a1.czi](compare/19juil05a1.flat_true.stitch_true.md)|true|0|0|0|0|1.6|1.2|1.2|
+|✓|[Fig1B_left.czi](compare/Fig1B_left.flat_true.stitch_false.md)|false|0|0|0|0|1.5|1.3|1.8|
+|✓|[Fig1B_left.czi](compare/Fig1B_left.flat_true.stitch_true.md)|true|0|0|0|0|1.5|1.3|1.5|
+|✓|[0.7_L_side_LSO_b6_7_Nissl_first.czi](compare/0.7_L_side_LSO_b6_7_Nissl_first.flat_true.stitch_false.md)|false|0|0|0|0|1.5|1.5|1.4|
+|✓|[0.7_L_side_LSO_b6_7_Nissl_first.czi](compare/0.7_L_side_LSO_b6_7_Nissl_first.flat_true.stitch_true.md)|true|0|0|0|0|1.5|1.5|1.4|
+|✓|[190729S LP x63Z mCK13rCK17.czi](compare/190729S LP x63Z mCK13rCK17.flat_true.stitch_false.md)|false|0|0|0|0|1.8|0.4|1.7|
+|✓|[190729S LP x63Z mCK13rCK17.czi](compare/190729S LP x63Z mCK13rCK17.flat_true.stitch_true.md)|true|0|0|0|0|1.8|1.2|1.3|
+|✓|[NIP51_Int1570_mRNA670_ (2).czi](compare/NIP51_Int1570_mRNA670_ (2).flat_true.stitch_false.md)|false|0|0|0|0|2.0|0.5|1.5|
+|✓|[NIP51_Int1570_mRNA670_ (2).czi](compare/NIP51_Int1570_mRNA670_ (2).flat_true.stitch_true.md)|true|0|0|0|0|2.0|1.0|1.5|
+|✓|[Figure2D-eGFPCdt1_2MKCl.czi](compare/Figure2D-eGFPCdt1_2MKCl.flat_true.stitch_false.md)|false|0|0|0|0|1.6|0.3|1.6|
+|✓|[Figure2D-eGFPCdt1_2MKCl.czi](compare/Figure2D-eGFPCdt1_2MKCl.flat_true.stitch_true.md)|true|0|0|0|0|1.6|1.0|1.5|
+| |[GFP_plasmid_Ecoli_plus_plaque_sample_ecoli_fov_01tile_Airyscan_Processing_stitch.czi](compare/GFP_plasmid_Ecoli_plus_plaque_sample_ecoli_fov_01tile_Airyscan_Processing_stitch.flat_true.stitch_false.md)|false|0|8|0|0|1.5|0.2|1.2|
+| |[GFP_plasmid_Ecoli_plus_plaque_sample_ecoli_fov_01tile_Airyscan_Processing_stitch.czi](compare/GFP_plasmid_Ecoli_plus_plaque_sample_ecoli_fov_01tile_Airyscan_Processing_stitch.flat_true.stitch_true.md)|true|0|8|0|0|1.5|0.8|1.3|
+| |[63x_tile_du145_tf_647_k27ac_488_dapi_r2.czi](compare/63x_tile_du145_tf_647_k27ac_488_dapi_r2.flat_true.stitch_false.md)|false|0|8|0|0|1.5|0.3|1.2|
+| |[63x_tile_du145_tf_647_k27ac_488_dapi_r2.czi](compare/63x_tile_du145_tf_647_k27ac_488_dapi_r2.flat_true.stitch_true.md)|true|0|8|0|0|1.5|1.5|1.2|
+|✓|[daf-12 L1 1.czi](compare/daf-12 L1 1.flat_true.stitch_false.md)|false|0|0|0|0|1.8|0.4|1.4|
+|✓|[daf-12 L1 1.czi](compare/daf-12 L1 1.flat_true.stitch_true.md)|true|0|0|0|0|1.8|1.0|1.4|
+|✓|[dO 30 min nr 13.czi](compare/dO 30 min nr 13.flat_true.stitch_false.md)|false|0|0|0|0|1.4|0.9|1.1|
+|✓|[dO 30 min nr 13.czi](compare/dO 30 min nr 13.flat_true.stitch_true.md)|true|0|0|0|0|1.4|1.0|1.2|

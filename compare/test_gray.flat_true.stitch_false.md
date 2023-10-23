@@ -1,13 +1,52 @@
+|  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
+| -------------------|------------------|--------------------|-----------------|------- |
+| Initialization     |                  |14 ms|6 ms|        |
+| Reader Size (Mb)     |                  |0.18|0.24|        |
+| getStageLabelName| Image 1 | Scene position #0| Scene position #1| |
+| getStageLabelName| Image 2 | Scene position #0| Scene position #2| |
+| getStageLabelName| Image 3 | Scene position #0| Scene position #3| |
+| getStageLabelName| Image 4 | Scene position #0| Scene position #4| |
+| getStageLabelName| Image 5 | Scene position #0| Scene position #5| |
+| getStageLabelName| Image 6 | Scene position #0| Scene position #6| |
+| getStageLabelName| Image 7 | Scene position #0| Scene position #7| |
+| getStageLabelName| Image 8 | Scene position #0| Scene position #8| |
+| getStageLabelName| Image 9 | Scene position #0| Scene position #9| |
+| getStageLabelName| Image 10 | Scene position #0| Scene position #10| |
+| getStageLabelName| Image 11 | Scene position #0| Scene position #11| |
+| getStageLabelName| Image 12 | Scene position #0| Scene position #12| |
+| getStageLabelName| Image 13 | Scene position #0| Scene position #13| |
+| getStageLabelName| Image 14 | Scene position #0| Scene position #14| |
+| getStageLabelName| Image 15 | Scene position #0| Scene position #15| |
+| getStageLabelName| Image 16 | Scene position #0| Scene position #16| |
+| getStageLabelName| Image 17 | Scene position #0| Scene position #17| |
+| getStageLabelName| Image 18 | Scene position #0| Scene position #18| |
+| getStageLabelName| Image 19 | Scene position #0| Scene position #19| |
+| getStageLabelName| Image 20 | Scene position #0| Scene position #20| |
+| getStageLabelName| Image 21 | Scene position #0| Scene position #21| |
+| getStageLabelName| Image 22 | Scene position #0| Scene position #22| |
+| getStageLabelName| Image 23 | Scene position #0| Scene position #23| |
+| getStageLabelName| Image 24 | Scene position #0| Scene position #24| |
+| getStageLabelName| Image 25 | Scene position #0| Scene position #25| |
+| getStageLabelName| Image 26 | Scene position #0| Scene position #26| |
+| getStageLabelName| Image 27 | Scene position #0| Scene position #27| |
+| getStageLabelName| Image 28 | Scene position #0| Scene position #28| |
+| getStageLabelName| Image 29 | Scene position #0| Scene position #29| |
+| getStageLabelName| Image 30 | Scene position #0| Scene position #30| |
+| getStageLabelName| Image 31 | Scene position #0| Scene position #31| |
+| getStageLabelName| Image 32 | Scene position #0| Scene position #32| |
+| getStageLabelName| Image 33 | Scene position #0| Scene position #33| |
+| getStageLabelName| Image 34 | Scene position #0| Scene position #34| |
+| getStageLabelName| Image 35 | Scene position #0| Scene position #35| |
 # [test_gray.czi](https://zenodo.org/record/8263451/files/test_gray.czi) report
  - **Autostitch** = false
  - ZeissCZIReader v6.14.0
- - ZeissQuickStartCZIReader v0.1.8-SNAPSHOT
+ - ZeissQuickStartCZIReader v0.2.1-SNAPSHOT
 
 # Images 
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |2696 ms|------|3404 ms|------|--------|
+| Read time (all)   |2884 ms|------|3281 ms|------|--------|
 |0|![test_gray.quick_true.flat_true.stitch_false.series_0.jpg](test_gray/test_gray.quick_true.flat_true.stitch_false.series_0.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|![test_gray.quick_false.flat_true.stitch_false.series_0.jpg](test_gray/test_gray.quick_false.flat_true.stitch_false.series_0.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|0|
 |1|![test_gray.quick_true.flat_true.stitch_false.series_1.jpg](test_gray/test_gray.quick_true.flat_true.stitch_false.series_1.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|![test_gray.quick_false.flat_true.stitch_false.series_1.jpg](test_gray/test_gray.quick_false.flat_true.stitch_false.series_1.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|0|
 |2|![test_gray.quick_true.flat_true.stitch_false.series_2.jpg](test_gray/test_gray.quick_true.flat_true.stitch_false.series_2.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|![test_gray.quick_false.flat_true.stitch_false.series_2.jpg](test_gray/test_gray.quick_false.flat_true.stitch_false.series_2.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|0|
@@ -47,42 +86,3 @@
 
 # Metadata
 
-|  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
-| -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |12 ms|5 ms|        |
-| Reader Size (Mb)     |                  |0.17|0.23|        |
-| getStageLabelName| Image 1 | Scene position #0| Scene position #1| |
-| getStageLabelName| Image 2 | Scene position #0| Scene position #2| |
-| getStageLabelName| Image 3 | Scene position #0| Scene position #3| |
-| getStageLabelName| Image 4 | Scene position #0| Scene position #4| |
-| getStageLabelName| Image 5 | Scene position #0| Scene position #5| |
-| getStageLabelName| Image 6 | Scene position #0| Scene position #6| |
-| getStageLabelName| Image 7 | Scene position #0| Scene position #7| |
-| getStageLabelName| Image 8 | Scene position #0| Scene position #8| |
-| getStageLabelName| Image 9 | Scene position #0| Scene position #9| |
-| getStageLabelName| Image 10 | Scene position #0| Scene position #10| |
-| getStageLabelName| Image 11 | Scene position #0| Scene position #11| |
-| getStageLabelName| Image 12 | Scene position #0| Scene position #12| |
-| getStageLabelName| Image 13 | Scene position #0| Scene position #13| |
-| getStageLabelName| Image 14 | Scene position #0| Scene position #14| |
-| getStageLabelName| Image 15 | Scene position #0| Scene position #15| |
-| getStageLabelName| Image 16 | Scene position #0| Scene position #16| |
-| getStageLabelName| Image 17 | Scene position #0| Scene position #17| |
-| getStageLabelName| Image 18 | Scene position #0| Scene position #18| |
-| getStageLabelName| Image 19 | Scene position #0| Scene position #19| |
-| getStageLabelName| Image 20 | Scene position #0| Scene position #20| |
-| getStageLabelName| Image 21 | Scene position #0| Scene position #21| |
-| getStageLabelName| Image 22 | Scene position #0| Scene position #22| |
-| getStageLabelName| Image 23 | Scene position #0| Scene position #23| |
-| getStageLabelName| Image 24 | Scene position #0| Scene position #24| |
-| getStageLabelName| Image 25 | Scene position #0| Scene position #25| |
-| getStageLabelName| Image 26 | Scene position #0| Scene position #26| |
-| getStageLabelName| Image 27 | Scene position #0| Scene position #27| |
-| getStageLabelName| Image 28 | Scene position #0| Scene position #28| |
-| getStageLabelName| Image 29 | Scene position #0| Scene position #29| |
-| getStageLabelName| Image 30 | Scene position #0| Scene position #30| |
-| getStageLabelName| Image 31 | Scene position #0| Scene position #31| |
-| getStageLabelName| Image 32 | Scene position #0| Scene position #32| |
-| getStageLabelName| Image 33 | Scene position #0| Scene position #33| |
-| getStageLabelName| Image 34 | Scene position #0| Scene position #34| |
-| getStageLabelName| Image 35 | Scene position #0| Scene position #35| |

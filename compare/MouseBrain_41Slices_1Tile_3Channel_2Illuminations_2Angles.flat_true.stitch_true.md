@@ -1,22 +1,7 @@
-# [MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.czi](https://zenodo.org/record/8305531/files/MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.czi) report
- - **Autostitch** = true
- - ZeissCZIReader v6.14.0
- - ZeissQuickStartCZIReader v0.1.8-SNAPSHOT
-
-# Images 
-
-| Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
-|-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |268 ms|------|270 ms|------|--------|
-|0|![MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.quick_true.flat_true.stitch_true.series_0.jpg](MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles/MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.quick_true.flat_true.stitch_true.series_0.jpg)|X:1500<br>Y:1000<br>C:6<br>Z:41<br>T:1|![MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.quick_false.flat_true.stitch_true.series_0.jpg](MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles/MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.quick_false.flat_true.stitch_true.series_0.jpg)|X:1500<br>Y:1000<br>C:6<br>Z:41<br>T:1|0|
-|1|![MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.quick_true.flat_true.stitch_true.series_1.jpg](MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles/MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.quick_true.flat_true.stitch_true.series_1.jpg)|X:1500<br>Y:1000<br>C:6<br>Z:41<br>T:1|![MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.quick_false.flat_true.stitch_true.series_1.jpg](MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles/MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.quick_false.flat_true.stitch_true.series_1.jpg)|X:1500<br>Y:1000<br>C:6<br>Z:41<br>T:1|0|
-
-# Metadata
-
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |11 ms|11 ms|        |
-| Reader Size (Mb)     |                  |0.39|0.93|        |
+| Initialization     |                  |11 ms|15 ms|        |
+| Reader Size (Mb)     |                  |0.40|0.94|        |
 | getStageLabelName| Image 1 | Scene position #0| Scene position #1| |
 | getStageLabelX| Image 1 | ome.units.quantity.Length: value[-388.443], unit[µm] stored as java.lang.Double| ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer| |
 | getStageLabelY| Image 1 | ome.units.quantity.Length: value[16038.1], unit[µm] stored as java.lang.Double| ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer| |
@@ -514,3 +499,18 @@
 | getPlanePositionY| Image 1 Plane 163 | ome.units.quantity.Length: value[16038.1], unit[µm] stored as java.lang.Double| ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer| |
 
  More than 500 differences.
+# [MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.czi](https://zenodo.org/record/8305531/files/MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.czi) report
+ - **Autostitch** = true
+ - ZeissCZIReader v6.14.0
+ - ZeissQuickStartCZIReader v0.2.1-SNAPSHOT
+
+# Images 
+
+| Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
+|-------------------|--------------------|------|-----------------|------|--------|
+| Read time (all)   |249 ms|------|306 ms|------|--------|
+|0|![MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.quick_true.flat_true.stitch_true.series_0.jpg](MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles/MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.quick_true.flat_true.stitch_true.series_0.jpg)|X:1500<br>Y:1000<br>C:6<br>Z:41<br>T:1|![MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.quick_false.flat_true.stitch_true.series_0.jpg](MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles/MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.quick_false.flat_true.stitch_true.series_0.jpg)|X:1500<br>Y:1000<br>C:6<br>Z:41<br>T:1|0|
+|1|![MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.quick_true.flat_true.stitch_true.series_1.jpg](MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles/MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.quick_true.flat_true.stitch_true.series_1.jpg)|X:1500<br>Y:1000<br>C:6<br>Z:41<br>T:1|![MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.quick_false.flat_true.stitch_true.series_1.jpg](MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles/MouseBrain_41Slices_1Tile_3Channel_2Illuminations_2Angles.quick_false.flat_true.stitch_true.series_1.jpg)|X:1500<br>Y:1000<br>C:6<br>Z:41<br>T:1|0|
+
+# Metadata
+
