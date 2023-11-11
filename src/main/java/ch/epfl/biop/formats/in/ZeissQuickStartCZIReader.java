@@ -816,7 +816,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             if (image.intersects(blockRegion)) {
                 RandomAccessInputStream stream = getStream(block.filePart);
 
-                if (image.equals(blockRegion)) {
+                if (image.equals(blockRegion) && blocks.size()==1) { // THE SECOND TEST IS NECESSARY BECAUSE OTHER BLOCKS CAN INTERSECT!
                     // Best case scenario
                     return readRawPixelData(
                             block,
@@ -839,6 +839,8 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     }
 
                     Region tileInBlock = new Region(regionRead.x-blockRegion.x, regionRead.y-blockRegion.y, regionRead.width, regionRead.height);
+
+
 
                     byte[] rawData = readRawPixelData(
                             block,
