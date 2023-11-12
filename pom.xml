@@ -11,7 +11,7 @@
 
 	<groupId>ch.epfl.biop</groupId>
 	<artifactId>quick-start-czi-reader</artifactId>
-	<version>0.2.1-SNAPSHOT</version>
+	<version>0.2.1</version>
 
 	<name>Quick Start CZI Reader</name>
 	<description>A Bio-Formats CZI Reader that starts fast and with low memory footprint</description>
@@ -75,7 +75,7 @@
 	<scm>
 		<connection>scm:git:https://github.com/BIOP/quick-start-czi-reader</connection>
 		<developerConnection>scm:git:git@github.com:BIOP/quick-start-czi-reader</developerConnection>
-		<tag>HEAD</tag>
+		<tag>quick-start-czi-reader-0.2.1</tag>
 		<url>https://github.com/BIOP/quick-start-czi-reader</url>
 	</scm>
 	
