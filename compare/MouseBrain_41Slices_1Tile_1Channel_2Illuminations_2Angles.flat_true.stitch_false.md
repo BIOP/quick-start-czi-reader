@@ -1,7 +1,7 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |16 ms|12 ms|        |
-| Reader Size (Mb)     |                  |0.22|0.49|        |
+| Initialization     |                  |34 ms|13 ms|        |
+| Reader Size (Mb)     |                  |0.21|0.48|        |
 | getStageLabelName| Image 1 | Scene position #0| Scene position #1| |
 | getStageLabelX| Image 1 | ome.units.quantity.Length: value[-387.375], unit[µm] stored as java.lang.Double| ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer| |
 | getStageLabelY| Image 1 | ome.units.quantity.Length: value[16038.0], unit[µm] stored as java.lang.Double| ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer| |
@@ -254,14 +254,14 @@
 | getPlanePositionZ| Image 1 Plane 81 |  1: ome.units.quantity.Length: value[-1207.55], unit[µm] stored as java.lang.Double| 2: null |
 # [MouseBrain_41Slices_1Tile_1Channel_2Illuminations_2Angles.czi](https://zenodo.org/record/8305531/files/MouseBrain_41Slices_1Tile_1Channel_2Illuminations_2Angles.czi) report
  - **Autostitch** = false
- - ZeissCZIReader v6.14.0
+ - ZeissCZIReader v7.0.0
  - ZeissQuickStartCZIReader v0.2.2-SNAPSHOT
 
 # Images 
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |128 ms|------|193 ms|------|--------|
+| Read time (all)   |148 ms|------|173 ms|------|--------|
 |0|![MouseBrain_41Slices_1Tile_1Channel_2Illuminations_2Angles.quick_true.flat_true.stitch_false.series_0.jpg](MouseBrain_41Slices_1Tile_1Channel_2Illuminations_2Angles/MouseBrain_41Slices_1Tile_1Channel_2Illuminations_2Angles.quick_true.flat_true.stitch_false.series_0.jpg)|X:1500<br>Y:1000<br>C:2<br>Z:41<br>T:1|![MouseBrain_41Slices_1Tile_1Channel_2Illuminations_2Angles.quick_false.flat_true.stitch_false.series_0.jpg](MouseBrain_41Slices_1Tile_1Channel_2Illuminations_2Angles/MouseBrain_41Slices_1Tile_1Channel_2Illuminations_2Angles.quick_false.flat_true.stitch_false.series_0.jpg)|X:1500<br>Y:1000<br>C:2<br>Z:41<br>T:1|0|
 |1|![MouseBrain_41Slices_1Tile_1Channel_2Illuminations_2Angles.quick_true.flat_true.stitch_false.series_1.jpg](MouseBrain_41Slices_1Tile_1Channel_2Illuminations_2Angles/MouseBrain_41Slices_1Tile_1Channel_2Illuminations_2Angles.quick_true.flat_true.stitch_false.series_1.jpg)|X:1500<br>Y:1000<br>C:2<br>Z:41<br>T:1|![MouseBrain_41Slices_1Tile_1Channel_2Illuminations_2Angles.quick_false.flat_true.stitch_false.series_1.jpg](MouseBrain_41Slices_1Tile_1Channel_2Illuminations_2Angles/MouseBrain_41Slices_1Tile_1Channel_2Illuminations_2Angles.quick_false.flat_true.stitch_false.series_1.jpg)|X:1500<br>Y:1000<br>C:2<br>Z:41<br>T:1|0|
 

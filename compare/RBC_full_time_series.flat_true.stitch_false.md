@@ -1,7 +1,7 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |28 ms|315 ms|        |
-| Reader Size (Mb)     |                  |2.60|5.34|        |
+| Initialization     |                  |30 ms|614 ms|        |
+| Reader Size (Mb)     |                  |2.60|5.33|        |
 | getPlanePositionZ| Image 0 Plane 1 | -384.727 um | -385.027 um | 0.300 um |
 | getPlanePositionZ| Image 0 Plane 2 | -384.427 um | -385.027 um | 0.600 um |
 | getPlanePositionZ| Image 0 Plane 3 | -384.127 um | -385.027 um | 0.900 um |
@@ -501,14 +501,14 @@
  More than 500 differences.
 # [RBC_full_time_series.czi](https://zenodo.org/record/7117784/files/RBC_full_time_series.czi) report
  - **Autostitch** = false
- - ZeissCZIReader v6.14.0
+ - ZeissCZIReader v7.0.0
  - ZeissQuickStartCZIReader v0.2.2-SNAPSHOT
 
 # Images 
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |154 ms|------|253 ms|------|--------|
+| Read time (all)   |159 ms|------|258 ms|------|--------|
 |0|![RBC_full_time_series.quick_true.flat_true.stitch_false.series_0.jpg](RBC_full_time_series/RBC_full_time_series.quick_true.flat_true.stitch_false.series_0.jpg)|X:2048<br>Y:300<br>C:1<br>Z:834<br>T:3|![RBC_full_time_series.quick_false.flat_true.stitch_false.series_0.jpg](RBC_full_time_series/RBC_full_time_series.quick_false.flat_true.stitch_false.series_0.jpg)|X:2048<br>Y:300<br>C:1<br>Z:834<br>T:3|0|
 
 # Metadata

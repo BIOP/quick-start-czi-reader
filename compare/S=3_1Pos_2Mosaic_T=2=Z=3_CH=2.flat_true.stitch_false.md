@@ -1,7 +1,7 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |58 ms|37 ms|        |
-| Reader Size (Mb)     |                  |2.23|3.36|        |
+| Initialization     |                  |124 ms|45 ms|        |
+| Reader Size (Mb)     |                  |2.23|3.35|        |
 | getImageCount|(No args)|28| 51| |
 | getStageLabelName| Image 0 | TR1| Scene position #0| |
 | getStageLabelName| Image 1 | TR1| Scene position #1| |
@@ -501,14 +501,14 @@
  More than 500 differences.
 # [S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.czi](https://zenodo.org/record/7015307/files/S%3D3_1Pos_2Mosaic_T%3D2%3DZ%3D3_CH%3D2.czi) report
  - **Autostitch** = false
- - ZeissCZIReader v6.14.0
+ - ZeissCZIReader v7.0.0
  - ZeissQuickStartCZIReader v0.2.2-SNAPSHOT
 
 # Images 
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |345 ms|------|845 ms|------|--------|
+| Read time (all)   |423 ms|------|683 ms|------|--------|
 |0|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_false.series_0.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_false.series_0.jpg)|X:256<br>Y:256<br>C:2<br>Z:3<br>T:2|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_false.series_0.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_false.series_0.jpg)|X:256<br>Y:256<br>C:2<br>Z:3<br>T:2|0|
 |1|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_false.series_1.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_false.series_1.jpg)|X:256<br>Y:256<br>C:2<br>Z:3<br>T:2|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_false.series_1.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_false.series_1.jpg)|X:256<br>Y:256<br>C:2<br>Z:3<br>T:2|0|
 |2|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_false.series_2.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_true.flat_true.stitch_false.series_2.jpg)|X:256<br>Y:256<br>C:2<br>Z:3<br>T:2|![S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_false.series_2.jpg](S=3_1Pos_2Mosaic_T=2=Z=3_CH=2/S=3_1Pos_2Mosaic_T=2=Z=3_CH=2.quick_false.flat_true.stitch_false.series_2.jpg)|X:256<br>Y:256<br>C:2<br>Z:3<br>T:2|0|

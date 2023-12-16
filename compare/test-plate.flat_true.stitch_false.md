@@ -1,6 +1,6 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |307 ms|106 ms|        |
+| Initialization     |                  |355 ms|84 ms|        |
 | Reader Size (Mb)     |                  |3.52|4.66|        |
 | getStageLabelName| Image 0 | P1| Scene position #0| |
 | getStageLabelName| Image 1 | P2| Scene position #1| |
@@ -501,14 +501,14 @@
  More than 500 differences.
 # [test-plate.czi](https://zenodo.org/record/7129425/files/test-plate.czi) report
  - **Autostitch** = false
- - ZeissCZIReader v6.14.0
+ - ZeissCZIReader v7.0.0
  - ZeissQuickStartCZIReader v0.2.2-SNAPSHOT
 
 # Images 
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |30926 ms|------|40884 ms|------|--------|
+| Read time (all)   |32454 ms|------|35380 ms|------|--------|
 |0|![test-plate.quick_true.flat_true.stitch_false.series_0.jpg](test-plate/test-plate.quick_true.flat_true.stitch_false.series_0.jpg)|X:2048<br>Y:2048<br>C:4<br>Z:1<br>T:1|![test-plate.quick_false.flat_true.stitch_false.series_0.jpg](test-plate/test-plate.quick_false.flat_true.stitch_false.series_0.jpg)|X:2048<br>Y:2048<br>C:4<br>Z:1<br>T:1|0|
 |1|![test-plate.quick_true.flat_true.stitch_false.series_1.jpg](test-plate/test-plate.quick_true.flat_true.stitch_false.series_1.jpg)|X:2048<br>Y:2048<br>C:4<br>Z:1<br>T:1|![test-plate.quick_false.flat_true.stitch_false.series_1.jpg](test-plate/test-plate.quick_false.flat_true.stitch_false.series_1.jpg)|X:2048<br>Y:2048<br>C:4<br>Z:1<br>T:1|0|
 |2|![test-plate.quick_true.flat_true.stitch_false.series_2.jpg](test-plate/test-plate.quick_true.flat_true.stitch_false.series_2.jpg)|X:2048<br>Y:2048<br>C:4<br>Z:1<br>T:1|![test-plate.quick_false.flat_true.stitch_false.series_2.jpg](test-plate/test-plate.quick_false.flat_true.stitch_false.series_2.jpg)|X:2048<br>Y:2048<br>C:4<br>Z:1<br>T:1|0|

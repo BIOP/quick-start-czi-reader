@@ -1,17 +1,17 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |6 ms|6 ms|        |
+| Initialization     |                  |15 ms|10 ms|        |
 | Reader Size (Mb)     |                  |0.15|0.27|        |
 # [20221019_MixedGrain.czi](https://zenodo.org/record/7260610/files/20221019_MixedGrain.czi) report
  - **Autostitch** = false
- - ZeissCZIReader v6.14.0
+ - ZeissCZIReader v7.0.0
  - ZeissQuickStartCZIReader v0.2.2-SNAPSHOT
 
 # Images 
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |46 ms|------|74 ms|------|--------|
+| Read time (all)   |63 ms|------|72 ms|------|--------|
 |0|![20221019_MixedGrain.quick_true.flat_true.stitch_false.series_0.jpg](20221019_MixedGrain/20221019_MixedGrain.quick_true.flat_true.stitch_false.series_0.jpg)|X:1024<br>Y:1024<br>C:2<br>Z:27<br>T:1|![20221019_MixedGrain.quick_false.flat_true.stitch_false.series_0.jpg](20221019_MixedGrain/20221019_MixedGrain.quick_false.flat_true.stitch_false.series_0.jpg)|X:1024<br>Y:1024<br>C:2<br>Z:27<br>T:1|0|
 
 # Metadata
