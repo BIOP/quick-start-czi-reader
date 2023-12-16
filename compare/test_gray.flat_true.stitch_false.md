@@ -1,7 +1,7 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |14 ms|6 ms|        |
-| Reader Size (Mb)     |                  |0.18|0.24|        |
+| Initialization     |                  |24 ms|7 ms|        |
+| Reader Size (Mb)     |                  |0.17|0.23|        |
 | getStageLabelName| Image 1 | Scene position #0| Scene position #1| |
 | getStageLabelName| Image 2 | Scene position #0| Scene position #2| |
 | getStageLabelName| Image 3 | Scene position #0| Scene position #3| |
@@ -40,13 +40,13 @@
 # [test_gray.czi](https://zenodo.org/record/8263451/files/test_gray.czi) report
  - **Autostitch** = false
  - ZeissCZIReader v6.14.0
- - ZeissQuickStartCZIReader v0.2.1-SNAPSHOT
+ - ZeissQuickStartCZIReader v0.2.2-SNAPSHOT
 
 # Images 
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |2884 ms|------|3281 ms|------|--------|
+| Read time (all)   |3766 ms|------|4597 ms|------|--------|
 |0|![test_gray.quick_true.flat_true.stitch_false.series_0.jpg](test_gray/test_gray.quick_true.flat_true.stitch_false.series_0.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|![test_gray.quick_false.flat_true.stitch_false.series_0.jpg](test_gray/test_gray.quick_false.flat_true.stitch_false.series_0.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|0|
 |1|![test_gray.quick_true.flat_true.stitch_false.series_1.jpg](test_gray/test_gray.quick_true.flat_true.stitch_false.series_1.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|![test_gray.quick_false.flat_true.stitch_false.series_1.jpg](test_gray/test_gray.quick_false.flat_true.stitch_false.series_1.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|0|
 |2|![test_gray.quick_true.flat_true.stitch_false.series_2.jpg](test_gray/test_gray.quick_true.flat_true.stitch_false.series_2.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|![test_gray.quick_false.flat_true.stitch_false.series_2.jpg](test_gray/test_gray.quick_false.flat_true.stitch_false.series_2.jpg)|X:2048<br>Y:2048<br>C:1<br>Z:1<br>T:1|0|

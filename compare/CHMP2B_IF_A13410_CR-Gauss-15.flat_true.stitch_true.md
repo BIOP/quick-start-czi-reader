@@ -1,17 +1,17 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |4 ms|4 ms|        |
-| Reader Size (Mb)     |                  |0.19|0.28|        |
+| Initialization     |                  |7 ms|7 ms|        |
+| Reader Size (Mb)     |                  |0.18|0.27|        |
 # [CHMP2B_IF_A13410_CR-Gauss-15.czi](https://zenodo.org/record/8139356/files/CHMP2B_IF_A13410_CR-Gauss-15.czi) report
  - **Autostitch** = true
  - ZeissCZIReader v6.14.0
- - ZeissQuickStartCZIReader v0.2.1-SNAPSHOT
+ - ZeissQuickStartCZIReader v0.2.2-SNAPSHOT
 
 # Images 
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |117 ms|------|135 ms|------|--------|
+| Read time (all)   |128 ms|------|166 ms|------|--------|
 |0|![CHMP2B_IF_A13410_CR-Gauss-15.quick_true.flat_true.stitch_true.series_0.jpg](CHMP2B_IF_A13410_CR-Gauss-15/CHMP2B_IF_A13410_CR-Gauss-15.quick_true.flat_true.stitch_true.series_0.jpg)|X:2599<br>Y:1299<br>C:4<br>Z:1<br>T:1|![CHMP2B_IF_A13410_CR-Gauss-15.quick_false.flat_true.stitch_true.series_0.jpg](CHMP2B_IF_A13410_CR-Gauss-15/CHMP2B_IF_A13410_CR-Gauss-15.quick_false.flat_true.stitch_true.series_0.jpg)|X:2599<br>Y:1299<br>C:4<br>Z:1<br>T:1|0|
 
 # Metadata

@@ -1,7 +1,7 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |9 ms|7 ms|        |
-| Reader Size (Mb)     |                  |0.94|1.17|        |
+| Initialization     |                  |12 ms|14 ms|        |
+| Reader Size (Mb)     |                  |0.93|1.16|        |
 | getStageLabelName| Image 0 | P3| Scene position #0| |
 | getPlanePositionZ| Image 0 Plane 2 | -3438.840 um | -3435.340 um | 3.500 um |
 | getPlanePositionZ| Image 0 Plane 5 | -3438.490 um | -3435.340 um | 3.150 um |
@@ -26,13 +26,13 @@
 # [Plate1-Blue-A-12-Scene-3-P3-F2-03.czi](https://downloads.openmicroscopy.org/images/Zeiss-CZI/idr0011/Plate1-Blue-A_TS-Stinger/Plate1-Blue-A-12-Scene-3-P3-F2-03.czi) report
  - **Autostitch** = true
  - ZeissCZIReader v6.14.0
- - ZeissQuickStartCZIReader v0.2.1-SNAPSHOT
+ - ZeissQuickStartCZIReader v0.2.2-SNAPSHOT
 
 # Images 
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |31 ms|------|41 ms|------|--------|
+| Read time (all)   |47 ms|------|56 ms|------|--------|
 |0|![Plate1-Blue-A-12-Scene-3-P3-F2-03.quick_true.flat_true.stitch_true.series_0.jpg](Plate1-Blue-A-12-Scene-3-P3-F2-03/Plate1-Blue-A-12-Scene-3-P3-F2-03.quick_true.flat_true.stitch_true.series_0.jpg)|X:672<br>Y:512<br>C:3<br>Z:21<br>T:1|![Plate1-Blue-A-12-Scene-3-P3-F2-03.quick_false.flat_true.stitch_true.series_0.jpg](Plate1-Blue-A-12-Scene-3-P3-F2-03/Plate1-Blue-A-12-Scene-3-P3-F2-03.quick_false.flat_true.stitch_true.series_0.jpg)|X:672<br>Y:512<br>C:3<br>Z:21<br>T:1|0|
 
 # Metadata

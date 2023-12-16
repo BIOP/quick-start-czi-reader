@@ -1,7 +1,7 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |10 ms|10 ms|        |
-| Reader Size (Mb)     |                  |0.37|0.79|        |
+| Initialization     |                  |18 ms|15 ms|        |
+| Reader Size (Mb)     |                  |0.36|0.78|        |
 | getStageLabelX| Image 0 | -4168.941 um | -429.424 um | 3739.517 um |
 | getStageLabelY| Image 0 | 1450.507 um | -2289.010 um | 3739.517 um |
 | getPlanePositionX| Image 0 Plane 0 | -4168.941 um | -429.424 um | 3739.517 um |
@@ -502,13 +502,13 @@
 # [mf20_NF_sox9_Paroedura_PO18_2.czi](https://zenodo.org/record/5911450/files/mf20_NF_sox9_Paroedura_PO18_2.czi) report
  - **Autostitch** = false
  - ZeissCZIReader v6.14.0
- - ZeissQuickStartCZIReader v0.2.1-SNAPSHOT
+ - ZeissQuickStartCZIReader v0.2.2-SNAPSHOT
 
 # Images 
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |57 ms|------|76 ms|------|--------|
+| Read time (all)   |86 ms|------|140 ms|------|--------|
 |0|![mf20_NF_sox9_Paroedura_PO18_2.quick_true.flat_true.stitch_false.series_0.jpg](mf20_NF_sox9_Paroedura_PO18_2/mf20_NF_sox9_Paroedura_PO18_2.quick_true.flat_true.stitch_false.series_0.jpg)|X:1254<br>Y:1254<br>C:3<br>Z:150<br>T:1|![mf20_NF_sox9_Paroedura_PO18_2.quick_false.flat_true.stitch_false.series_0.jpg](mf20_NF_sox9_Paroedura_PO18_2/mf20_NF_sox9_Paroedura_PO18_2.quick_false.flat_true.stitch_false.series_0.jpg)|X:1254<br>Y:1254<br>C:3<br>Z:150<br>T:1|0|
 
 # Metadata

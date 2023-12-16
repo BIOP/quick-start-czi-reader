@@ -1,7 +1,7 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |8 ms|10 ms|        |
-| Reader Size (Mb)     |                  |0.88|1.06|        |
+| Initialization     |                  |10 ms|14 ms|        |
+| Reader Size (Mb)     |                  |0.87|1.05|        |
 | getStageLabelX| Image 0 | ome.units.quantity.Length: value[0.0], unit[µm] stored as java.lang.Double| ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer| |
 | getStageLabelY| Image 0 | ome.units.quantity.Length: value[0.0], unit[µm] stored as java.lang.Double| ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer| |
 | getPlanePositionX| Image 0 Plane 0 | ome.units.quantity.Length: value[0.0], unit[µm] stored as java.lang.Double| ome.units.quantity.Length: value[0], unit[reference frame] stored as java.lang.Integer| |
@@ -9,13 +9,13 @@
 # [v.zanotelli_20190509_p165_031_pt2.czi](https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031_pt2.czi) report
  - **Autostitch** = true
  - ZeissCZIReader v6.14.0
- - ZeissQuickStartCZIReader v0.2.1-SNAPSHOT
+ - ZeissQuickStartCZIReader v0.2.2-SNAPSHOT
 
 # Images 
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |89 ms|------|105 ms|------|--------|
+| Read time (all)   |124 ms|------|162 ms|------|--------|
 |0|![v.zanotelli_20190509_p165_031_pt2.quick_true.flat_true.stitch_true.series_0.jpg](v.zanotelli_20190509_p165_031_pt2/v.zanotelli_20190509_p165_031_pt2.quick_true.flat_true.stitch_true.series_0.jpg)|X:1585<br>Y:743<br>C:3<br>Z:1<br>T:1|![v.zanotelli_20190509_p165_031_pt2.quick_false.flat_true.stitch_true.series_0.jpg](v.zanotelli_20190509_p165_031_pt2/v.zanotelli_20190509_p165_031_pt2.quick_false.flat_true.stitch_true.series_0.jpg)|X:1585<br>Y:743<br>C:3<br>Z:1<br>T:1|0|
 
 # Metadata

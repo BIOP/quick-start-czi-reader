@@ -1,7 +1,7 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |21 ms|9 ms|        |
-| Reader Size (Mb)     |                  |1.41|1.72|        |
+| Initialization     |                  |28 ms|15 ms|        |
+| Reader Size (Mb)     |                  |1.40|1.71|        |
 | getStageLabelName| Image 0 | TR1| Scene position #0| |
 | getStageLabelName| Image 1 | TR1| Scene position #1| |
 | getStageLabelX| Image 1 | 48259.266 um | 48259.084 um | 0.182 um |
@@ -261,13 +261,13 @@
 # [Skin-Positive.czi](https://zenodo.org/record/7884760/files/Skin-Positive.czi) report
  - **Autostitch** = false
  - ZeissCZIReader v6.14.0
- - ZeissQuickStartCZIReader v0.2.1-SNAPSHOT
+ - ZeissQuickStartCZIReader v0.2.2-SNAPSHOT
 
 # Images 
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |17738 ms|------|18182 ms|------|--------|
+| Read time (all)   |21315 ms|------|23603 ms|------|--------|
 |0|![Skin-Positive.quick_true.flat_true.stitch_false.series_0.jpg](Skin-Positive/Skin-Positive.quick_true.flat_true.stitch_false.series_0.jpg)|X:2752<br>Y:2208<br>C:3<br>Z:1<br>T:1|![Skin-Positive.quick_false.flat_true.stitch_false.series_0.jpg](Skin-Positive/Skin-Positive.quick_false.flat_true.stitch_false.series_0.jpg)|X:2752<br>Y:2208<br>C:3<br>Z:1<br>T:1|0|
 |1|![Skin-Positive.quick_true.flat_true.stitch_false.series_1.jpg](Skin-Positive/Skin-Positive.quick_true.flat_true.stitch_false.series_1.jpg)|X:2752<br>Y:2208<br>C:3<br>Z:1<br>T:1|![Skin-Positive.quick_false.flat_true.stitch_false.series_1.jpg](Skin-Positive/Skin-Positive.quick_false.flat_true.stitch_false.series_1.jpg)|X:2752<br>Y:2208<br>C:3<br>Z:1<br>T:1|0|
 |2|![Skin-Positive.quick_true.flat_true.stitch_false.series_2.jpg](Skin-Positive/Skin-Positive.quick_true.flat_true.stitch_false.series_2.jpg)|X:2752<br>Y:2208<br>C:3<br>Z:1<br>T:1|![Skin-Positive.quick_false.flat_true.stitch_false.series_2.jpg](Skin-Positive/Skin-Positive.quick_false.flat_true.stitch_false.series_2.jpg)|X:2752<br>Y:2208<br>C:3<br>Z:1<br>T:1|0|
