@@ -22,8 +22,32 @@
  * <http://www.gnu.org/licenses/gpl-2.0.html>.
  * #L%
  */
-
 package ch.epfl.biop.formats.in;
+
+/*
+ * #%L
+ * OME Bio-Formats package for reading and converting biological file formats.
+ * %%
+ * Copyright (C) 2005 - 2017 Open Microscopy Environment:
+ *   - Board of Regents of the University of Wisconsin-Madison
+ *   - Glencoe Software, Inc.
+ *   - University of Dundee
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/gpl-2.0.html>.
+ * #L%
+ */
 
 import loci.common.ByteArrayHandle;
 import loci.common.Constants;
@@ -397,16 +421,13 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
     // -- ZeissCZI-specific methods --
 
-    public static boolean allowAutoStitch = false; // TODO CHANGE THIS TO METADATA OPTIONS!
-
     public boolean allowAutostitching() {
-        //return false;
         MetadataOptions options = getMetadataOptions();
         if (options instanceof DynamicMetadataOptions) {
             return ((DynamicMetadataOptions) options).getBoolean(
                     ALLOW_AUTOSTITCHING_KEY, ALLOW_AUTOSTITCHING_DEFAULT);
         }
-        return allowAutoStitch;// ALLOW_AUTOSTITCHING_DEFAULT;*/
+        return ALLOW_AUTOSTITCHING_DEFAULT;
     }
 
     public boolean canReadAttachments() { // TODO : handle this method
@@ -817,7 +838,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 RandomAccessInputStream stream = getStream(block.filePart);
 
                 if (image.equals(blockRegion) && blocks.size()==1) { // THE SECOND TEST IS NECESSARY BECAUSE OTHER BLOCKS CAN INTERSECT!
-                    // Best case scenario
+                    // Best case scenario: reads and returns full subblock
                     return readRawPixelData(
                             block,
                             coreIndexToCompression.get(coreIndex),
@@ -839,8 +860,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     }
 
                     Region tileInBlock = new Region(regionRead.x-blockRegion.x, regionRead.y-blockRegion.y, regionRead.width, regionRead.height);
-
-
 
                     byte[] rawData = readRawPixelData(
                             block,
@@ -1009,20 +1028,20 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         // and proper alphabetical ordering
         cziPartToSegments.forEach((part, cziSegments) -> { // For each part
             Arrays.asList(cziSegments.subBlockDirectory.data.entries).forEach( // and each entry
-                entry -> {
-                    for (LibCZI.SubBlockSegment.SubBlockSegmentData.SubBlockDirectoryEntryDV.DimensionEntry dimEntry: entry.getDimensionEntries()) {
-                        //int nDigits = String.valueOf(dimEntry.start).length(); // TODO: Can this be negative ?
-                        int val = dimEntry.start;
-                        if (!maxValuePerDimension.containsKey(dimEntry.dimension)) {
-                            maxValuePerDimension.put(dimEntry.dimension, dimEntry.start);
-                        } else {
-                            int curMax = maxValuePerDimension.get(dimEntry.dimension);
-                            if (val>curMax) {
-                                maxValuePerDimension.put(dimEntry.dimension, val);
+                    entry -> {
+                        for (LibCZI.SubBlockSegment.SubBlockSegmentData.SubBlockDirectoryEntryDV.DimensionEntry dimEntry: entry.getDimensionEntries()) {
+                            //int nDigits = String.valueOf(dimEntry.start).length(); // TODO: Can this be negative ?
+                            int val = dimEntry.start;
+                            if (!maxValuePerDimension.containsKey(dimEntry.dimension)) {
+                                maxValuePerDimension.put(dimEntry.dimension, dimEntry.start);
+                            } else {
+                                int curMax = maxValuePerDimension.get(dimEntry.dimension);
+                                if (val>curMax) {
+                                    maxValuePerDimension.put(dimEntry.dimension, val);
+                                }
                             }
                         }
                     }
-                }
             );
         });
 
@@ -1066,26 +1085,26 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         // Write all signatures
         cziPartToSegments.forEach((part, cziSegments) -> { // For each part
             Arrays.asList(cziSegments.subBlockDirectory.data.entries).forEach( // and each entry
-                entry -> {
-                    int downscalingFactor = entry.getDimension("X").size/entry.getDimension("X").storedSize;
-                    if ((downscalingFactor==1)||(allowAutostitching())) {
-                        // Split by resolution level if flattenedResolutions is true
-                        ModuloDimensionEntries moduloEntry = new ModuloDimensionEntries(entry,
-                                nRotations, nIlluminations, nPhases,
-                                nChannels, nSlices, nFrames, part);
+                    entry -> {
+                        int downscalingFactor = entry.getDimension("X").size/entry.getDimension("X").storedSize;
+                        if ((downscalingFactor==1)||(allowAutostitching())) {
+                            // Split by resolution level if flattenedResolutions is true
+                            ModuloDimensionEntries moduloEntry = new ModuloDimensionEntries(entry,
+                                    nRotations, nIlluminations, nPhases,
+                                    nChannels, nSlices, nFrames, part);
 
-                        CoreSignature coreSignature = new CoreSignature(moduloEntry
-                                , RESOLUTION_LEVEL_DIMENSION,
-                                downscalingFactor,//getDownSampling(entry),
-                                maxDigitPerDimension::get,
-                                allowAutostitching(),
-                                FILE_PART_DIMENSION, part);
-                        if (!coreSignatureToBlocks.containsKey(coreSignature)) {
-                            coreSignatureToBlocks.put(coreSignature, new ArrayList<>());
+                            CoreSignature coreSignature = new CoreSignature(moduloEntry
+                                    , RESOLUTION_LEVEL_DIMENSION,
+                                    downscalingFactor,//getDownSampling(entry),
+                                    maxDigitPerDimension::get,
+                                    allowAutostitching(),
+                                    FILE_PART_DIMENSION, part);
+                            if (!coreSignatureToBlocks.containsKey(coreSignature)) {
+                                coreSignatureToBlocks.put(coreSignature, new ArrayList<>());
+                            }
+                            coreSignatureToBlocks.get(coreSignature).add(moduloEntry);
                         }
-                        coreSignatureToBlocks.get(coreSignature).add(moduloEntry);
-                    }
-                });
+                    });
         });
 
         // Sort them
@@ -1150,7 +1169,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             coreIndexToOx.add(coordsOrigin[0]);
             coreIndexToOy.add(coordsOrigin[1]);
             core_i.bitsPerPixel =
-            core_i.imageCount = (core_i.rgb ? core_i.sizeC/3 : core_i.sizeC)*core_i.sizeT*core_i.sizeZ;
+                    core_i.imageCount = (core_i.rgb ? core_i.sizeC/3 : core_i.sizeC)*core_i.sizeT*core_i.sizeZ;
 
             // We assert that all sub blocks do have the same size pixel type
             // Series are ordered by dimension changes, and the (non-ignored) dimension
@@ -1233,7 +1252,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         // This structure will be trimmed down in size and stored in the mapCoreTZCToMinimalBlocks field
         List< // CoreIndex
                 HashMap<CZTKey, // CZT
-                       // List<LibCZI.SubBlockDirectorySegment.SubBlockDirectorySegmentData.SubBlockDirectoryEntry>>>
+                        // List<LibCZI.SubBlockDirectorySegment.SubBlockDirectorySegmentData.SubBlockDirectoryEntry>>>
                         List<MinDimEntry>>>
                 mapCoreTZCToBlocks = new ArrayList<>();
 
@@ -1245,7 +1264,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             HashMap<CZTKey, List<MinDimEntry>> blocksInCore = mapCoreTZCToBlocks.get(iCoreIndex);
             HashMap<CZTKey, List<MinDimEntry>> minimalBlocksInCore = coreIndexToTZCToMinimalBlocks.get(iCoreIndex);
             for (ModuloDimensionEntries block: coreSignatureToBlocks.get(coreSignature)) {
-                int c = block.getDimension("C").start;
+                int c = (block.hasDimension("C"))? block.getDimension("C").start: 0;
                 int z = (block.hasDimension("Z"))? block.getDimension("Z").start: 0;
                 int t = (block.hasDimension("T"))? block.getDimension("T").start: 0;
                 CZTKey k = new CZTKey(c,z,t);
@@ -1537,7 +1556,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             case "T":
             case "C":
             case FILE_PART_DIMENSION:
-            //case "S":
+                //case "S":
                 return true;
             case "M":
                 return autostitch;
@@ -2264,13 +2283,9 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
         private void translateMetadata(String xml, DocumentBuilder parser) throws FormatException, IOException {
             Element root;
-            try {
-                ByteArrayInputStream s =
-                        new ByteArrayInputStream(xml.getBytes(Constants.ENCODING));
+            try ( ByteArrayInputStream s = new ByteArrayInputStream(xml.getBytes(Constants.ENCODING))) {
                 root = parser.parse(s).getDocumentElement();
-                s.close();
-            }
-            catch (SAXException e) {
+            } catch (SAXException e) {
                 throw new FormatException(e);
             }
 
@@ -3417,7 +3432,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                             offsetZ0 = planePosZ.value(unitLength).doubleValue();
                         }
                     }
-                    double stepZ = (zStep==null)?0:zStep.value(unitLength).doubleValue();
+                    double stepZ = (zStep==null)?0:zStep.value().doubleValue();
 
                     if (resolutionLevel0) timeStampsResolutionLevel0.put(iChannel, new double[reader.getSizeT()*reader.getSizeZ()]); // Store the timestamps to be copied over resolution levels
                     double[] currentTimeStamps = timeStampsResolutionLevel0.get(iChannel);
@@ -3586,11 +3601,11 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                                 "Expected positive value for PhysicalSize; got {}", value);
                         for (int iCoreIndex=0; iCoreIndex<reader.core.size(); iCoreIndex++) {
                             if (!coreToPixSizeX.containsKey(iCoreIndex))
-                            coreToPixSizeX.put(iCoreIndex, new Length(1, UNITS.REFERENCEFRAME));
+                                coreToPixSizeX.put(iCoreIndex, new Length(1, UNITS.REFERENCEFRAME));
                             if (!coreToPixSizeY.containsKey(iCoreIndex))
-                            coreToPixSizeY.put(iCoreIndex, new Length(1, UNITS.REFERENCEFRAME));
+                                coreToPixSizeY.put(iCoreIndex, new Length(1, UNITS.REFERENCEFRAME));
                             if (!coreToPixSizeZ.containsKey(iCoreIndex))
-                            coreToPixSizeZ.put(iCoreIndex, new Length(1, UNITS.REFERENCEFRAME));
+                                coreToPixSizeZ.put(iCoreIndex, new Length(1, UNITS.REFERENCEFRAME));
                         }
                     }
                 }

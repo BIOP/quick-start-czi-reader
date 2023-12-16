@@ -11,7 +11,7 @@ public class OpenFile {
     }
     public static void main(String... args) throws Exception {
         /*ZeissQuickStartCZIReader reader = new ZeissQuickStartCZIReader();*/
-        ZeissQuickStartCZIReader.allowAutoStitch = false;
+        //ZeissQuickStartCZIReader.allowAutoStitch = false;
         // TODO: fix dataset
         /*reader.setId("N:\\temp-Nico\\lightsheet-cleared-brain-demo\\Demo LISH 4x8 15pct 647.czi");
         //reader.setId("C:/Users/nicol/Desktop/test_gray.czi");

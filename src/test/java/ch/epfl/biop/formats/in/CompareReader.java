@@ -6,7 +6,6 @@ import ij.plugin.ContrastEnhancer;
 import ij.plugin.Scaler;
 import ij.process.ImageProcessor;
 import loci.common.DebugTools;
-import loci.common.Region;
 import loci.common.services.DependencyException;
 import loci.common.services.ServiceException;
 import loci.common.services.ServiceFactory;
@@ -23,7 +22,6 @@ import ome.units.quantity.Length;
 import ome.units.quantity.Time;
 import ome.xml.meta.MetadataRetrieve;
 import org.apache.commons.io.FilenameUtils;
-import org.jruby.RubyProcess;
 import org.openjdk.jol.info.GraphLayout;
 import org.scijava.util.VersionUtils;
 
@@ -528,7 +526,7 @@ public class CompareReader {
         String imagePath = imageFolderPath + imageName;
         String imageNameNoExt = FilenameUtils.removeExtension(imageName);
 
-        ZeissQuickStartCZIReader.allowAutoStitch = autoStitch;
+        //ZeissQuickStartCZIReader.allowAutoStitch = autoStitch;
         ij.Prefs.set("bioformats.zeissczi.allow.autostitch", autoStitch);
 
         String reportFolderPath = "compare"+File.separator;
@@ -1046,7 +1044,7 @@ public class CompareReader {
         List<SummaryPerFile> summaryList = new ArrayList<>();
 
         for (String url: cziURLs) {
-            File f = null;
+            File f;
             if (url.startsWith("https://")) {
                 f = DatasetHelper.getDataset(url, decoder);
             } else {
