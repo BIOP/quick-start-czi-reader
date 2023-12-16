@@ -225,7 +225,6 @@ import static ch.epfl.biop.formats.in.libczi.LibCZI.ZSTD_1;
  *  lazy loading AND memoization functionality.
  *
  *  TODO: sync https://github.com/ome/bioformats/pull/4088, that was fixed after this reader was branched from bio-formats
- *  TODO: implement getfillcolor
  *  TODO: test PALM file
  *  TODO: ask how to get rid of absolute file path in memo that do not crash the reader when the file is moved
  *
@@ -297,7 +296,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             coreIndexToTZCToMinimalBlocks = new ArrayList<>();
 
     @CopyByRef
-    int nIlluminations, nRotations, nPhases;
+    int nIlluminations, nRotations, nPhases, maxResolution;
 
     // ------------------------ METADATA FIELDS
     @CopyByRef
@@ -784,6 +783,26 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         }
     }
 
+    /**
+     * @see loci.formats.FormatReader#getFillColor()
+     *
+     * If the fill value was set explicitly, use that.
+     * Otherwise, return 255 (white) for RGB data with a pyramid,
+     * and 0 in all other cases. RGB data with a pyramid can
+     * reasonably be assumed to be a brightfield slide.
+     */
+    @Override
+    public Byte getFillColor() {
+        if (fillColor != null) {
+            return fillColor;
+        }
+        byte fill = (byte) 0;
+        if (isRGB() && (maxResolution > 0)) {
+            fill = (byte) 255;
+        }
+        return fill;
+    }
+
     @Override
     public byte[] openBytes(int no, byte[] buf, int x, int y, int w, int h) throws FormatException, IOException {
 
@@ -820,6 +839,8 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                         coreIndexToDownscaleFactor.get(baseResolution-1)) {
             baseResolution--;
         }
+
+        Arrays.fill(buf, getFillColor());
 
         // The data is somewhere in these blocks
         List<MinDimEntry> blocks = coreIndexToTZCToMinimalBlocks.get(currentIndex).get(key);
@@ -1050,6 +1071,8 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         nRotations = maxValuePerDimension.containsKey("R")? maxValuePerDimension.get("R")+1:1;
 
         nPhases = maxValuePerDimension.containsKey("H")? maxValuePerDimension.get("H")+1:1;
+
+        maxResolution = maxValuePerDimension.containsKey(RESOLUTION_LEVEL_DIMENSION)? maxValuePerDimension.get(RESOLUTION_LEVEL_DIMENSION):0; // Used only for auto-determination of the fill color
 
         int nChannels = maxValuePerDimension.containsKey("C")? maxValuePerDimension.get("C")+1:1;
 
