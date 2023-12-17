@@ -745,6 +745,8 @@ public class CompareReader {
     }
 
     public static void main(String... args) {
+        //ImageJ imageJ = new ImageJ();
+        //imageJ.setVisible(true);
         DebugTools.setRootLevel("TRACE");
         DebugTools.setRootLevel("WARN");
         DebugTools.setRootLevel("OFF");
@@ -1264,7 +1266,6 @@ public class CompareReader {
             reader.setFlattenedResolutions(flattenRes); // To test in bdv condition
             reader.setMetadataOptions(options);
             return reader;
-
         }
     }
 

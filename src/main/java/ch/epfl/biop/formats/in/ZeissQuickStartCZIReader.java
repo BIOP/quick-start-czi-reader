@@ -293,7 +293,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
     // previous channel has a value set by the last bytes being called, this is a weird behaviour IMO
     // but it behaves as expected to make the methods IFormatReader#get8BitLookupTable and
     // IFormatReader#get16BitLookupTable work
-    transient int previousChannel = -1;
+    transient int previousChannel = 0;
 
     // Core map structure for fast access to blocks:
     // - first key: bio-formats core index
