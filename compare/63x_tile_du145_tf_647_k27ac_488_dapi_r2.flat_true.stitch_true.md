@@ -1,6 +1,6 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |5 ms|5 ms|        |
+| Initialization     |                  |4 ms|5 ms|        |
 | Reader Size (Mb)     |                  |0.14|0.22|        |
 | getStageLabelX| Image 0 | 10627.391 um | 10746.100 um | 118.709 um |
 | getStageLabelY| Image 0 | 3260.401 um | 3379.110 um | 118.709 um |
@@ -19,7 +19,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |2542 ms|------|2941 ms|------|--------|
+| Read time (all)   |2134 ms|------|2492 ms|------|--------|
 |0|![63x_tile_du145_tf_647_k27ac_488_dapi_r2.quick_true.flat_true.stitch_true.series_0.jpg](63x_tile_du145_tf_647_k27ac_488_dapi_r2/63x_tile_du145_tf_647_k27ac_488_dapi_r2.quick_true.flat_true.stitch_true.series_0.jpg)|X:6835<br>Y:6852<br>C:3<br>Z:1<br>T:1|![63x_tile_du145_tf_647_k27ac_488_dapi_r2.quick_false.flat_true.stitch_true.series_0.jpg](63x_tile_du145_tf_647_k27ac_488_dapi_r2/63x_tile_du145_tf_647_k27ac_488_dapi_r2.quick_false.flat_true.stitch_true.series_0.jpg)|X:6835<br>Y:6852<br>C:3<br>Z:1<br>T:1|0|
 
 # Metadata

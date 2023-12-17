@@ -1,6 +1,6 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |89 ms|81 ms|        |
+| Initialization     |                  |47 ms|44 ms|        |
 | Reader Size (Mb)     |                  |2.80|4.53|        |
 | getPlanePositionZ| Image 0 Plane 13 | 5794.730 um | 5794.731 um | 0.001 um |
 | getPlanePositionZ| Image 0 Plane 14 | 5794.940 um | 5794.941 um | 0.001 um |
@@ -508,7 +508,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |127 ms|------|195 ms|------|--------|
+| Read time (all)   |93 ms|------|90 ms|------|--------|
 |0|![xz-scan-lsm980.quick_true.flat_true.stitch_true.series_0.jpg](xz-scan-lsm980/xz-scan-lsm980.quick_true.flat_true.stitch_true.series_0.jpg)|X:512<br>Y:1<br>C:1<br>Z:715<br>T:1|![xz-scan-lsm980.quick_false.flat_true.stitch_true.series_0.jpg](xz-scan-lsm980/xz-scan-lsm980.quick_false.flat_true.stitch_true.series_0.jpg)|X:512<br>Y:1<br>C:1<br>Z:715<br>T:1|0|
 
 # Metadata

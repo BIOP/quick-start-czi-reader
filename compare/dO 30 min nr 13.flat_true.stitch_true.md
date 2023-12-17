@@ -1,6 +1,6 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |18 ms|18 ms|        |
+| Initialization     |                  |12 ms|12 ms|        |
 | Reader Size (Mb)     |                  |1.44|2.08|        |
 # [dO 30 min nr 13.czi](https://zenodo.org/record/5714530/files/dO%2030%20min%20nr%2013.czi) report
  - **Autostitch** = true
@@ -11,7 +11,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |68 ms|------|74 ms|------|--------|
+| Read time (all)   |53 ms|------|57 ms|------|--------|
 |0|![dO 30 min nr 13.quick_true.flat_true.stitch_true.series_0.jpg](dO 30 min nr 13/dO 30 min nr 13.quick_true.flat_true.stitch_true.series_0.jpg)|X:506<br>Y:506<br>C:5<br>Z:1<br>T:1|![dO 30 min nr 13.quick_false.flat_true.stitch_true.series_0.jpg](dO 30 min nr 13/dO 30 min nr 13.quick_false.flat_true.stitch_true.series_0.jpg)|X:506<br>Y:506<br>C:5<br>Z:1<br>T:1|0|
 
 # Metadata

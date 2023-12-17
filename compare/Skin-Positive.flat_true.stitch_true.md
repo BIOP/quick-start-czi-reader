@@ -1,6 +1,6 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |16 ms|10 ms|        |
+| Initialization     |                  |13 ms|10 ms|        |
 | Reader Size (Mb)     |                  |1.15|1.47|        |
 | getStageLabelName| Image 0 | TR1| Scene position #0| |
 | getStageLabelX| Image 0 | 46010.150 um | 53881.420 um | 7871.270 um |
@@ -16,7 +16,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |18102 ms|------|49607 ms|------|--------|
+| Read time (all)   |16532 ms|------|21466 ms|------|--------|
 |0|![Skin-Positive.quick_true.flat_true.stitch_true.series_0.jpg](Skin-Positive/Skin-Positive.quick_true.flat_true.stitch_true.series_0.jpg)|X:20090<br>Y:16119<br>C:3<br>Z:1<br>T:1|![Skin-Positive.quick_false.flat_true.stitch_true.series_0.jpg](Skin-Positive/Skin-Positive.quick_false.flat_true.stitch_true.series_0.jpg)|X:20090<br>Y:16119<br>C:3<br>Z:1<br>T:1|0|
 
 # Metadata

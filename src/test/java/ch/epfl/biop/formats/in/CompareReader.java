@@ -47,6 +47,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+/*
+TODO: mention improvement on split_hcr_probes_plasmid_pos_fov_tile3_Airyscan_Processing_Stitch.czi:
+the image is cropped in the original reader and has black edges
+ */
+
 public class CompareReader {
     public static final Set<String> criticalMethods = new HashSet<>(Arrays.asList(
             "getPixelsSizeX",
@@ -645,7 +650,7 @@ public class CompareReader {
 
                 int nSeries = imps.length;
                 List<ImagePlus> thumbs = new ArrayList<>();
-                for (int i = 0; i < 5+0*nSeries; i++) {
+                for (int i = 0; i < nSeries; i++) {
                     if (!skipSeriesReader2.get(i)) {
                         ImagePlus temp = new ImagePlus("", imps[i].getProcessor());
                         temp.setLut(imps[i].getLuts()[0]);

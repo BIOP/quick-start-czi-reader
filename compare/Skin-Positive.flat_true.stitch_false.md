@@ -1,6 +1,6 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |57 ms|21 ms|        |
+| Initialization     |                  |43 ms|13 ms|        |
 | Reader Size (Mb)     |                  |1.39|1.70|        |
 | getStageLabelName| Image 0 | TR1| Scene position #0| |
 | getStageLabelName| Image 1 | TR1| Scene position #1| |
@@ -267,7 +267,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |21932 ms|------|20438 ms|------|--------|
+| Read time (all)   |19871 ms|------|19894 ms|------|--------|
 |0|![Skin-Positive.quick_true.flat_true.stitch_false.series_0.jpg](Skin-Positive/Skin-Positive.quick_true.flat_true.stitch_false.series_0.jpg)|X:2752<br>Y:2208<br>C:3<br>Z:1<br>T:1|![Skin-Positive.quick_false.flat_true.stitch_false.series_0.jpg](Skin-Positive/Skin-Positive.quick_false.flat_true.stitch_false.series_0.jpg)|X:2752<br>Y:2208<br>C:3<br>Z:1<br>T:1|0|
 |1|![Skin-Positive.quick_true.flat_true.stitch_false.series_1.jpg](Skin-Positive/Skin-Positive.quick_true.flat_true.stitch_false.series_1.jpg)|X:2752<br>Y:2208<br>C:3<br>Z:1<br>T:1|![Skin-Positive.quick_false.flat_true.stitch_false.series_1.jpg](Skin-Positive/Skin-Positive.quick_false.flat_true.stitch_false.series_1.jpg)|X:2752<br>Y:2208<br>C:3<br>Z:1<br>T:1|0|
 |2|![Skin-Positive.quick_true.flat_true.stitch_false.series_2.jpg](Skin-Positive/Skin-Positive.quick_true.flat_true.stitch_false.series_2.jpg)|X:2752<br>Y:2208<br>C:3<br>Z:1<br>T:1|![Skin-Positive.quick_false.flat_true.stitch_false.series_2.jpg](Skin-Positive/Skin-Positive.quick_false.flat_true.stitch_false.series_2.jpg)|X:2752<br>Y:2208<br>C:3<br>Z:1<br>T:1|0|

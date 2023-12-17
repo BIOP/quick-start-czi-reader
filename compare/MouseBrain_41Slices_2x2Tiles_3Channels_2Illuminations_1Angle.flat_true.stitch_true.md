@@ -1,6 +1,6 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |19 ms|26 ms|        |
+| Initialization     |                  |15 ms|21 ms|        |
 | Reader Size (Mb)     |                  |0.29|1.40|        |
 | getStageLabelX| Image 0 | -2023.375 um | -388.639 um | 1634.736 um |
 | getStageLabelY| Image 0 | 14947.420 um | 16038.100 um | 1090.680 um |
@@ -505,7 +505,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |559 ms|------|613 ms|------|--------|
+| Read time (all)   |532 ms|------|654 ms|------|--------|
 |0|![MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.quick_true.flat_true.stitch_true.series_0.jpg](MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle/MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.quick_true.flat_true.stitch_true.series_0.jpg)|X:2774<br>Y:1850<br>C:6<br>Z:41<br>T:1|![MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.quick_false.flat_true.stitch_true.series_0.jpg](MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle/MouseBrain_41Slices_2x2Tiles_3Channels_2Illuminations_1Angle.quick_false.flat_true.stitch_true.series_0.jpg)|X:2774<br>Y:1850<br>C:6<br>Z:41<br>T:1|0|
 
 # Metadata

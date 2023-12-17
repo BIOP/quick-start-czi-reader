@@ -1,6 +1,6 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |25 ms|177 ms|        |
+| Initialization     |                  |21 ms|180 ms|        |
 | Reader Size (Mb)     |                  |1.79|2.99|        |
 | getPlanePositionZ| Image 0 Plane 1 | -384.727 um | -385.027 um | 0.300 um |
 | getPlanePositionZ| Image 0 Plane 2 | -384.427 um | -385.027 um | 0.600 um |
@@ -508,7 +508,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |76 ms|------|120 ms|------|--------|
+| Read time (all)   |71 ms|------|108 ms|------|--------|
 |0|![RBC_full_one_timepoint.quick_true.flat_true.stitch_false.series_0.jpg](RBC_full_one_timepoint/RBC_full_one_timepoint.quick_true.flat_true.stitch_false.series_0.jpg)|X:2048<br>Y:300<br>C:1<br>Z:834<br>T:1|![RBC_full_one_timepoint.quick_false.flat_true.stitch_false.series_0.jpg](RBC_full_one_timepoint/RBC_full_one_timepoint.quick_false.flat_true.stitch_false.series_0.jpg)|X:2048<br>Y:300<br>C:1<br>Z:834<br>T:1|0|
 
 # Metadata

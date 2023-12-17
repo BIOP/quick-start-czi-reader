@@ -1,6 +1,6 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |20 ms|50 ms|        |
+| Initialization     |                  |14 ms|18 ms|        |
 | Reader Size (Mb)     |                  |0.15|0.24|        |
 # [split_hcr_probes_plasmid_pos_fov_tile3_Airyscan_Processing_Stitch.czi](https://zenodo.org/record/8015721/files/split_hcr_probes_plasmid_pos_fov_tile3_Airyscan_Processing_Stitch.czi) report
  - **Autostitch** = false
@@ -11,7 +11,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |2452 ms|------|1227 ms|------|--------|
+| Read time (all)   |998 ms|------|898 ms|------|--------|
 |0|![split_hcr_probes_plasmid_pos_fov_tile3_Airyscan_Processing_Stitch.quick_true.flat_true.stitch_false.series_0.jpg](split_hcr_probes_plasmid_pos_fov_tile3_Airyscan_Processing_Stitch/split_hcr_probes_plasmid_pos_fov_tile3_Airyscan_Processing_Stitch.quick_true.flat_true.stitch_false.series_0.jpg)|X:5314<br>Y:5294<br>C:2<br>Z:1<br>T:1|![split_hcr_probes_plasmid_pos_fov_tile3_Airyscan_Processing_Stitch.quick_false.flat_true.stitch_false.series_0.jpg](split_hcr_probes_plasmid_pos_fov_tile3_Airyscan_Processing_Stitch/split_hcr_probes_plasmid_pos_fov_tile3_Airyscan_Processing_Stitch.quick_false.flat_true.stitch_false.series_0.jpg)|X:5314<br>Y:5294<br>C:2<br>Z:1<br>T:1|0|
 
 # Metadata

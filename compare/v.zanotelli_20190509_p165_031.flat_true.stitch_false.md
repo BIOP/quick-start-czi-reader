@@ -1,6 +1,6 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |333 ms|197 ms|        |
+| Initialization     |                  |234 ms|146 ms|        |
 | Reader Size (Mb)     |                  |10.85|11.49|        |
 | getImageCount|(No args)|172| 194| |
 | getStageLabelName| Image 0 | ScanRegion0| Scene position #0| |
@@ -508,7 +508,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |51550 ms|------|82869 ms|------|--------|
+| Read time (all)   |30073 ms|------|40128 ms|------|--------|
 |0|![v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_0.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_0.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|![v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_0.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_0.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|0|
 |1|![v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_1.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_1.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|![v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_1.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_1.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|0|
 |2|![v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_2.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_2.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|![v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_2.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_2.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|0|

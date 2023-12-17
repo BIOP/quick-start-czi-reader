@@ -1,6 +1,6 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |5 ms|7 ms|        |
+| Initialization     |                  |5 ms|6 ms|        |
 | Reader Size (Mb)     |                  |0.13|0.24|        |
 | getStageLabelX| Image 0 | -16845.945 um | -16082.100 um | 763.845 um |
 | getStageLabelY| Image 0 | -31051.822 um | -30669.900 um | 381.922 um |
@@ -29,7 +29,7 @@
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |47 ms|------|76 ms|------|--------|
+| Read time (all)   |41 ms|------|63 ms|------|--------|
 |0|![3Dexample.quick_true.flat_true.stitch_true.series_0.jpg](3Dexample/3Dexample.quick_true.flat_true.stitch_true.series_0.jpg)|X:1432<br>Y:972<br>C:2<br>Z:4<br>T:1|![3Dexample.quick_false.flat_true.stitch_true.series_0.jpg](3Dexample/3Dexample.quick_false.flat_true.stitch_true.series_0.jpg)|X:1432<br>Y:972<br>C:2<br>Z:4<br>T:1|0|
 
 # Metadata
