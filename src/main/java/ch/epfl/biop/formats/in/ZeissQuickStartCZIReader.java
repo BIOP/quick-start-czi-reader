@@ -1320,19 +1320,20 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             coreIndexToSignature.add(coreSignature);
         }
 
-        // Add extra images / thumbnails:
-        // Label
-        // SlidePreview
-        // JPG Thumbnail -> not read for the sake of backward compatibility
-
         List<Integer> sortedFileParts = cziPartToSegments.keySet().stream().sorted().collect(Collectors.toList());
 
-        try {
-            addLabelIfExists(sortedFileParts, cziPartToSegments, id);//, allPositionsInformation);
-            addSlidePreviewIfExists(sortedFileParts, cziPartToSegments, id);//, allPositionsInformation);
-            //getJPGThumbnailIfExists(sortedFileParts, cziPartToSegments, id); //disabled for bwd compatibility
-        } catch (DependencyException | ServiceException e) {
-            throw new RuntimeException(e);
+        if (canReadAttachments()) {
+            // Add extra images / thumbnails:
+            // Label
+            // SlidePreview
+            // JPG Thumbnail -> not read for the sake of backward compatibility
+            try {
+                addLabelIfExists(sortedFileParts, cziPartToSegments, id);
+                addSlidePreviewIfExists(sortedFileParts, cziPartToSegments, id);
+                //getJPGThumbnailIfExists(sortedFileParts, cziPartToSegments, id); //disabled for bwd compatibility
+            } catch (DependencyException | ServiceException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         LOGGER.trace("#CoreSeries = {}", core.size());
