@@ -1,5 +1,6 @@
 package ch.epfl.biop.formats.in;
 
+import ij.ImageJ;
 import ij.ImagePlus;
 import ij.io.FileSaver;
 import ij.plugin.ContrastEnhancer;
@@ -613,6 +614,7 @@ public class CompareReader {
                 for (int i = 0; i < nSeriesQStart; i++) {
                     if (!skipSeriesReader1.get(i)) {
                         ImagePlus temp = new ImagePlus("", imps[i].getProcessor());
+                        temp.setLut(imps[i].getLuts()[0]);
                         //temp.show();
                         double scaleFactor = temp.getWidth() > temp.getWidth() ? THUMB_SIZE / (double) temp.getWidth() : THUMB_SIZE / (double) temp.getHeight();
                         ImagePlus thumb = Scaler.resize(temp, (int) (temp.getWidth() * scaleFactor), (int) (temp.getHeight() * scaleFactor), 1, "");
@@ -643,9 +645,10 @@ public class CompareReader {
 
                 int nSeries = imps.length;
                 List<ImagePlus> thumbs = new ArrayList<>();
-                for (int i = 0; i < nSeries; i++) {
+                for (int i = 0; i < 5+0*nSeries; i++) {
                     if (!skipSeriesReader2.get(i)) {
                         ImagePlus temp = new ImagePlus("", imps[i].getProcessor());
+                        temp.setLut(imps[i].getLuts()[0]);
                         //temp.show();
                         double scaleFactor = temp.getWidth() > temp.getWidth() ? THUMB_SIZE / (double) temp.getWidth() : THUMB_SIZE / (double) temp.getHeight();
                         ImagePlus thumb = Scaler.resize(temp, (int) (temp.getWidth() * scaleFactor), (int) (temp.getHeight() * scaleFactor), 1, "");
@@ -812,7 +815,7 @@ public class CompareReader {
                 "https://zenodo.org/record/7117784/files/RBC_tiny.czi", // 48.9 MB RBC tiny
                 "https://zenodo.org/record/7260610/files/20221019_MixedGrain.czi", // 113 MB Mixed Grain confocal
                 "https://zenodo.org/record/7260610/files/20221019_MixedGrain2.czi", // 78.6 MB Mixed Grain2
-                "https://zenodo.org/record/5101351/files/Ph488.czi", // 43.1 MB
+                "https://zenodo.org/record/5101351/files/Ph488.czi", // 43.1 MB*/
                 "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031.czi", // 964 MB
                 "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031_pt1.czi", // 3 MB
                 "https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031_pt2.czi", // 7.3 MB

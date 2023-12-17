@@ -438,7 +438,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         return ALLOW_AUTOSTITCHING_DEFAULT;
     }
 
-    public boolean canReadAttachments() { // TODO : handle this method
+    public boolean canReadAttachments() {
         MetadataOptions options = getMetadataOptions();
         if (options instanceof DynamicMetadataOptions) {
             return ((DynamicMetadataOptions) options).getBoolean(
