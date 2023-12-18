@@ -560,6 +560,18 @@ public class LibCZI {
             public SubBlockDirectoryEntry[] entries;
 
             public static class SubBlockDirectoryEntry {
+                @Override
+                public String toString() {
+                    if (entryDV!=null) {
+                        StringBuilder sb = new StringBuilder();
+                        sb.append("pixelType "+this.getPixelType()+" compression = "+getCompression()+"\n");
+                        for (SubBlockSegment.SubBlockSegmentData.SubBlockDirectoryEntryDV.DimensionEntry entry: getDimensionEntries()) {
+                            sb.append(entry+"\n");
+                        }
+                        return sb.toString();
+                    } else return "entryDE not supported";
+                }
+
                 public SubBlockSegment.SubBlockSegmentData.SubBlockDirectoryEntryDV entryDV;
                 public SubBlockSegment.SubBlockSegmentData.SubBlockDirectoryEntryDE entryDE;
 
