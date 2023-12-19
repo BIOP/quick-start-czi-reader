@@ -878,16 +878,17 @@ public class CompareReader {
                 "https://zenodo.org/record/5714530/files/dO%2030%20min%20nr%2013.czi"
         };
         // Local files - too big and/or private, not available on Zenodo
-        /*cziURLs = new String[] {
+       /* cziURLs = new String[] {
           //"F:/czis/27052022_MouseE11_ToPRO_test_5x_z1.czi"
            //     "C:\\Users\\nicol\\Dropbox\\czis\\xt-scan-lsm980.czi",
            //     "C:\\Users\\nicol\\Dropbox\\czis\\xz-scan-lsm980.czi",
            //     "C:\\Users\\nicol\\Dropbox\\czis\\xzt-scan-lsm980.czi"
                 //"F:\\czis\\TL-03.czi",
-                "\\\\sv-01-154\\d$\\SWAP\\Data\\2023-02-16_Marine\\2023-02-16\\New-02.czi" // never ends remotely
+              //  "\\\\sv-01-154\\d$\\SWAP\\Data\\2023-02-16_Marine\\2023-02-16\\New-02.czi" // never ends remotely
                 //"\\\\sv-01-154\\d$\\SWAP\\Data\\Marine\\2023-03-16\\Cfra_LS2-02.czi", // 27 Gb, remote
                 //"\\\\sv-01-154\\d$\\SWAP\\Data\\2022-11-07-Omaya\\2022-11-07\\New-04.czi" // 155 Gb, on server
                 //"\\\\sv-01-154\\d$\\SWAP\\Data\\NicoBIOP\\2022-06-30\\New-07.czi"
+               // "F:\\czis\\Tiles_small_1chanels_stitch_Zen3-8.czi"
         };*/
 
         for (String url: cziURLs) {

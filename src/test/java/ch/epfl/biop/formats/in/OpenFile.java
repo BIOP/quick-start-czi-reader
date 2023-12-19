@@ -19,6 +19,5 @@ public class OpenFile {
         ij.Prefs.set("bioformats.enabled.ZeissQuickStartCZI", true);*/
         ImageJ fiji = new ImageJ();
         fiji.ui().showUI();
-        ZeissCZIReader r;
     }
 }
