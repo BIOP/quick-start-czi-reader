@@ -755,7 +755,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
         if (buf != null && buf.length >= data.length) {
             System.arraycopy(data, 0, buf, 0, data.length);
-            swapRGBIfnecessary(buf, UNCOMPRESSED, bpp, totalBpp);
+            swapRGBIfnecessary(buf, compression, bpp, totalBpp);
             if (useCache) {
                 cacheLock.lock();
                 // Block just computed
@@ -769,7 +769,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             }
             return buf;
         }
-        swapRGBIfnecessary(data, UNCOMPRESSED, bpp, totalBpp);
+        swapRGBIfnecessary(data, compression, bpp, totalBpp);
         if (useCache) {
             cacheLock.lock();
             subBlockLRUCache.touch(block, data);
