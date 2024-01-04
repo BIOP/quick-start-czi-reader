@@ -2087,9 +2087,13 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         public CZISegments(String id, boolean littleEndian) throws IOException {
             this.fileName = id;
             this.fileHeader = LibCZI.getFileHeaderSegment(id, BUFFER_SIZE, littleEndian);
-            this.subBlockDirectory = LibCZI.getSubBlockDirectorySegment(this.fileHeader, id, BUFFER_SIZE, littleEndian);
-            this.metadata = LibCZI.getMetaDataSegment(this.fileHeader, id, BUFFER_SIZE, littleEndian);
-            this.attachmentDirectory = LibCZI.getAttachmentDirectorySegment(this.fileHeader, id, BUFFER_SIZE, littleEndian);
+            this.subBlockDirectory = LibCZI.getSubBlockDirectorySegment(this.fileHeader.data.subBlockDirectoryPosition, id, BUFFER_SIZE, littleEndian);
+            this.attachmentDirectory = LibCZI.getAttachmentDirectorySegment(this.fileHeader.data.attachmentDirectoryPosition, id, BUFFER_SIZE, littleEndian);
+
+            // For searching of blocks at the end of the file, just in case the metadata subblock has been deleted
+            long lastBlockPosition = LibCZI.getPositionLastBlock(subBlockDirectory);
+            this.metadata = LibCZI.getMetaDataSegment(this.fileHeader.data.metadataPosition, id, BUFFER_SIZE, littleEndian, lastBlockPosition);
+
             if (attachmentDirectory!=null) {
                 this.timeStamps = LibCZI.getTimeStamps(this.attachmentDirectory, id, BUFFER_SIZE, littleEndian);
                 //System.out.println("#ts="+timeStamps.length);
