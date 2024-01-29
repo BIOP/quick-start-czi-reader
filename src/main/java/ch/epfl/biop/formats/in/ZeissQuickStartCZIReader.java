@@ -223,7 +223,7 @@ import static ch.epfl.biop.formats.in.libczi.LibCZI.ZSTD_1;
  *  but loading these bytes on demand is quite tedious: hard to explain, but a reader is created inside the reader and
  *  maps the file 'temporarily' to a fake file. That's pretty clever and convenient, but prevents (most probably)
  *  lazy loading AND memoization functionality.
- *
+ * <p>
  *  TODO: test PALM file
  *  TODO: ask how to get rid of absolute file path in memo that do not crash the reader when the file is moved
  *
@@ -1751,7 +1751,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         public int getFilePart() {
             return filePart;
         }
-        public CoreSignature(ModuloDimensionEntries entries, //LibCZI.SubBlockSegment.SubBlockSegmentData.SubBlockDirectoryEntryDV.DimensionEntry[] entries,
+        public CoreSignature(ModuloDimensionEntries entries,
                              String pyramidLevelDimension, int pyramidLevelValue,
                              Function<String, Integer> maxDigitPerDimension, boolean autostitch,
                              String filePartDimension, int filePartValue) {
@@ -3266,9 +3266,20 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             double cornerYAllScenesMicrons = Double.NaN;
 
             // Attempt strategy 1:
-            // - Let's pick the first subblock of the first core index
+            // - Let's pick the first subblock of the first core index, of the lowest czt key
+            // - We do not take CZTKey(0,0,0) because some files do not have this block (Zenodo repo 10577621 file Intestine_3color_RAC.czi)
+
             int coreUsedForXYOffset = 0;
-            MinDimEntry firstSubBlock = mapCoreCZTToBlocks.get(coreUsedForXYOffset).get(new CZTKey(0, 0, 0)).get(0);
+
+            final Comparator<CZTKey> keyComparator = Comparator.comparingInt((CZTKey p) -> p.t)
+                    .thenComparingInt(p -> p.c)
+                    .thenComparingInt(p -> p.z);
+
+            HashMap<CZTKey, List<MinDimEntry>> blocksForXYOffset = mapCoreCZTToBlocks.get(coreUsedForXYOffset);
+            CZTKey cztKeyForXYOffset = blocksForXYOffset.keySet().stream().min(keyComparator::compare).get();
+
+            MinDimEntry firstSubBlock = blocksForXYOffset
+                    .get(cztKeyForXYOffset).get(0);
 
             LibCZI.SubBlockSegment block = LibCZI.getBlock(reader.getStream(firstSubBlock.filePart), firstSubBlock.filePosition);
             LibCZI.SubBlockMeta sbm = LibCZI.readSubBlockMeta(reader.getStream(firstSubBlock.filePart), block, parser);
@@ -3390,7 +3401,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
                 Length planePosX, planePosY, planePosZ = null; // plane position of the current coreindex - do not vary over z and t, but that could happen
 
-                blocks = mapCoreCZTToBlocks.get(iCoreIndex).get(new CZTKey(0,0,0));
+                blocks = mapCoreCZTToBlocks.get(iCoreIndex).get(cztKeyForXYOffset);
 
                 if (!resolutionLevel0) {
                     // Use the same position as the higher resolution level
@@ -3646,8 +3657,20 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         }
 
         private void translateScaling(Element root) {
+
+            // Default values in case no metadata is found : avoids NPE
+            for (int iCoreIndex=0; iCoreIndex<reader.core.size(); iCoreIndex++) {
+                if (!coreToPixSizeX.containsKey(iCoreIndex))
+                    coreToPixSizeX.put(iCoreIndex, new Length(1, UNITS.REFERENCEFRAME));
+                if (!coreToPixSizeY.containsKey(iCoreIndex))
+                    coreToPixSizeY.put(iCoreIndex, new Length(1, UNITS.REFERENCEFRAME));
+                if (!coreToPixSizeZ.containsKey(iCoreIndex))
+                    coreToPixSizeZ.put(iCoreIndex, new Length(1, UNITS.REFERENCEFRAME));
+            }
+
             NodeList scalings = root.getElementsByTagName("Scaling");
             if (scalings.getLength() == 0) {
+                LOGGER.debug("No Scaling element found in Image Document.");
                 return;
             }
 
@@ -3700,18 +3723,8 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                                     } break;
                             }
                         }
-                    }
-                    else {
-                        LOGGER.debug(
-                                "Expected positive value for PhysicalSize; got {}", value);
-                        for (int iCoreIndex=0; iCoreIndex<reader.core.size(); iCoreIndex++) {
-                            if (!coreToPixSizeX.containsKey(iCoreIndex))
-                                coreToPixSizeX.put(iCoreIndex, new Length(1, UNITS.REFERENCEFRAME));
-                            if (!coreToPixSizeY.containsKey(iCoreIndex))
-                                coreToPixSizeY.put(iCoreIndex, new Length(1, UNITS.REFERENCEFRAME));
-                            if (!coreToPixSizeZ.containsKey(iCoreIndex))
-                                coreToPixSizeZ.put(iCoreIndex, new Length(1, UNITS.REFERENCEFRAME));
-                        }
+                    } else {
+                        LOGGER.debug("Expected positive value for PhysicalSize; got {}", value);
                     }
                 }
             }
@@ -4724,7 +4737,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
     static private String normalizeColor(String color) {
         String c = color.replaceAll("#", "");
         if (c.length() > 6) {
-            c = c.substring(2, (int) Math.min(8, c.length()));
+            c = c.substring(2, Math.min(8, c.length()));
             LOGGER.debug("Replaced color {} with {}", color, c);
         }
         return c;
