@@ -120,7 +120,8 @@ public class LibCZI {
                 }
                 return directorySegment;
             } else {
-                throw new IOException(ZISRAWDIRECTORY+" segment expected, found "+segmentID+" instead.");
+                logger.warn(ZISRAWDIRECTORY+" segment expected, found "+segmentID+" instead.");
+                return null; // Some multipart file could be deprived of this segment. The reader needs to deal with null in this case
             }
         }
     }
@@ -159,7 +160,6 @@ public class LibCZI {
             } else {
                 logger.warn("No "+ZISRAWATTDIR+" segment found.");
                 return null;
-                //throw new IOException(ZISRAWATTDIR+" segment expected, found "+segmentID+" instead.");
             }
         }
     }

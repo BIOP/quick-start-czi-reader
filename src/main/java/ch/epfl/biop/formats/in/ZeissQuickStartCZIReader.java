@@ -58,7 +58,6 @@ import loci.common.RandomAccessInputStream;
 import loci.common.Region;
 import loci.common.services.DependencyException;
 import loci.common.services.ServiceException;
-import loci.common.services.ServiceFactory;
 import loci.common.xml.XMLTools;
 import loci.formats.CoreMetadata;
 import loci.formats.FormatException;
@@ -74,9 +73,8 @@ import loci.formats.in.DynamicMetadataOptions;
 import loci.formats.in.JPEGReader;
 import loci.formats.in.MetadataOptions;
 import ch.epfl.biop.formats.in.libczi.LibCZI;
+import loci.formats.meta.DummyMetadata;
 import loci.formats.meta.MetadataStore;
-import loci.formats.ome.OMEXMLMetadata;
-import loci.formats.services.OMEXMLService;
 import ome.units.UNITS;
 import ome.units.quantity.Length;
 import ome.units.quantity.Power;
@@ -667,7 +665,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         options.interleaved = isInterleaved();
         options.littleEndian = isLittleEndian();
         options.bitsPerSample = bytesPerPixel * 8;
-        options.maxBytes = getSizeX() * getSizeY() * getRGBChannelCount() * bytesPerPixel;
+        options.maxBytes = block.storedSizeX * block.storedSizeY * getRGBChannelCount() * bytesPerPixel; // The maximal size is the one of the subblock
 
         switch (compression) {
             case JPEG:
@@ -983,7 +981,41 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                             compression==UNCOMPRESSED? DataTools.allocate(tileInBlock.width, tileInBlock.height, nCh, bpp): null,
                             bpp, bytesPerPixel);
 
-                    // We need to basically crop a rectangle with a rectangle, of potentially different sizes
+                    int nLinesMissing = 0;
+                    int nColumnsMissing = 0;
+
+                    if (compression!=UNCOMPRESSED) {
+                        // Sometimes (see post https://forum.image.sc/t/would-anyone-have-a-palm-czi-example-file/85900/12),
+                        // decompressed subblock does not return the proper number of pixels
+                        // try this code on the Young-Mouse czi image from  - resolution level 6 https://zenodo.org/records/10577621:
+                        /* ZeissQuickStartCZIReader r = new ZeissQuickStartCZIReader();
+                            r.setId("image path to \\Young_mouse.czi");
+                            r.setSeries(5);
+                            r.openPlane(0,0,0,5947,2168); */
+                        int expectedRawDataSize = block.storedSizeX*block.storedSizeY*bpp*nCh;
+                        if (rawData.length!=expectedRawDataSize) {
+                            // Bad scenario: columns or rows are missing
+                            // let's try to decipher what is missing - a line or a column
+                            boolean probableColumnMissing = rawData.length % (block.storedSizeY*bpp*nCh) == 0;
+                            boolean probableLineMissing = rawData.length % (block.storedSizeX*bpp*nCh) == 0;
+                            if (probableLineMissing&&probableColumnMissing) {
+                                logger.error("SubBlock at position "+block.filePosition+" returned an unexpected number of pixels.");
+                                continue;
+                            }
+                            if (probableLineMissing) {
+                                logger.warn("SubBlock at position "+block.filePosition+" returned an unexpected number of pixels.");
+                                nLinesMissing = block.storedSizeY-(rawData.length / (block.storedSizeX*bpp*nCh));
+                            } else if (probableColumnMissing) {
+                                logger.warn("SubBlock at position "+block.filePosition+" returned an unexpected number of pixels.");
+                                nColumnsMissing = block.storedSizeX-(rawData.length / (block.storedSizeY*bpp*nCh));
+                            } else {
+                                logger.error("SubBlock at position "+block.filePosition+" returned an unexpected number of pixels.");
+                                continue;
+                            }
+                        }
+                    }
+
+                    // We need to crop a rectangle with another rectangle, of potentially different sizes
                     // Let's find out the position of the block in the image referential
                     int blockOriX = regionRead.x-image.x;
                     int skipBytesStartX = 0;
@@ -998,7 +1030,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     if (blockEndX>0) {
                         skipBytesEndX = blockEndX*bytesPerPixel;
                     }
-                    int nBytesToCopyPerLine = (regionRead.width*bytesPerPixel-skipBytesStartX-skipBytesEndX);
+                    int nBytesToCopyPerLine = ((regionRead.width-nColumnsMissing) * bytesPerPixel - skipBytesStartX - skipBytesEndX);
                     int blockOriY = regionRead.y-image.y;
                     int skipLinesRawDataStart = 0;
                     int skipLinesBufStart = 0;
@@ -1009,13 +1041,13 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     }
                     int blockEndY = (regionRead.y+regionRead.height)-(image.y+image.height);
                     int skipLinesEnd = Math.max(blockEndY, 0);
-                    int totalLines = regionRead.height-skipLinesRawDataStart-skipLinesEnd;
-                    int nBytesPerLineRawData = regionRead.width*bytesPerPixel;
+                    int totalLines = regionRead.height-nLinesMissing-skipLinesRawDataStart-skipLinesEnd;
+                    int nBytesPerLineRawData = (regionRead.width-nColumnsMissing)*bytesPerPixel;
                     int nBytesPerLineBuf = image.width*bytesPerPixel;
                     int offsetRawData = skipLinesRawDataStart*nBytesPerLineRawData+skipBytesStartX;
                     int offsetBuf = skipLinesBufStart*nBytesPerLineBuf+skipBytesBufStartX;
 
-                    for (int i=0; i<totalLines;i++) { // TODO: totalines or totalines + 1 ?
+                    for (int i=0; i<totalLines;i++) {
                         System.arraycopy(rawData,offsetRawData,buf,offsetBuf,nBytesToCopyPerLine);
                         offsetRawData=offsetRawData+nBytesPerLineRawData;
                         offsetBuf=offsetBuf+nBytesPerLineBuf;
@@ -1140,9 +1172,10 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         // Then we look at the max value in each dimension, to know how many digits are needed to write the signature
         // and proper alphabetical ordering
         cziPartToSegments.forEach((part, cziSegments) -> { // For each part
-            Arrays.asList(cziSegments.subBlockDirectory.data.entries).forEach( // and each entry
+            if (cziSegments.subBlockDirectory!=null) {
+                Arrays.asList(cziSegments.subBlockDirectory.data.entries).forEach( // and each entry
                     entry -> {
-                        for (LibCZI.SubBlockSegment.SubBlockSegmentData.SubBlockDirectoryEntryDV.DimensionEntry dimEntry: entry.getDimensionEntries()) {
+                        for (LibCZI.SubBlockSegment.SubBlockSegmentData.SubBlockDirectoryEntryDV.DimensionEntry dimEntry : entry.getDimensionEntries()) {
                             //int nDigits = String.valueOf(dimEntry.start).length(); // TODO: Can this be negative ?
                             int val = dimEntry.start;
                             if (!maxValuePerDimension.containsKey(dimEntry.dimension)) {
@@ -1155,7 +1188,8 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                             }
                         }
                     }
-            );
+                );
+            }
         });
 
         nIlluminations = maxValuePerDimension.containsKey("I")? maxValuePerDimension.get("I")+1:1;
@@ -1197,9 +1231,15 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
         // Write all signatures
         cziPartToSegments.forEach((part, cziSegments) -> { // For each part
-            Arrays.asList(cziSegments.subBlockDirectory.data.entries).forEach( // and each entry
+            if (cziSegments.subBlockDirectory!=null) {
+                Arrays.asList(cziSegments.subBlockDirectory.data.entries).forEach( // and each entry
                     entry -> {
-                        int downscalingFactor = (int) Math.round((double)(entry.getDimension("X").size)/(double)(entry.getDimension("X").storedSize));
+                        double doubleDownscalingFactor = (double)(entry.getDimension("X").size) / (double)(entry.getDimension("X").storedSize);
+                        if (doubleDownscalingFactor<1) {
+                            // PALM dataset -> forcing pyramid level to 0 will lead to create a new series
+                            doubleDownscalingFactor = 0;
+                        }
+                        int downscalingFactor = (int) Math.round(doubleDownscalingFactor);
 
                         hasPyramid = hasPyramid || (downscalingFactor!=1);
 
@@ -1221,6 +1261,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                             coreSignatureToBlocks.get(coreSignature).add(moduloEntry);
                         }
                     });
+            }
         });
 
         // Sort them
@@ -1409,15 +1450,12 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             byte[] bytes = LibCZI.getLabelBytes(cziPartToSegments.get(filePart).attachmentDirectory, id, BUFFER_SIZE, isLittleEndian());
             if (bytes!=null) {
                 int nSeries = getSeriesCount();
-                ServiceFactory factory = new ServiceFactory();
-                OMEXMLService service = factory.getInstance(OMEXMLService.class);
-                OMEXMLMetadata omeXML = service.createOMEXMLMetadata();
                 ZeissQuickStartCZIReader labelReader = new ZeissQuickStartCZIReader();
                 String placeHolderName = "label.czi";
                 // thumbReader.setMetadataOptions(getMetadataOptions());
                 ByteArrayHandle stream = new ByteArrayHandle(bytes);
                 Location.mapFile(placeHolderName, stream);
-                labelReader.setMetadataStore(omeXML);
+                labelReader.setMetadataStore(new DummyMetadata());
                 labelReader.setId(placeHolderName);
 
                 CoreMetadata c = labelReader.getCoreMetadataList().get(0);
@@ -1451,15 +1489,12 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             byte[] bytes = LibCZI.getPreviewBytes(cziPartToSegments.get(filePart).attachmentDirectory, id, BUFFER_SIZE, isLittleEndian());
             if (bytes!=null) {
                 int nSeries = getSeriesCount();
-                ServiceFactory factory = new ServiceFactory();
-                OMEXMLService service = factory.getInstance(OMEXMLService.class);
-                OMEXMLMetadata omeXML = service.createOMEXMLMetadata();
                 ZeissQuickStartCZIReader labelReader = new ZeissQuickStartCZIReader();
                 String placeHolderName = "slide_preview.czi";
                 labelReader.setMetadataOptions(getMetadataOptions());
                 ByteArrayHandle stream = new ByteArrayHandle(bytes);
                 Location.mapFile(placeHolderName, stream);
-                labelReader.setMetadataStore(omeXML);
+                labelReader.setMetadataStore(new DummyMetadata());
                 labelReader.setId(placeHolderName);
 
                 CoreMetadata c = labelReader.getCoreMetadataList().get(0);
@@ -1584,9 +1619,13 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             if (minT>t_min) minT = t_min;
         }
 
-        ms0.sizeZ = maxZ - minZ;
-        ms0.sizeC = maxC - minC;
-        ms0.sizeT = maxT - minT;
+        if (minZ!=0) logger.warn("No block found with Z = 0, first Z block found at Z = "+minZ);
+        if (minC!=0) logger.warn("No block found with C = 0, first C block found at C = "+minC);
+        if (minT!=0) logger.warn("No block found with T = 0, first T block found at T = "+minT);
+
+        ms0.sizeZ = maxZ - 0;//minZ;
+        ms0.sizeC = maxC - 0;//minC;
+        ms0.sizeT = maxT - 0;//minT;
 
         if ((downScale!=1)&&(allowAutostitching())) {
             ms0.sizeX = nPixX_maxRes/downScale;
@@ -1886,9 +1925,9 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             this.nPhases = nPhases;
             this.pixelType = entry.getPixelType();
             this.compression = entry.getCompression();
-            this.downSampling = (int) Math.round((double)(entry.getDimension("X").size)/(double)(entry.getDimension("X").storedSize));
+            int ds = (int) Math.round((double)(entry.getDimension("X").size)/(double)(entry.getDimension("X").storedSize));
+            this.downSampling = Math.max(ds,1); // The downsampling factor could go below 1 for PALM dataset, but within the block, the real data is such that there's no downsampling - just the pixel size changes
             this.filePosition = entry.getFilePosition();
-            //System.out.println(entry);
 
             int iRotation = 0;
             int iIllumination = 0;
@@ -2079,7 +2118,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
      */
     private static class CZISegments {
         final LibCZI.FileHeaderSegment fileHeader;
-        final LibCZI.SubBlockDirectorySegment subBlockDirectory;
+        final LibCZI.SubBlockDirectorySegment subBlockDirectory; // Some multipart files could have a part without this segment
         final LibCZI.AttachmentDirectorySegment attachmentDirectory;
         final LibCZI.MetaDataSegment metadata;
         final double[] timeStamps;
@@ -2091,21 +2130,21 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             this.attachmentDirectory = LibCZI.getAttachmentDirectorySegment(this.fileHeader.data.attachmentDirectoryPosition, id, BUFFER_SIZE, littleEndian);
 
             // For searching of blocks at the end of the file, just in case the metadata subblock has been deleted
-            long lastBlockPosition = LibCZI.getPositionLastBlock(subBlockDirectory);
+            long lastBlockPosition = subBlockDirectory!=null?LibCZI.getPositionLastBlock(subBlockDirectory):0;
             this.metadata = LibCZI.getMetaDataSegment(this.fileHeader.data.metadataPosition, id, BUFFER_SIZE, littleEndian, lastBlockPosition);
 
             if (attachmentDirectory!=null) {
                 this.timeStamps = LibCZI.getTimeStamps(this.attachmentDirectory, id, BUFFER_SIZE, littleEndian);
-                //System.out.println("#ts="+timeStamps.length);
-                /*for (double timeStamp: timeStamps) {
-                    System.out.println(timeStamp);
-                }*/
             } else {
                 this.timeStamps = new double[0];
             }
         }
     }
 
+    /**
+     * A least recently used cache for CZI subblocks. Its goal is to prevent multiple decompression of the same subblock
+     * when only subregions are requested.
+     */
     static class SubBlockLRUCache extends
             LinkedHashMap<MinDimEntry, SoftReference<byte[]>>
     {
@@ -2143,7 +2182,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 totalWeight.addAndGet(-cost.get(eldest.getKey()));
                 cost.remove(eldest.getKey());
                 eldest.getValue().clear();
-                //System.out.println("Remove");
                 return true;
             }
             else return false;
@@ -2154,10 +2192,9 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         {
             final SoftReference<byte[]> ref = get(key);
             if (ref == null) {
-                long costValue = value.length;//getWeight(value);
+                long costValue = value.length;
                 totalWeight.addAndGet(costValue);
                 cost.put(key, costValue);
-                //System.out.println(totalWeight.get()/(1024*1024)+" Mb");
                 put(key, new SoftReference<>(value));
             }
             else if (ref.get() == null) {
@@ -3401,11 +3438,12 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
                 Length planePosX, planePosY, planePosZ = null; // plane position of the current coreindex - do not vary over z and t, but that could happen
 
-                blocks = mapCoreCZTToBlocks.get(iCoreIndex).get(cztKeyForXYOffset);
+                CZTKey cztKeySeriesForXYOffset = mapCoreCZTToBlocks.get(iCoreIndex).keySet().stream().min(keyComparator::compare).get();
+                blocks = mapCoreCZTToBlocks.get(iCoreIndex).get(cztKeySeriesForXYOffset);
 
                 if (!resolutionLevel0) {
                     // Use the same position as the higher resolution level
-                    // Keeping the last highest resolutio works because bio-formats forces the resolution
+                    // Keeping the last highest resolution works because bio-formats forces the resolution
                     // level series to be sorted according to the core series index:
                     // res 0 series i / res 1 series i / res 2 series i / res 0 series i+1 / res 1 series i+1 etc.
                     planePosX = planePosXResolutionLevel0;
