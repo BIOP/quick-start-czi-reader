@@ -3255,8 +3255,10 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     if ((x == null)||(x.value().doubleValue()>posX.value(unitLength).doubleValue())) {
                         x = posX;
                     }
+
+                    // UnitLength in Y may be Reference Frames for Line scans
                     Length posY = new Length((double) iBlock.dimensionStartY/(double) reader.coreIndexToDownscaleFactor.get(iCoreIndex)
-                            *coreToPixSizeY.get(iCoreIndex).value(unitLength).doubleValue(), unitLength);
+                            *coreToPixSizeY.get(iCoreIndex).value(coreToPixSizeY.get(iCoreIndex).unit()).doubleValue(), coreToPixSizeY.get(iCoreIndex).unit());
                     if ((y == null)||(y.value().doubleValue()>posY.value(unitLength).doubleValue())) {
                         y = posY;
                     }
