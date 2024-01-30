@@ -578,13 +578,23 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         }
     }
 
-    private byte[] readRawPixelData(MinDimEntry block,
+    private byte[] readRawPixelData(
+                                    CZTKey key,
+                                    MinDimEntry block,
                                     int compression,
                                     int storedSizeX,
                                     int storedSizeY,
                                     RandomAccessInputStream s, Region tile, byte[] buf,
                                     int bpp, int totalBpp) throws FormatException, IOException {
         //s.order(isLittleEndian()); -> it is already set when calling the method
+
+        if ((key.t!=block.dimensionStartT)||(key.z!=block.dimensionStartZ)) {
+            // Line scan with multiple T or Z per subblock
+            if (compression!=UNCOMPRESSED) {
+                logger.error("Compression is not supported with line scans.");
+                return null;
+            }
+        }
 
         if ((useCache)&&(compression!=UNCOMPRESSED)) {
             cacheLock.lock();
@@ -640,6 +650,12 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         LibCZI.SubBlockSegment subBlock = LibCZI.getBlock(s, block.filePosition);
         long blockDataOffset = subBlock.dataOffset;
         long blockDataSize = subBlock.data.dataSize;
+
+        if ((key.t!=block.dimensionStartT)||(key.z!=block.dimensionStartZ)) {
+            // Line scan with multiple T or Z per subblock
+            assert compression==UNCOMPRESSED;
+            blockDataOffset+=((key.t-block.dimensionStartT)+(key.z-block.dimensionStartZ))*totalBpp*Math.max(storedSizeX,storedSizeY);
+        }
 
         s.seek(blockDataOffset);
 
@@ -951,6 +967,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 if (image.equals(blockRegion) && blocks.size()==1) { // THE SECOND TEST IS NECESSARY BECAUSE OTHER BLOCKS CAN INTERSECT!
                     // Best case scenario: reads and returns full subblock
                     return readRawPixelData(
+                            key,
                             block,
                             coreIndexToCompression.get(coreIndex),
                             block.storedSizeX,
@@ -973,6 +990,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     Region tileInBlock = new Region(regionRead.x-blockRegion.x, regionRead.y-blockRegion.y, regionRead.width, regionRead.height);
 
                     byte[] rawData = readRawPixelData(
+                            key,
                             block,
                             compression,
                             block.storedSizeX,
@@ -1433,6 +1451,41 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 MinDimEntry mde = new MinDimEntry(block); // Makes a trimmed down version of the block in order to reduce the reader memory footprint getMinimalEntry(block);//
                 blocksInCore.get(k).add(mde);
                 minimalBlocksInCore.get(k).add(mde);
+
+                // Need to handle LineScans: there may be multiple Z or T per subblock
+                // We add the same MinDimEntry with all keys that need to access the same block
+                // We can retrieve the z or t offset thanks to the difference between the key
+                // and the startdimension. The offset is taken into account into the readrawdata method
+                if (block.hasDimension("Z")) {
+                    int sizeZ = block.getDimension("Z").storedSize;
+                    if (sizeZ>1) {
+                        logger.debug("Multiple Z found in a single sub-block.");
+                        for (int zi = z+1; zi < z+sizeZ; zi++) {
+                            k = new CZTKey(c,zi,t);
+                            if (!minimalBlocksInCore.containsKey(k)) {
+                                blocksInCore.put(k, new ArrayList<>());
+                                minimalBlocksInCore.put(k, new ArrayList<>());
+                            }
+                            blocksInCore.get(k).add(mde);
+                            minimalBlocksInCore.get(k).add(mde);
+                        }
+                    }
+                }
+                if (block.hasDimension("T")) {
+                    int sizeT = block.getDimension("T").storedSize;
+                    if (sizeT>1) {
+                        logger.debug("Multiple T found in a single sub-block.");
+                        for (int ti = t+1; ti < t+sizeT; ti++) {
+                            k = new CZTKey(c,z,ti);
+                            if (!minimalBlocksInCore.containsKey(k)) {
+                                blocksInCore.put(k, new ArrayList<>());
+                                minimalBlocksInCore.put(k, new ArrayList<>());
+                            }
+                            blocksInCore.get(k).add(mde);
+                            minimalBlocksInCore.get(k).add(mde);
+                        }
+                    }
+                }
             }
             //In the end, there are 'blocksInCore.values().size()' blocks in the core 'iCoreIndex'
         }
@@ -2072,6 +2125,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
     static class MinDimEntry {
 
         final int dimensionStartZ;
+        final int dimensionStartT;
 
         public MinDimEntry(ModuloDimensionEntries entry) {
             filePosition = entry.getFilePosition();
@@ -2081,6 +2135,11 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 dimensionStartZ = entry.getDimension("Z").start;
             } else {
                 dimensionStartZ = 0;
+            }
+            if (entry.hasDimension("T")) {
+                dimensionStartT = entry.getDimension("T").start;
+            } else {
+                dimensionStartT = 0;
             }
             storedSizeX = entry.getDimension("X").storedSize;
             storedSizeY = entry.getDimension("Y").storedSize;
