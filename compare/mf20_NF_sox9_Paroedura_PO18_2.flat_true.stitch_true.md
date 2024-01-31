@@ -1,6 +1,6 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |14 ms|14 ms|        |
+| Initialization     |                  |9 ms|9 ms|        |
 | Reader Size (Mb)     |                  |0.36|0.78|        |
 | getStageLabelX| Image 0 | -4168.941 um | -429.424 um | 3739.517 um |
 | getStageLabelY| Image 0 | 1450.507 um | -2289.010 um | 3739.517 um |
@@ -501,14 +501,14 @@
  More than 500 differences.
 # [mf20_NF_sox9_Paroedura_PO18_2.czi](https://zenodo.org/record/5911450/files/mf20_NF_sox9_Paroedura_PO18_2.czi) report
  - **Autostitch** = true
- - ZeissCZIReader v7.0.0
- - ZeissQuickStartCZIReader v0.2.2-SNAPSHOT
+ - ZeissCZIReader v7.1.0
+ - ZeissQuickStartCZIReader v0.2.4-SNAPSHOT
 
 # Images 
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |84 ms|------|92 ms|------|--------|
+| Read time (all)   |57 ms|------|60 ms|------|--------|
 |0|![mf20_NF_sox9_Paroedura_PO18_2.quick_true.flat_true.stitch_true.series_0.jpg](mf20_NF_sox9_Paroedura_PO18_2/mf20_NF_sox9_Paroedura_PO18_2.quick_true.flat_true.stitch_true.series_0.jpg)|X:1254<br>Y:1254<br>C:3<br>Z:150<br>T:1|![mf20_NF_sox9_Paroedura_PO18_2.quick_false.flat_true.stitch_true.series_0.jpg](mf20_NF_sox9_Paroedura_PO18_2/mf20_NF_sox9_Paroedura_PO18_2.quick_false.flat_true.stitch_true.series_0.jpg)|X:1254<br>Y:1254<br>C:3<br>Z:150<br>T:1|0|
 
 # Metadata

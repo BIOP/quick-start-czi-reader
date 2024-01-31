@@ -849,7 +849,7 @@ public class CompareReader {
                 "https://zenodo.org/record/3737795/files/qDII-CLV3-DR5-E27-LD-SAM11-T10.czi",
 
                // "https://zenodo.org/record/7149674/files/raw_TMA_images.czi", too big
-                "https://zenodo.org/record/7884760/files/Skin-Positive.czi", // Takes too long
+               // "https://zenodo.org/record/7884760/files/Skin-Positive.czi", // Takes too long
                 "https://zenodo.org/record/4017923/files/03_12_2020_DSGN0673_fov_11_561.czi",
                 "https://zenodo.org/record/8015721/files/split_hcr_probes_plasmid_pos_fov_tile3_Airyscan_Processing_Stitch.czi",
                 "https://zenodo.org/record/4994280/files/Nyre_5-1_Strep_100_DBE_500_mikro.czi",
@@ -875,7 +875,24 @@ public class CompareReader {
             //    "https://zenodo.org/record/8015833/files/GFP_plasmid_Ecoli_plus_plaque_sample_ecoli_fov_01tile_Airyscan_Processing_stitch.czi", line too long
                 "https://zenodo.org/record/4243557/files/63x_tile_du145_tf_647_k27ac_488_dapi_r2.czi",
                 "https://zenodo.org/record/5602160/files/daf-12%20L1%201.czi",
-                "https://zenodo.org/record/5714530/files/dO%2030%20min%20nr%2013.czi"
+                "https://zenodo.org/record/5714530/files/dO%2030%20min%20nr%2013.czi",
+
+                "https://zenodo.org/records/10577621/files/Channel-ZStack-LineScan-Bidirectional-Averaging.czi",
+                "https://zenodo.org/records/10577621/files/Image%205_PALM_verrechnet.czi",
+                "https://zenodo.org/records/10577621/files/Intestine_3color_RAC.czi",
+                "https://zenodo.org/records/10577621/files/Kidney_RAC_3color.czi",
+                "https://zenodo.org/records/10577621/files/LineScan_T3500.czi",
+                "https://zenodo.org/records/10577621/files/LineScan_T80_Z25.czi",
+                "https://zenodo.org/records/10577621/files/LineScan_Z200.czi",
+                "https://zenodo.org/records/10577621/files/Palm_mitDrift.czi",
+                "https://zenodo.org/records/10577621/files/PALM_OnlineVerrechnet.czi",
+                "https://zenodo.org/records/10577621/files/winnt.czi",
+                // "https://zenodo.org/records/10577621/files/Young_mouse.czi", // too many tiles
+                "https://zenodo.org/records/10577186/files/2023_11_30__RecognizedCode-27-Background%20subtraction-08.czi",
+                "https://zenodo.org/records/10577186/files/2023_11_30__RecognizedCode-27-Deconvolution%20(defaults)-11.czi",
+                "https://zenodo.org/records/10577186/files/2023_11_30__RecognizedCode-27.czi"
+
+
         };
         // Local files - too big and/or private, not available on Zenodo
        /* cziURLs = new String[] {

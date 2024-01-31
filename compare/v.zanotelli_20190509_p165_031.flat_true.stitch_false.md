@@ -1,6 +1,6 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |234 ms|146 ms|        |
+| Initialization     |                  |222 ms|132 ms|        |
 | Reader Size (Mb)     |                  |10.85|11.49|        |
 | getImageCount|(No args)|172| 194| |
 | getStageLabelName| Image 0 | ScanRegion0| Scene position #0| |
@@ -501,14 +501,14 @@
  More than 500 differences.
 # [v.zanotelli_20190509_p165_031.czi](https://zenodo.org/record/3991919/files/v.zanotelli_20190509_p165_031.czi) report
  - **Autostitch** = false
- - ZeissCZIReader v7.0.0
- - ZeissQuickStartCZIReader v0.2.2-SNAPSHOT
+ - ZeissCZIReader v7.1.0
+ - ZeissQuickStartCZIReader v0.2.4-SNAPSHOT
 
 # Images 
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |30073 ms|------|40128 ms|------|--------|
+| Read time (all)   |25571 ms|------|32894 ms|------|--------|
 |0|![v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_0.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_0.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|![v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_0.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_0.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|0|
 |1|![v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_1.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_1.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|![v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_1.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_1.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|0|
 |2|![v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_2.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_true.flat_true.stitch_false.series_2.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|![v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_2.jpg](v.zanotelli_20190509_p165_031/v.zanotelli_20190509_p165_031.quick_false.flat_true.stitch_false.series_2.jpg)|X:1600<br>Y:1600<br>C:2<br>Z:1<br>T:1|0|

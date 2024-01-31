@@ -1,6 +1,6 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |28 ms|48 ms|        |
+| Initialization     |                  |23 ms|48 ms|        |
 | Reader Size (Mb)     |                  |0.23|2.63|        |
 | getStageLabelX| Image 0 | -3371.350 um | -27.045 um | 3344.305 um |
 | getStageLabelY| Image 0 | 12412.780 um | 17428.300 um | 5015.520 um |
@@ -118,14 +118,14 @@
 | getPlanePositionY| Image 0 Plane 55 | 12412.780 um | 17428.300 um | 5015.520 um |
 # [Demo LISH 4x8 15pct 647.czi](https://zenodo.org/record/8263451/files/Demo%20LISH%204x8%2015pct%20647.czi) report
  - **Autostitch** = true
- - ZeissCZIReader v7.0.0
- - ZeissQuickStartCZIReader v0.2.2-SNAPSHOT
+ - ZeissCZIReader v7.1.0
+ - ZeissQuickStartCZIReader v0.2.4-SNAPSHOT
 
 # Images 
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |1076 ms|------|866 ms|------|--------|
+| Read time (all)   |1031 ms|------|923 ms|------|--------|
 |0|![Demo LISH 4x8 15pct 647.quick_true.flat_true.stitch_true.series_0.jpg](Demo LISH 4x8 15pct 647/Demo LISH 4x8 15pct 647.quick_true.flat_true.stitch_true.series_0.jpg)|X:4969<br>Y:6254<br>C:1<br>Z:56<br>T:1|![Demo LISH 4x8 15pct 647.quick_false.flat_true.stitch_true.series_0.jpg](Demo LISH 4x8 15pct 647/Demo LISH 4x8 15pct 647.quick_false.flat_true.stitch_true.series_0.jpg)|X:4969<br>Y:6254<br>C:1<br>Z:56<br>T:1|0|
 
 # Metadata

@@ -1,6 +1,6 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |25 ms|70 ms|        |
+| Initialization     |                  |25 ms|78 ms|        |
 | Reader Size (Mb)     |                  |0.64|1.35|        |
 | getPlaneDeltaT| Image 0 Plane 42 |  1: ome.units.quantity.Time: value[6508.476219151515], unit[s] stored as java.lang.Double| 2: null |
 | getPlaneDeltaT| Image 0 Plane 43 |  1: ome.units.quantity.Time: value[6508.476219151515], unit[s] stored as java.lang.Double| 2: null |
@@ -501,14 +501,14 @@
  More than 500 differences.
 # [2021-02-25-tulip_unprocessed-Airyscan.czi](https://zenodo.org/record/4662053/files/2021-02-25-tulip_unprocessed-Airyscan.czi) report
  - **Autostitch** = false
- - ZeissCZIReader v7.0.0
- - ZeissQuickStartCZIReader v0.2.2-SNAPSHOT
+ - ZeissCZIReader v7.1.0
+ - ZeissQuickStartCZIReader v0.2.4-SNAPSHOT
 
 # Images 
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |111 ms|------|97 ms|------|--------|
+| Read time (all)   |87 ms|------|75 ms|------|--------|
 |0|![2021-02-25-tulip_unprocessed-Airyscan.quick_true.flat_true.stitch_false.series_0.jpg](2021-02-25-tulip_unprocessed-Airyscan/2021-02-25-tulip_unprocessed-Airyscan.quick_true.flat_true.stitch_false.series_0.jpg)|X:1024<br>Y:1024<br>C:2<br>Z:21<br>T:32|![2021-02-25-tulip_unprocessed-Airyscan.quick_false.flat_true.stitch_false.series_0.jpg](2021-02-25-tulip_unprocessed-Airyscan/2021-02-25-tulip_unprocessed-Airyscan.quick_false.flat_true.stitch_false.series_0.jpg)|X:1024<br>Y:1024<br>C:2<br>Z:21<br>T:32|0|
 
 # Metadata

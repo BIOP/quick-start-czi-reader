@@ -1,6 +1,6 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |15 ms|45 ms|        |
+| Initialization     |                  |13 ms|41 ms|        |
 | Reader Size (Mb)     |                  |1.79|2.99|        |
 | getPlanePositionZ| Image 0 Plane 1 | -384.727 um | -385.027 um | 0.300 um |
 | getPlanePositionZ| Image 0 Plane 2 | -384.427 um | -385.027 um | 0.600 um |
@@ -501,14 +501,14 @@
  More than 500 differences.
 # [RBC_tiny.czi](https://zenodo.org/record/7117784/files/RBC_tiny.czi) report
  - **Autostitch** = true
- - ZeissCZIReader v7.0.0
- - ZeissQuickStartCZIReader v0.2.2-SNAPSHOT
+ - ZeissCZIReader v7.1.0
+ - ZeissQuickStartCZIReader v0.2.4-SNAPSHOT
 
 # Images 
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |54 ms|------|91 ms|------|--------|
+| Read time (all)   |47 ms|------|88 ms|------|--------|
 |0|![RBC_tiny.quick_true.flat_true.stitch_true.series_0.jpg](RBC_tiny/RBC_tiny.quick_true.flat_true.stitch_true.series_0.jpg)|X:209<br>Y:118<br>C:1<br>Z:834<br>T:1|![RBC_tiny.quick_false.flat_true.stitch_true.series_0.jpg](RBC_tiny/RBC_tiny.quick_false.flat_true.stitch_true.series_0.jpg)|X:209<br>Y:118<br>C:1<br>Z:834<br>T:1|0|
 
 # Metadata

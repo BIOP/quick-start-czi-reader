@@ -1,6 +1,6 @@
 |  Method            | Parameters       | Quick Start Reader | Original Reader | Delta  |
 | -------------------|------------------|--------------------|-----------------|------- |
-| Initialization     |                  |59 ms|30 ms|        |
+| Initialization     |                  |59 ms|24 ms|        |
 | Reader Size (Mb)     |                  |2.30|2.97|        |
 | getStageLabelName| Image 0 | B2| Scene position #0| |
 | getStageLabelName| Image 1 | B2| Scene position #1| |
@@ -94,14 +94,14 @@
 | getStageLabelName| Image 89 | B4| Scene position #89| |
 # [W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.czi](https://zenodo.org/record/7015307/files/W96_B2%2BB4_S%3D2_T%3D1%3DZ%3D1_C%3D1_Tile%3D5x9.czi) report
  - **Autostitch** = false
- - ZeissCZIReader v7.0.0
- - ZeissQuickStartCZIReader v0.2.2-SNAPSHOT
+ - ZeissCZIReader v7.1.0
+ - ZeissQuickStartCZIReader v0.2.4-SNAPSHOT
 
 # Images 
 
 | Series            | Quick Start Reader | Size | Original Reader | Size | #Diffs |
 |-------------------|--------------------|------|-----------------|------|--------|
-| Read time (all)   |931 ms|------|1003 ms|------|--------|
+| Read time (all)   |791 ms|------|897 ms|------|--------|
 |0|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_false.series_0.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_false.series_0.jpg)|X:640<br>Y:420<br>C:1<br>Z:1<br>T:1|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_false.series_0.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_false.series_0.jpg)|X:640<br>Y:420<br>C:1<br>Z:1<br>T:1|0|
 |1|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_false.series_1.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_false.series_1.jpg)|X:640<br>Y:420<br>C:1<br>Z:1<br>T:1|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_false.series_1.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_false.series_1.jpg)|X:640<br>Y:420<br>C:1<br>Z:1<br>T:1|0|
 |2|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_false.series_2.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_true.flat_true.stitch_false.series_2.jpg)|X:640<br>Y:420<br>C:1<br>Z:1<br>T:1|![W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_false.series_2.jpg](W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9/W96_B2+B4_S=2_T=1=Z=1_C=1_Tile=5x9.quick_false.flat_true.stitch_false.series_2.jpg)|X:640<br>Y:420<br>C:1<br>Z:1<br>T:1|0|

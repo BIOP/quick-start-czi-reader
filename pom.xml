@@ -105,6 +105,7 @@
 		<maven.compiler.target>19</maven.compiler.target>
 		<maven.compiler.testSource>19</maven.compiler.testSource>
 		<maven.compiler.testTarget>19</maven.compiler.testTarget>-->
+		<bf.version>7.1.0</bf.version>
 	</properties>
 
 	<repositories>
@@ -119,6 +120,7 @@
 		<dependency>
 			<groupId>ome</groupId>
 			<artifactId>formats-api</artifactId>
+			<version>${bf.version}</version>
 			<exclusions>
 				<exclusion>
 					<!-- NB: Exclude problematic uber-JAR that bundles commons-io. -->
@@ -137,6 +139,7 @@
 		<dependency>
 			<groupId>ome</groupId>
 			<artifactId>formats-bsd</artifactId>
+			<version>${bf.version}</version>
 			<exclusions>
 				<exclusion>
 					<!-- NB: Exclude problematic uber-JAR that bundles commons-io. -->
@@ -155,6 +158,7 @@
 		<dependency>
 			<groupId>ome</groupId>
 			<artifactId>formats-gpl</artifactId>
+			<version>${bf.version}</version>
 			<exclusions>
 				<exclusion>
 					<!-- NB: Exclude problematic uber-JAR that bundles commons-io. -->
@@ -173,6 +177,7 @@
 		<dependency>
 			<groupId>ome</groupId>
 			<artifactId>bio-formats_plugins</artifactId>
+			<version>${bf.version}</version>
 			<scope>test</scope>
 		</dependency>
 

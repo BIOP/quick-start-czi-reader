@@ -222,7 +222,6 @@ import static ch.epfl.biop.formats.in.libczi.LibCZI.ZSTD_1;
  *  maps the file 'temporarily' to a fake file. That's pretty clever and convenient, but prevents (most probably)
  *  lazy loading AND memoization functionality.
  * <p>
- *  TODO: test PALM file
  *  TODO: ask how to get rid of absolute file path in memo that do not crash the reader when the file is moved
  *
  */
