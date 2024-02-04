@@ -75,6 +75,8 @@ import loci.formats.in.MetadataOptions;
 import ch.epfl.biop.formats.in.libczi.LibCZI;
 import loci.formats.meta.DummyMetadata;
 import loci.formats.meta.MetadataStore;
+import loci.formats.tiff.IFD;
+import loci.formats.tiff.TiffParser;
 import ome.units.UNITS;
 import ome.units.quantity.Length;
 import ome.units.quantity.Power;
@@ -695,7 +697,11 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 options.maxBytes = options.width * options.height *
                         getRGBChannelCount() * bytesPerPixel;
                 try {
-                    data = new JPEGXRCodec().decompress(data, options);
+                    byte[] decompressed = new JPEGXRCodec().decompress(data, options);
+                    data = fixUnexpectedJPEGXRDimensions(data, decompressed,
+                            block.storedSizeX,
+                            block.storedSizeY,
+                            totalBpp, getFillColor());
                 }
                 catch (FormatException e) {
                     if (data.length == options.maxBytes) {
@@ -796,6 +802,47 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             }
         }
         return data;
+    }
+
+    private static byte[] fixUnexpectedJPEGXRDimensions(byte[] compressed, byte[] uncompressed,
+                                                        int storedSizeX, int storedSizeY,
+                                                        int totalBpp, Byte fillColor) {
+        // Sometimes (see post https://forum.image.sc/t/would-anyone-have-a-palm-czi-example-file/85900/12),
+        // decompressed subblock does not return the number of pixels expected from subblock field storedSizeX or storedSizeY
+        // to find an example that will use this correction, execute the code below
+        // on the Young-Mouse czi image from  - resolution level 6 https://zenodo.org/records/10577621:
+        /* ZeissQuickStartCZIReader r = new ZeissQuickStartCZIReader();
+            r.setId("image path to \\Young_mouse.czi");
+            r.setSeries(5);
+            r.openPlane(0,0,0,5947,2168); */
+        int expectedRawDataSize = storedSizeX*storedSizeY*totalBpp;
+        if (uncompressed.length!=expectedRawDataSize) {
+            // We got an issue
+            try {
+                int[] result = getWidthAndHeight(compressed); // It is possible to get the dimension of the decompressed subblock
+                // thanks to a header present in the compressed bytes (check JPEGXR specs in the getWidthAndHeight method)
+                int w = result[0];
+                int h = result[1];
+                if ((w>storedSizeX)||(h>storedSizeY)) { // No handling of a decompressed subblock bigger than expected. Only smaller.
+                    throw new RuntimeException("Too many pixels found in a CZI JPEGXR compressed subblock.");
+                }
+                assert uncompressed.length == (w * h * totalBpp);
+                byte[] corrected = new byte[expectedRawDataSize];
+                Arrays.fill(corrected, fillColor);
+                // The strategy is to copy one line after another, leaving empty columns or line depending on
+                // the case. The color of the empty pixels is set by the fillColor argument
+                for (int y = 0; y < h; y++) {
+                    System.arraycopy(uncompressed, w*totalBpp*y, corrected, storedSizeX*totalBpp*y, w*totalBpp);
+                }
+                return corrected;
+            } catch (FormatException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            return uncompressed;
+        }
     }
 
     private static int readVarint(RandomAccessInputStream stream) throws IOException {
@@ -998,40 +1045,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                             compression==UNCOMPRESSED? DataTools.allocate(tileInBlock.width, tileInBlock.height, nCh, bpp): null,
                             bpp, bytesPerPixel);
 
-                    int nLinesMissing = 0;
-                    int nColumnsMissing = 0;
-
-                    if (compression!=UNCOMPRESSED) {
-                        // Sometimes (see post https://forum.image.sc/t/would-anyone-have-a-palm-czi-example-file/85900/12),
-                        // decompressed subblock does not return the proper number of pixels
-                        // try this code on the Young-Mouse czi image from  - resolution level 6 https://zenodo.org/records/10577621:
-                        /* ZeissQuickStartCZIReader r = new ZeissQuickStartCZIReader();
-                            r.setId("image path to \\Young_mouse.czi");
-                            r.setSeries(5);
-                            r.openPlane(0,0,0,5947,2168); */
-                        int expectedRawDataSize = block.storedSizeX*block.storedSizeY*bpp*nCh;
-                        if (rawData.length!=expectedRawDataSize) {
-                            // Bad scenario: columns or rows are missing
-                            // let's try to decipher what is missing - a line or a column
-                            boolean probableColumnMissing = rawData.length % (block.storedSizeY*bpp*nCh) == 0;
-                            boolean probableLineMissing = rawData.length % (block.storedSizeX*bpp*nCh) == 0;
-                            if (probableLineMissing&&probableColumnMissing) {
-                                logger.error("SubBlock at position "+block.filePosition+" returned an unexpected number of pixels.");
-                                continue;
-                            }
-                            if (probableLineMissing) {
-                                logger.warn("SubBlock at position "+block.filePosition+" returned an unexpected number of pixels.");
-                                nLinesMissing = block.storedSizeY-(rawData.length / (block.storedSizeX*bpp*nCh));
-                            } else if (probableColumnMissing) {
-                                logger.warn("SubBlock at position "+block.filePosition+" returned an unexpected number of pixels.");
-                                nColumnsMissing = block.storedSizeX-(rawData.length / (block.storedSizeY*bpp*nCh));
-                            } else {
-                                logger.error("SubBlock at position "+block.filePosition+" returned an unexpected number of pixels.");
-                                continue;
-                            }
-                        }
-                    }
-
                     // We need to crop a rectangle with another rectangle, of potentially different sizes
                     // Let's find out the position of the block in the image referential
                     int blockOriX = regionRead.x-image.x;
@@ -1047,7 +1060,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     if (blockEndX>0) {
                         skipBytesEndX = blockEndX*bytesPerPixel;
                     }
-                    int nBytesToCopyPerLine = ((regionRead.width-nColumnsMissing) * bytesPerPixel - skipBytesStartX - skipBytesEndX);
+                    int nBytesToCopyPerLine = (regionRead.width * bytesPerPixel - skipBytesStartX - skipBytesEndX);
                     int blockOriY = regionRead.y-image.y;
                     int skipLinesRawDataStart = 0;
                     int skipLinesBufStart = 0;
@@ -1058,8 +1071,8 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     }
                     int blockEndY = (regionRead.y+regionRead.height)-(image.y+image.height);
                     int skipLinesEnd = Math.max(blockEndY, 0);
-                    int totalLines = regionRead.height-nLinesMissing-skipLinesRawDataStart-skipLinesEnd;
-                    int nBytesPerLineRawData = (regionRead.width-nColumnsMissing)*bytesPerPixel;
+                    int totalLines = regionRead.height-skipLinesRawDataStart-skipLinesEnd;
+                    int nBytesPerLineRawData = regionRead.width*bytesPerPixel;
                     int nBytesPerLineBuf = image.width*bytesPerPixel;
                     int offsetRawData = skipLinesRawDataStart*nBytesPerLineRawData+skipBytesStartX;
                     int offsetBuf = skipLinesBufStart*nBytesPerLineBuf+skipBytesBufStartX;
@@ -1074,6 +1087,21 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             }
         }
         return buf;
+    }
+
+    // see table A.4 in ITU-T T.832 https://www.itu.int/rec/T-REC-T.832/en version 2009
+    private static final int IMAGE_WIDTH_TAG = 0xBC80;
+    private static final int IMAGE_HEIGHT_TAG = 0xBC81;
+
+    private static int[] getWidthAndHeight(byte[] stream) throws FormatException, IOException {
+        try (RandomAccessInputStream s = new RandomAccessInputStream(stream)) {
+            s.order(true);
+            s.seek(4);
+            long ifdPointer = s.readInt();
+            TiffParser p = new TiffParser(s);
+            IFD ifd = p.getIFD(ifdPointer);
+            return new int[]{ifd.getIFDIntValue(IMAGE_WIDTH_TAG), ifd.getIFDIntValue(IMAGE_HEIGHT_TAG)};
+        }
     }
 
     /* @see loci.formats.FormatReader#initFile(String) */
