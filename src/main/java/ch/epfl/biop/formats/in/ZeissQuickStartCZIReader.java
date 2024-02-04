@@ -353,15 +353,20 @@ public class ZeissQuickStartCZIReader extends FormatReader {
     }
 
     /** Duplicates 'that' reader for parallel reading.
-     * Creating a reader with this constructor allows to keep a very low memory footprint
+     * Creating another reader using this constructor allows to keep a very low memory footprint
      * because all immutable objects are re-used by reference.
      * WARNING: calling {@link ZeissQuickStartCZIReader#close()} on this or that reader will prevent the use
-     * of the other reader created with this constructor */
+     * of the other reader created with this constructor
+     * WARNING: 'that' reader should have been initialized with setId before creating another reader
+     * */
     public ZeissQuickStartCZIReader(ZeissQuickStartCZIReader that) {
         super(FORMAT, SUFFIX);
         domains = new String[] {FormatTools.LM_DOMAIN, FormatTools.HISTOLOGY_DOMAIN};
         suffixSufficient = false;
         suffixNecessary = false;
+        if ((that.currentId ==null)||(that.currentId == "")) {
+            throw new RuntimeException("Do not duplicate this reader from a model if the model has not been initialized");
+        }
 
         this.streamCurrentPart = -1;
 
@@ -558,8 +563,17 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         else return null;
     }
 
+    static private String normalizeColor(String color) {
+        String c = color.replaceAll("#", "");
+        if (c.length() > 6) {
+            c = c.substring(2, Math.min(8, c.length()));
+            LOGGER.debug("Replaced color {} with {}", color, c);
+        }
+        return c;
+    }
+
     private void swapRGBIfnecessary(byte[] buf, int compression, int bpp, int pixel) {
-        if (isRGB() /*&& !emptyTile*/ && compression != JPEGXR) { // TODO: case emptytile
+        if (isRGB() && compression != JPEGXR) {
             // channels are stored in BGR order; red and blue channels need switching
             // JPEG-XR data has already been reversed during decompression
             int redOffset = bpp * 2;
@@ -587,10 +601,12 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                                     int storedSizeY,
                                     RandomAccessInputStream s, Region tile, byte[] buf,
                                     int bpp, int totalBpp) throws FormatException, IOException {
-        //s.order(isLittleEndian()); -> it is already set when calling the method
+        //s.order(isLittleEndian()); -> unnecessary because it is already set when calling the method
 
         if ((key.t!=block.dimensionStartT)||(key.z!=block.dimensionStartZ)) {
-            // Line scan with multiple T or Z per subblock
+            // This code branch is used with some czi files:
+            // - line scans
+            // - with subblocks that may contain with multiple Ts or Zs
             if (compression!=UNCOMPRESSED) {
                 logger.error("Compression is not supported with line scans.");
                 return null;
@@ -819,7 +835,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         if (uncompressed.length!=expectedRawDataSize) {
             // We got an issue
             try {
-                int[] result = getWidthAndHeight(compressed); // It is possible to get the dimension of the decompressed subblock
+                int[] result = getWidthAndHeightFromJPEGXRBytes(compressed); // It is possible to get the dimension of the decompressed subblock
                 // thanks to a header present in the compressed bytes (check JPEGXR specs in the getWidthAndHeight method)
                 int w = result[0];
                 int h = result[1];
@@ -842,6 +858,21 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             }
         } else {
             return uncompressed;
+        }
+    }
+
+    // see table A.4 in ITU-T T.832 https://www.itu.int/rec/T-REC-T.832/en version 2009
+    private static final int IMAGE_WIDTH_TAG = 0xBC80;
+    private static final int IMAGE_HEIGHT_TAG = 0xBC81;
+
+    private static int[] getWidthAndHeightFromJPEGXRBytes(byte[] stream) throws FormatException, IOException {
+        try (RandomAccessInputStream s = new RandomAccessInputStream(stream)) {
+            s.order(true);
+            s.seek(4);
+            long ifdPointer = s.readInt();
+            TiffParser p = new TiffParser(s);
+            IFD ifd = p.getIFD(ifdPointer);
+            return new int[]{ifd.getIFDIntValue(IMAGE_WIDTH_TAG), ifd.getIFDIntValue(IMAGE_HEIGHT_TAG)};
         }
     }
 
@@ -1089,21 +1120,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         return buf;
     }
 
-    // see table A.4 in ITU-T T.832 https://www.itu.int/rec/T-REC-T.832/en version 2009
-    private static final int IMAGE_WIDTH_TAG = 0xBC80;
-    private static final int IMAGE_HEIGHT_TAG = 0xBC81;
-
-    private static int[] getWidthAndHeight(byte[] stream) throws FormatException, IOException {
-        try (RandomAccessInputStream s = new RandomAccessInputStream(stream)) {
-            s.order(true);
-            s.seek(4);
-            long ifdPointer = s.readInt();
-            TiffParser p = new TiffParser(s);
-            IFD ifd = p.getIFD(ifdPointer);
-            return new int[]{ifd.getIFDIntValue(IMAGE_WIDTH_TAG), ifd.getIFDIntValue(IMAGE_HEIGHT_TAG)};
-        }
-    }
-
     /* @see loci.formats.FormatReader#initFile(String) */
     @Override
     protected void initFile(String id) throws FormatException, IOException {
@@ -1190,18 +1206,20 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         // PY, which identifies the pyramidal level (RESOLUTION_LEVEL_DIMENSION)
         // PA, which identifies the file part (FILE_PART_DIMENSION)
 
-        // To build a series, one should:
-        // - Split according to view, phase, illumination, rotation, scene, and mosaic ?
-        // - Merge according to Z, T
-        // - Merge according to C, except if pixels types are different (unimplemented, case not found in tested images. But is it possible?)
+        // To collect the subblocks involved in one series / core index, one should:
+        // - Split subblocks according to view, phase, illumination, rotation, scene indices
+        // - Merge according to Z, T indices
+        // - Merge according to C indices, except if pixels types are different (unimplemented, case not found in tested images. But is it possible?)
+        // - Merge according to M indices if autostitch is true
+        // - Split according to M indices if autostitch is false
 
         // Adding the extra dimension in each subblock : part, and resolution level
-        // For the series order, each dimension has a priority, set by the method dimensionPriority
 
         // What do I want to do ?
-        // I want to find the number of series. For that, I make a unique signature
+        // I want to find the number of series. For that, I make a unique String signature
         // of each subblock with its dimension signature, then count the number of
         // signature in the signature set.
+        // For the series order, each dimension has a priority, set by the method dimensionPriority
 
         // The signature alphabetical order will be used for the ordering of the series
         // Here's some example signatures:
@@ -1271,7 +1289,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
         // Ready to build the signature
         Map<CoreSignature, List<ModuloDimensionEntries>> coreSignatureToBlocks = new HashMap<>();
-        maxDigitPerDimension.put(RESOLUTION_LEVEL_DIMENSION,5); // Let's hope that the downsampling ratio never exceeds 9999 TODO : improve
+        maxDigitPerDimension.put(RESOLUTION_LEVEL_DIMENSION,5); // It is assumed that the downsampling ratio never exceeds 99999
         maxDigitPerDimension.put(FILE_PART_DIMENSION, String.valueOf(cziPartToSegments.size()).length());
 
         // Write all signatures
@@ -1286,7 +1304,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                         }
                         int downscalingFactor = (int) Math.round(doubleDownscalingFactor);
 
-                        hasPyramid = hasPyramid || (downscalingFactor!=1);
+                        hasPyramid = hasPyramid || (downscalingFactor>1);
 
                         if ((downscalingFactor==1)||(allowAutostitching())) {
                             // Split by resolution level if flattenedResolutions is true
@@ -1785,7 +1803,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
      * The M dimension 'mosaic' will split subblocks between cores only if autostitch is false.
      *
      * Actually, transforming the reader to allow it to merge all scenes together is as simple as
-     * returning true for the dimension "S" (and "M")
+     * returning true for the dimension "S"
      */
     private static boolean ignoreDimForSeries(String dimension, boolean autostitch) {
         switch (dimension) {
@@ -1795,7 +1813,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             case "T":
             case "C":
             case FILE_PART_DIMENSION:
-                //case "S":
                 return true;
             case "M":
                 return autostitch;
@@ -2142,18 +2159,18 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         }
     }
 
-
-
     /**
      * A stripped down version of
      * {@link LibCZI.SubBlockDirectorySegment.SubBlockDirectorySegmentData.SubBlockDirectoryEntry}
      * Because we have really many of these objects, and it's critical to keep these objects as small as possible
      */
     static class MinDimEntry {
-
+        final long filePosition;
+        final int dimensionStartX, dimensionStartY;
+        final int storedSizeX, storedSizeY;
         final int dimensionStartZ;
         final int dimensionStartT;
-
+        final int filePart;
         public MinDimEntry(ModuloDimensionEntries entry) {
             filePosition = entry.getFilePosition();
             dimensionStartX = entry.getDimension("X").start;
@@ -2172,12 +2189,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             storedSizeY = entry.getDimension("Y").storedSize;
             filePart = entry.filePart;
         }
-
-        final long filePosition;
-        final int dimensionStartX, dimensionStartY;
-        final int storedSizeX, storedSizeY;
-
-        final int filePart;
 
     }
 
@@ -4859,15 +4870,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             return isLatticeLightSheet;
         }
 
-    }
-
-    static private String normalizeColor(String color) {
-        String c = color.replaceAll("#", "");
-        if (c.length() > 6) {
-            c = c.substring(2, Math.min(8, c.length()));
-            LOGGER.debug("Replaced color {} with {}", color, c);
-        }
-        return c;
     }
 
 }
