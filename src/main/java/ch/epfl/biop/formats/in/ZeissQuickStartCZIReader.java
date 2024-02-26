@@ -936,6 +936,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         if ((in != null)&&(streamCurrentPart == filePart)) {
             return in;
         }
+        if (in!=null) in.close();
         streamCurrentPart = filePart;
         RandomAccessInputStream ris = new RandomAccessInputStream(filePartToFileName.get(filePart), BUFFER_SIZE);
         in = ris;
@@ -1559,6 +1560,8 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 CoreMetadata c = labelReader.getCoreMetadataList().get(0);
 
                 if (c.sizeZ > 1 || c.sizeT > 1) {
+                    stream.close();
+                    labelReader.close();
                     return;
                 }
                 core.add(new CoreMetadata(c));
@@ -1587,22 +1590,24 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             byte[] bytes = LibCZI.getPreviewBytes(cziPartToSegments.get(filePart).attachmentDirectory, id, BUFFER_SIZE, isLittleEndian());
             if (bytes!=null) {
                 int nSeries = getSeriesCount();
-                ZeissQuickStartCZIReader labelReader = new ZeissQuickStartCZIReader();
+                ZeissQuickStartCZIReader slidePreviewReader = new ZeissQuickStartCZIReader();
                 String placeHolderName = "slide_preview.czi";
-                labelReader.setMetadataOptions(getMetadataOptions());
+                slidePreviewReader.setMetadataOptions(getMetadataOptions());
                 ByteArrayHandle stream = new ByteArrayHandle(bytes);
                 Location.mapFile(placeHolderName, stream);
-                labelReader.setMetadataStore(new DummyMetadata());
-                labelReader.setId(placeHolderName);
+                slidePreviewReader.setMetadataStore(new DummyMetadata());
+                slidePreviewReader.setId(placeHolderName);
 
-                CoreMetadata c = labelReader.getCoreMetadataList().get(0);
+                CoreMetadata c = slidePreviewReader.getCoreMetadataList().get(0);
 
                 if (c.sizeZ > 1 || c.sizeT > 1) {
+                    stream.close();
+                    slidePreviewReader.close();
                     return;
                 }
                 core.add(new CoreMetadata(c));
                 core.get(core.size() - 1).thumbnail = true;
-                extraImages.add(labelReader.openBytes(0));
+                extraImages.add(slidePreviewReader.openBytes(0));
                 stream.close();
                 coreIndexToSeries.put(core.size() - 1, nSeries);
                 Location.mapFile(placeHolderName, null);
@@ -1615,7 +1620,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 allPositionsInformation.slidePreviewLocation.pX = omeXML.getPlanePositionX(0,0);
                 allPositionsInformation.slidePreviewLocation.pY = omeXML.getPlanePositionY(0,0);
                 allPositionsInformation.slidePreviewLocation.pZ = omeXML.getPlanePositionZ(0,0);*/
-                labelReader.close();
+                slidePreviewReader.close();
             }
         }
 
@@ -1637,7 +1642,8 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 CoreMetadata c = thumbReader.getCoreMetadataList().get(0);
 
                 if (c.sizeZ > 1 || c.sizeT > 1) {
-
+                    stream.close();
+                    thumbReader.close();
                 } else {
                     if ((c.sizeX>1) && (c.sizeY>1)) { // Sometimes there's nothing in the thumbnail
                         core.add(new CoreMetadata(c));
