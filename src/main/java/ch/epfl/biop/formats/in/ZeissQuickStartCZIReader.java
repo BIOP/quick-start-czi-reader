@@ -122,8 +122,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Function;
@@ -235,6 +237,8 @@ public class ZeissQuickStartCZIReader extends FormatReader {
     // -- Constants --
     public static final String ALLOW_AUTOSTITCHING_KEY = "zeissczi.autostitch";
     public static final boolean ALLOW_AUTOSTITCHING_DEFAULT = true;
+    public static final String STITCHSCENES_KEY = "zeissczi.stitchscenes";
+    public static final boolean STITCHSCENES_DEFAULT = false;
     public static final String INCLUDE_ATTACHMENTS_KEY = "zeissczi.attachments";
     public static final boolean INCLUDE_ATTACHMENTS_DEFAULT = true;
     public static final String TRIM_DIMENSIONS_KEY = "zeissczi.trim_dimensions";
@@ -428,6 +432,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
     protected ArrayList<String> getAvailableOptions() {
         ArrayList<String> optionsList = super.getAvailableOptions();
         optionsList.add(ALLOW_AUTOSTITCHING_KEY);
+        optionsList.add(STITCHSCENES_KEY);
         optionsList.add(INCLUDE_ATTACHMENTS_KEY);
         optionsList.add(TRIM_DIMENSIONS_KEY);
         optionsList.add(RELATIVE_POSITIONS_KEY);
@@ -443,6 +448,16 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     ALLOW_AUTOSTITCHING_KEY, ALLOW_AUTOSTITCHING_DEFAULT);
         }
         return ALLOW_AUTOSTITCHING_DEFAULT;
+    }
+
+    public boolean stitchScenes() {
+        if (!allowAutostitching()) return false; // we can't stitch scenes if autostitch is disabled
+        MetadataOptions options = getMetadataOptions();
+        if (options instanceof DynamicMetadataOptions) {
+            return ((DynamicMetadataOptions) options).getBoolean(
+                    STITCHSCENES_KEY, STITCHSCENES_DEFAULT);
+        }
+        return STITCHSCENES_DEFAULT;
     }
 
     public boolean canReadAttachments() {
@@ -784,10 +799,17 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                         data[right + 1] = left2;
                     }
                 }
-
                 break;
             case 504: // camera-specific packed pixels
                 data = decode12BitCamera(data, options.maxBytes);
+                break;
+            case 121: // See https://zenodo.org/records/10708864 40_Dual.czi
+                int nBytesExpected = storedSizeX*storedSizeY*bpp;
+                if (data.length > nBytesExpected) {
+                    byte[] r = new byte[nBytesExpected];
+                    System.arraycopy(data, 0, r, 0, nBytesExpected);
+                    data = r;
+                }
                 break;
         }
 
@@ -1235,10 +1257,22 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
         // Then we look at the max value in each dimension, to know how many digits are needed to write the signature
         // and proper alphabetical ordering
+
+        AtomicReference<Integer> maxDownscalingFactor = new AtomicReference<>(1);
+
+        // To enable the support of all scenes fused into a single image, we need to collect
+        // the resolution level attained for all scenes (a big scene may reach a downscaling
+        // factor bigger than a small scene). If this is the case we get rid of these big
+        // downscaling because we want all blocks to be present at all scales
+
+        Map<Integer, Integer> maxDownScalingPerScene = new HashMap<>();
+
         cziPartToSegments.forEach((part, cziSegments) -> { // For each part
             if (cziSegments.subBlockDirectory!=null) {
                 Arrays.asList(cziSegments.subBlockDirectory.data.entries).forEach( // and each entry
                     entry -> {
+                        int iScene = -1;
+
                         for (LibCZI.SubBlockSegment.SubBlockSegmentData.SubBlockDirectoryEntryDV.DimensionEntry dimEntry : entry.getDimensionEntries()) {
                             //int nDigits = String.valueOf(dimEntry.start).length(); // TODO: Can this be negative ?
                             int val = dimEntry.start;
@@ -1250,11 +1284,33 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                                     maxValuePerDimension.put(dimEntry.dimension, val);
                                 }
                             }
+                            if (dimEntry.dimension.equals("S")) {
+                                iScene = dimEntry.start;
+                            }
+                        }
+
+                        // Collects the max downscaling factor per scene
+                        double doubleDownscalingFactor = (double)(entry.getDimension("X").size) / (double)(entry.getDimension("X").storedSize);
+                        int downScalingFactor = (int) Math.round(doubleDownscalingFactor);
+                        if (doubleDownscalingFactor> maxDownscalingFactor.get()) maxDownscalingFactor.set(downScalingFactor);
+                        if (iScene!=-1) {
+                            if (!maxDownScalingPerScene.containsKey(iScene)) {
+                                maxDownScalingPerScene.put(iScene, downScalingFactor);
+                            } else if (maxDownScalingPerScene.get(iScene) < downScalingFactor) {
+                                maxDownScalingPerScene.put(iScene, downScalingFactor);
+                            }
                         }
                     }
                 );
             }
         });
+
+        // Collect the min of max downscaling factors for all scenes
+
+        Optional<Integer> optMinDownscaling = maxDownScalingPerScene.values().stream().min(Integer::compareTo);
+
+        int maxAllowedDownscalingFactorWhenFusingAllScenes =
+            (optMinDownscaling.isPresent())? optMinDownscaling.get():1;
 
         nIlluminations = maxValuePerDimension.containsKey("I")? maxValuePerDimension.get("I")+1:1;
 
@@ -1269,6 +1325,11 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         int nFrames = maxValuePerDimension.containsKey("T")? maxValuePerDimension.get("T")+1:1;
 
         Map<String, Integer> maxDigitPerDimension = new HashMap<>();
+
+        int maxDigitDownscalingFactor = String.valueOf(maxDownscalingFactor.get()).length();
+
+        maxDigitPerDimension.put(RESOLUTION_LEVEL_DIMENSION,maxDigitDownscalingFactor);
+
         maxValuePerDimension.keySet().forEach(dim -> {
             switch (dim) {
                 case "C":
@@ -1290,9 +1351,10 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
         // Ready to build the signature
         Map<CoreSignature, List<ModuloDimensionEntries>> coreSignatureToBlocks = new HashMap<>();
-        maxDigitPerDimension.put(RESOLUTION_LEVEL_DIMENSION,5); // It is assumed that the downsampling ratio never exceeds 99999
         maxDigitPerDimension.put(FILE_PART_DIMENSION, String.valueOf(cziPartToSegments.size()).length());
 
+        final boolean allowAutostitch = allowAutostitching();
+        final boolean stitchScenes = stitchScenes();
         // Write all signatures
         cziPartToSegments.forEach((part, cziSegments) -> { // For each part
             if (cziSegments.subBlockDirectory!=null) {
@@ -1307,24 +1369,31 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
                         hasPyramid = hasPyramid || (downscalingFactor>1);
 
-                        if ((downscalingFactor==1)||(allowAutostitching())) {
-                            // Split by resolution level if flattenedResolutions is true
-                            ModuloDimensionEntries moduloEntry = new ModuloDimensionEntries(entry,
-                                    nRotations, nIlluminations, nPhases,
-                                    nChannels, nSlices, nFrames, part);
+                        if ((downscalingFactor==1)||(allowAutostitching())) { // All downscaled versions are discarded if autostitching is disabled
 
-                            CoreSignature coreSignature = new CoreSignature(moduloEntry
-                                    , RESOLUTION_LEVEL_DIMENSION,
-                                    downscalingFactor,//getDownSampling(entry),
-                                    maxDigitPerDimension::get,
-                                    allowAutostitching(),
-                                    FILE_PART_DIMENSION, part);
-                            if (!coreSignatureToBlocks.containsKey(coreSignature)) {
-                                coreSignatureToBlocks.put(coreSignature, new ArrayList<>());
+                            if ((stitchScenes)&&(downscalingFactor<=maxAllowedDownscalingFactorWhenFusingAllScenes)) {
+                                // Do nothing : Crops resolution level to common downscaling factor if all scenes are fused
+                            } else {
+
+                                // Split by resolution level if flattenedResolutions is true
+                                ModuloDimensionEntries moduloEntry = new ModuloDimensionEntries(entry,
+                                        nRotations, nIlluminations, nPhases,
+                                        nChannels, nSlices, nFrames, part);
+
+                                CoreSignature coreSignature = new CoreSignature(moduloEntry
+                                        , RESOLUTION_LEVEL_DIMENSION,
+                                        downscalingFactor,//getDownSampling(entry),
+                                        maxDigitPerDimension::get,
+                                        allowAutostitch, stitchScenes,
+                                        FILE_PART_DIMENSION, part);
+                                if (!coreSignatureToBlocks.containsKey(coreSignature)) {
+                                    coreSignatureToBlocks.put(coreSignature, new ArrayList<>());
+                                }
+                                coreSignatureToBlocks.get(coreSignature).add(moduloEntry);
                             }
-                            coreSignatureToBlocks.get(coreSignature).add(moduloEntry);
                         }
-                    });
+                    }
+                );
             }
         });
 
@@ -1811,13 +1880,15 @@ public class ZeissQuickStartCZIReader extends FormatReader {
      * Actually, transforming the reader to allow it to merge all scenes together is as simple as
      * returning true for the dimension "S"
      */
-    private static boolean ignoreDimForSeries(String dimension, boolean autostitch) {
+    private static boolean ignoreDimForSeries(String dimension, boolean autostitch, boolean stitchScenes) {
         switch (dimension) {
             case "X"://
             case "Y":
             case "Z":
             case "T":
             case "C":
+            case "S":
+                return stitchScenes;
             case FILE_PART_DIMENSION:
                 return true;
             case "M":
@@ -1895,7 +1966,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         }
         public CoreSignature(ModuloDimensionEntries entries,
                              String pyramidLevelDimension, int pyramidLevelValue,
-                             Function<String, Integer> maxDigitPerDimension, boolean autostitch,
+                             Function<String, Integer> maxDigitPerDimension, boolean autostitch, boolean stitchScenes,
                              String filePartDimension, int filePartValue) {
             this.filePart = filePartValue;
             final StringBuilder signatureBuilder = new StringBuilder();
@@ -1905,7 +1976,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             entries.getList().stream()
                     .sorted(Comparator.comparing(e -> dimensionPriority(e.getDimension())))
                     .forEachOrdered(e -> {
-                        if (!ignoreDimForSeries(e.getDimension(), autostitch)) {
+                        if (!ignoreDimForSeries(e.getDimension(), autostitch, stitchScenes)) {
                             String digitFormat_inner = "%0"+maxDigitPerDimension.apply(e.getDimension())+"d";
                             signatureBuilder.append(e.getDimension())
                                     .append(String.format(digitFormat_inner, e.getStart()));
