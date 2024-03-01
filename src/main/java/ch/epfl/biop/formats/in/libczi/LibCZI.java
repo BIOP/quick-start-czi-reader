@@ -91,7 +91,6 @@ public class LibCZI {
      * @throws IOException invalid file, invalid file location, segment not found
      */
     public static SubBlockDirectorySegment getSubBlockDirectorySegment(long blockPosition, String id, int BUFFER_SIZE, boolean isLittleEndian) throws IOException {
-        // TODO (maybe) : increase buffer size to limit the number of IO calls, especially when the file is mounted on a network drive
         try (RandomAccessInputStream in = new RandomAccessInputStream(id, BUFFER_SIZE)) {
             SubBlockDirectorySegment directorySegment = new SubBlockDirectorySegment();
 
@@ -113,7 +112,6 @@ public class LibCZI {
                         directorySegment.data.entries[i].entryDV = getEntryDV(in);//return new ZeissCZIFastReader.DirectoryEntryDV(s, prestitchedSetter, coreIndex);
                     } else if (schemaType.equals("DE")) {
                         throw new IOException("Unsupported schema type DE for directory entry.");
-                        //return new DirectoryEntryDV(s);
                     } else {
                         throw new IOException("Unrecognized directory entry schema type = "+schemaType);
                     }
@@ -179,7 +177,7 @@ public class LibCZI {
             String segmentID = in.readString(16).trim();
             boolean metadataSegmentFound = false;
 
-            // ------------ Handling of potentially deleted metadata segement
+            // ------------ Handling of potentially deleted metadata segment
             if (!segmentID.equals(ZISRAWMETADATA)) {
                 if (segmentID.equals(DELETED)) {
                     // The metadata segment has been deleted, let's walk at the end of the file and attempt to find the missing metadata segment
@@ -351,8 +349,6 @@ public class LibCZI {
             String segmentId = in.readString(16).trim(); // in.skipBytes(16);
             int dataSize = in.readInt(); // in.skipBytes(4)
             in.skip(12); // spare
-            //int xmlSize = in.readInt();
-            //int attachSize = in.readInt();
             in.skipBytes(256); // spare
 
             int size = in.readInt(); // size
@@ -414,8 +410,7 @@ public class LibCZI {
         subBlock.data.metadataSize = in.readInt();
         subBlock.data.attachmentSize = in.readInt();
         subBlock.data.dataSize = in.readLong();
-        // Here is the directory entry (DE, or DV, but we already read it, so
-        // here we just skip it
+        // Here is the directory entry (DE, or DV), but we already read it, so here we just skip it
         skipEntryDV(in);
         in.skipBytes((int) Math.max(256 - (in.getFilePointer() - fp), 0));
         subBlock.data.metadataOffset = in.getFilePointer();
@@ -515,11 +510,13 @@ public class LibCZI {
         public double timestamp = Double.NaN;
         public Length stageX, stageY, stageZ;
     }
+
     public static class SegmentHeader {
         public String id;
         public long allocatedSize;
         public long usedSize;
     }
+
     public static class GUID {
         final byte[] bytes = new byte[16]; // 128 bits identifier = 16 bytes, or 2 longs
     }
@@ -675,7 +672,6 @@ public class LibCZI {
                                 ", startCoordinate=" + startCoordinate + ", storedSize=" + storedSize;
                     }
 
-
                 }
 
                 @Override
@@ -722,7 +718,7 @@ public class LibCZI {
                 public int compression;
                 public String contentFileType;
 
-                public String name;  //dimensionCount;
+                public String name;
 
             }
         }

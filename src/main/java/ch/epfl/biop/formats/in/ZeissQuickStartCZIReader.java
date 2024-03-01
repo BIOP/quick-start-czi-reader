@@ -470,9 +470,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
     // -- IFormatReader API methods --
 
-    /**
-     * @see loci.formats.IFormatReader#isThisType(RandomAccessInputStream)
-     */
+    /** @see loci.formats.IFormatReader#isThisType(RandomAccessInputStream) */
     @Override
     public boolean isThisType(RandomAccessInputStream stream) throws IOException {
         final int blockLen = 10;
@@ -481,7 +479,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         return check.equals(CZI_MAGIC_STRING);
     }
 
-    /* @see loci.formats.IFormatReader#get8BitLookupTable() */
+    /** @see loci.formats.IFormatReader#get8BitLookupTable() */
     @Override
     public byte[][] get8BitLookupTable() throws FormatException, IOException {
         if ((getPixelType() != FormatTools.INT8 &&
@@ -514,11 +512,10 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             catch (NumberFormatException e) {
                 return null;
             }
-        }
-        else return null;
+        } else return null;
     }
 
-    /* @see loci.formats.IFormatReader#get16BitLookupTable() */
+    /** @see loci.formats.IFormatReader#get16BitLookupTable() */
     @Override
     public short[][] get16BitLookupTable() throws FormatException, IOException {
         if ((getPixelType() != FormatTools.INT16 &&
@@ -576,7 +573,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             int index = 0;
             int nloops=buf.length/pixel;
             for (int i=0; i<nloops; i++) {
-                //index = i * pixel;
                 for (int b=0; b<bpp; b++) {
                     int blueIndex = index + b;
                     int redIndex = index + redOffset + b;
@@ -600,7 +596,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         //s.order(isLittleEndian()); -> unnecessary because it is already set when calling the method
 
         if ((useCache)&&(compression!=UNCOMPRESSED)) {
-            cacheLock.lock();
+            cacheLock.lock(); // acquires lock -> it will be the only thread reading cache properties below
             if (subBlockLRUCache.containsKey(block)) {
                 byte[] bytes = subBlockLRUCache.get(block).get();
                 if (bytes!=null) {
@@ -695,8 +691,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             case JPEGXR:
                 options.width = storedSizeX;
                 options.height = storedSizeY;
-                options.maxBytes = options.width * options.height *
-                        getRGBChannelCount() * bytesPerPixel;
+                options.maxBytes = options.width * options.height * getRGBChannelCount() * bytesPerPixel;
                 try {
                     byte[] decompressed = new JPEGXRCodec().decompress(data, options);
                     data = fixUnexpectedJPEGXRDimensions(data, decompressed,
@@ -933,9 +928,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         ris.order(isLittleEndian());
         return ris;
     }
-
-    // TODO: make this depend on compression -> it's preferable to avoid decompressing multiple times the same block
-    // but with overlapping, anyway, and without caching, multiple decompression of the same block is hard to avoid
     @Override
     public int getOptimalTileWidth() {
         if (maxBlockSizeX>0) {
@@ -945,7 +937,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         }
     }
 
-    /* @see loci.formats.IFormatReader#getOptimalTileHeight() */
     @Override
     public int getOptimalTileHeight() {
         if (maxBlockSizeY>0) {
