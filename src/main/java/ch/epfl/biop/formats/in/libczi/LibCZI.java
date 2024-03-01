@@ -256,45 +256,6 @@ public class LibCZI {
      * @param id a czi file path
      * @param BUFFER_SIZE the size of the caching buffer in bytes
      * @param isLittleEndian endianness of the data
-     * @return the bytes of the jpg thumbnail, or null if no thumbnail is found
-     * @throws IOException invalid file, invalid file location
-     */
-    public static byte[] getJPGThumbNailBytes(AttachmentDirectorySegment attachmentDirectorySegment, String id, int BUFFER_SIZE, boolean isLittleEndian) throws IOException {
-        if (attachmentDirectorySegment==null) return null;
-        AttachmentDirectorySegment.AttachmentDirectorySegmentData.AttachmentEntry thumbnailEntry = null;
-        for (AttachmentDirectorySegment.AttachmentDirectorySegmentData.AttachmentEntry entry: attachmentDirectorySegment.data.entries) {
-            if (entry.contentFileType.equals("JPG") && (entry.name.equals("Thumbnail"))) {
-                thumbnailEntry = entry;
-            }
-        }
-
-        if (thumbnailEntry==null) {
-            return null;
-        }
-
-        try (RandomAccessInputStream in = new RandomAccessInputStream(id, BUFFER_SIZE)) {
-            in.order(isLittleEndian);
-            in.seek(thumbnailEntry.filePosition);
-            String segmentID = in.readString(16).trim();
-            if (segmentID.equals(ZISRAWATTACH)) {
-                long usedSize = in.readLong();
-                in.skipBytes(256); // Hum hum why ? 16 (String) + 8 + 8
-                byte[] bytes = new byte[(int) usedSize];
-                in.read(bytes);
-                return bytes;
-
-            } else {
-                logger.warn("Thumbnail not found, "+ZISRAWATTACH+" segment expected, "+segmentID+" found instead.");
-            }
-        }
-        return null;
-    }
-
-    /**
-     * @param attachmentDirectorySegment attachment directory segment of the referenced czi file
-     * @param id a czi file path
-     * @param BUFFER_SIZE the size of the caching buffer in bytes
-     * @param isLittleEndian endianness of the data
      * @return the bytes of the label image (a czi file), null if no label is found
      * @throws IOException invalid file, invalid file location
      */
@@ -308,9 +269,7 @@ public class LibCZI {
             }
         }
 
-        if (labelEntry==null) {
-            return null;
-        }
+        if (labelEntry==null) return null;
 
         try (RandomAccessInputStream in = new RandomAccessInputStream(id, BUFFER_SIZE)) {
             in.order(isLittleEndian);
@@ -322,7 +281,6 @@ public class LibCZI {
                 byte[] bytes = new byte[(int) usedSize-256];
                 in.read(bytes);
                 return bytes;
-
             } else {
                 logger.warn("Label not found, "+ZISRAWATTACH+" segment expected, "+segmentID+" found instead.");
             }
@@ -346,9 +304,7 @@ public class LibCZI {
             }
         }
 
-        if (previewEntry==null) {
-            return null;
-        }
+        if (previewEntry==null) return null;
 
         try (RandomAccessInputStream in = new RandomAccessInputStream(id, BUFFER_SIZE)) {
             in.order(isLittleEndian);
@@ -360,7 +316,6 @@ public class LibCZI {
                 byte[] bytes = new byte[(int) usedSize];
                 in.read(bytes);
                 return bytes;
-
             } else {
                 logger.warn("Preview not found, "+ZISRAWATTACH+" segment expected, "+segmentID+" found instead.");
             }
@@ -482,7 +437,6 @@ public class LibCZI {
         SubBlockMeta subBlockMeta = new SubBlockMeta();
         if (subBlock.dataOffset + subBlock.data.dataSize + subBlock.data.attachmentSize < in.length()) {
             in.seek(subBlock.data.metadataOffset);
-            //System.out.println("Offs= "+subBlock.data.metadataOffset);
 
             String metadata = in.readString(subBlock.data.metadataSize).trim();
             if (metadata.length() <= 16) {
@@ -562,14 +516,6 @@ public class LibCZI {
         public Length stageX, stageY, stageZ;
     }
     public static class SegmentHeader {
-        /*
-         * struct PACKED SegmentHeader
-         * {
-         *     unsigned char Id[16];
-         *     std::int64_t AllocatedSize;
-         *     std::int64_t UsedSize;
-         * };
-         */
         public String id;
         public long allocatedSize;
         public long usedSize;
@@ -580,35 +526,20 @@ public class LibCZI {
 
     public static long getPositionLastBlock(SubBlockDirectorySegment segment) {
         long lastBlockPosition = -1;
+
         for (SubBlockDirectorySegment.SubBlockDirectorySegmentData.SubBlockDirectoryEntry entry: segment.data.entries) {
             lastBlockPosition = Math.max(lastBlockPosition, entry.getFilePosition());
         }
+
         return lastBlockPosition;
     }
 
     public static class SubBlockDirectorySegment {
-        /*
-        // SubBlockDirectorySegment: size = 128(fixed) + EntryCount * [128 bytes fixed (or variable if DV)]
-        struct PACKED SubBlockDirectorySegment
-        {
-            struct SegmentHeader header;
-            struct SubBlockDirectorySegmentData data;
-        };
-        */
         public final SegmentHeader header = new SegmentHeader();
+
         public final SubBlockDirectorySegmentData data = new SubBlockDirectorySegmentData();
         public static class SubBlockDirectorySegmentData {
-            /*
-            struct PACKED SubBlockDirectorySegmentData
-            {
-                std::int32_t EntryCount;
-                unsigned char _spare[SIZE_SUBBLOCKDIRECTORY_DATA - 4];
-                // followed by any sequence of SubBlockDirectoryEntryDE or SubBlockDirectoryEntryDV records;
-            };
-             */
             public int entryCount;
-            public String _spare; // _spare[SIZE_SUBBLOCKDIRECTORY_DATA - 4];
-            // followed by any sequence of SubBlockDirectoryEntryDE or SubBlockDirectoryEntryDV records;
             public SubBlockDirectoryEntry[] entries;
 
             public static class SubBlockDirectoryEntry {
@@ -625,19 +556,6 @@ public class LibCZI {
                 }
 
                 public SubBlockSegment.SubBlockSegmentData.SubBlockDirectoryEntryDV entryDV;
-                public SubBlockSegment.SubBlockSegmentData.SubBlockDirectoryEntryDE entryDE;
-
-                public String[] getDimensions() {
-                    if (entryDV!=null) {
-                        String[] dims = new String[this.entryDV.dimensionCount];
-                        for (int i = 0; i<dims.length; i++) {
-                            dims[i] = this.entryDV.dimensionEntries[i].dimension;
-                        }
-                        return dims;
-                    } else {
-                        throw new UnsupportedOperationException("entryDE not supported");
-                    }
-                }
 
                 public SubBlockSegment.SubBlockSegmentData.SubBlockDirectoryEntryDV.DimensionEntry getDimension(String dimension) {
                     if (entryDV!=null) {
@@ -646,7 +564,6 @@ public class LibCZI {
                             if (entryDV.dimensionEntries[i].dimension.equals(dimension)) break;
                         }
                         if (i==entryDV.dimensionEntries.length) {
-                            //throw new UnsupportedOperationException("Could not find dimension "+dimension);
                             SubBlockSegment.SubBlockSegmentData.SubBlockDirectoryEntryDV.DimensionEntry dummyEntry = new SubBlockSegment.SubBlockSegmentData.SubBlockDirectoryEntryDV.DimensionEntry();
                             dummyEntry.dimension = dimension;
                             dummyEntry.start = 0;
@@ -655,9 +572,6 @@ public class LibCZI {
                             dummyEntry.startCoordinate = 0;
                             return dummyEntry;
                         }
-                        /*if (!entryDV.dimensionEntries[i].dimension.equals(dimension)) {
-                            throw new UnsupportedOperationException("Could not find dimension "+dimension);
-                        }*/
                         return entryDV.dimensionEntries[i];
                     } else {
                         throw new UnsupportedOperationException("entryDE not supported");
@@ -700,34 +614,12 @@ public class LibCZI {
 
     }
     public static class FileHeaderSegment {
-        /*
-        // FileHeaderSegment: size = 512(fixed)
-        struct PACKED FileHeaderSegment
-        {
-            struct SegmentHeader header;
-            struct FileHeaderSegmentData data;
-        };
-         */
         public final SegmentHeader header = new SegmentHeader();
+
         public final FileHeaderSegmentData data = new FileHeaderSegmentData();
 
         // FileHeader
         public static class FileHeaderSegmentData {
-            /*struct PACKED FileHeaderSegmentData
-            {
-                std::int32_t Major;
-                std::int32_t Minor;
-                std::int32_t _Reserved1;
-                std::int32_t _Reserved2;
-                GUID PrimaryFileGuid;
-                GUID FileGuid;
-                std::int32_t FilePart;
-                std::int64_t SubBlockDirectoryPosition;
-                std::int64_t MetadataPosition;
-                std::int32_t updatePending;
-                std::int64_t AttachmentDirectoryPosition;
-                unsigned char _spare[SIZE_FILEHEADER_DATA - 80];  // offset 80
-            };*/
             public int major;
             public int minor;
             public int _reserved1;
@@ -739,7 +631,6 @@ public class LibCZI {
             public long metadataPosition;
             public int updatePending;
             public long attachmentDirectoryPosition;
-            //unsigned char _spare[SIZE_FILEHEADER_DATA - 80];  // offset 80
         }
     }
     public static class MetaDataSegment {
@@ -751,157 +642,33 @@ public class LibCZI {
         }
     }
     public static class SubBlockSegment {
-        /*
-        struct PACKED SubBlockSegment
-        {
-            struct SegmentHeader header;
-            struct SubBlockSegmentData data;
-        };
-         */
-        public SegmentHeader header = new SegmentHeader();
-        public SubBlockSegmentData data = new SubBlockSegmentData();
 
+        public SubBlockSegmentData data = new SubBlockSegmentData();
         public long dataOffset; // Pure Java field, maybe not a good idea
 
         public static class SubBlockSegmentData {
-            /*
-            struct PACKED SubBlockSegmentData
-            {
-                std::int32_t MetadataSize;
-                std::int32_t AttachmentSize;
-                std::int64_t DataSize;
-                union PACKED
-                {
-                    unsigned char _spare[SIZE_SUBBLOCKDATA_MINIMUM - SIZE_SUBBLOCKDATA_FIXEDPART];  // offset 16
-                    unsigned char entrySchema[2];
-                    SubBlockDirectoryEntryDV entryDV;
-                    SubBlockDirectoryEntryDE entryDE;
-                };
-            };
-             */
             public int metadataSize;
             public int attachmentSize;
             public long dataSize;
-            //union PACKED
-            //{
-            public String _spare; //[SIZE_SUBBLOCKDATA_MINIMUM - SIZE_SUBBLOCKDATA_FIXEDPART];  // offset 16
-            public String entrySchema; //unsigned char entrySchema[2];
-            //public SubBlockDirectoryEntryDV entryDV; // entryDV or entryDE will be null
-            //public SubBlockDirectoryEntryDE entryDE;
-
             public long metadataOffset; // Pure Java field, out of convenience
 
-
-            public static class SubBlockDirectoryEntryDE {
-                /*
-                // SubBlockDirectory - Entry: DE fixed size 256 bytes
-                struct PACKED SubBlockDirectoryEntryDE
-                {
-                    unsigned char SchemaType[2];
-                    std::int32_t PixelType;
-                    std::int32_t SizeXStored;
-                    std::int32_t SizeYStored;
-                    unsigned char _pad[2];
-                    std::int32_t StartX;        // offset 16
-                    std::int32_t SizeX;
-                    std::int32_t StartY;
-                    std::int32_t SizeY;
-                    std::int32_t StartC;
-                    std::int32_t SizeC;
-                    std::int32_t StartZ;
-                    std::int32_t SizeZ;
-                    std::int32_t StartT;
-                    std::int32_t SizeT;
-                    std::int32_t StartS;
-                    std::int32_t StartR;
-                    std::int32_t StartI;
-                    std::int32_t StartB;
-                    std::int32_t Compression;
-                    std::int32_t StartM;
-                    std::int64_t FilePosition;
-                    std::int32_t FilePart;
-                    unsigned char DimensionOrder[16];
-                    std::int32_t StartH;
-                    std::int32_t Start10;
-                    std::int32_t Start11;
-                    std::int32_t Start12;
-                    std::int32_t Start13;
-                };
-                 */
-                String schemaType; // DE or DV
-                int pixelType;
-                int sizeXStored;
-                int sizeYStored;
-                String pad; //unsigned char _pad[2];
-                int startX;        // offset 16
-                int sizeX;
-                int startY;
-                int sizeY;
-                int startC;
-                int sizeC;
-                int startZ;
-                int sizeZ;
-                int startT;
-                int sizeT;
-                int startS;
-                int startR;
-                int startI;
-                int startB;
-                int compression;
-                int startM;
-                long filePosition;
-                int filePart;
-                String dimensionOrder; //unsigned char DimensionOrder[16];
-                int startH;
-                int start10;
-                int start11;
-                int start12;
-                int start13;
-            }
-
             public static class SubBlockDirectoryEntryDV {
-                /*
-                struct PACKED SubBlockDirectoryEntryDV
-                {
-                    unsigned char SchemaType[2];
-                    std::int32_t PixelType;
-                    std::int64_t FilePosition;
-                    std::int32_t FilePart;
-                    std::int32_t Compression;
-                    unsigned char _spare[6];
-                    std::int32_t DimensionCount;
-                };
-                 */
-                //public String schemaType; // DE or DV -> probably useless because it we know the class, we know the schema type
                 public int pixelType;
                 public long filePosition;
                 public int filePart;
                 public int compression;
-                //public String _spare;
                 public int dimensionCount;
-
-                // max. allocation for ease of use (valid size = 32 + EntryCount * 20)
-                //struct DimensionEntryDV DimensionEntries[MAXDIMENSIONS]; // offset 32
                 public DimensionEntry[] dimensionEntries; // offset 32
 
                 public static class DimensionEntry {
-                    /*
-                    typedef struct PACKED DimensionEntry
-                    {
-                        char Dimension[4];
-                        std::int32_t Start;
-                        std::int32_t Size;
-                        float StartCoordinate;
-                        std::int32_t StoredSize;
-                    } DIMENSIONENTRY;
-                     */
 
                     public String dimension;
+
                     public int start;
+
                     public int size; // real physical size
                     public float startCoordinate; // TODO : remove ?
                     public int storedSize; // number of pixels in this block
-
                     @Override
                     public String toString() {
                         return "dimension=" + dimension + ", start=" + start + ", size=" + size +
@@ -936,42 +703,16 @@ public class LibCZI {
 
     }
     public static class AttachmentDirectorySegment {
-        /*
-        // AttachmentDirectorySegment: size = 256(fixed) + EntryCount * 128(fixed)
-        struct PACKED AttachmentDirectorySegment
-        {
-            struct SegmentHeader header;
-            struct AttachmentDirectorySegmentData data;
-        };
-        */
         public final SegmentHeader header = new SegmentHeader();
+
         public final AttachmentDirectorySegmentData data = new AttachmentDirectorySegmentData();
         public static class AttachmentDirectorySegmentData {
-            /*
-            struct PACKED AttachmentDirectorySegmentData
-            {
-                std::int32_t EntryCount;
-                unsigned char _spare[SIZE_ATTACHMENTDIRECTORY_DATA - 4];
-                // followed by => AttachmentEntry entries[EntryCount];
-            };*/
             public int entryCount;
             public String _spare; // _spare[SIZE_ATTACHMENTDIRECTORY_DATA - 4];
             // followed by any sequence of SubBlockDirectoryEntryDE or SubBlockDirectoryEntryDV records;
             public AttachmentEntry[] entries;
 
             public static class AttachmentEntry {
-                /*
-                struct PACKED AttachmentEntryA1
-                {
-                    unsigned char SchemaType[2];
-                    unsigned char _spare[10];
-                    std::int64_t FilePosition;
-                    std::int32_t FilePart;
-                    GUID ContentGuid;
-                    unsigned char ContentFileType[8];
-                    unsigned char Name[80];
-                };
-                 */
 
                 public String schemaType;
                 // Spare : 10 bytes
@@ -980,11 +721,11 @@ public class LibCZI {
                 // GUID : 16 bytes
                 public int compression;
                 public String contentFileType;
+
                 public String name;  //dimensionCount;
 
             }
         }
-
     }
 
     // --------------------------- CONSTANTS
@@ -996,27 +737,6 @@ public class LibCZI {
             ZISRAWMETADATA = "ZISRAWMETADATA",
             ZISRAWATTACH = "ZISRAWATTACH",
             DELETED = "DELETED";
-
-
-    // defined segment alignments (never modify this constants!)
-    final public static int SEGMENT_ALIGN = 32;
-
-    // Sizes of segment parts (never modify this constants!)
-    final public static int SIZE_SEGMENTHEADER = 32;
-    final public static int SIZE_SEGMENTID = 16;
-    final public static int SIZE_SUBBLOCKDIRECTORYENTRY_DE = 128;
-    final public static int SIZE_ATTACHMENTENTRY = 128;
-    final public static int SIZE_SUBBLOCKDIRECTORYENTRY_DV_FIXEDPART = 32;
-
-    // Data section within segments (never modify this constants!)
-    final public static int SIZE_FILEHEADER_DATA = 512;
-    final public static int SIZE_METADATA_DATA = 256;
-    final public static int SIZE_SUBBLOCKDATA_MINIMUM = 256;
-    final public static int SIZE_SUBBLOCKDATA_FIXEDPART = 16;
-    final public static int SIZE_SUBBLOCKDIRECTORY_DATA = 128;
-    final public static int SIZE_ATTACHMENTDIRECTORY_DATA = 256;
-    final public static int SIZE_ATTACHMENT_DATA = 256;
-    final public static int SIZE_DIMENSIONENTRYDV = 20;
 
     /** Pixel type constants. See CziUtils.cpp */
     public static final int GRAY8 = 0;
@@ -1042,138 +762,3 @@ public class LibCZI {
     public static final int HEADER_SIZE = 32; // SubBlock header size
 
 }
-/*
-
-/////////////////////////////////////////////////////////////////////////////////
-// Enumerations
-/////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////
-// STRUCTURES
-////////////////////////////////////////////////////////////////////
-
-typedef struct PACKED AttachmentInfo
-{
-    std::int64_t AllocatedSize;
-    std::int64_t DataSize;
-    std::int32_t FilePart;
-    GUID ContentGuid;
-    char ContentFileType[8];
-    char Name[80];
-    //HANDLE FileHandle;
-    unsigned char spare[128];
-} ATTACHMENTINFO;
-
-typedef struct PACKED MetadataInfo
-{
-    std::int64_t AllocatedSize;
-    std::int32_t XmlSize;
-    std::int32_t BinarySize;
-} METADATAINFO;
-
-typedef struct PACKED AttachmentDirectoryInfo
-{
-    std::int32_t EntryCount;
-    //HANDLE* attachmentHandles;
-} ATTACHMENTDIRECTORYINFO;
-
-////////////////////////////////////////////////////////////////////
-// COMMON
-////////////////////////////////////////////////////////////////////
-
-// internal implementation limits (internal use of pre-allocated structures)
-// re-dimension if more items needed
-const int MAXDIMENSIONS = 40;
-//#define MAXFILE 50000
-//
-//#define ATTACHMENT_SPARE 2048
-
-////////////////////////////////////////////////////////////////////
-// SCHEMAS
-////////////////////////////////////////////////////////////////////
-
-// SubBlockDirectory - Entry: DV variable length - mimimum of 256 bytes
-
-///////////////////////////////////////////////////////////////////////////////////
-// Attachment
-
-struct PACKED AttachmentEntryA1
-{
-    unsigned char SchemaType[2];
-    unsigned char _spare[10];
-    std::int64_t FilePosition;
-    std::int32_t FilePart;
-    GUID ContentGuid;
-    unsigned char ContentFileType[8];
-    unsigned char Name[80];
-};
-
-struct PACKED AttachmentSegmentData
-{
-    std::int64_t DataSize;
-    unsigned char _spare[8];
-    union
-    {
-        std::uint8_t reserved[SIZE_ATTACHMENTENTRY];
-        struct AttachmentEntryA1 entry;     // offset 16
-    };
-    unsigned char _spare2[SIZE_ATTACHMENT_DATA - SIZE_ATTACHMENTENTRY - 16];
-};
-
-struct PACKED AttachmentDirectorySegmentData
-{
-    std::int32_t EntryCount;
-    unsigned char _spare[SIZE_ATTACHMENTDIRECTORY_DATA - 4];
-    // followed by => AttachmentEntry entries[EntryCount];
-};
-
-
-///////////////////////////////////////////////////////////////////////////////////
-// SubBlock
-
-
-
-///////////////////////////////////////////////////////////////////////////////////
-// Metadata
-
-struct PACKED MetadataSegmentData
-{
-    std::int32_t XmlSize;
-    std::int32_t AttachmentSize;
-    unsigned char _spare[SIZE_METADATA_DATA - 8];
-};
-
-
-////////////////////////////////////////////////////////////////////
-// SEGMENTS
-////////////////////////////////////////////////////////////////////
-
-
-
-
-
-// MetdataSegment: size = 128(fixed) + dataLength
-struct PACKED MetadataSegment
-{
-    struct SegmentHeader header;
-    struct MetadataSegmentData data;
-};
-
-// AttachmentDirectorySegment: size = 256(fixed) + EntryCount * 128(fixed)
-struct PACKED AttachmentDirectorySegment
-{
-    struct SegmentHeader header;
-    struct AttachmentDirectorySegmentData data;
-};
-
-// AttachmentSegment: size = 256(fixed)
-struct PACKED AttachmentSegment
-{
-    struct SegmentHeader header;
-    struct AttachmentSegmentData data;
-};
-
-
- */
