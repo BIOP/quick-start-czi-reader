@@ -1,5 +1,7 @@
 [![Build Status](https://github.com/BIOP/quick-start-czi-reader/actions/workflows/build.yml/badge.svg)](https://github.com/BIOP/quick-start-czi-reader/actions/workflows/build.yml)
 
+This reader can be used starting from Bio-Formats version 7.1.0 and above.
+
 # Quick start Bio-Formats CZI reader
 
 A revamped version of the original ZeissCZIReader which parses faster the metadata. This is critical to open multi-TB files in Fiji in a reasonable amount of time.
