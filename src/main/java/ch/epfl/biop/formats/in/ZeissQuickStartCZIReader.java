@@ -449,8 +449,11 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         return ALLOW_AUTOSTITCHING_DEFAULT;
     }
 
+    public static boolean STITCH_SCENES_HACK = false;
+
     public boolean stitchScenes() {
         if (!allowAutostitching()) return false; // we can't stitch scenes if autostitch is disabled
+        if (STITCH_SCENES_HACK) return true;
         MetadataOptions options = getMetadataOptions();
         if (options instanceof DynamicMetadataOptions) {
             return ((DynamicMetadataOptions) options).getBoolean(

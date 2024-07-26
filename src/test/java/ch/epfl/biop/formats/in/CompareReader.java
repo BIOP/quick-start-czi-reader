@@ -1,6 +1,6 @@
 package ch.epfl.biop.formats.in;
 
-import ij.ImageJ;
+import ch.epfl.biop.DatasetHelper;
 import ij.ImagePlus;
 import ij.io.FileSaver;
 import ij.plugin.ContrastEnhancer;
