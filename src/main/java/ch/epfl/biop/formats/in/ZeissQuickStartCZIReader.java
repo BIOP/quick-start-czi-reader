@@ -3347,7 +3347,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
             // Flags that prevents the reading of all metadata subblocks - there are way too many in LLS acquisition and
             // this slows down drastically the initialisation time
-            boolean interpolatePlanePositionOverZ = isLatticeLightSheet();
+            boolean interpolatePlanePositionOverZ = true; // isLatticeLightSheet();
 
             // SPACE : according to czi specs, all subblocks are located within a common 2D virtual plane
             // However, there's no easy way to know the physical coordinates of the origin of this virtual plane.

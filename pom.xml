@@ -105,7 +105,7 @@
 		<maven.compiler.target>19</maven.compiler.target>
 		<maven.compiler.testSource>19</maven.compiler.testSource>
 		<maven.compiler.testTarget>19</maven.compiler.testTarget>-->
-		<bf.version>7.3.0</bf.version>
+		<bf.version>8.0.1</bf.version>
 	</properties>
 
 	<repositories>
@@ -216,7 +216,7 @@
 		<dependency>
 			<groupId>ch.epfl.biop</groupId>
 			<artifactId>bigdataviewer-biop-tools</artifactId>
-			<version>0.10.0</version>
+			<version>0.11.0</version>
 			<scope>test</scope>
 		</dependency>
 
