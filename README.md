@@ -1,5 +1,13 @@
 [![Build Status](https://github.com/BIOP/quick-start-czi-reader/actions/workflows/build.yml/badge.svg)](https://github.com/BIOP/quick-start-czi-reader/actions/workflows/build.yml)
 
+# STATUS
+
+This project can't move forward. The initial ambition was to replace the inefficiencies of the original Bio-Formats CZI reader. Unfortunately, the OME team maintains exclusive access to CZI files that only they can test. Coupled with the burden of integrating a major rewrite, the PR I had hoped would be merged will never be merged (https://github.com/ome/bioformats/pull/4092). So instead of being part of the solution and making a contribution to the open-source community, this extra reader adds—yet again—more complexity to the problem.
+
+That's a disgrace.
+
+# Zeiss Quick start CZI Reader
+
 This reader can be used starting from Bio-Formats version 7.1.0 and above.
 
 # Quick start Bio-Formats CZI reader
@@ -16,3 +24,4 @@ For more information see:
 To use this reader instead of the original one, you will need to activate the Fiji update site [Zeiss Quick Start Reader](https://imagej.net/plugins/zeiss-quick-start-reader) and by enabling the Zeiss(CZI) Quick Start reader in the Bio-Formats plugins configuration.
 
 Special thanks to Zeiss for [opening its file format](https://github.com/ZEISS/libczi) and allowing open source software to improve!
+
