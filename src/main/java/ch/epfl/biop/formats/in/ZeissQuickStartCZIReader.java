@@ -307,9 +307,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             coreIndexToTZCToMinimalBlocks = new ArrayList<>();
 
     @CopyByRef
-    int nIlluminations, nRotations, nPhases;
-
-    @CopyByRef
     boolean hasPyramid = false;
 
     // ------------------------ METADATA FIELDS
@@ -1273,18 +1270,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
         int maxAllowedDownscalingFactorWhenFusingAllScenes = optMinDownscaling.orElse(1);
 
-        nIlluminations = maxValuePerDimension.containsKey("I")? maxValuePerDimension.get("I")+1:1;
-
-        nRotations = maxValuePerDimension.containsKey("R")? maxValuePerDimension.get("R")+1:1;
-
-        nPhases = maxValuePerDimension.containsKey("H")? maxValuePerDimension.get("H")+1:1;
-
-        int nChannels = maxValuePerDimension.containsKey("C")? maxValuePerDimension.get("C")+1:1;
-
-        int nSlices = maxValuePerDimension.containsKey("Z")? maxValuePerDimension.get("Z")+1:1;
-
-        int nFrames = maxValuePerDimension.containsKey("T")? maxValuePerDimension.get("T")+1:1;
-
         Map<String, Integer> maxDigitPerDimension = new HashMap<>();
 
         int maxDigitDownscalingFactor = String.valueOf(maxDownscalingFactor.get()).length();
@@ -1358,19 +1343,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             // rotations -> modulo Z
             // illuminations -> modulo C
             // phases -> modulo T
-
-            core_i.moduloZ.step = nSlices;
-            core_i.moduloZ.end = nSlices * (nRotations - 1);
-            core_i.moduloZ.type = FormatTools.ROTATION;
-
-            core_i.moduloC.step = nChannels;
-            core_i.moduloC.end = nChannels * (nIlluminations - 1);
-            core_i.moduloC.type = FormatTools.ILLUMINATION;
-            core_i.moduloC.parentType = FormatTools.CHANNEL;
-
-            core_i.moduloT.step = nFrames;
-            core_i.moduloT.end = nFrames * (nPhases - 1);
-            core_i.moduloT.type = FormatTools.PHASE;
 
             //--------------- END OF MODULO
 
@@ -2289,8 +2261,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             //setExtraImagesSpatialInformation();
 
             setPlateInformation();
-
-            setModuloLabels(reader.core.get(0));
         }
 
         final ZeissQuickStartCZIReader reader;
@@ -3530,13 +3500,13 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                             iCoreIndex, mapCoreCZTToBlocks, parser);
                     LibCZI.SubBlockMeta sbmzfti = getSubBlockMeta(
                             iChannel,
-                            reader.getSizeZ()/reader.nRotations-1,
+                            reader.getSizeZ()-1,
                             0,
                             iCoreIndex, mapCoreCZTToBlocks, parser);
                     LibCZI.SubBlockMeta sbmzitf = getSubBlockMeta(
                             iChannel,
                             0,
-                            reader.getSizeT()/reader.nPhases-1,
+                            reader.getSizeT()-1,
                             iCoreIndex, mapCoreCZTToBlocks, parser);
 
                     if ((sbmziti==null)||(sbmzfti==null)||(sbmzitf==null)) break loopChannel;
@@ -3552,11 +3522,11 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
                     double incrementTimeOverZ = 0;
                     if (reader.getSizeZ()>1) {
-                        incrementTimeOverZ = (sbmzfti.timestamp - sbmziti.timestamp) / (double) ((reader.getSizeZ()-1) / reader.nRotations);
+                        incrementTimeOverZ = (sbmzfti.timestamp - sbmziti.timestamp) / (double) ((reader.getSizeZ()-1));
                     }
                     double incrementTimeOverT = 0;
                     if (reader.getSizeT()>1) {
-                        incrementTimeOverT = (sbmzitf.timestamp - sbmziti.timestamp) / (double) ((reader.getSizeT()-1) / reader.nPhases);
+                        incrementTimeOverT = (sbmzitf.timestamp - sbmziti.timestamp) / (double) ((reader.getSizeT()-1));
                     }
                     Time exposure = null;
                     if (!Double.isNaN(sbmziti.exposureTime)) {
@@ -3604,7 +3574,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     int planeCounter = 0;
                     if ((reader.flattenedResolutions)||(resolutionLevel0)) { // Avoid setting the metadata not for lower resolution levels, because this override proper metadata if flattenresolution = false
                         for (int iTori = 0; iTori < reader.getSizeT(); iTori++) {
-                            int iT = iTori % (reader.getSizeT() / reader.nPhases);
+                            int iT = iTori % (reader.getSizeT());
                             double timeStartCurrentFrame = 0;
                             if (interpolatePlanePositionOverZ) {
                                 // We can afford to read the first block of the first timepoint, even for lattice
@@ -3624,11 +3594,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
                             for (int iZori = 0; iZori < reader.getSizeZ(); iZori++) {
 
-
                                 int planeIndex = reader.getIndex(iZori, iChannel, iTori);
-                                // rotations -> modulo Z
-                                // illuminations -> modulo C
-                                // phases -> modulo T
 
                                 reader.store.setPlanePositionX(planePosX, reader.series, planeIndex);
                                 reader.store.setPlanePositionY(planePosY, reader.series, planeIndex);
@@ -3636,7 +3602,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                                 if ((exposure != null)&&(!Double.isNaN(exposure.value().doubleValue()))) {
                                     reader.store.setPlaneExposureTime(exposure, reader.series, planeIndex); // 0 exposure do not make sense
                                 }
-                                int iZ = iZori % (reader.getSizeZ() / reader.nRotations);
+                                int iZ = iZori % (reader.getSizeZ());
 
                                 Time dT = null;
                                 Length pZ;
@@ -4535,21 +4501,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 reader.store.setLineText(getFirstNodeValue(textElements, "Text"), roi, shape);
             }
             return shape;
-        }
-
-        private void setModuloLabels(CoreMetadata ms0) {
-            if (rotationLabels != null) {
-                ms0.moduloZ.labels = rotationLabels;
-                ms0.moduloZ.end = ms0.moduloZ.start; // TODO: understand the role of this line...
-            }
-            if (illuminationLabels != null) {
-                ms0.moduloC.labels = illuminationLabels;
-                ms0.moduloC.end = ms0.moduloC.start; // TODO: understand the role of this line...
-            }
-            if (phaseLabels != null) {
-                ms0.moduloT.labels = phaseLabels;
-                ms0.moduloT.end = ms0.moduloT.start; // TODO: understand the role of this line...
-            }
         }
 
         /*private void setExtraImagesSpatialInformation(){
