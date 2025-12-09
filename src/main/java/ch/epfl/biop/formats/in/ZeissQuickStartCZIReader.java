@@ -1281,7 +1281,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         });
 
         // Ready to build the signature
-        Map<CoreSignature, List<ModuloDimensionEntries>> coreSignatureToBlocks = new HashMap<>();
+        Map<CoreSignature, List<DimensionEntries>> coreSignatureToBlocks = new HashMap<>();
         maxDigitPerDimension.put(FILE_PART_DIMENSION, String.valueOf(cziPartToSegments.size()).length());
 
         final boolean allowAutostitch = allowAutostitching();
@@ -1305,7 +1305,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                                 // Do nothing : Crops resolution level to common downscaling factor if all scenes are fused
                             } else {
                                 // Split by resolution level if flattenedResolutions is true
-                                ModuloDimensionEntries moduloEntry = new ModuloDimensionEntries(entry, part);
+                                DimensionEntries moduloEntry = new DimensionEntries(entry, part);
 
                                 CoreSignature coreSignature = new CoreSignature(moduloEntry,
                                         RESOLUTION_LEVEL_DIMENSION,
@@ -1337,21 +1337,12 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         for (int iCore = 0; iCore<orderedCoreSignatureList.size(); iCore++) {
             CoreMetadata core_i = new CoreMetadata();
 
-            //--------------- MODULO
-
-            // set modulo annotations
-            // rotations -> modulo Z
-            // illuminations -> modulo C
-            // phases -> modulo T
-
-            //--------------- END OF MODULO
-
             core.add(core_i);
             core_i.orderCertain = true;
             core_i.dimensionOrder = "XYCZT";
             core_i.littleEndian = true;
             CoreSignature coreSignature = orderedCoreSignatureList.get(iCore);
-            ModuloDimensionEntries model = coreSignatureToBlocks.get(coreSignature).get(0);
+            DimensionEntries model = coreSignatureToBlocks.get(coreSignature).get(0);
             int[] coordsOrigin = setOriginAndSize(core_i,
                     coreSignatureToBlocks.get(coreSignature),
                     previousMinX_maxRes,
@@ -1459,7 +1450,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             coreIndexToTZCToMinimalBlocks.add(iCoreIndex, new HashMap<>());
             HashMap<CZTKey, List<MinDimEntry>> blocksInCore = mapCoreTZCToBlocks.get(iCoreIndex);
             HashMap<CZTKey, List<MinDimEntry>> minimalBlocksInCore = coreIndexToTZCToMinimalBlocks.get(iCoreIndex);
-            for (ModuloDimensionEntries block: coreSignatureToBlocks.get(coreSignature)) {
+            for (DimensionEntries block: coreSignatureToBlocks.get(coreSignature)) {
                 int c = (block.hasDimension("C"))? block.getDimension("C").start: 0;
                 int z = (block.hasDimension("Z"))? block.getDimension("Z").start: 0;
                 int t = (block.hasDimension("T"))? block.getDimension("T").start: 0;
@@ -1587,7 +1578,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
     X, Y, Z, C, T bounds of these subblocks.
      */
     private int[] setOriginAndSize(CoreMetadata ms0,
-                                   List<ModuloDimensionEntries> blocks,
+                                   List<DimensionEntries> blocks,
                                    int minX_maxRes, int minY_maxRes, int nPixX_maxRes, int nPixY_maxRes) {
         int minX = Integer.MAX_VALUE;
         int minY = Integer.MAX_VALUE;
@@ -1601,7 +1592,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         int maxT = -Integer.MAX_VALUE;
         int downScale = blocks.get(0).getDownSampling();
 
-        for (ModuloDimensionEntries block: blocks) {
+        for (DimensionEntries block: blocks) {
             int blockSizeX = block.getDimension("X").storedSize; // size in pixel
             int blockSizeY = block.getDimension("Y").storedSize;
             if (blockSizeX>maxBlockSizeX) maxBlockSizeX = blockSizeX;
@@ -1807,7 +1798,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
         final int filePart;
 
-        public CoreSignature(ModuloDimensionEntries entries,
+        public CoreSignature(DimensionEntries entries,
                              String pyramidLevelDimension, int pyramidLevelValue,
                              Function<String, Integer> maxDigitPerDimension, boolean autostitch,
                              boolean stitchScenes, int filePartValue) {
@@ -1895,47 +1886,13 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
     }
 
-    /**
-     * A class that transforms dimension entries to account for the Modulo implementation
-     * So it just keeps what's needed and apply modulo operations on C Z and T
-     */
-    static class ModuloDimensionEntries {
-        /**
-         // set modulo annotations
-         // rotations -> modulo Z
-         // illuminations -> modulo C
-         // phases -> modulo T
+    static class DimensionEntries {
 
-         LOGGER.trace("rotations = {}", rotations);
-         LOGGER.trace("illuminations = {}", illuminations);
-         LOGGER.trace("phases = {}", phases);
-
-         LOGGER.trace("positions = {}", positions);
-         LOGGER.trace("acquisitions = {}", acquisitions);
-         LOGGER.trace("mosaics = {}", mosaics);
-         LOGGER.trace("angles = {}", angles);
-
-         ms0.moduloZ.step = ms0.sizeZ;
-         ms0.moduloZ.end = ms0.sizeZ * (rotations - 1);
-         ms0.moduloZ.type = FormatTools.ROTATION;
-         ms0.sizeZ *= rotations;
-
-         ms0.moduloC.step = ms0.sizeC;
-         ms0.moduloC.end = ms0.sizeC * (illuminations - 1);
-         ms0.moduloC.type = FormatTools.ILLUMINATION;
-         ms0.moduloC.parentType = FormatTools.CHANNEL;
-         ms0.sizeC *= illuminations;
-
-         ms0.moduloT.step = ms0.sizeT;
-         ms0.moduloT.end = ms0.sizeT * (phases - 1);
-         ms0.moduloT.type = FormatTools.PHASE;
-         ms0.sizeT *= phases;
-         */
-        final List<ModuloDimensionEntry> entryList = new ArrayList<>();
+        final List<DimensionEntry> entryList = new ArrayList<>();
         final int filePart;
 
-        public ModuloDimensionEntries(LibCZI.SubBlockDirectorySegment.SubBlockDirectorySegmentData.SubBlockDirectoryEntry entry,
-                                      int filePart) {
+        public DimensionEntries(LibCZI.SubBlockDirectorySegment.SubBlockDirectorySegmentData.SubBlockDirectoryEntry entry,
+                                int filePart) {
             this.filePart = filePart;
             this.pixelType = entry.getPixelType();
             this.compression = entry.getCompression();
@@ -1946,11 +1903,11 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             LibCZI.SubBlockSegment.SubBlockSegmentData.SubBlockDirectoryEntryDV.DimensionEntry[] entries = entry.getDimensionEntries();
 
             for (LibCZI.SubBlockSegment.SubBlockSegmentData.SubBlockDirectoryEntryDV.DimensionEntry dimensionEntry : entries) {
-                entryList.add(new ModuloDimensionEntry(dimensionEntry.dimension, dimensionEntry.start, dimensionEntry.storedSize));
+                entryList.add(new DimensionEntry(dimensionEntry.dimension, dimensionEntry.start, dimensionEntry.storedSize));
             }
         }
 
-        public Collection<ModuloDimensionEntry> getList() {
+        public Collection<DimensionEntry> getList() {
             return entryList;
         }
 
@@ -1970,8 +1927,8 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             return downSampling;
         }
 
-        public ModuloDimensionEntry getDimension(String dim) {
-            for (ModuloDimensionEntry entry:getList()) {
+        public DimensionEntry getDimension(String dim) {
+            for (DimensionEntry entry:getList()) {
                 if (entry.dimension.equals(dim)) {
                     return entry;
                 }
@@ -1985,7 +1942,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         }
 
         public boolean hasDimension(String dim) {
-            for (ModuloDimensionEntry entry:getList()) {
+            for (DimensionEntry entry:getList()) {
                 if (entry.dimension.equals(dim)) {
                     return true;
                 }
@@ -1993,12 +1950,12 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             return false;
         }
 
-        static class ModuloDimensionEntry {
+        static class DimensionEntry {
             //LibCZI.SubBlockSegment.SubBlockSegmentData.SubBlockDirectoryEntryDV.DimensionEntry entry;
             final String dimension;
             final int start;
             final int storedSize;
-            public ModuloDimensionEntry(String dimension, int start, int storedSize) {
+            public DimensionEntry(String dimension, int start, int storedSize) {
                 this.dimension = dimension;
                 this.start = start;
                 this.storedSize = storedSize;
@@ -2061,7 +2018,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         final int dimensionStartZ;
         final int dimensionStartT;
         final int filePart;
-        public MinDimEntry(ModuloDimensionEntries entry) {
+        public MinDimEntry(DimensionEntries entry) {
             filePosition = entry.getFilePosition();
             dimensionStartX = entry.getDimension("X").start;
             dimensionStartY = entry.getDimension("Y").start;
