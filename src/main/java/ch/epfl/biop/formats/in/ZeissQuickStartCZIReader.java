@@ -1292,22 +1292,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         maxDigitPerDimension.put(RESOLUTION_LEVEL_DIMENSION,maxDigitDownscalingFactor);
 
         maxValuePerDimension.keySet().forEach(dim -> {
-            switch (dim) {
-                case "C":
-                    // illuminations -> modulo C
-                    maxDigitPerDimension.put(dim, String.valueOf(maxValuePerDimension.get(dim)*nIlluminations).length());
-                    break;
-                case "Z":
-                    // rotations -> modulo Z
-                    maxDigitPerDimension.put(dim, String.valueOf(maxValuePerDimension.get(dim)*nRotations).length());
-                    break;
-                case "T":
-                    // phases -> modulo T
-                    maxDigitPerDimension.put(dim, String.valueOf(maxValuePerDimension.get(dim)*nPhases).length());
-                    break;
-                default:
-                    maxDigitPerDimension.put(dim, String.valueOf(maxValuePerDimension.get(dim)).length());
-            }
+            maxDigitPerDimension.put(dim, String.valueOf(maxValuePerDimension.get(dim)).length());
         });
 
         // Ready to build the signature
@@ -1335,12 +1320,10 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                                 // Do nothing : Crops resolution level to common downscaling factor if all scenes are fused
                             } else {
                                 // Split by resolution level if flattenedResolutions is true
-                                ModuloDimensionEntries moduloEntry = new ModuloDimensionEntries(entry,
-                                        nRotations, nIlluminations, nPhases,
-                                        nChannels, nSlices, nFrames, part);
+                                ModuloDimensionEntries moduloEntry = new ModuloDimensionEntries(entry, part);
 
-                                CoreSignature coreSignature = new CoreSignature(moduloEntry
-                                        , RESOLUTION_LEVEL_DIMENSION,
+                                CoreSignature coreSignature = new CoreSignature(moduloEntry,
+                                        RESOLUTION_LEVEL_DIMENSION,
                                         downscalingFactor,//getDownSampling(entry),
                                         maxDigitPerDimension::get,
                                         allowAutostitch, stitchScenes, part);
@@ -1977,53 +1960,21 @@ public class ZeissQuickStartCZIReader extends FormatReader {
          ms0.sizeT *= phases;
          */
         final List<ModuloDimensionEntry> entryList = new ArrayList<>();
-        final int nRotations, nIlluminations, nPhases, filePart;
+        final int filePart;
 
         public ModuloDimensionEntries(LibCZI.SubBlockDirectorySegment.SubBlockDirectorySegmentData.SubBlockDirectoryEntry entry,
-                                      int nRotations, int nIlluminations, int nPhases, int nChannels, int nSlices, int nFrames, int filePart) {
+                                      int filePart) {
             this.filePart = filePart;
-            this.nRotations = nRotations;
-            this.nIlluminations = nIlluminations;
-            this.nPhases = nPhases;
             this.pixelType = entry.getPixelType();
             this.compression = entry.getCompression();
             int ds = (int) Math.round((double)(entry.getDimension("X").size)/(double)(entry.getDimension("X").storedSize));
             this.downSampling = Math.max(ds,1); // The downsampling factor could go below 1 for PALM dataset, but within the block, the real data is such that there's no downsampling - just the pixel size changes
             this.filePosition = entry.getFilePosition();
 
-            int iRotation = 0;
-            int iIllumination = 0;
-            int iPhase = 0;
-            // Collect
             LibCZI.SubBlockSegment.SubBlockSegmentData.SubBlockDirectoryEntryDV.DimensionEntry[] entries = entry.getDimensionEntries();
-            for (LibCZI.SubBlockSegment.SubBlockSegmentData.SubBlockDirectoryEntryDV.DimensionEntry dimensionEntry : entries) {
-                switch (dimensionEntry.dimension) {
-                    case "R": iRotation = dimensionEntry.start; break;
-                    case "I": iIllumination = dimensionEntry.start; break;
-                    case "H": iPhase = dimensionEntry.start; break;
-                }
-            }
 
             for (LibCZI.SubBlockSegment.SubBlockSegmentData.SubBlockDirectoryEntryDV.DimensionEntry dimensionEntry : entries) {
-                switch (dimensionEntry.dimension) {
-                    case "R":
-                    case "I":
-                    case "H":
-                        break; // no entry
-                    case "C":
-                        entryList.add(new ModuloDimensionEntry("C",
-                                iIllumination * nChannels + dimensionEntry.start, dimensionEntry.storedSize));
-                        break;
-                    case "Z":
-                        entryList.add(new ModuloDimensionEntry("Z",
-                                iRotation * nSlices + dimensionEntry.start, dimensionEntry.storedSize));
-                        break;
-                    case "T":
-                        entryList.add(new ModuloDimensionEntry("T",
-                                iPhase * nFrames + dimensionEntry.start, dimensionEntry.storedSize));
-                    default:
-                        entryList.add(new ModuloDimensionEntry(dimensionEntry.dimension, dimensionEntry.start, dimensionEntry.storedSize));
-                }
+                entryList.add(new ModuloDimensionEntry(dimensionEntry.dimension, dimensionEntry.start, dimensionEntry.storedSize));
             }
         }
 
