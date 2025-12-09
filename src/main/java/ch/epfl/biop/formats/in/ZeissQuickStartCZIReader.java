@@ -289,6 +289,12 @@ public class ZeissQuickStartCZIReader extends FormatReader {
     @CopyByRef
     ArrayList<MetadataInitializer.Channel> channels = new ArrayList<>();
 
+    @CopyByRef
+    public String[] rotationLabels, phaseLabels, illuminationLabels;
+
+    @CopyByRef
+    private boolean isLatticeLightSheet = false;
+
     // streamCurrentSeries is a temp field that should maybe be changed when setSeries is called
     transient int streamCurrentPart = -1;
 
@@ -364,7 +370,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         domains = new String[] {FormatTools.LM_DOMAIN, FormatTools.HISTOLOGY_DOMAIN};
         suffixSufficient = false;
         suffixNecessary = false;
-        if ((that.currentId == null)||(that.currentId.equals(""))) {
+        if ((that.currentId == null)||(that.currentId.isEmpty())) {
             throw new RuntimeException("Do not duplicate this reader from a model if the model has not been initialized");
         }
 
@@ -481,7 +487,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
     /** @see loci.formats.IFormatReader#get8BitLookupTable() */
     @Override
-    public byte[][] get8BitLookupTable() throws FormatException, IOException {
+    public byte[][] get8BitLookupTable() {
         if ((getPixelType() != FormatTools.INT8 &&
                 getPixelType() != FormatTools.UINT8) || previousChannel == -1 ||
                 previousChannel >= channels.size())
@@ -517,7 +523,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
     /** @see loci.formats.IFormatReader#get16BitLookupTable() */
     @Override
-    public short[][] get16BitLookupTable() throws FormatException, IOException {
+    public short[][] get16BitLookupTable() {
         if ((getPixelType() != FormatTools.INT16 &&
                 getPixelType() != FormatTools.UINT16) || previousChannel == -1 ||
                 previousChannel >= channels.size())
@@ -1276,9 +1282,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
         maxDigitPerDimension.put(RESOLUTION_LEVEL_DIMENSION,maxDigitDownscalingFactor);
 
-        maxValuePerDimension.keySet().forEach(dim -> {
-            maxDigitPerDimension.put(dim, String.valueOf(maxValuePerDimension.get(dim)).length());
-        });
+        maxValuePerDimension.keySet().forEach(dim -> maxDigitPerDimension.put(dim, String.valueOf(maxValuePerDimension.get(dim)).length()));
 
         // Ready to build the signature
         Map<CoreSignature, List<DimensionEntries>> coreSignatureToBlocks = new HashMap<>();
@@ -1504,6 +1508,10 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         MetadataInitializer mi = new MetadataInitializer(this);
         mi.initializeMetadata(cziPartToSegments, mapCoreTZCToBlocks);
         channels.addAll(mi.channels);
+        this.rotationLabels = mi.rotationLabels;
+        this.illuminationLabels = mi.illuminationLabels;
+        this.phaseLabels = mi.phaseLabels;
+        this.isLatticeLightSheet = mi.isLatticeLightSheet;
     }
 
     private void addLabelIfExists(List<Integer> sortedFileParts, Map<Integer, CZISegments> cziPartToSegments, String id) throws IOException, FormatException, DependencyException, ServiceException {//}, AllPositionsInformation allPositionsInformation) throws IOException, FormatException, DependencyException, ServiceException {
@@ -2294,13 +2302,13 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
         private void setPlateInformation() {
 
-            if (plateRows > 0 && plateColumns > 0 && platePositions.size() > 0) {
+            if (plateRows > 0 && plateColumns > 0 && !platePositions.isEmpty()) {
                 reader.store.setPlateID(MetadataTools.createLSID("Plate", 0), 0);
                 reader.store.setPlateRows(new PositiveInteger(plateRows), 0);
                 reader.store.setPlateColumns(new PositiveInteger(plateColumns), 0);
 
                 int fieldsPerWell = fieldNames.size() / platePositions.size();
-                if (fieldNames.size() == 0) {
+                if (fieldNames.isEmpty()) {
                     fieldsPerWell = 1;
                 }
 
@@ -2620,7 +2628,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     String acquisition = getFirstNodeValue(channel, "AcquisitionMode");
                     if (acquisition != null) {
                         if (acquisition.equals("LatticeLightsheet")) {
-                            setLatticeLightSheet(true);
+                            setLatticeLightSheet();
                         }
                         channels.get(i).acquisitionMode = MetadataTools.getAcquisitionMode(acquisition);
                     }
@@ -2799,7 +2807,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                         }
 
                         String offset = getFirstNodeValue(detector, "Offset");
-                        if (offset != null && !offset.equals("")) {
+                        if (offset != null && !offset.isEmpty()) {
                             store.setDetectorOffset(Double.parseDouble(offset), 0, detectorIndex);
                         }
 
@@ -2812,12 +2820,12 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                         }
 
                         String ampGain = getFirstNodeValue(detector, "AmplificationGain");
-                        if (ampGain != null && !ampGain.equals("")) {
+                        if (ampGain != null && !ampGain.isEmpty()) {
                             store.setDetectorAmplificationGain(Double.parseDouble(ampGain), 0, detectorIndex);
                         }
 
                         String detectorType = getFirstNodeValue(detector, "Type");
-                        if (detectorType != null && !detectorType.equals("")) {
+                        if (detectorType != null && !detectorType.isEmpty()) {
                             store.setDetectorType(MetadataTools.getDetectorType(detectorType), 0, detectorIndex);
                         }
                     }
@@ -2866,7 +2874,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                         store.setFilterSetSerialNumber(serialNumber, 0, i);
                         store.setFilterSetLotNumber(lotNumber, 0, i);
 
-                        if (dichroicRef != null && dichroicRef.length() > 0) {
+                        if (dichroicRef != null && !dichroicRef.isEmpty()) {
                             store.setFilterSetDichroicRef(dichroicRef, 0, i);
                         }
 
@@ -2876,7 +2884,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                             if (ref == null || ref.length() <= 0) {
                                 ref = excitation.getAttribute("Id");
                             }
-                            if (ref.length() > 0) {
+                            if (!ref.isEmpty()) {
                                 store.setFilterSetExcitationFilterRef(ref, 0, i, ex);
                             }
                         }
@@ -2886,7 +2894,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                             if (ref == null || ref.length() <= 0) {
                                 ref = emission.getAttribute("Id");
                             }
-                            if (ref.length() > 0) {
+                            if (!ref.isEmpty()) {
                                 store.setFilterSetEmissionFilterRef(ref, 0, i, em);
                             }
                         }
@@ -3044,7 +3052,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     continue;
                 }
 
-                if (description != null && description.length() > 0) {
+                if (description != null && !description.isEmpty()) {
                     reader.store.setImageDescription(description, iSeries);
                 }
 
@@ -3088,7 +3096,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             reader.series = -1;
             int nSeries = reader.getSeriesCount();
             String name = new Location(reader.getCurrentFile()).getName();
-            if (imageName != null && imageName.trim().length() > 0) {
+            if (imageName != null && !imageName.trim().isEmpty()) {
                 name = imageName;
             }
 
@@ -3143,7 +3151,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                                                     DocumentBuilder parser) throws IOException {
             CZTKey czt = new CZTKey(c,z,t);
             List<MinDimEntry> blocks = mapCoreCZTToBlocks.get(coreIdx).get(czt);
-            if ((blocks==null) || (blocks.size()==0)) return null;
+            if ((blocks==null) || (blocks.isEmpty())) return null;
             LibCZI.SubBlockSegment block = LibCZI.getBlock(reader.getStream(blocks.get(0).filePart), blocks.get(0).filePosition);
             return LibCZI.readSubBlockMeta(reader.getStream(blocks.get(0).filePart), block, parser);
         }
@@ -3198,7 +3206,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     if ((y == null)||(y.value().doubleValue()>posY.value(unitLength).doubleValue())) {
                         y = posY;
                     }
-                    if (coreToPixSizeZ.size()!=0) {
+                    if (!coreToPixSizeZ.isEmpty()) {
                         if (coreToPixSizeZ.get(iCoreIndex).unit().equals(unitLength)) { // Sometimes, x and y are in um while z is undef
                             Length posZ = new Length((double) iBlock.dimensionStartZ
                                     * coreToPixSizeZ.get(iCoreIndex).value(unitLength).doubleValue(), unitLength);
@@ -3251,7 +3259,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     .thenComparingInt(p -> p.z);
 
             HashMap<CZTKey, List<MinDimEntry>> blocksForXYOffset = mapCoreCZTToBlocks.get(coreUsedForXYOffset);
-            CZTKey cztKeyForXYOffset = blocksForXYOffset.keySet().stream().min(keyComparator::compare).get();
+            CZTKey cztKeyForXYOffset = blocksForXYOffset.keySet().stream().min(keyComparator).get();
 
             MinDimEntry firstSubBlock = blocksForXYOffset
                     .get(cztKeyForXYOffset).get(0);
@@ -3285,7 +3293,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 LOGGER.debug("Global image origin Y acquired from sub-block meta (micrometer) {}", cornerYAllScenesMicrons);
             } else {
                 // Let's attempt Strategy 2
-                if ((allPositionsInformation.scenes.size()>0)&&(!coreToPixSizeX.get(0).unit().equals(UNITS.REFERENCEFRAME))) {
+                if ((!allPositionsInformation.scenes.isEmpty())&&(!coreToPixSizeX.get(0).unit().equals(UNITS.REFERENCEFRAME))) {
                     // Get the coordinate of the most top left corner of all scenes
                     Length minX = null, minY = null;
                     for (SceneProperties scene:allPositionsInformation.scenes) {
@@ -3348,7 +3356,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                     int sceneIndex = signature.getDimensions().get("S");
                     if (allPositionsInformation.scenes.size()>sceneIndex) {
                         sceneName = allPositionsInformation.scenes.get(sceneIndex).name;
-                        if ((sceneName == null)||(sceneName.trim().equals(""))) sceneName = "Scene position #"+sceneIndex;
+                        if ((sceneName == null)||(sceneName.trim().isEmpty())) sceneName = "Scene position #"+sceneIndex;
                         scenePosZ = allPositionsInformation.scenes.get(sceneIndex).getMinPosZInMicrons();
                     } else {
                         sceneName = "Scene position #"+sceneIndex;
@@ -3376,7 +3384,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
                 Length planePosX, planePosY, planePosZ = null; // plane position of the current coreindex - do not vary over z and t, but that could happen
 
-                CZTKey cztKeySeriesForXYOffset = mapCoreCZTToBlocks.get(iCoreIndex).keySet().stream().min(keyComparator::compare).get();
+                CZTKey cztKeySeriesForXYOffset = mapCoreCZTToBlocks.get(iCoreIndex).keySet().stream().min(keyComparator).get();
                 blocks = mapCoreCZTToBlocks.get(iCoreIndex).get(cztKeySeriesForXYOffset);
 
                 if (!resolutionLevel0) {
@@ -3419,7 +3427,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
 
                     if (planePosX.unit().equals(UNITS.MICROMETER) && (planePosY.unit().equals(UNITS.MICROMETER))) {
                         // Let's add a global stage offset, if possible
-                        if ((!Double.isNaN(cornerXAllScenesMicrons))&&(!Double.isNaN(cornerXAllScenesMicrons))) {
+                        if ((!Double.isNaN(cornerXAllScenesMicrons))&&(!Double.isNaN(cornerYAllScenesMicrons))) {
                             planePosX = new Length(planePosX.value(UNITS.MICROMETER).doubleValue()+cornerXAllScenesMicrons, UNITS.MICROMETER);
                             planePosY = new Length(planePosY.value(UNITS.MICROMETER).doubleValue()+cornerYAllScenesMicrons, UNITS.MICROMETER);
                         }
@@ -3601,14 +3609,14 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                                     }
                                 }
 
-                                if ((!Double.isNaN(offsetZ0))&&(pZ!=null)&&(!pZ.unit().equals(UNITS.REFERENCEFRAME))) {
+                                if (!Double.isNaN(offsetZ0) && !pZ.unit().equals(UNITS.REFERENCEFRAME)) {
                                     reader.store.setPlanePositionZ(pZ, reader.series, planeIndex);
                                 }
 
                                 if (planeIndex==0) {
                                     reader.store.setStageLabelX(planePosX, reader.series);
                                     reader.store.setStageLabelY(planePosY, reader.series);
-                                    if ((pZ!=null)&&(!Double.isNaN(pZ.value().doubleValue()))&&(!pZ.unit().equals(UNITS.REFERENCEFRAME))) {
+                                    if (!Double.isNaN(pZ.value().doubleValue()) && !pZ.unit().equals(UNITS.REFERENCEFRAME)) {
                                         reader.store.setStageLabelZ(pZ, reader.series);
                                     }
                                 }
@@ -4546,7 +4554,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 if (attrName.endsWith("|")){
                     attrName = attrName.substring(0, attrName.length() - 1);
                 }
-                else if(attrName.length() == 0 && keyString.endsWith("|")) {
+                else if(attrName.isEmpty() && keyString.endsWith("|")) {
                     keyString = keyString.substring(0, keyString.length() - 1);
                 }
 
@@ -4589,7 +4597,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             String name;
 
             public Length getMinPosXInMicrons() {
-                if (pos.size()==0) {
+                if (pos.isEmpty()) {
                     return null;//new Length(0, UNITS.MICROMETER);
                 }
                 double minX = Double.MAX_VALUE;
@@ -4604,7 +4612,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
                 return new Length(minX, pos.get(0).pX.unit());
             }
             public Length getMinPosYInMicrons() {
-                if (pos.size()==0) {
+                if (pos.isEmpty()) {
                     return null;//new Length(0, UNITS.MICROMETER);
                 }
                 double minY = Double.MAX_VALUE;
@@ -4620,7 +4628,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             }
 
             public Length getMinPosZInMicrons() {
-                if (pos.size()==0) {
+                if (pos.isEmpty()) {
                     return null;//new Length(0, UNITS.MICROMETER);
                 }
                 double minZ = Double.MAX_VALUE;
@@ -4657,14 +4665,15 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         }
 
         private boolean isLatticeLightSheet = false;
-        private void setLatticeLightSheet(boolean flag) {
-            isLatticeLightSheet = flag;
+
+        private void setLatticeLightSheet() {
+            isLatticeLightSheet = true;
         }
 
-        private boolean isLatticeLightSheet() {
-            return isLatticeLightSheet;
-        }
+    }
 
+    public boolean isLatticeLightSheet() {
+        return isLatticeLightSheet;
     }
 
 }
