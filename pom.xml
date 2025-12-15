@@ -5,13 +5,13 @@
 	<parent>
 		<groupId>org.scijava</groupId>
 		<artifactId>pom-scijava</artifactId>
-		<version>40.0.0</version>
+		<version>43.0.0</version>
 		<relativePath />
 	</parent>
 
 	<groupId>ch.epfl.biop</groupId>
 	<artifactId>quick-start-czi-reader</artifactId>
-	<version>0.2.7-SNAPSHOT</version>
+	<version>0.3.0-SNAPSHOT</version>
 
 	<name>Quick Start CZI Reader</name>
 	<description>A Bio-Formats CZI Reader that starts fast and with low memory footprint</description>
@@ -105,7 +105,7 @@
 		<maven.compiler.target>19</maven.compiler.target>
 		<maven.compiler.testSource>19</maven.compiler.testSource>
 		<maven.compiler.testTarget>19</maven.compiler.testTarget>-->
-		<bf.version>8.0.1</bf.version>
+		<bf.version>8.3.0</bf.version>
 	</properties>
 
 	<repositories>

@@ -358,6 +358,10 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         suffixNecessary = false;
     }
 
+    public Map<String, Integer> getDimensions(int coreIndex) {
+        return this.coreIndexToSignature.get(coreIndex).getDimensions();
+    }
+
     /** Duplicates 'that' reader for parallel reading.
      * Creating another reader using this constructor allows to keep a very low memory footprint
      * because all immutable objects are re-used by reference.
@@ -934,6 +938,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
         ris.order(isLittleEndian());
         return ris;
     }
+
     @Override
     public int getOptimalTileWidth() {
         if (maxBlockSizeX>0) {
@@ -1802,6 +1807,7 @@ public class ZeissQuickStartCZIReader extends FormatReader {
      */
     static class CoreSignature implements Comparable<CoreSignature> {
         final String signature;
+
         final int hashCode;
 
         final int filePart;
@@ -2164,8 +2170,6 @@ public class ZeissQuickStartCZIReader extends FormatReader {
             super.clear();
         }
     }
-
-
 
     /**
      * This Zeiss Reader class was initially huge and contained many fields. One issue

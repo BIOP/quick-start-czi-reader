@@ -29,7 +29,7 @@ import java.io.IOException;
  * <p>
  * Timestamps reading inspired by <a href="https://gist.github.com/mutterer/5fbddc293d6c969a9d02778f1551b73f">Jerome's macro</a>
  * <p>
- * See @see <a href="https://zeiss.github.io/">CZI reference documentation</a>
+ * See @see <a href="https://zeiss.github.io/libczi">CZI reference documentation</a>
  * <p>
  * Used in {@link ZeissQuickStartCZIReader}
  *
@@ -544,9 +544,9 @@ public class LibCZI {
                 public String toString() {
                     if (entryDV!=null) {
                         StringBuilder sb = new StringBuilder();
-                        sb.append("pixelType "+this.getPixelType()+" compression = "+getCompression()+"\n");
+                        sb.append("pixelType ").append(this.getPixelType()).append(" compression = ").append(getCompression()).append("\n");
                         for (SubBlockSegment.SubBlockSegmentData.SubBlockDirectoryEntryDV.DimensionEntry entry: getDimensionEntries()) {
-                            sb.append(entry+"\n");
+                            sb.append(entry).append("\n");
                         }
                         return sb.toString();
                     } else return "entryDE not supported";
